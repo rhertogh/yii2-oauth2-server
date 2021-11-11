@@ -1,0 +1,89 @@
+{
+    "name": "rhertogh/yii2-oauth2-server",
+    "description": "A Yii2 Oauth 2 and OpenID Connect server based on thephpleague/oauth2-server",
+    "keywords": [
+        "Yii2",
+        "Oauth 2",
+        "OpenID Connect"
+    ],
+    "type": "yii2-extension",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/rhertogh/yii2-oauth2-server/issues",
+        "source": "https://github.com/rhertogh/yii2-oauth2-server"
+    },
+    "authors": [
+        {
+            "name": "Rutger Hertogh"
+        }
+    ],
+    "require": {
+        "php": ">=7.4.0",
+        "yiisoft/yii2": "~2.0.43",
+        "guzzlehttp/psr7": "~1.8.3",
+        "league/oauth2-server": "~8.3.3"
+    },
+    "require-dev": {
+        "ext-json": "*",
+        "yiisoft/yii2-coding-standards": "~2.0",
+        "codeception/codeception": "~4.1.22",
+        "codeception/module-yii2": "~1.1.3",
+        "codeception/module-asserts": "~1.3.1",
+        "codeception/module-rest": "~1.3.2",
+        "yiisoft/yii2-debug": "~2.1.18",
+        "yiisoft/yii2-bootstrap4": "~2.0.10",
+        "schmunk42/yii2-giiant": "dev-master#7d27dd40604af842905768d6be43bcc96c02cee2",
+        "vlucas/phpdotenv": "~5.3",
+        "league/oauth2-client": "~2.6.0",
+        "yiisoft/yii2-authclient": "dev-master",
+        "web-token/jwt-checker": "~2.2.11",
+        "web-token/jwt-key-mgmt": "~2.2.11",
+        "web-token/jwt-signature": "~2.2.11",
+        "web-token/jwt-signature-algorithm-hmac": "~2.2.11",
+        "web-token/jwt-signature-algorithm-ecdsa": "~2.2.11",
+        "web-token/jwt-signature-algorithm-rsa": "~2.2.11"
+    },
+    "autoload": {
+        "psr-4": {
+            "rhertogh\\Yii2Oauth2Server\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Yii2Oauth2ServerTests\\": "tests"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        },
+        "composer-exit-on-patch-failure": true,
+        "patches": {
+            "phpunit/phpunit-mock-objects": {
+                "Fix PHP 7 and 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_mock_objects.patch"
+            },
+            "phpunit/phpunit": {
+                "Fix PHP 7 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php7.patch",
+                "Fix PHP 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php8.patch"
+            }
+        }
+    },
+    "config": {
+        "process-timeout": 1800,
+        "fxp-asset": {
+            "enabled": false
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "archive": {
+        "exclude": [
+            "sample",
+            "tests"
+        ]
+    }
+}

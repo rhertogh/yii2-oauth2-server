@@ -1,0 +1,85 @@
+name: build
+
+on: [push, pull_request]
+
+env:
+  DEFAULT_COMPOSER_FLAGS: "--prefer-dist --no-interaction --no-progress --optimize-autoloader --ansi"
+  XDEBUG_MODE: coverage, develop
+
+jobs:
+  phpunit:
+    name: PHP ${{ matrix.php }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: Yii2Oauth2ServerTest
+          MYSQL_USER: Yii2Oauth2ServerTest
+          MYSQL_PASSWORD: password
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      postgres:
+        image: postgres:9.6
+        env:
+          POSTGRES_USER: Yii2Oauth2ServerTest
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: Yii2Oauth2ServerTest
+        ports:
+          - 5432:5432
+        options: --name=postgres --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        php: ['7.4', '8.0']
+    env:
+      # WARNING!
+      # These variables are provided for testing use only. NEVER use them for other purposes!
+      YII2_OAUTH2_SERVER_PK_PASSPHRASE: secret
+      YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY: def00000761b6fce5b2c1721c37602e82effb785154c3bb0db93bfb3f413012bd85d46461e28f156a3a5afab910a64d5b2665276d45f24b1085d90e12ab3d38ee47b4337
+      YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEY: def00000cb36fd6ed6641e0ad70805b28da86192765eb73daae7306acc537ca5e9678db80e92dbfcb489debbac0ed96139e6ff210fc0281078e99c1420d2d18e2c7388ac
+      MYSQL_DB_HOST: mysql
+      MYSQL_DB_NAME: Yii2Oauth2ServerTest
+      MYSQL_USER_NAME: Yii2Oauth2ServerTest
+      MYSQL_USER_PASSWORD: password
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: pecl
+          extensions: apc, curl, dom, imagick, intl, mbstring, mcrypt, memcached, mysql, pdo, pdo_mysql, pdo_pgsql, pdo_sqlite, pgsql, sqlite
+          ini-values: date.timezone='UTC', session.save_path="${{ runner.temp }}"
+
+      - name: Install Memcached
+        uses: niden/actions-memcached@v7
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Cache composer dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install dependencies
+        run: composer update $DEFAULT_COMPOSER_FLAGS
+
+      - name: Codeception tests
+        run: php vendor/bin/codecept run --steps --colors
+
+      - name: Code coverage
+        run: |
+          wget https://scrutinizer-ci.com/ocular.phar
+          php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+        continue-on-error: true # if is fork

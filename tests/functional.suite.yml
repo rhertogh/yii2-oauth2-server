@@ -1,0 +1,17 @@
+actor: ApiTester
+modules:
+  enabled:
+    - Yii2Oauth2ServerTests\Oauth2REST:
+        depends: Yii2
+        part: JSON
+
+    - Asserts
+    - Yii2:
+        configFile: 'tests/_config/site.php'
+        responseCleanMethod: recreate
+        recreateComponents: []
+    - Yii2Oauth2ServerTests\Helper\Api
+
+coverage:
+  include:
+    - src/*

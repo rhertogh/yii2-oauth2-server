@@ -1,0 +1,20 @@
+namespace: Yii2Oauth2ServerTests
+actor: Tester
+
+bootstrap: bootstrap.php
+
+paths:
+  tests: tests
+  log: tests/_output
+  data: tests/_data
+  helpers: tests/_support
+
+settings:
+  memory_limit: 1024M
+  colors: true
+  shuffle: true
+
+coverage:
+  enabled: true
+  low_limit: 90
+  high_limit: 100

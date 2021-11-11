@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+
+  Yii2Oauth2Server:
+    build:
+      context: ..
+      dockerfile: docker/Yii2Oauth2Server/Dockerfile
+    image: "rhertogh/yii2-oauth2-server"
+    networks:
+      - test
+    depends_on:
+      - MySql
+    ports:
+      - '88:80' # http
+    volumes:
+      # Re-use local composer cache via host-volume
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      # Mount source-code for development
+      - ..:/app
+    environment:
+      # PHP & Xdebug
+      - PHP_IDE_CONFIG=${PHP_IDE_CONFIG:-serverName=Yii2Oauth2Server}
+      - PHP_ENABLE_XDEBUG=${PHP_ENABLE_XDEBUG:-1}
+      - XDEBUG_MODE=${XDEBUG_MODE}
+      - XDEBUG_CONFIG=${XDEBUG_CONFIG}
+      # Oauth2 Server
+      - YII2_OAUTH2_SERVER_PK_PASSPHRASE=${YII2_OAUTH2_SERVER_PK_PASSPHRASE:?err}
+      - YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY=${YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY:?err}
+      - YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEY=${YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEY:?err}
+      # Database
+      - MYSQL_DB_HOST=${MYSQL_DB_HOST:?err}
+      - MYSQL_DB_NAME=${MYSQL_DB_NAME:?err}
+      - MYSQL_USER_NAME=${MYSQL_USER_NAME:?err}
+      - MYSQL_USER_PASSWORD=${MYSQL_USER_PASSWORD:?err}
+
+  MySql:
+    image: "mysql:5.7"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:?err}
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=${MYSQL_DB_NAME:?err}
+      - MYSQL_USER=${MYSQL_USER_NAME:?err}
+      - MYSQL_PASSWORD=${MYSQL_USER_PASSWORD:?err}
+    networks:
+      - test
+    ports:
+      - "3307:3306"
+
+networks:
+  test:
+    driver: bridge
+    name: test
