@@ -20,8 +20,10 @@ $projectRoot = dirname(__DIR__);
 require_once($projectRoot . '/vendor/autoload.php');
 require_once($projectRoot. '/vendor/yiisoft/yii2/Yii.php');
 
-$dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__ . '/..');
-$dotenv->load();
+if (is_readable(__DIR__ . '/../.env')) {
+    $dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__ . '/..');
+    $dotenv->load();
+}
 
 Yii::setAlias('@Yii2Oauth2ServerTests', __DIR__);
 Yii::setAlias('@rhertogh/Yii2Oauth2Server', $projectRoot . '/src');
