@@ -76,7 +76,7 @@ jobs:
         run: composer update $DEFAULT_COMPOSER_FLAGS
 
       - name: Codeception tests
-        run: php vendor/bin/codecept run --steps --colors
+        run: php vendor/bin/codecept run --steps --colors --debug
 
       - name: Code coverage
         run: |
