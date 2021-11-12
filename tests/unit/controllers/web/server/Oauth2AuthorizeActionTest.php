@@ -501,7 +501,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         );
     }
 
-    public function testOidcPromptNoneForGuest()
+    public function testPromptNoneForGuest()
     {
         $this->mockWebApplication();
         $module = Oauth2Module::getInstance();
@@ -528,9 +528,9 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
     }
 
     /**
-     * @dataProvider oidcPromptLoginForAuthenticatedUserProvider
+     * @dataProvider promptLoginForAuthenticatedUserProvider
      */
-    public function testOidcPromptLoginForAuthenticatedUser($prompt, $maxAge, $expectLoginPrompt)
+    public function testPromptLoginForAuthenticatedUser($prompt, $maxAge, $expectLoginPrompt)
     {
 
         $mockUserComponent = $this->getMockBuilder(TestUserComponentOidc::class)
@@ -597,9 +597,9 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
 
     /**
      * @return array[]
-     * @see testOidcPromptLoginForAuthenticatedUser()
+     * @see testPromptLoginForAuthenticatedUser()
      */
-    public function oidcPromptLoginForAuthenticatedUserProvider()
+    public function promptLoginForAuthenticatedUserProvider()
     {
         return [
             [
@@ -633,9 +633,9 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
     /**
      * @param array $moduleConfig
      * @param array $clientConfig
-     * @dataProvider oidcPromptNoneWithForcedUserAccountSelectionProvider
+     * @dataProvider promptNoneWithForcedUserAccountSelectionProvider
      */
-    public function testOidcPromptNoneWithForcedUserAccountSelection($moduleConfig, $clientConfig)
+    public function testPromptNoneWithForcedUserAccountSelection($moduleConfig, $clientConfig)
     {
         $clientIdentifier = 'test-client-type-auth-code-open-id-connect';
 
@@ -674,10 +674,10 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
     }
 
     /**
-     * @see testOidcPromptNoneWithForcedUserAccountSelection()
+     * @see testPromptNoneWithForcedUserAccountSelection()
      * @return array[]
      */
-    public function oidcPromptNoneWithForcedUserAccountSelectionProvider()
+    public function promptNoneWithForcedUserAccountSelectionProvider()
     {
         return [
             [
@@ -756,7 +756,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         $this->assertEquals('http://localhost/site/account-selection', $response->headers->get('location'));
     }
 
-    public function testOidcPromptNoneWhenCLientAuthenticationIsRequired()
+    public function testPromptNoneWhenCLientAuthenticationIsRequired()
     {
         $this->mockWebApplication();
 
@@ -819,7 +819,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         $this->assertEquals('The use of the "request_uri" parameter is not supported Try to send the request as query parameters.', $response->data['error_description']);
     }
 
-    public function testOidcPromptNoneInvalid()
+    public function testPromptNoneInvalid()
     {
         $this->mockWebApplication();
         $module = Oauth2Module::getInstance();
