@@ -7,7 +7,7 @@
         "OpenID Connect"
     ],
     "type": "yii2-extension",
-    "license": "BSD-3-Clause",
+    "license": "Apache License v2.0",
     "support": {
         "issues": "https://github.com/rhertogh/yii2-oauth2-server/issues",
         "source": "https://github.com/rhertogh/yii2-oauth2-server"
