@@ -9,7 +9,10 @@ $config = [
             'fixture' => __DIR__ . '/cubrid.sql',
         ],
         'mysql' => [
-            'dsn' => 'mysql:host=' . getenv('MYSQL_HOST') . ';dbname=' . getenv('MYSQL_DB_NAME'),
+            'dsn' =>
+                'mysql:host=' . getenv('MYSQL_HOST')
+                . (getenv('MYSQL_PORT') ? ':' . getenv('MYSQL_PORT') : '')
+                . ';dbname=' . getenv('MYSQL_DB_NAME'),
             'username' => getenv('MYSQL_USER_NAME'),
             'password' => getenv('MYSQL_USER_PASSWORD'),
             'charset' => 'utf8mb4',
