@@ -181,7 +181,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     public $publicKey = null;
 
     /**
-     * @var string|null The encryption key for authorization and refresh codes
+     * @var string|null The encryption key for authorization and refresh codes.
      * @since 1.0.0
      */
     public $codesEncryptionKey = null;
@@ -214,47 +214,47 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     public $urlRulesPrefix = null;
 
     /**
-     * @var string URL path for the access token endpoint (will be prefixed with $urlRulesPrefix)
+     * @var string URL path for the access token endpoint (will be prefixed with $urlRulesPrefix).
      * @since 1.0.0
      */
     public $authorizePath = 'authorize';
 
     /**
-     * @var string URL path for the access token endpoint (will be prefixed with $urlRulesPrefix)
+     * @var string URL path for the access token endpoint (will be prefixed with $urlRulesPrefix).
      * @since 1.0.0
      */
     public $accessTokenPath = 'access-token';
 
     /**
-     * @var string URL path for the certificates jwks endpoint (will be prefixed with $urlRulesPrefix)
+     * @var string URL path for the certificates jwks endpoint (will be prefixed with $urlRulesPrefix).
      * @since 1.0.0
      */
     public $jwksPath = 'certs';
 
     /**
-     * The URL to the page where the user can perform the client/scope authorization (if `null` the build in page will be used)
+     * The URL to the page where the user can perform the client/scope authorization (if `null` the build in page will be used).
      * @return string
      * @since 1.0.0
      */
     public $clientAuthorizationUrl = null;
 
     /**
-     * @var string The URL path to the build in page where the user can authorize the client for the requested scopes (will be prefixed with $urlRulesPrefix)
-     * Note: This setting will only be used if $clientAuthorizationUrl is `null`
+     * @var string The URL path to the build in page where the user can authorize the client for the requested scopes (will be prefixed with $urlRulesPrefix).
+     * Note: This setting will only be used if $clientAuthorizationUrl is `null`.
      * @since 1.0.0
      */
     public $clientAuthorizationPath = 'authorize-client';
 
     /**
-     * @var string The view to use in the "client authorization action" for the page where the user can authorize the client for the requested scopes
-     * Note: This setting will only be used if $clientAuthorizationUrl is `null`
+     * @var string The view to use in the "client authorization action" for the page where the user can authorize the client for the requested scopes.
+     * Note: This setting will only be used if $clientAuthorizationUrl is `null`.
      * @since 1.0.0
      */
     public $clientAuthorizationView = 'authorize-client';
 
     /**
-     * @var string The URL path to the OpenID Connect Userinfo Action (will be prefixed with $urlRulesPrefix)
-     * Note: This setting will only be used if $enableOpenIdConnect and $openIdConnectUserinfoEndpoint are `true`
+     * @var string The URL path to the OpenID Connect Userinfo Action (will be prefixed with $urlRulesPrefix).
+     * Note: This setting will only be used if $enableOpenIdConnect and $openIdConnectUserinfoEndpoint are `true`.
      * @since 1.0.0
      */
     public $openIdConnectUserinfoPath = 'oidc/userinfo';
@@ -269,13 +269,13 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     /**
      * @var string|null Default Time To Live for the access token, used when the Grant Type does not specify it.
      * When `null` default value of 1 hour is used.
-     * The format should be a DateInterval duration (https://www.php.net/manual/en/dateinterval.construct.php)
+     * The format should be a DateInterval duration (https://www.php.net/manual/en/dateinterval.construct.php).
      * @since 1.0.0
      */
     public $defaultAccessTokenTTL = null;
 
     /**
-     * @var bool Should the resource server check for revocation of the access token
+     * @var bool Should the resource server check for revocation of the access token.
      * @since 1.0.0
      */
     public $resourceServerAccessTokenRevocationValidation = true;
@@ -293,7 +293,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     public $enableOpenIdConnectDiscovery = true;
 
     /**
-     * @var bool include `grant_types_supported` in the OpenIdConnect Discovery
+     * @var bool include `grant_types_supported` in the OpenIdConnect Discovery.
      * Note: Since grant types can be specified per client not all clients might support all enabled grant types.
      * @since 1.0.0
      */
@@ -308,7 +308,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     public $openIdConnectDiscoveryServiceDocumentationUrl = null;
 
     /**
-     * @var string|bool A string to a custom userinfo endpoint or `true` to enable the build in endpoint
+     * @var string|bool A string to a custom userinfo endpoint or `true` to enable the build in endpoint.
      * @since 1.0.0
      */
     public $openIdConnectUserinfoEndpoint = true;

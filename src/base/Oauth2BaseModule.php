@@ -122,7 +122,7 @@ use yii\helpers\StringHelper;
  */
 abstract class Oauth2BaseModule extends Module
 {
-    # region Supported grant types. Note: These should match GrantTypeInterface::getIdentifier() for their respective type
+    # region Supported grant types. Note: These should match League\OAuth2\Server\Grant\GrantTypeInterface::getIdentifier() for their respective type
     /**
      * "authorization_code" Grant Type.
      * @since 1.0.0
@@ -149,6 +149,10 @@ abstract class Oauth2BaseModule extends Module
      */
     public const GRANT_TYPE_IDENTIFIER_PASSWORD = 'password';
 
+    /**
+     * Supported grant type identifiers
+     * @since 1.0.0
+     */
     public const GRANT_TYPE_IDENTIFIERS = [
         self::GRANT_TYPE_IDENTIFIER_AUTH_CODE,
         self::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS,
@@ -156,7 +160,6 @@ abstract class Oauth2BaseModule extends Module
         self::GRANT_TYPE_IDENTIFIER_IMPLICIT,
         self::GRANT_TYPE_IDENTIFIER_PASSWORD,
     ];
-
     # endregion Supported grant types
 
     # region Numeric IDs for Supported grant types
