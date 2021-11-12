@@ -62,8 +62,9 @@ return [
         ],
         'db' => [
             'class' => yii\db\Connection::class,
-            'dsn' => getenv('MYSQL_DB_HOST') && getenv('MYSQL_DB_NAME')
-                ? 'mysql:host=' . getenv('MYSQL_DB_HOST') . ';dbname=' . getenv('MYSQL_DB_NAME')
+            'dsn' => getenv('MYSQL_HOST') && getenv('MYSQL_DB_NAME')
+                ? 'mysql:host=' . getenv('MYSQL_HOST') . (getenv('MYSQL_PORT') ? ':' . getenv('MYSQL_PORT') : '')
+                  . ';dbname=' . getenv('MYSQL_DB_NAME')
                 : null,
             'username' => getenv('MYSQL_USER_NAME'),
             'password' => getenv('MYSQL_USER_PASSWORD'),
