@@ -76,7 +76,7 @@ jobs:
         run: composer update $DEFAULT_COMPOSER_FLAGS
 
       - name: Set private and public key permissions
-        id: composer-cache
+        id: set-private-and-public-key-permissions
         run: chmod 660 tests/_config/keys/private.key tests/_config/keys/public.key
 
       - name: Codeception tests
