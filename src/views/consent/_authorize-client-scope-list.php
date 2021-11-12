@@ -19,6 +19,9 @@ foreach ($scopeRequests as $scopeRequest): ?>
         $inputId = Html::getInputId($clientAuthorizationRequest, 'selectedScopeIdentifiers')
                         . '-'
                         . preg_replace('/[^a-z0-9_]/','_',  mb_strtolower($scope->getIdentifier()));
+
+        $authorizationMessage = $scope->getAuthorizationMessage() ?? $scope->getDescription() ?? $scope->getIdentifier();
+
         $field = $form
             ->field($clientAuthorizationRequest, 'selectedScopeIdentifiers[]', [
                 'inputOptions' => [
@@ -28,14 +31,14 @@ foreach ($scopeRequests as $scopeRequest): ?>
         if ($scopeRequest->getIsRequired()) {
             echo $field
                 ->hiddenInput(['value' => $scope->getIdentifier()])
-                ->label(Html::encode($scope->getDescription()));
+                ->label(Html::encode($authorizationMessage));
         } else {
             echo $field
                 ->checkbox([
                     'id' => $inputId,
                     'value' => $scope->getIdentifier(),
                     'checked' => !$scopeRequest->getHasBeenRejectedBefore(),
-                    'label' => Html::encode($scope->getDescription()),
+                    'label' => Html::encode($authorizationMessage),
                     'uncheck' => null,
                 ]);
         }

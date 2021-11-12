@@ -31,6 +31,14 @@ class Oauth2Scope extends base\Oauth2Scope implements Oauth2ScopeInterface
     /**
      * @inheritDoc
      */
+    public function getAuthorizationMessage()
+    {
+        return $this->authorization_message;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getAppliedByDefault()
     {
         return (int)$this->applied_by_default;

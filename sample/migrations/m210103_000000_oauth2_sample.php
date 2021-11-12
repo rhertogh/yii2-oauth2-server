@@ -105,13 +105,15 @@ class m210103_000000_oauth2_sample extends Migration
             [
                 [
                     'user.username.read',
-                    'Read your username',
+                    'Read username',
+                    'See your username',
                     time(),
                     time(),
                 ],
                 [
                     'user.email_address.read',
-                    'Read your email address',
+                    'Read email address',
+                    'See your email address',
                     time(),
                     time(),
                 ],

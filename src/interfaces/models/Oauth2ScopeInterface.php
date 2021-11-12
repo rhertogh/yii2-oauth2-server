@@ -47,10 +47,19 @@ interface Oauth2ScopeInterface extends
 
     /**
      * Get the description for the scope
-     * @return mixed
+     * @return string|null
      * @since 1.0.0
      */
     public function getDescription();
+
+    /**
+     * Get the message to show to the end-user during client authorization for this scope.
+     * If this value is `null`, the description will be used.
+     * @return string|null
+     * @since 1.0.0
+     * @see getDescription()
+     */
+    public function getAuthorizationMessage();
 
     /**
      * Get ClientScope relation for a specific client.

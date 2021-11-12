@@ -97,11 +97,13 @@ class Oauth2ScopeTest extends BaseOauth2ActiveRecordTest
     {
         $scope = new Oauth2Scope([
             'description' => 'test-description',
+            'authorization_message' => 'test-authorization_message',
             'applied_by_default' => 1,
             'required_on_authorization' => 1,
         ]);
 
         $this->assertEquals('test-description', $scope->getDescription());
+        $this->assertEquals('test-authorization_message', $scope->getAuthorizationMessage());
         $this->assertEquals(1, $scope->getAppliedByDefault());
         $this->assertEquals(1, $scope->getRequiredOnAuthorization());
     }
