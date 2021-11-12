@@ -12,7 +12,7 @@ return [
     // ...
     'modules' => [
         'oauth2' => [
-            'class' => 'rhertogh\yii2-oauth2-server\Oauth2Module',
+            'class' => rhertogh\Yii2Oauth2Server\Oauth2Module::class,
             // ...
             'enableOpenIdConnect' => true,
         ],
