@@ -75,6 +75,10 @@ jobs:
       - name: Install dependencies
         run: composer update $DEFAULT_COMPOSER_FLAGS
 
+      - name: Set private and public key permissions
+        id: composer-cache
+        run: chmod 660 tests/_config/keys/private.key tests/_config/keys/public.key
+
       - name: Codeception tests
         run: php vendor/bin/codecept run --steps --colors --debug
 
