@@ -38,7 +38,8 @@ abstract class BaseOauth2BaseModelsTest extends TestCase
 
     public function testRules()
     {
-        $this->assertIsArray((new ($this->getBaseClassWrapper()))->rules());
+        $class = $this->getBaseClassWrapper();
+        $this->assertIsArray((new $class)->rules());
     }
 
     /**
@@ -48,8 +49,9 @@ abstract class BaseOauth2BaseModelsTest extends TestCase
      */
     public function testAttributeLabels($attributeLabels)
     {
+        $class = $this->getBaseClassWrapper();
         /** @var Oauth2BaseActiveRecord $baseModel */
-        $baseModel = new ($this->getBaseClassWrapper());
+        $baseModel = new $class;
 
         $this->assertEquals($attributeLabels, $baseModel->attributeLabels());
     }
@@ -62,8 +64,9 @@ abstract class BaseOauth2BaseModelsTest extends TestCase
      */
     public function testRelations($name, $queryClass, $multiple)
     {
+        $class = $this->getBaseClassWrapper();
         /** @var Oauth2BaseActiveRecord $baseModel */
-        $baseModel = new ($this->getBaseClassWrapper());
+        $baseModel = new $class;
 
         $relationName = 'get' . ucfirst($name);
 
