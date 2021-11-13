@@ -92,7 +92,7 @@ Configuration
                'class' => rhertogh\Yii2Oauth2Server\Oauth2Module::class,
                'identityClass' => app\models\User::class, // The Identity Class of your application (most likely the same as the 'identityClass' of your application's User Component) 
                'privateKey' => 'file:///path/to/private.key', // Path to the private key generated in step 1. Warning: make sure the path is outside the web-root.
-               'publicKey' => 'file:///path/to/public.key', // Path to the public key generated in step 1. Warning: make sure the path is outside the web-root.
+               'publicKey' => 'file:///path/to/public.key', // Path to the public key generated in step 1.
                'privateKeyPassphrase' => getenv('YII2_OAUTH2_SERVER_PRIVATE_KEY_PASSPHRASE'), // The private key passphrase (if used in step 1).
                'codesEncryptionKey' => getenv('YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY'), // The encryption key generated in step 2.
                'storageEncryptionKeys' => [
