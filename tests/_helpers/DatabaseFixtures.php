@@ -49,6 +49,18 @@ class DatabaseFixtures
     protected static function runFixture($driverName, $fixture)
     {
         Yii::$app->db->open();
+
+        // Force committing of any active transactions for PHP < 8 due to pdo->inTransaction() bug after implicit commit
+        if (PHP_MAJOR_VERSION < 8) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $transaction->commit();
+            } catch (\Exception $e) { }
+            try {
+                $transaction->commit();
+            } catch (\Exception $e) { }
+        }
+
         if ($driverName === 'oci') {
             list($drops, $creates) = explode('/* STATEMENTS */', file_get_contents($fixture), 2);
             list($statements, $triggers, $data) = explode('/* TRIGGERS */', $creates, 3);
