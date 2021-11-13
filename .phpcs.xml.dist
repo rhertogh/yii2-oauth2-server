@@ -19,8 +19,10 @@
     <arg value="p"/><!-- Show progress of the run -->
     <arg value="s"/><!-- Show sniff codes in all reports -->
 
+    <!-- PSR-1: Basic Coding Standard (https://www.php-fig.org/psr/psr-1/) -->
     <rule ref="PSR1"/>
 
+    <!-- PSR-12: Extended Coding Style (https://www.php-fig.org/psr/psr-12/) -->
     <rule ref="PSR12">
 
         <!-- Disable warning for property declaration with underscores for now -->
