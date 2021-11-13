@@ -69,6 +69,10 @@
             }
         }
     },
+    "scripts": {
+        "phpcs": "vendor/bin/phpcs",
+        "phpcbf": "vendor/bin/phpcbf"
+    },
     "config": {
         "process-timeout": 1800,
         "fxp-asset": {
