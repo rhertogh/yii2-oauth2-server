@@ -25,11 +25,12 @@ Configuration
 > Most likely your application performs both roles at the same time,
 > this is also the default configuration for the Yii2-Oauth2-Server.
 
-1. ### Generating public and private keys {#generating-pki-keys}
+1. ### Generating public and private keys
    The public/private key pair is used to sign and verify JWTs transmitted.
-   The Authorization Server possesses both the private key to sign tokens and the public key to make it available
-   as JWKS for clients. The Resource Server possesses only the public key to verify the signatures.
 
+   > Note: The private key must be kept secret at all time
+   > (i.e. out of the web-root of the authorization server and out of version control).
+   
     - To generate your own private key run this command on the terminal:  
       `openssl genrsa -out private.key 2048`  
       If you want to provide a passphrase for your private key run this command instead:  
@@ -39,20 +40,35 @@ Configuration
       `openssl rsa -in private.key -pubout -out public.key`  
       or use your passphrase if provided on private key generation:  
       `openssl rsa -in private.key -passin pass:_your_passphrase_ -pubout -out public.key`
-
+    
     - In case you used a passphrase it is advisable to store it in an environment variable.
       For the sample app we use `YII2_OAUTH2_SERVER_PRIVATE_KEY_PASSPHRASE`.
+   
+   #### Distributing the keys:
 
-    - Set the permissions of the .key files `chmod 660 *.key`,
-      change the owner if necessary (e.g. `chown root:www-data`).
+   The Authorization Server possesses both the private key to sign tokens and the public key to make it available
+   as JWKS for clients. The Resource Server possesses only the public key to verify the signatures.  
+   
+   The keys can be provided to the server in two ways:
 
-   The private key must be kept secret (i.e. out of the web-root of the authorization server).
-   The authorization server also requires the public key.  
-   If a passphrase has been used to generate private key it must be provided to the authorization server.
+   * As file:
+     - Set the permissions of the .key files `chmod 660 *.key`,
+       change the owner if necessary (e.g. `chown root:www-data`).
+     - Set the `privateKey` setting to `'file:///path/to/private.key'`, and the
+       `publicKey` to `'file:///path/to/public.key'`.
+       
+   * As environment variables:
+     - Store the content of the `private.key` and `public.key` in environment variables,
+       for example `YII2_OAUTH2_SERVER_PRIVATE_KEY` and `YII2_OAUTH2_SERVER_PUBLIC_KEY` respectively.
+     - Set the `privateKey` setting to `getenv('YII2_OAUTH2_SERVER_PRIVATE_KEY')`, and the
+       `publicKey` to `getenv('YII2_OAUTH2_SERVER_PUBLIC_KEY')`.
+
+   If a passphrase has been used to generate private key it must be provided to the authorization server by setting
+   the `privateKeyPassphrase` setting, e.g `getenv('YII2_OAUTH2_SERVER_PRIVATE_KEY_PASSPHRASE')`. 
 
    The public key should be distributed to any services (e.g. the resource servers) that validate access tokens.
 
-3. ### Generating encryption keys {#generating-encryption-keys}
+2. ### Generating encryption keys
    Encryption keys are used to encrypt authorization and refresh codes.
 
     - To generate 2 keys for the server run the following command in the terminal twice:
@@ -62,7 +78,7 @@ Configuration
       For the sample app we use `YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY`
       and `YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEY`
 
-4. ### Application Configuration
+3. ### Application Configuration
    Once the extension is installed, simply modify your application configuration as follows:
 
    ```php
