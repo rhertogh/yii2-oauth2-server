@@ -49,6 +49,7 @@ class Oauth2DebugConfigActionTest extends TestCase
     public function testGetConfiguration($moduleConfig)
     {
         $ignoreModuleProperties = [
+            'appType', // Irrelevant for the cli actions (always console).
             'controllerNamespace', // Only defined in module to override default Yii behavior.
             'migrationsFileMode', // Only used for local development
             'migrationsFileOwnership', // Only used for local development
