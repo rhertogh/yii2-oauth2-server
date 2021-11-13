@@ -85,8 +85,8 @@ jobs:
           cli-args: "--format=php-clover tests/_output/coverage.xml"
         continue-on-error: true # if is fork
 
-      - name: Code coverage (phar)
-        run: |
-          wget https://scrutinizer-ci.com/ocular.phar
-          php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml
-        continue-on-error: true # if is fork
+#      - name: Code coverage (phar)
+#        run: |
+#          wget https://scrutinizer-ci.com/ocular.phar
+#          php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml
+#        continue-on-error: true # if is fork
