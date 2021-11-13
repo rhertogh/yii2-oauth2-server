@@ -16,6 +16,7 @@ DROP TABLE IF EXISTS `oauth2_access_token` CASCADE;
 DROP TABLE IF EXISTS `oauth2_client` CASCADE;
 DROP TABLE IF EXISTS `oauth2_scope` CASCADE;
 
+DROP TABLE IF EXISTS `user_identity_link` CASCADE; # in case the sample migrations were run against the test database
 DROP TABLE IF EXISTS `user` CASCADE;
 
 CREATE TABLE `user`
