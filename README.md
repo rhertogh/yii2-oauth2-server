@@ -38,15 +38,16 @@ Installation
 
 Full installation details can be found in the docs under [Installing the Yii2-Oauth2-Server](docs/guide/start-installation.md)
 
+
 Documentation
 -------------
 There are two main sections in the documentation
 * [Usage Guide](docs/guide/README.md) for using the Yii2-Oauth2-Server in your own project.
 * [Development Guide](docs/internals/README.md) for contributing to the Yii2-Oauth2-Server.
 
+
 Contributing
 ------------
-
 The framework is [Open Source](LICENSE.md). You can help by:
 
 - [Report an issue](docs/internals/report-an-issue.md)
@@ -55,14 +56,19 @@ The framework is [Open Source](LICENSE.md). You can help by:
 
 Reporting Security issues
 -------------------------
-
 In case you found a security issue please [contact us directly](
 https://docs.google.com/forms/d/e/1FAIpQLSfiJD1loIfsPtdLi6e0d7cyqtElXOrX_mdVAF6cTJJRDy1JOA/viewform)
 DO NOT use the issue tracker or discuss it in the public forum as it will cause more damage than help.
 
+
+Versioning & Change Log
+-----------------------
+The Yii2-Oauth2-Server follows [Semantic Versioning 2.0](https://semver.org/spec/v2.0.0.html)  
+Please see the [Change Log](CHANGELOG.md) for more information on version history.
+
+
 Directory Structure
 -------------------
-
 ```
 docker/     Docker container definition
 docs/       Documentation (for both usage and development)
@@ -71,16 +77,14 @@ src/        Yii2-Oauth2-Server source
 tests/      Codeception unit and functional tests
 ```
 
-Change Log
-----------
-Please see the [Change Log](CHANGELOG.md) for more information on version history.
 
 Credits
 -------
 - [Rutger Hertogh](https://github.com/rhertogh)
 - [All Contributors](https://github.com/rhertogh/yii2-oauth2-server/graphs/contributors)
 
-## License
 
+License
+-------
 The Yii2-Oauth2-Server is free software. It is released under the terms of the Apache License.
 Please see [`LICENSE.md`](LICENSE.md) for more information.
