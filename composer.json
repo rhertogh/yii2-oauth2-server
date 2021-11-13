@@ -41,7 +41,8 @@
         "web-token/jwt-signature": "~2.2.11",
         "web-token/jwt-signature-algorithm-hmac": "~2.2.11",
         "web-token/jwt-signature-algorithm-ecdsa": "~2.2.11",
-        "web-token/jwt-signature-algorithm-rsa": "~2.2.11"
+        "web-token/jwt-signature-algorithm-rsa": "~2.2.11",
+        "squizlabs/php_codesniffer": "3.*"
     },
     "autoload": {
         "psr-4": {
