@@ -39,7 +39,7 @@ abstract class Oauth2BaseScopeAuthorizationRequest extends Component implements 
     /**
      * @inheritDoc
      */
-    public function setScope(Oauth2ScopeInterface $scope): static
+    public function setScope(Oauth2ScopeInterface $scope)
     {
         $this->_scope = $scope;
         return $this;
