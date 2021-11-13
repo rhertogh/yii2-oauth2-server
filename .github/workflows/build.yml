@@ -66,7 +66,7 @@ jobs:
         run: chmod 660 tests/_config/keys/private.key tests/_config/keys/public.key
 
       - name: Codeception tests
-        run: php vendor/bin/codecept run --steps --colors --debug
+        run: php vendor/bin/codecept run --steps --colors --debug --coverage-xml
         env:
           # WARNING!
           # These variables are provided for testing use only. NEVER use them for other purposes!
@@ -79,8 +79,14 @@ jobs:
           MYSQL_USER_NAME: Yii2Oauth2ServerTest
           MYSQL_USER_PASSWORD: password
 
-      - name: Code coverage
-        run: |
-          wget https://scrutinizer-ci.com/ocular.phar
-          php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+      - name: Upload Scrutinizer coverage
+        uses: sudo-bot/action-scrutinizer@latest
+        with:
+          cli-args: "--format=php-clover tests/_output/coverage.xml"
         continue-on-error: true # if is fork
+
+#      - name: Code coverage
+#        run: |
+#          wget https://scrutinizer-ci.com/ocular.phar
+#          php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+#        continue-on-error: true # if is fork
