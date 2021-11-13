@@ -13,6 +13,7 @@
     <h1 align="center">Oauth2 + OpenID Connect Extension for Yii 2</h1>
     <br>
 </p>
+
 [![build](https://github.com/rhertogh/yii2-oauth2-server/actions/workflows/build.yml/badge.svg)](https://github.com/rhertogh/yii2-oauth2-server/actions/workflows/build.yml)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/rhertogh/yii2-oauth2-server/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/rhertogh/yii2-oauth2-server/?branch=master)
 

@@ -66,7 +66,7 @@ jobs:
         run: chmod 660 tests/_config/keys/private.key tests/_config/keys/public.key
 
       - name: Codeception tests
-        run: php vendor/bin/codecept run --steps --colors --debug --coverage-xml
+        run: php vendor/bin/codecept run --steps --colors --coverage-xml
         env:
           # WARNING!
           # These variables are provided for testing use only. NEVER use them for other purposes!
