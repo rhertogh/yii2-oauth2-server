@@ -34,7 +34,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        php: ['7.4', '8.0']
+        php: ['7.4', '8.0', '8.1']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -79,14 +79,14 @@ jobs:
           MYSQL_USER_NAME: Yii2Oauth2ServerTest
           MYSQL_USER_PASSWORD: password
 
-      - name: Upload Scrutinizer coverage
-        uses: sudo-bot/action-scrutinizer@latest
-        with:
-          cli-args: "--format=php-clover tests/_output/coverage.xml"
-        continue-on-error: true # if is fork
-
-#      - name: Code coverage (phar)
-#        run: |
-#          wget https://scrutinizer-ci.com/ocular.phar
-#          php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml
+#      - name: Upload Scrutinizer coverage
+#        uses: sudo-bot/action-scrutinizer@latest
+#        with:
+#          cli-args: "--format=php-clover tests/_output/coverage.xml"
 #        continue-on-error: true # if is fork
+
+      - name: Code coverage (phar)
+        run: |
+          wget https://scrutinizer-ci.com/ocular.phar
+          php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml
+        continue-on-error: true # if is fork
