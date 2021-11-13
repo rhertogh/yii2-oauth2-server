@@ -14,8 +14,9 @@ class Oauth2EnabledQueryTraitTest extends TestCase
     public function testEnabled()
     {
         $query = new class extends Query {
-            public $modelClass = null;
             use Oauth2EnabledQueryTrait;
+
+            public $modelClass = null;
         };
 
         $query->modelClass = get_class(new class {
@@ -32,8 +33,9 @@ class Oauth2EnabledQueryTraitTest extends TestCase
     public function testEnabledFrom()
     {
         $query = new class extends Query {
-            public $modelClass = null;
             use Oauth2EnabledQueryTrait;
+
+            public $modelClass = null;
         };
 
         $query->from = ['test_alias' => 'test'];

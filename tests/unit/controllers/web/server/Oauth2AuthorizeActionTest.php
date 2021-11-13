@@ -59,6 +59,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         $controller = new Controller('test', $module);
         $accessTokenAction = new Oauth2AuthorizeAction('test', $controller);
 
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         Yii::$app->request->setQueryParams([
             'response_type' => 'code',
             'client_id' => 'test-client-type-auth-code-valid', // Note, using `confidential` client, public clients always require a code challenge
@@ -67,6 +68,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
             'scope' => 'user.username.read user.email_address.read',
             'redirect_uri' => 'http://localhost/redirect_uri/',
         ]);
+        // phpcs:enable Generic.Files.LineLength.TooLong
 
         $response = $accessTokenAction->run();
         $this->assertEquals(HttpCode::BAD_REQUEST, $response->statusCode);
@@ -260,7 +262,10 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(HttpCode::FOUND, $response->statusCode);
-        $this->assertEquals('http://localhost/redirect_uri/?state=12345&error=access_denied', $response->headers->get('location'));
+        $this->assertEquals(
+            'http://localhost/redirect_uri/?state=12345&error=access_denied',
+            $response->headers->get('location')
+        );
     }
 
     public function testRunAuthenticatedUserCompletedClientAuthorizationRequestAuthorizationApproved()
@@ -287,6 +292,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
             'code_challenge_method' => 'S256',
         ]);
 
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         $clientAuthorizationRequest = new Oauth2ClientAuthorizationRequest([
             'module' => $module,
             'clientIdentifier' => $clientIdentifier,
@@ -299,6 +305,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
             'completed' => true,
             'state' => $state,
         ]);
+        // phpcs:enable Generic.Files.LineLength.TooLong
         $module->setClientAuthReqSession($clientAuthorizationRequest);
 
         $response = $accessTokenAction->run($clientAuthorizationRequest->getRequestId());
@@ -462,7 +469,8 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         $this->assertEquals(HttpCode::INTERNAL_SERVER_ERROR, $response->statusCode);
         $this->assertEquals('Invalid Configuration', $response->data['error']);
         $this->assertStringContainsString(
-            'OpenId Connect is enabled but user component does not implement ' . Oauth2OidcUserComponentInterface::class,
+            'OpenId Connect is enabled but user component does not implement '
+                . Oauth2OidcUserComponentInterface::class,
             $response->data['error_description']
         );
     }
@@ -670,7 +678,10 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(HttpCode::FOUND, $response->statusCode);
-        $this->assertEquals('http://localhost/redirect_uri/?error=account_selection_required', $response->headers->get('location'));
+        $this->assertEquals(
+            'http://localhost/redirect_uri/?error=account_selection_required',
+            $response->headers->get('location')
+        );
     }
 
     /**
@@ -782,7 +793,10 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(HttpCode::FOUND, $response->statusCode);
-        $this->assertEquals('http://localhost/redirect_uri/?error=consent_required', $response->headers->get('location'));
+        $this->assertEquals(
+            'http://localhost/redirect_uri/?error=consent_required',
+            $response->headers->get('location')
+        );
     }
 
     public function testOidcRequestParamNotSupported()
@@ -799,7 +813,10 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         $response = $accessTokenAction->run();
         $this->assertEquals(HttpCode::BAD_REQUEST, $response->statusCode);
         $this->assertEquals('request_not_supported', $response->data['error']);
-        $this->assertEquals('The use of the "request" parameter is not supported Try to send the request as query parameters.', $response->data['error_description']);
+        $this->assertEquals(
+            'The use of the "request" parameter is not supported Try to send the request as query parameters.',
+            $response->data['error_description']
+        );
     }
 
     public function testOidcRequestUriParamNotSupported()
@@ -816,7 +833,10 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         $response = $accessTokenAction->run();
         $this->assertEquals(HttpCode::BAD_REQUEST, $response->statusCode);
         $this->assertEquals('request_uri_not_supported', $response->data['error']);
-        $this->assertEquals('The use of the "request_uri" parameter is not supported Try to send the request as query parameters.', $response->data['error_description']);
+        $this->assertEquals(
+            'The use of the "request_uri" parameter is not supported Try to send the request as query parameters.',
+            $response->data['error_description']
+        );
     }
 
     public function testPromptNoneInvalid()

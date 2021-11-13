@@ -36,7 +36,10 @@ class Psr7HelperTest extends TestCase
 
         $this->assertEquals($method, $psr7Request->getMethod());
         $this->assertEquals('http://' . $server . $path, $psr7Request->getUri());
-        $this->assertEquals($headers, ArrayHelper::merge($psr7Request->getHeaders(), ['Host' => new UnsetArrayValue()]));
+        $this->assertEquals(
+            $headers,
+            ArrayHelper::merge($psr7Request->getHeaders(), ['Host' => new UnsetArrayValue()])
+        );
         $this->assertEquals($rawBody, $psr7Request->getBody());
         $this->assertEquals($bodyParams, $psr7Request->getParsedBody());
     }

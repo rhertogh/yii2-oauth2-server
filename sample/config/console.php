@@ -8,7 +8,7 @@ use sample\dev\giiant\generators\model\Generator as ModelGenerator;
 use yii\console\controllers\MigrateController;
 use yii\helpers\ArrayHelper;
 
-// phpcs:disable Generic.Files.LineLength.TooLong  -- Sample documentation
+// phpcs:disable Generic.Files.LineLength.TooLong -- Sample documentation
 return ArrayHelper::merge(require('main.php'), [
     'bootstrap' => [
         'gii',

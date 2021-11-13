@@ -33,6 +33,7 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $authorizationStatus = Oauth2ClientAuthorizationRequest::AUTHORIZATION_APPROVED;
         $isCompleted = true;
 
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_requestId', $requestId);
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_clientIdentifier', $clientIdentifier);
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_userIdentifier', $userIdentifier);
@@ -58,6 +59,7 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $this->assertEquals($selectedScopeIdentifiers, $this->getInaccessibleProperty($clientAuthorizationRequest, '_selectedScopeIdentifiers'));
         $this->assertEquals($authorizationStatus, $this->getInaccessibleProperty($clientAuthorizationRequest, '_authorizationStatus'));
         $this->assertEquals($isCompleted, $this->getInaccessibleProperty($clientAuthorizationRequest, '_isCompleted'));
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     public function testInitRandomRequestId()
@@ -93,7 +95,10 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $clientAuthorizationRequest = $this->getMockClientAuthorizationRequest();
 
         $this->assertNull($clientAuthorizationRequest->getState());
-        $this->assertInstanceOf(Oauth2ClientAuthorizationRequestInterface::class, $clientAuthorizationRequest->setState($state));
+        $this->assertInstanceOf(
+            Oauth2ClientAuthorizationRequestInterface::class,
+            $clientAuthorizationRequest->setState($state)
+        );
         $this->assertEquals($state, $clientAuthorizationRequest->getState());
     }
 
@@ -115,6 +120,7 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $clientAuthorizationRequest = $this->getMockClientAuthorizationRequest();
         $clientAuthorizationRequest->setModule(Oauth2Module::getInstance());
 
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         $scopeAuthorizationRequests = [new Oauth2ScopeAuthorizationRequest()];
         $scopesAppliedByDefaultAutomatically = [new Oauth2Scope()];
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests', $scopeAuthorizationRequests);
@@ -136,6 +142,7 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $clientAuthorizationRequest->setClient($customClient);
         $this->assertEquals($customClient, $clientAuthorizationRequest->getClient());
         $this->assertEquals($customClientIdentifier, $this->getInaccessibleProperty($clientAuthorizationRequest, '_clientIdentifier'));
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     public function testGetClientWithoutIdentifier()
@@ -156,6 +163,7 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $clientAuthorizationRequest = $this->getMockClientAuthorizationRequest();
         $clientAuthorizationRequest->setModule(Oauth2Module::getInstance());
 
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         $scopeAuthorizationRequests = [new Oauth2ScopeAuthorizationRequest()];
         $scopesAppliedByDefaultAutomatically = [new Oauth2Scope()];
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests', $scopeAuthorizationRequests);
@@ -167,6 +175,7 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $this->assertNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests'));
         $this->assertNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultAutomatically'));
         $this->assertEquals($user, $clientAuthorizationRequest->getUserIdentity());
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     public function testSetWasUserAuthenticatedBeforeRequest()
@@ -174,7 +183,10 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $clientAuthorizationRequest = $this->getMockClientAuthorizationRequest();
 
         $this->assertFalse($clientAuthorizationRequest->wasUserAuthenticatedBeforeRequest());
-        $this->assertInstanceOf(Oauth2ClientAuthorizationRequestInterface::class, $clientAuthorizationRequest->setUserAuthenticatedBeforeRequest(true));
+        $this->assertInstanceOf(
+            Oauth2ClientAuthorizationRequestInterface::class,
+            $clientAuthorizationRequest->setUserAuthenticatedBeforeRequest(true)
+        );
         $this->assertTrue($clientAuthorizationRequest->wasUserAuthenticatedBeforeRequest());
     }
 
@@ -183,7 +195,10 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $clientAuthorizationRequest = $this->getMockClientAuthorizationRequest();
 
         $this->assertFalse($clientAuthorizationRequest->wasUserAthenticatedDuringRequest());
-        $this->assertInstanceOf(Oauth2ClientAuthorizationRequestInterface::class, $clientAuthorizationRequest->setUserAuthenticatedDuringRequest(true));
+        $this->assertInstanceOf(
+            Oauth2ClientAuthorizationRequestInterface::class,
+            $clientAuthorizationRequest->setUserAuthenticatedDuringRequest(true)
+        );
         $this->assertTrue($clientAuthorizationRequest->wasUserAthenticatedDuringRequest());
     }
 
@@ -194,6 +209,7 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $requestedScopeIdentifiers = ['scope1', 'scope2'];
         $clientAuthorizationRequest = $this->getMockClientAuthorizationRequest();
 
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         $scopeAuthorizationRequests = [new Oauth2ScopeAuthorizationRequest()];
         $scopesAppliedByDefaultAutomatically = [new Oauth2Scope()];
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests', $scopeAuthorizationRequests);
@@ -205,6 +221,7 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $this->assertEquals($requestedScopeIdentifiers, $clientAuthorizationRequest->getRequestedScopeIdentifiers());
         $this->assertNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests'));
         $this->assertNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultAutomatically'));
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     public function testIsClientIdentifiable()
@@ -367,7 +384,9 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $clientAuthorizationRequest->setRequestedScopeIdentifiers($requestedScopes);
         $clientAuthorizationRequest->setUserIdentity($user);
         $clientAuthorizationRequest->setSelectedScopeIdentifiers($selectedScopes);
-        $clientAuthorizationRequest->setAuthorizationStatus(Oauth2ClientAuthorizationRequest::AUTHORIZATION_APPROVED);
+        $clientAuthorizationRequest->setAuthorizationStatus(
+            Oauth2ClientAuthorizationRequest::AUTHORIZATION_APPROVED
+        );
 
         $clientAuthorizationRequest->processAuthorization();
 
@@ -427,7 +446,9 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
 
         $clientAuthorizationRequest->setClientIdentifier('test-client-type-auth-code-valid');
         $clientAuthorizationRequest->setUserIdentity($user);
-        $clientAuthorizationRequest->setAuthorizationStatus(Oauth2ClientAuthorizationRequest::AUTHORIZATION_DENIED);
+        $clientAuthorizationRequest->setAuthorizationStatus(
+            Oauth2ClientAuthorizationRequest::AUTHORIZATION_DENIED
+        );
 
         $this->assertTrue(
             Oauth2UserClient::find()

@@ -17,6 +17,7 @@ class Oauth2EncryptorTest extends TestCase
         $this->mockConsoleApplication();
         $encryptor = new Oauth2Encryptor([
             'keys' => [
+                // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
                 'test' => 'def0000068fcf7a02625e841c263b227bb0ee04a42cb39b668a81e9b151e58f58d44fa15655e138a397b515482bea2688bd479647d41d084b82932215938d702f4e3b15c'
             ],
             'defaultKeyName' => 'test',
@@ -33,7 +34,9 @@ class Oauth2EncryptorTest extends TestCase
     public function testSetKeyInvalidKey()
     {
         $this->mockConsoleApplication();
-        $this->expectExceptionMessage('Encryption key "test" is malformed: Encoding::hexToBin() input is not a hex string.');
+        $this->expectExceptionMessage(
+            'Encryption key "test" is malformed: Encoding::hexToBin() input is not a hex string.'
+        );
         new Oauth2Encryptor([
             'keys' => [
                 'test' => 'malformed'
@@ -47,6 +50,7 @@ class Oauth2EncryptorTest extends TestCase
         $this->mockConsoleApplication([
             'container' => [
                 'definitions' => [
+                    // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
                     Oauth2EncryptionKeyFactoryInterface::class => new class () implements Oauth2EncryptionKeyFactoryInterface {
                         public function createFromAsciiSafeString($keyString, $doNotTrim = null)
                         {
@@ -60,6 +64,7 @@ class Oauth2EncryptorTest extends TestCase
         $this->expectExceptionMessage('Could not instantiate key "test": test message');
         new Oauth2Encryptor([
             'keys' => [
+                // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
                 'test' => 'def0000068fcf7a02625e841c263b227bb0ee04a42cb39b668a81e9b151e58f58d44fa15655e138a397b515482bea2688bd479647d41d084b82932215938d702f4e3b15c'
             ],
         ]);
@@ -86,6 +91,7 @@ class Oauth2EncryptorTest extends TestCase
         $this->mockConsoleApplication();
         $encryptor = new Oauth2Encryptor([
             'keys' => [
+                // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
                 'test' => 'def0000068fcf7a02625e841c263b227bb0ee04a42cb39b668a81e9b151e58f58d44fa15655e138a397b515482bea2688bd479647d41d084b82932215938d702f4e3b15c',
             ],
             'defaultKeyName' => 'test',
@@ -101,6 +107,7 @@ class Oauth2EncryptorTest extends TestCase
         $this->mockConsoleApplication();
         $encryptor = new Oauth2Encryptor([
             'keys' => [
+                // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
                 'test::' => 'def0000068fcf7a02625e841c263b227bb0ee04a42cb39b668a81e9b151e58f58d44fa15655e138a397b515482bea2688bd479647d41d084b82932215938d702f4e3b15c',
             ],
             'defaultKeyName' => 'test::',

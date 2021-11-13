@@ -25,7 +25,8 @@ class PasswordGrantCest extends BaseSimpleGrantCest
     {
         parent::_before($I);
 
-        // Using TestUserModelPasswordGrant as definition for the Oauth2Module's identityClass in order to support the password grant
+        // Using TestUserModelPasswordGrant as definition for the Oauth2Module's identity class
+        // in order to support the password grant.
         Oauth2Module::getInstance()->identityClass = TestUserModelPasswordGrant::class;
     }
 

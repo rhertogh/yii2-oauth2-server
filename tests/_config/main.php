@@ -5,6 +5,7 @@ use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\web\Request;
 use Yii2Oauth2ServerTests\_helpers\TestUserModel;
 
+// phpcs:disable Generic.Files.LineLength.TooLong -- Sample documentation
 return [
 
     'id' => 'testapp',

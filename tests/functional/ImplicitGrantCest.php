@@ -66,7 +66,10 @@ class ImplicitGrantCest extends BaseGrantCest
         $I->assertArrayHasKey('expires_in', $fragmentParts);
         $I->assertArrayHasKey('state', $fragmentParts);
         $I->assertEquals($expectedState, $fragmentParts['state']);
-        $I->assertTrue(strlen($fragmentParts['access_token']) > 100, 'Expected an `access_token` with at leas 100 characters.');
+        $I->assertTrue(
+            strlen($fragmentParts['access_token']) > 100,
+            'Expected an `access_token` with at leas 100 characters.'
+        );
         # endregion
 
         # region make authenticated request

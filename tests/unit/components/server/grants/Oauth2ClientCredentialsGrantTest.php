@@ -103,7 +103,9 @@ class Oauth2ClientCredentialsGrantTest extends DatabaseTestCase
                 'expectAccessToken' => false,
                 'expectUserIdentifier' => null,
                 'expectedScopeIdentifiers' => [],
-                'expectExceptionMessage' => 'User id "124" is set as default "client credentials grant user" for client "test-client-type-client-credentials-valid" but the client is not authorized for this user.',
+                'expectExceptionMessage' =>
+                    'User id "124" is set as default "client credentials grant user" for client'
+                    . ' "test-client-type-client-credentials-valid" but the client is not authorized for this user.',
             ],
             [// clientCredentialsGrantUserId unauthorized scope
                 'moduleConfig' => [],
@@ -126,9 +128,12 @@ class Oauth2ClientCredentialsGrantTest extends DatabaseTestCase
                 'expectAccessToken' => false,
                 'expectUserIdentifier' => null,
                 'expectedScopeIdentifiers' => [],
-                'expectExceptionMessage' => 'User id "123" is set as default "client credentials grant user" for client "test-client-type-client-credentials-valid" but the following scopes are not approved: user.email_address.read',
+                'expectExceptionMessage' => 'User id "123" is set as default "client credentials grant user"'
+                    . ' for client "test-client-type-client-credentials-valid"'
+                    . ' but the following scopes are not approved: user.email_address.read',
             ],
-            [// clientCredentialsGrantUserId unauthorized scope but not active for the client (should silently reject scope)
+            [// clientCredentialsGrantUserId unauthorized scope but not active for the client
+             //(should silently reject scope)
                 'moduleConfig' => [],
                 'clientIdentifier' => 'test-client-type-client-credentials-valid',
                 'clientCredentialsGrantUserId' => 123,

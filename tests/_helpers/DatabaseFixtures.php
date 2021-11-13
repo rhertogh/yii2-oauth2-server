@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 
 class DatabaseFixtures
 {
-    static $params = null;
+    public static $params = null;
 
     public static function createDbFixtures(
         $driverName,
@@ -65,7 +65,12 @@ class DatabaseFixtures
         if ($driverName === 'oci') {
             list($drops, $creates) = explode('/* STATEMENTS */', file_get_contents($fixture), 2);
             list($statements, $triggers, $data) = explode('/* TRIGGERS */', $creates, 3);
-            $lines = array_merge(explode('--', $drops), explode(';', $statements), explode('/', $triggers), explode(';', $data));
+            $lines = array_merge(
+                explode('--', $drops),
+                explode(';', $statements),
+                explode('/', $triggers),
+                explode(';', $data)
+            );
         } else {
             $lines = explode(';', file_get_contents($fixture));
         }

@@ -28,7 +28,7 @@ class ClientTokenProvider extends GenericProvider
 
 
     # region PKCE https://github.com/thephpleague/oauth2-client/pull/901
-    const PKCE_METHOD_S256 = 'S256';
+    public const PKCE_METHOD_S256 = 'S256';
     protected $pkceCode;
     public $pkceMethod = null;
     public function setPkceCode($pkceCode)

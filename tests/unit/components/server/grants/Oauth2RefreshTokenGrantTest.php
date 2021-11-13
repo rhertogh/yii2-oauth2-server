@@ -21,8 +21,14 @@ class Oauth2RefreshTokenGrantTest extends DatabaseTestCase
     /**
      * @dataProvider respondToAccessTokenRequestProvider
      */
-    public function testRespondToAccessTokenRequest($moduleConfig, $scopes, $userId, $userHasActiveSession, $expectTokenResponse, $expectExceptionMessage)
-    {
+    public function testRespondToAccessTokenRequest(
+        $moduleConfig,
+        $scopes,
+        $userId,
+        $userHasActiveSession,
+        $expectTokenResponse,
+        $expectExceptionMessage
+    ) {
         $this->mockWebApplication([
             'modules' => [
                 'oauth2' => $moduleConfig,
@@ -34,8 +40,9 @@ class Oauth2RefreshTokenGrantTest extends DatabaseTestCase
         TestUserModelOidc::$hasActiveSession = $userHasActiveSession;
 
         $refreshTokenGrant = new class ($module->getRefreshTokenRepository()) extends Oauth2RefreshTokenGrant {
-            static $scopes;
-            static $userId;
+            public static $scopes;
+            public static $userId;
+
             protected function validateClient(ServerRequestInterface $request)
             {
                 return new Oauth2Client([
@@ -179,7 +186,9 @@ class Oauth2RefreshTokenGrantTest extends DatabaseTestCase
                 'userId' => 123,
                 'userHasActiveSession' => true,
                 'expectTokenResponse' => false,
-                'expectExceptionMessage' => 'In order to support OpenId Connect Refresh Tokens without offline_access scope ' . TestUserModel::class . ' must implement ' . Oauth2OidcUserSessionStatusInterface::class,
+                'expectExceptionMessage' =>
+                    'In order to support OpenId Connect Refresh Tokens without offline_access scope '
+                        . TestUserModel::class . ' must implement ' . Oauth2OidcUserSessionStatusInterface::class,
             ],
         ];
     }

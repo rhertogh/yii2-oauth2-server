@@ -25,8 +25,9 @@
     <!-- PSR-12: Extended Coding Style (https://www.php-fig.org/psr/psr-12/) -->
     <rule ref="PSR12">
 
-        <!-- Disable warning for property declaration with underscores for now -->
+        <!-- Disable warning for property and method declaration with underscores for now -->
         <exclude name="PSR2.Classes.PropertyDeclaration.Underscore"/>
+        <exclude name="PSR2.Methods.MethodDeclaration.Underscore"/>
 
     </rule>
 

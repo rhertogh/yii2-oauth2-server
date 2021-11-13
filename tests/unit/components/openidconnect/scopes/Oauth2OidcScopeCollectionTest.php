@@ -60,6 +60,8 @@ class Oauth2OidcScopeCollectionTest extends TestCase
             ],
         ];
 
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+
         $this->assertEquals($collection, $collection->setOidcScopes($scopes));
 
         // Ensure we still got the openid scope
@@ -121,6 +123,8 @@ class Oauth2OidcScopeCollectionTest extends TestCase
         $this->assertEquals($collection, $collection->clearOidcScopes());
         $this->assertCount(1, $collection->getOidcScopes());
         $this->assertTrue($collection->hasOidcScope('openid'));
+
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     public function testAddOidcScopesInvalidArrayType()
@@ -146,10 +150,14 @@ class Oauth2OidcScopeCollectionTest extends TestCase
             'identifier' => 'test-scope2',
         ]);
 
-        $this->assertEquals($collection, $collection->addOidcScope(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_EMAIL));
-        $this->assertEquals($collection, $collection->addOidcScope([
-            'identifier' => 'test-scope-array',
-        ]));
+        $this->assertEquals(
+            $collection,
+            $collection->addOidcScope(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_EMAIL)
+        );
+        $this->assertEquals(
+            $collection,
+            $collection->addOidcScope(['identifier' => 'test-scope-array'])
+        );
         $this->assertEquals($collection, $collection->addOidcScope($scope1));
         $this->assertEquals($collection, $collection->addOidcScope($scope2));
 
@@ -181,7 +189,10 @@ class Oauth2OidcScopeCollectionTest extends TestCase
     {
         $collection = new Oauth2OidcScopeCollection();
 
-        $this->expectExceptionMessage('Invalid $scopeName "non-existing", it must be an OpenID Connect default claims scope (openid, profile, email, address, phone).');
+        $this->expectExceptionMessage(
+            'Invalid $scopeName "non-existing", it must be an OpenID Connect default claims scope'
+                . ' (openid, profile, email, address, phone).'
+        );
         $collection->getDefaultOidcScope('non-existing');
     }
 
@@ -224,8 +235,17 @@ class Oauth2OidcScopeCollectionTest extends TestCase
         ]);
 
         $this->assertEquals([], $collection->getFilteredClaims([]));
-        $this->assertEquals(['1.1', '1.2'], array_column($collection->getFilteredClaims(['scope1']), 'identifier'));
-        $this->assertEquals(['1.1', '1.2', '2.1', '2.2'], array_column($collection->getFilteredClaims(['scope1', 'scope2']), 'identifier'));
-        $this->assertEquals(['2.1', '2.2'], array_column($collection->getFilteredClaims(['scope2']), 'identifier'));
+        $this->assertEquals(
+            ['1.1', '1.2'],
+            array_column($collection->getFilteredClaims(['scope1']), 'identifier')
+        );
+        $this->assertEquals(
+            ['1.1', '1.2', '2.1', '2.2'],
+            array_column($collection->getFilteredClaims(['scope1', 'scope2']), 'identifier')
+        );
+        $this->assertEquals(
+            ['2.1', '2.2'],
+            array_column($collection->getFilteredClaims(['scope2']), 'identifier')
+        );
     }
 }

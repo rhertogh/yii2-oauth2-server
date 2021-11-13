@@ -72,10 +72,16 @@ class Oauth2BaseClientAuthorizationRequestTest extends TestCase
         $this->setInaccessibleProperty($baseClientAuthorizationRequest, '_isCompleted', true);
         $baseClientAuthorizationRequest->setUserIdentity($user);
         $this->assertEquals($user, $baseClientAuthorizationRequest->getUserIdentity());
-        $this->assertEquals($user->getId(), $this->getInaccessibleProperty($baseClientAuthorizationRequest, '_userIdentifier'));
+        $this->assertEquals(
+            $user->getId(),
+            $this->getInaccessibleProperty($baseClientAuthorizationRequest, '_userIdentifier')
+        );
         $this->assertFalse($baseClientAuthorizationRequest->isCompleted());
 
-        $this->assertEquals(123, $this->callInaccessibleMethod($baseClientAuthorizationRequest, 'getUserIdentifier'));
+        $this->assertEquals(
+            123,
+            $this->callInaccessibleMethod($baseClientAuthorizationRequest, 'getUserIdentifier')
+        );
     }
 
     public function testSetUserIdentifier()
@@ -87,10 +93,18 @@ class Oauth2BaseClientAuthorizationRequestTest extends TestCase
         $baseClientAuthorizationRequest->setModule($module);
         $baseClientAuthorizationRequest->setUserIdentity($user);
 
-        $this->assertEquals($user, $this->getInaccessibleProperty($baseClientAuthorizationRequest, '_userIdentity'));
+        $this->assertEquals(
+            $user,
+            $this->getInaccessibleProperty($baseClientAuthorizationRequest, '_userIdentity')
+        );
         $this->callInaccessibleMethod($baseClientAuthorizationRequest, 'setUserIdentifier', [124]);
-        $this->assertNull($this->getInaccessibleProperty($baseClientAuthorizationRequest, '_userIdentity'));
-        $this->assertInstanceOf(Oauth2UserInterface::class, $baseClientAuthorizationRequest->getUserIdentity());
+        $this->assertNull(
+            $this->getInaccessibleProperty($baseClientAuthorizationRequest, '_userIdentity')
+        );
+        $this->assertInstanceOf(
+            Oauth2UserInterface::class,
+            $baseClientAuthorizationRequest->getUserIdentity()
+        );
         $this->assertEquals(124, $baseClientAuthorizationRequest->getUserIdentity()->getIdentifier());
     }
 
@@ -119,7 +133,10 @@ class Oauth2BaseClientAuthorizationRequestTest extends TestCase
 
         $this->setInaccessibleProperty($baseClientAuthorizationRequest, '_isCompleted', true);
         $baseClientAuthorizationRequest->setRequestedScopeIdentifiers($requestedScopeIdentifiers);
-        $this->assertEquals($requestedScopeIdentifiers, $baseClientAuthorizationRequest->getRequestedScopeIdentifiers());
+        $this->assertEquals(
+            $requestedScopeIdentifiers,
+            $baseClientAuthorizationRequest->getRequestedScopeIdentifiers()
+        );
         $this->assertFalse($baseClientAuthorizationRequest->isCompleted());
     }
 
@@ -148,9 +165,13 @@ class Oauth2BaseClientAuthorizationRequestTest extends TestCase
         $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
 
         $this->assertFalse($baseClientAuthorizationRequest->isApproved());
-        $baseClientAuthorizationRequest->setAuthorizationStatus(Oauth2BaseClientAuthorizationRequest::AUTHORIZATION_APPROVED);
+        $baseClientAuthorizationRequest->setAuthorizationStatus(
+            Oauth2BaseClientAuthorizationRequest::AUTHORIZATION_APPROVED
+        );
         $this->assertTrue($baseClientAuthorizationRequest->isApproved());
-        $baseClientAuthorizationRequest->setAuthorizationStatus(Oauth2BaseClientAuthorizationRequest::AUTHORIZATION_DENIED);
+        $baseClientAuthorizationRequest->setAuthorizationStatus(
+            Oauth2BaseClientAuthorizationRequest::AUTHORIZATION_DENIED
+        );
         $this->assertFalse($baseClientAuthorizationRequest->isApproved());
         $baseClientAuthorizationRequest->setAuthorizationStatus(null);
         $this->assertFalse($baseClientAuthorizationRequest->isApproved());

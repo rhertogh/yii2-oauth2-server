@@ -31,6 +31,7 @@ class UrlHelperTest extends TestCase
      */
     public function addQueryParamsProvider()
     {
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         return [
             ['/index', ['param1' => 'test1'], '/index?param1=test1'],
             ['/index.php', ['param1' => 'test1'], '/index.php?param1=test1'],
@@ -42,5 +43,6 @@ class UrlHelperTest extends TestCase
             ['localhost?present1=1', ['present1' => 'test1', 'param2' => 'test2'], 'localhost?present1=test1&param2=test2'],
             ['https://user:password@localhost:8080?present1=1&present2=2#fragment1=1', ['present2' => 'test2', 'param2' => 'test2'], 'https://user:password@localhost:8080?present1=1&present2=test2&param2=test2#fragment1=1'],
         ];
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 }

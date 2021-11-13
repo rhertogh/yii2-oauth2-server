@@ -48,7 +48,9 @@ class Oauth2ServerHttpExceptionCest extends BaseGrantCest
             'clientId' => 'test-client-type-client-credentials-valid'
         ]);
 
-        $accessTokenRequest = $provider->getAccessTokenRequestWrapper(Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS);
+        $accessTokenRequest = $provider->getAccessTokenRequestWrapper(
+            Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS
+        );
         $I->sendPsr7Request($accessTokenRequest);
         $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
     }

@@ -77,6 +77,7 @@ trait Oauth2GetSetClientTestTrait
     }
 
     /**
+     * // phpcs:ignore Generic.Files.LineLength.TooLong -- single line is required for PhpStorm
      * @return array{model: Oauth2AccessTokenInterface|Oauth2AuthCodeInterface, clientId: int, client: Oauth2ClientInterface}
      * @throws \yii\base\InvalidConfigException
      */

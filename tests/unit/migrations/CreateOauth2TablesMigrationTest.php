@@ -35,7 +35,9 @@ class CreateOauth2TablesMigrationTest extends BaseMigrationTest
     {
         $this->mockApplicationWithoutOauth2();
 
-        $this->expectExceptionMessage('Oauth2Module is not instantiated. Is it added to the config in the "module" and "bootstrap" section?');
+        $this->expectExceptionMessage(
+            'Oauth2Module is not instantiated. Is it added to the config in the "module" and "bootstrap" section?'
+        );
         $this->getMockMigration()->getTablesWrapper();
     }
 
@@ -86,7 +88,9 @@ class CreateOauth2TablesMigrationTest extends BaseMigrationTest
         $migration = $this->getMockMigration();
         $this->setInaccessibleProperty($migration, 'numTables', 9999);
 
-        $this->expectExceptionMessage('Incorrect number of tables in definition. Are the Active Record classes correctly configured?');
+        $this->expectExceptionMessage(
+            'Incorrect number of tables in definition. Are the Active Record classes correctly configured?'
+        );
         $migration->getTablesWrapper();
     }
 

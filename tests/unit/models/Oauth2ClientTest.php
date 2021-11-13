@@ -160,6 +160,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
             'oidc_userinfo_encrypted_response_alg' => $openIdConnectUserinfoEncryptedResponseAlg,
         ]);
 
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         $this->assertEquals($name, $client->getName());
         $this->assertEquals($userAccountSelection, $client->getUserAccountSelection());
         $this->assertEquals($allowAuthCodeWithoutPkce, $client->isAuthCodeWithoutPkceAllowed());
@@ -168,6 +169,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $this->assertEquals($clientCredentialsGrantUserId, $client->getClientCredentialsGrantUserId());
         $this->assertEquals($openIdConnectAllowOfflineAccessWithoutConsent, $client->getOpenIdConnectAllowOfflineAccessWithoutConsent());
         $this->assertEquals($openIdConnectUserinfoEncryptedResponseAlg, $client->getOpenIdConnectUserinfoEncryptedResponseAlg());
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     public function testGetRedirectUri()
@@ -321,19 +323,27 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
     /**
      * @dataProvider validateAuthRequestScopesProvider
      */
-    public function testValidateAuthRequestScopes($requestedScopeIdentifiers, $scopeAccess, $expected, $expectedUnauthorizedScopes)
-    {
+    public function testValidateAuthRequestScopes(
+        $requestedScopeIdentifiers,
+        $scopeAccess,
+        $expected,
+        $expectedUnauthorizedScopes
+    ) {
         $client = $this->getMockModel([
             'id' => 1003000,
             'scope_access' => $scopeAccess,
         ]);
 
-        $this->assertEquals($expected, $client->validateAuthRequestScopes($requestedScopeIdentifiers, $unauthorizedScopes));
+        $this->assertEquals(
+            $expected,
+            $client->validateAuthRequestScopes($requestedScopeIdentifiers, $unauthorizedScopes)
+        );
         $this->assertEquals($expectedUnauthorizedScopes, $unauthorizedScopes);
     }
 
     public function validateAuthRequestScopesProvider()
     {
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         return [
             [['user.username.read', 'user.email_address.read'], Oauth2Client::SCOPE_ACCESS_STRICT, true, []],
             [['user.username.read', 'user.email_address.read'], Oauth2Client::SCOPE_ACCESS_STRICT_QUIET, true, []],
@@ -348,6 +358,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
             [['defined-but-not-assigned'], Oauth2Client::SCOPE_ACCESS_PERMISSIVE, true, []],
             [['non-existing'], Oauth2Client::SCOPE_ACCESS_PERMISSIVE, false, ['non-existing']],
         ];
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     /**

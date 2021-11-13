@@ -59,8 +59,13 @@ class Oauth2GenerateMigrationsActionTest extends TestCase
     /**
      * @dataProvider runOkProvider
      */
-    public function testRunOK($enableOpenIdConnect, $existingMigrations, $force, $expectedMigrations, $expectedDummyCount)
-    {
+    public function testRunOK(
+        $enableOpenIdConnect,
+        $existingMigrations,
+        $force,
+        $expectedMigrations,
+        $expectedDummyCount
+    ) {
         $controller = $this->getMockController(
             [
                 'interactive' => false,
@@ -91,7 +96,13 @@ class Oauth2GenerateMigrationsActionTest extends TestCase
                 $content = file_get_contents($path);
                 if ($content == 'dummy') {
                     $foundDummies[$file] = true;
-                } elseif (preg_match('/class m\d{6}_?\d{6}_Oauth2_\d{5}_.+Migration extends (Oauth2_\d{5}_.+Migration)/i', $content, $matches)) {
+                } elseif (
+                    preg_match(
+                        '/class m\d{6}_?\d{6}_Oauth2_\d{5}_.+Migration extends (Oauth2_\d{5}_.+Migration)/i',
+                        $content,
+                        $matches
+                    )
+                ) {
                     $foundSources[$matches[1]] = true;
                 }
             }
@@ -220,7 +231,11 @@ class Oauth2GenerateMigrationsActionTest extends TestCase
     protected function injectExistingMigrations($action, $migrations)
     {
         foreach ($migrations as $migration) {
-            $name = $this->callInaccessibleMethod($action, 'generateNewMigrationClassName', [$this->getMigrationsNamespace(), StringHelper::basename($migration)]);
+            $name = $this->callInaccessibleMethod(
+                $action,
+                'generateNewMigrationClassName',
+                [$this->getMigrationsNamespace(), StringHelper::basename($migration)]
+            );
             $migrationsPath = $this->getNamespacePath(StringHelper::dirname($name));
             $file = $migrationsPath . DIRECTORY_SEPARATOR . StringHelper::basename($name) . '.php';
 

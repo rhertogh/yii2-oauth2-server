@@ -14,8 +14,9 @@ class Oauth2ActiveRecordTraitTest extends TestCase
     {
         /** @var Oauth2ActiveRecordTrait|string $modelClass */
         $modelClass = get_class(new class {
-            public $id = null;
             use Oauth2ActiveRecordTrait;
+
+            public $id = null;
 
             public static function findOne($condition)
             {

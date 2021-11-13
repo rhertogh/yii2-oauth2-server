@@ -31,6 +31,7 @@ class Oauth2BaseModuleTest extends TestCase
 {
     public function testGetGrantTypeId()
     {
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         $this->assertEquals(Oauth2Module::GRANT_TYPE_AUTH_CODE, Oauth2Module::getGrantTypeId('authorization_code'));
         $this->assertEquals(Oauth2Module::GRANT_TYPE_CLIENT_CREDENTIALS, Oauth2Module::getGrantTypeId('client_credentials'));
         $this->assertEquals(Oauth2Module::GRANT_TYPE_REFRESH_TOKEN, Oauth2Module::getGrantTypeId('refresh_token'));
@@ -38,10 +39,12 @@ class Oauth2BaseModuleTest extends TestCase
         $this->assertEquals(Oauth2Module::GRANT_TYPE_PASSWORD, Oauth2Module::getGrantTypeId('password'));
 
         $this->assertNull(Oauth2Module::getGrantTypeId('non-exiting-grant-type'));
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     public function testGetGrantTypeIdentifier()
     {
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         $this->assertEquals('authorization_code', Oauth2Module::getGrantTypeIdentifier(Oauth2Module::GRANT_TYPE_AUTH_CODE));
         $this->assertEquals('client_credentials', Oauth2Module::getGrantTypeIdentifier(Oauth2Module::GRANT_TYPE_CLIENT_CREDENTIALS));
         $this->assertEquals('refresh_token', Oauth2Module::getGrantTypeIdentifier(Oauth2Module::GRANT_TYPE_REFRESH_TOKEN));
@@ -49,6 +52,7 @@ class Oauth2BaseModuleTest extends TestCase
         $this->assertEquals('password', Oauth2Module::getGrantTypeIdentifier(Oauth2Module::GRANT_TYPE_PASSWORD));
 
         $this->assertNull(Oauth2Module::getGrantTypeIdentifier(999999999));
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     /**
@@ -325,7 +329,10 @@ class Oauth2BaseModuleTest extends TestCase
         $user = new TestUserModel();
         $scopeIdentifiers = ['openid', 'profile', 'email', 'address', 'custom-scope'];
 
-        $this->expectExceptionMessage('In order to support OpenID Connect ' . get_class($user) . ' must implement ' . Oauth2OidcUserInterface::class);
+        $this->expectExceptionMessage(
+            'In order to support OpenID Connect ' . get_class($user) . ' must implement '
+            . Oauth2OidcUserInterface::class
+        );
         $this->callInaccessibleMethod($module, 'generateOpenIdConnectUserClaimsToken', [
             $user,
             'test-client',

@@ -100,9 +100,11 @@ class Oauth2DebugConfigActionTest extends TestCase
         $defaultTestEndpoints = [
             'accessToken' => ['Access Token', 'oauth2/access-token', 'urlRulesPrefix, accessTokenPath'],
             'authorizeClient' => ['Authorize Client', 'oauth2/authorize', 'urlRulesPrefix, authorizePath'],
-            'clientAuthorization' => ['Client Authorization', 'oauth2/authorize-client', 'urlRulesPrefix, clientAuthorizationPath'],
+            'clientAuthorization' =>
+                ['Client Authorization', 'oauth2/authorize-client', 'urlRulesPrefix, clientAuthorizationPath'],
             'jwks' => ['JSON Web Key Sets', 'oauth2/certs', 'urlRulesPrefix, jwksPath'],
-            'oidcUserinfo' => ['OpenId Connect Userinfo', 'oauth2/oidc/userinfo', 'urlRulesPrefix, openIdConnectUserinfoPath'],
+            'oidcUserinfo' =>
+                ['OpenId Connect Userinfo', 'oauth2/oidc/userinfo', 'urlRulesPrefix, openIdConnectUserinfoPath'],
         ];
 
         $expectedEndpoints = array_merge($defaultTestEndpoints, $overwriteExpectedEndpoints);
@@ -135,8 +137,10 @@ class Oauth2DebugConfigActionTest extends TestCase
                     'authorizeClient' => ['Authorize Client', '[Only available for "authorization_server" role]', '-'],
                     'accessToken' => ['Access Token', '[Only available for "authorization_server" role]', '-'],
                     'jwks' => ['JSON Web Key Sets', '[Only available for "authorization_server" role]', '-'],
-                    'clientAuthorization' => ['Client Authorization', '[Only available for "authorization_server" role]', '-'],
-                    'oidcUserinfo' => ['OpenId Connect Userinfo', '[Only available for "authorization_server" role]', '-'],
+                    'clientAuthorization' =>
+                        ['Client Authorization', '[Only available for "authorization_server" role]', '-'],
+                    'oidcUserinfo' =>
+                        ['OpenId Connect Userinfo', '[Only available for "authorization_server" role]', '-'],
                 ],
             ],
             [ // OpenID Connect disabled
@@ -160,7 +164,11 @@ class Oauth2DebugConfigActionTest extends TestCase
                     'openIdConnectUserinfoEndpoint' => 'https://custom_openIdConnectUserinfoEndpoint',
                 ],
                 [
-                    'oidcUserinfo' => ['OpenId Connect Userinfo', 'https://custom_openIdConnectUserinfoEndpoint', 'openIdConnectUserinfoEndpoint'],
+                    'oidcUserinfo' => [
+                        'OpenId Connect Userinfo',
+                        'https://custom_openIdConnectUserinfoEndpoint',
+                        'openIdConnectUserinfoEndpoint'
+                    ],
                 ],
             ],
         ];

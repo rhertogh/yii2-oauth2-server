@@ -7,11 +7,14 @@ use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2OidcUserInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2OidcUserSessionStatusInterface;
 use rhertogh\Yii2Oauth2Server\traits\models\Oauth2OidcUserIdentityTrait;
 
+// phpcs:disable Generic.Files.LineLength.TooLong -- Sample documentation
 class TestUserModelOidc extends TestUserModel implements
     Oauth2OidcUserInterface, # Optional interface, only required when 'Open ID Connect' is used
     Oauth2OidcUserSessionStatusInterface # Optional interface, only required when 'openIdConnectIssueRefreshTokenWithoutOfflineAccessScope' is enabled
 {
     use Oauth2OidcUserIdentityTrait; # Helper trait resolve Open ID Connect claims
+
+    // phpcs:enable Generic.Files.LineLength.TooLong
 
     // placeholder for test setting
     public static $hasActiveSession = false;

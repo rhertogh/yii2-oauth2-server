@@ -62,6 +62,8 @@ class Oauth2OidcScopeTest extends TestCase
             ],
         ];
 
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+
         // Dummy that should be cleared by `setClaims`
         $oidcScope->setClaims([new Oauth2OidcClaim([
             'identifier' => 'dummy',
@@ -120,13 +122,17 @@ class Oauth2OidcScopeTest extends TestCase
         // Clear Claims
         $this->assertEquals($oidcScope, $oidcScope->clearClaims());
         $this->assertEquals([], $oidcScope->getClaims());
+
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     public function testAddClaimsInvalidArrayConfig()
     {
         $oidcScope = new Oauth2OidcScope();
 
-        $this->expectExceptionMessage('Elements must either be an array, string or a ' . Oauth2OidcClaimInterface::class);
+        $this->expectExceptionMessage(
+            'Elements must either be an array, string or a ' . Oauth2OidcClaimInterface::class
+        );
         $oidcScope->addClaims([
             new \stdClass(),
         ]);
@@ -136,7 +142,10 @@ class Oauth2OidcScopeTest extends TestCase
     {
         $oidcScope = new Oauth2OidcScope();
 
-        $this->expectExceptionMessage('If an element is an array it should either be declared as an associative element or contain an "identifier" key.');
+        $this->expectExceptionMessage(
+            'If an element is an array it should either be declared as an associative element'
+            . ' or contain an "identifier" key.'
+        );
         $oidcScope->addClaims([
             [
                 'determiner' => 'test-claim-array-indexed-determiner',

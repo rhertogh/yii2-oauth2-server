@@ -20,7 +20,8 @@ class Oauth2UserIdentityTraitTest extends DatabaseTestCase
         $this->mockWebApplication([
             'modules' => [
                 'oauth2' => [
-                    'resourceServerAccessTokenRevocationValidation' => false, // Token revocation validation is tested during functional testing
+                    // Token revocation validation is tested during functional testing
+                    'resourceServerAccessTokenRevocationValidation' => false,
                 ]
             ]
         ]);
@@ -34,8 +35,8 @@ class Oauth2UserIdentityTraitTest extends DatabaseTestCase
 
             public function getId()
             {
-                return 0;
-            } // not used
+                return 0; // not used
+            }
         });
 
         $identity = $modelClass::findIdentityByAccessToken($this->validAccessToken, Oauth2HttpBearerAuth::class);
@@ -59,8 +60,9 @@ class Oauth2UserIdentityTraitTest extends DatabaseTestCase
 
         /** @var Oauth2UserIdentityTrait|string $modelClass */
         $modelClass = get_class(new class {
-            public static $oauth2ModuleName = 'oauth2-test';
             use Oauth2UserIdentityTrait;
+
+            public static $oauth2ModuleName = 'oauth2-test';
 
             public function getId()
             {

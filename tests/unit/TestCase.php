@@ -25,6 +25,7 @@ abstract class TestCase extends \Codeception\Test\Unit
 {
     public static $params;
 
+    // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
     public $validAccessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJ0ZXN0LWNsaWVudC10eXBlLWF1dGgtY29kZS12YWxpZCIsImp0aSI6ImUyNzU5MWMxYzNjMzUwYjM0ODRhY2JiYjU5NmU5OTkxYzVhZWVlMDRjOWFiZjhkNjE4OGUwZGFjNjI3MzQzMjVmOTA0YzljZTkyMjEzNGJlIiwiaWF0IjoxNjMwODU1MTgxLjE2NTk1NCwibmJmIjoxNjMwODU1MTgxLjE2NTk2LCJleHAiOjQ3ODY1Mjg3ODEsInN1YiI6IjEyMyIsInNjb3BlcyI6WyJ1c2VyLnVzZXJuYW1lLnJlYWQiLCJ1c2VyLmVtYWlsX2FkZHJlc3MucmVhZCJdfQ.dMR-0At3PvjzwWyzcM0P5z_Z7jjrbZKW-aRKpa4_hquS-1uLyxOKjU2wqgaEzXRqqLWnUF8fwbj_DEQsPA8su6hI0B_hyKI_hKO4DzAUNLKIthwqFsyiAh4Ksj1cc5-tFfmrqMMgRkQqSuKPSzk_cnIQEYw9hKUjbmqotgHFGEIwmoMzry1bvbD6JCO766JHOvaFMHOmKNAgSf9REeSCdlmWMtT0ScY9qUNqcDcQpp-pndiYvGteQ-jrU0Gah1L6fMXLgGzjTU6k6UbPXlSmG2FsDVFa6zpA8vbzFWoG1H4ql2kXVclUdJ2rMX8FoTJ__qaRgJXTz8rYDV58LTIzhQ';
 
     public $privateCryptKeyPath = '@Yii2Oauth2ServerTests/_config/keys/private.key';
@@ -293,7 +294,9 @@ abstract class TestCase extends \Codeception\Test\Unit
 
     protected function getBearerTokenValidatorHelper()
     {
-        $bearerTokenValidatorHelper = new BearerTokenValidatorHelper(Yii::createObject(Oauth2AccessTokenRepositoryInterface::class));
+        $bearerTokenValidatorHelper = new BearerTokenValidatorHelper(
+            Yii::createObject(Oauth2AccessTokenRepositoryInterface::class)
+        );
         $bearerTokenValidatorHelper->setPublicKey($this->getMockPublicCryptKey());
         return $bearerTokenValidatorHelper;
     }

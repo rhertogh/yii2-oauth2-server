@@ -13,8 +13,9 @@ class Oauth2EnabledTraitTest extends TestCase
     public function testSetEnabled()
     {
         $model = new class {
-            public $enabled = false;
             use Oauth2EnabledTrait;
+
+            public $enabled = false;
         };
 
         $model->setEnabled(true);

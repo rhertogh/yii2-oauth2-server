@@ -78,6 +78,7 @@ class Oauth2UserRepositoryTest extends BaseOauth2RepositoryTest
 
     public function testGetUserEntityByIdentifierWithInvalidFindIdentityClass()
     {
+        // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
         $mockTestUserModelClass = get_class(new class extends TestUserModel implements Oauth2PasswordGrantUserInterface {
             public function validatePassword($password)
             {
@@ -103,7 +104,9 @@ class Oauth2UserRepositoryTest extends BaseOauth2RepositoryTest
             ],
         ]);
 
-        $this->expectExceptionMessage($mockTestUserModelClass . '::findIdentity() must return an instance of ' . Oauth2UserInterface::class);
+        $this->expectExceptionMessage(
+            $mockTestUserModelClass . '::findIdentity() must return an instance of ' . Oauth2UserInterface::class
+        );
         $this->getUserRepository()->getUserEntityByIdentifier(123);
     }
 
@@ -117,12 +120,18 @@ class Oauth2UserRepositoryTest extends BaseOauth2RepositoryTest
      *
      * @dataProvider getUserEntityByUserCredentialsProvider
      */
-    public function testGetUserEntityByUserCredentials($username, $password, $grantType, $clientIdentifier, $userIdentifier)
-    {
+    public function testGetUserEntityByUserCredentials(
+        $username,
+        $password,
+        $grantType,
+        $clientIdentifier,
+        $userIdentifier
+    ) {
         $this->mockConsoleApplication([
             'modules' => [
                 'oauth2' => [
-                    'identityClass' => TestUserModelPasswordGrant::class, // TestUserModel with Oauth2PasswordGrantUserInterface
+                    // TestUserModel with Oauth2PasswordGrantUserInterface.
+                    'identityClass' => TestUserModelPasswordGrant::class,
                 ],
             ],
         ]);
@@ -144,15 +153,18 @@ class Oauth2UserRepositoryTest extends BaseOauth2RepositoryTest
      */
     public function getUserEntityByUserCredentialsProvider()
     {
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         return [
             ['test.user', 'password',  Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD, 'test-client-type-password-public-valid', 123],
             ['test.user', 'incorrect', Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD, 'test-client-type-password-public-valid', null],
             ['missing',   'password',  Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD, 'test-client-type-password-public-valid', null],
         ];
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     public function testGetUserEntityByUserCredentialsWithInvalidFindByUsernameClass()
     {
+        // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
         $mockTestUserModelClass = get_class(new class extends TestUserModel implements Oauth2PasswordGrantUserInterface {
             public function validatePassword($password)
             {
@@ -176,20 +188,36 @@ class Oauth2UserRepositoryTest extends BaseOauth2RepositoryTest
         ]);
 
         $client = static::getClientClass()::findOne(['identifier' => 'test-client-type-password-public-valid']);
-        $this->expectExceptionMessage($mockTestUserModelClass . '::findByUsername() must return an instance of ' . Oauth2UserInterface::class);
-        $this->getUserRepository()->getUserEntityByUserCredentials('test.user', 'password', Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD, $client);
+        $this->expectExceptionMessage(
+            $mockTestUserModelClass . '::findByUsername() must return an instance of ' . Oauth2UserInterface::class
+        );
+        $this->getUserRepository()->getUserEntityByUserCredentials(
+            'test.user',
+            'password',
+            Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD,
+            $client
+        );
     }
 
     public function testGetUserEntityByUserCredentialsWithoutOauth2PasswordGrantUserInterface()
     {
         // Run with default TestUserModel set as Oauth2UserInterface
         $client = static::getClientClass()::findOne(['identifier' => 'test-client-type-password-public-valid']);
-        $this->expectExceptionMessage('In order to support the `password` grant type, ' . TestUserModel::class . ' must implement ' . Oauth2PasswordGrantUserInterface::class);
-        $this->getUserRepository()->getUserEntityByUserCredentials('test.user', 'password', Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD, $client);
+        $this->expectExceptionMessage(
+            'In order to support the `password` grant type, ' . TestUserModel::class
+                . ' must implement ' . Oauth2PasswordGrantUserInterface::class
+        );
+        $this->getUserRepository()->getUserEntityByUserCredentials(
+            'test.user',
+            'password',
+            Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD,
+            $client
+        );
     }
 
-    public function testGetUserEntityByUserCredentialsWithoutOauth2PasswordGrantUserInterface_______()
+    public function testGetUserEntityByUserCredentialsWithoutOauth2FindByUsernamePasswordGrantUserInterface()
     {
+        // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
         $mockTestUserModelClass = get_class(new class extends TestUserModel implements Oauth2PasswordGrantUserInterface {
             public function validatePassword($password)
             {
@@ -200,7 +228,8 @@ class Oauth2UserRepositoryTest extends BaseOauth2RepositoryTest
 
             public static function findByUsername($username)
             {
-                return new TestUserModel(); // returning TestUserModel which doesn't implement Oauth2PasswordGrantUserInterface
+                // returning TestUserModel which doesn't implement Oauth2PasswordGrantUserInterface.
+                return new TestUserModel();
             }
         });
 
@@ -213,8 +242,16 @@ class Oauth2UserRepositoryTest extends BaseOauth2RepositoryTest
         ]);
 
         $client = static::getClientClass()::findOne(['identifier' => 'test-client-type-password-public-valid']);
-        $this->expectExceptionMessage('In order to support the `password` grant type, ' . $mockTestUserModelClass . '::findByUsername() must return an instance of ' . Oauth2PasswordGrantUserInterface::class);
-        $this->getUserRepository()->getUserEntityByUserCredentials('test.user', 'password', Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD, $client);
+        $this->expectExceptionMessage(
+            'In order to support the `password` grant type, ' . $mockTestUserModelClass
+                . '::findByUsername() must return an instance of ' . Oauth2PasswordGrantUserInterface::class
+        );
+        $this->getUserRepository()->getUserEntityByUserCredentials(
+            'test.user',
+            'password',
+            Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD,
+            $client
+        );
     }
 
     /**

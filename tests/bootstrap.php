@@ -3,6 +3,8 @@
 // Workaround for PhpStorm bug. https://stackoverflow.com/a/55040543/7702252
 use yii\helpers\Json;
 
+// phpcs:disable PSR1.Files.SideEffects
+
 if (in_array('reporters: report: PhpStorm_Codeception_ReportPrinter', $_SERVER['argv'] ?? [])) {
     ob_start();
 }

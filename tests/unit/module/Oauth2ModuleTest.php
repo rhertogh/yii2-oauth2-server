@@ -331,7 +331,9 @@ class Oauth2ModuleTest extends DatabaseTestCase
             ],
         ]);
 
-        $this->expectExceptionMessage('$codesEncryptionKey is malformed: Encoding::hexToBin() input is not a hex string.');
+        $this->expectExceptionMessage(
+            '$codesEncryptionKey is malformed: Encoding::hexToBin() input is not a hex string.'
+        );
         Oauth2Module::getInstance()->getAuthorizationServer();
     }
 
@@ -343,6 +345,7 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $this->mockConsoleApplication([
             'container' => [
                 'definitions' => [
+                    // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
                     Oauth2EncryptionKeyFactoryInterface::class => new class () implements Oauth2EncryptionKeyFactoryInterface {
                         public function createFromAsciiSafeString($keyString, $doNotTrim = null)
                         {
@@ -456,7 +459,9 @@ class Oauth2ModuleTest extends DatabaseTestCase
             ],
         ]);
 
-        $this->expectExceptionMessage('$openIdConnectScopes must be a callable, array, string or ' . Oauth2OidcScopeCollectionInterface::class);
+        $this->expectExceptionMessage(
+            '$openIdConnectScopes must be a callable, array, string or ' . Oauth2OidcScopeCollectionInterface::class
+        );
         Oauth2Module::getInstance()->getOidcScopeCollection();
     }
 
@@ -648,7 +653,9 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $this->assertNull($module->getClientAuthReqSession($requestId));
         $key = $keyPrefix . $requestId;
         Yii::$app->session->set($key, new \stdClass());
-        $this->assertNull($module->getClientAuthReqSession($requestId)); // Expect `null` since it's not an instance of Oauth2ClientAuthorizationRequestInterface
+        $this->assertNull( // Expect `null` since it's not an instance of Oauth2ClientAuthorizationRequestInterface
+            $module->getClientAuthReqSession($requestId)
+        );
         Yii::$app->session->set($key, new Oauth2ClientAuthorizationRequest());
         $this->assertNull($module->getClientAuthReqSession($requestId)); // Expect `null` since id doesn't match
 
@@ -735,7 +742,9 @@ class Oauth2ModuleTest extends DatabaseTestCase
             'authorizeUrl' => $authorizeUrl,
             'redirectUri' => 'http://localhost/redirect_uri',
         ]);
-        $clientAuthorizationRequest->setAuthorizationStatus(Oauth2ClientAuthorizationRequestInterface::AUTHORIZATION_APPROVED);
+        $clientAuthorizationRequest->setAuthorizationStatus(
+            Oauth2ClientAuthorizationRequestInterface::AUTHORIZATION_APPROVED
+        );
         $requestId = $clientAuthorizationRequest->getRequestId();
         $key = $keyPrefix . $requestId;
 
@@ -788,7 +797,10 @@ class Oauth2ModuleTest extends DatabaseTestCase
         };
 
         Yii::$app->user->setIdentity($user);
-        $this->expectExceptionMessage('Yii::$app->user->identity (currently ' . get_class($user) . ') must implement ' . Oauth2UserInterface::class);
+        $this->expectExceptionMessage(
+            'Yii::$app->user->identity (currently ' . get_class($user) . ') must implement '
+                . Oauth2UserInterface::class
+        );
         $module->getUserIdentity();
     }
 
@@ -797,7 +809,8 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $this->mockWebApplication([
             'modules' => [
                 'oauth2' => [
-                    'resourceServerAccessTokenRevocationValidation' => false, // Token revocation validation is tested during functional testing
+                    // Token revocation validation is tested during functional testing.
+                    'resourceServerAccessTokenRevocationValidation' => false,
                 ]
             ]
         ]);
@@ -806,7 +819,13 @@ class Oauth2ModuleTest extends DatabaseTestCase
 
         $module->validateAuthenticatedRequest();
         $this->assertEquals(123, $module->getRequestOauthUserId());
-        $this->assertEquals(['user.username.read','user.email_address.read'], $module->getRequestOauthScopeIdentifiers());
+        $this->assertEquals(
+            [
+                'user.username.read',
+                'user.email_address.read',
+            ],
+            $module->getRequestOauthScopeIdentifiers()
+        );
     }
 
     /**
@@ -817,7 +836,8 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $this->mockWebApplication([
             'modules' => [
                 'oauth2' => [
-                    'resourceServerAccessTokenRevocationValidation' => false, // Token revocation validation is tested during functional testing
+                    // Token revocation validation is tested during functional testing.
+                    'resourceServerAccessTokenRevocationValidation' => false,
                 ]
             ]
         ]);
@@ -837,7 +857,8 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $this->mockWebApplication([
             'modules' => [
                 'oauth2' => [
-                    'resourceServerAccessTokenRevocationValidation' => false, // Token revocation validation is tested during functional testing
+                    // Token revocation validation is tested during functional testing
+                    'resourceServerAccessTokenRevocationValidation' => false,
                 ]
             ]
         ]);
@@ -845,7 +866,9 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $module = Oauth2Module::getInstance();
         $module->validateAuthenticatedRequest();
 
-        $this->expectExceptionMessage('validateAuthenticatedRequest() must be called before findIdentityByAccessToken().');
+        $this->expectExceptionMessage(
+            'validateAuthenticatedRequest() must be called before findIdentityByAccessToken().'
+        );
         $module->findIdentityByAccessToken('other token', Oauth2HttpBearerAuth::class);
     }
 
@@ -854,7 +877,9 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $this->mockWebApplication();
         $module = Oauth2Module::getInstance();
 
-        $this->expectExceptionMessage('yii\filters\auth\HttpBearerAuth must implement ' . Oauth2HttpBearerAuthInterface::class);
+        $this->expectExceptionMessage(
+            'yii\filters\auth\HttpBearerAuth must implement ' . Oauth2HttpBearerAuthInterface::class
+        );
         $module->findIdentityByAccessToken($this->validAccessToken, HttpBearerAuth::class);
     }
 

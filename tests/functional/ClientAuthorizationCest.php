@@ -49,7 +49,10 @@ class ClientAuthorizationCest extends BaseGrantCest
         $I->seeElement('#oauth2-client-authorization-request-form');
         $I->see('See your user id');
         $I->seeElement('#oauth2clientauthorizationrequest-selectedscopeidentifiers-user_id_read[type="hidden"]');
-        $I->seeElement('#oauth2clientauthorizationrequest-selectedscopeidentifiers-applied_by_default_by_client_not_required_for_client[type="checkbox"]');
+        $I->seeElement(
+            '#oauth2clientauthorizationrequest-selectedscopeidentifiers-'
+                . 'applied_by_default_by_client_not_required_for_client[type="checkbox"]'
+        );
         # endregion authorize client
     }
 
@@ -70,7 +73,10 @@ class ClientAuthorizationCest extends BaseGrantCest
         $I->stopFollowingRedirects();
         $I->amOnPage($I->grabFromCurrentUrl());
         $I->seeElement('#oauth2-client-authorization-request-form');
-        $I->see('Valid public client with Grant Type Auth Code without scopes would like to access Yii2 Oauth2 Server Test on your behalf.');
+        $I->see(
+            'Valid public client with Grant Type Auth Code without scopes would like to access'
+                . ' Yii2 Oauth2 Server Test on your behalf.'
+        );
         # endregion authorize client
     }
 
@@ -98,7 +104,10 @@ class ClientAuthorizationCest extends BaseGrantCest
         $I->amOnPage($I->grabFromCurrentUrl());
         $I->seeElement('#oauth2-client-authorization-request-form');
         $I->see('See your user id');
-        $I->seeElement('#oauth2clientauthorizationrequest-selectedscopeidentifiers-pre_assigned_for_user_test[type="hidden"]');
+        $I->seeElement(
+            '#oauth2clientauthorizationrequest-selectedscopeidentifiers-'
+            . 'pre_assigned_for_user_test[type="hidden"]'
+        );
         # endregion authorize client
     }
 }

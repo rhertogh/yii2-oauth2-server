@@ -168,7 +168,9 @@ class Oauth2RefreshTokenTest extends BaseOauth2ActiveRecordTest
             }
         };
 
-        $this->expectExceptionMessage(get_class($mockAccessToken) . ' must implement ' . Oauth2AccessTokenInterface::class);
+        $this->expectExceptionMessage(
+            get_class($mockAccessToken) . ' must implement ' . Oauth2AccessTokenInterface::class
+        );
         $model->setAccessToken($mockAccessToken);
     }
 
@@ -180,6 +182,7 @@ class Oauth2RefreshTokenTest extends BaseOauth2ActiveRecordTest
 
 
     /**
+     * // phpcs:ignore Generic.Files.LineLength.TooLong -- single line is required for PhpStorm
      * @return array{model: Oauth2RefreshTokenInterface|ActiveRecord, accessTokenId: int, accessToken: Oauth2AccessTokenInterface}
      * @throws \yii\base\InvalidConfigException
      */

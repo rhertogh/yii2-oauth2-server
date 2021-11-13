@@ -67,7 +67,9 @@ class DiHelperTest extends TestCase
 
     public function testGetValidatedClassNameUndefinedClassForInterface()
     {
-        $this->expectExceptionMessage('ArrayAccess must be configured in the application dependency injection container.');
+        $this->expectExceptionMessage(
+            'ArrayAccess must be configured in the application dependency injection container.'
+        );
         DiHelper::getValidatedClassName(\ArrayAccess::class);
     }
 

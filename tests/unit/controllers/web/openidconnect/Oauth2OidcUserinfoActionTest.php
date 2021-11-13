@@ -39,7 +39,10 @@ class Oauth2OidcUserinfoActionTest extends DatabaseTestCase
     public function testRunUserInfoAlg($userInfoAlg, $nonce, $expectExceptionMessage)
     {
         $clientIdentifier = 'test-client-type-auth-code-open-id-connect';
-        Oauth2Client::updateAll(['oidc_userinfo_encrypted_response_alg' => $userInfoAlg], ['identifier' => $clientIdentifier]);
+        Oauth2Client::updateAll(
+            ['oidc_userinfo_encrypted_response_alg' => $userInfoAlg],
+            ['identifier' => $clientIdentifier]
+        );
 
         $this->mockWebApplication();
         $module = Oauth2Module::getInstance();
@@ -141,7 +144,9 @@ class Oauth2OidcUserinfoActionTest extends DatabaseTestCase
         $controller = $this->getMockController();
         $userinfoAction = new Oauth2OidcUserinfoAction('Oauth2OidcUserinfoActionTest', $controller);
 
-        $this->expectExceptionMessage('Request authentication does not contain the required OpenID Connect "openid" scope.');
+        $this->expectExceptionMessage(
+            'Request authentication does not contain the required OpenID Connect "openid" scope.'
+        );
         $userinfoAction->run();
     }
 

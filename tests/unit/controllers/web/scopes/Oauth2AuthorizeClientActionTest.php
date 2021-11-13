@@ -23,7 +23,10 @@ class Oauth2AuthorizeClientActionTest extends DatabaseTestCase
 {
     protected function getMockController()
     {
-        return new Oauth2ConsentController(Oauth2ConsentControllerInterface::CONTROLLER_NAME, Oauth2Module::getInstance());
+        return new Oauth2ConsentController(
+            Oauth2ConsentControllerInterface::CONTROLLER_NAME,
+            Oauth2Module::getInstance()
+        );
     }
 
     public function testInitInvalidClientAuthorizationView()
@@ -93,7 +96,9 @@ class Oauth2AuthorizeClientActionTest extends DatabaseTestCase
             'clientAuthorizationView' => $module->clientAuthorizationView,
         ]);
 
-        $this->expectExceptionMessage('Unable to respond to client authorization request. Invalid clientAuthorizationRequestId.');
+        $this->expectExceptionMessage(
+            'Unable to respond to client authorization request. Invalid clientAuthorizationRequestId.'
+        );
         $authorizeClientAction->run('test');
     }
 }

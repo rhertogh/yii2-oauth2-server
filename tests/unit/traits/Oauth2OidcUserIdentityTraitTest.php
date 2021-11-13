@@ -40,7 +40,8 @@ class Oauth2OidcUserIdentityTraitTest extends TestCase
             public function getNested1()
             {
                 return new class extends Component {
-                    public function getNested2() {
+                    public function getNested2()
+                    {
                         return 'nested-value';
                     }
                 };
@@ -88,15 +89,15 @@ class Oauth2OidcUserIdentityTraitTest extends TestCase
         $callableTest->expects($this->once())
             ->method('testFunction')
             ->with(
-                $this->callback(function($user) {
+                $this->callback(function ($user) {
                     return $user instanceof Oauth2OidcUserInterface
                         && $user->getIdentifier() == 123;
                 }),
-                $this->callback(function($claim) {
+                $this->callback(function ($claim) {
                     return $claim instanceof Oauth2OidcClaimInterface
                         && $claim->getIdentifier() == 'test-callable-claim';
                 }),
-                $this->callback(function($response) {
+                $this->callback(function ($response) {
                     return $response instanceof Oauth2OidcBearerTokenResponseInterface
                         && $response->getModule() === Oauth2Module::getInstance();
                 }),
@@ -105,8 +106,8 @@ class Oauth2OidcUserIdentityTraitTest extends TestCase
 
         $claim = new Oauth2OidcClaim([
             'identifier' => 'test-callable-claim',
-            'determiner' => [$callableTest, 'testFunction']],
-        );
+            'determiner' => [$callableTest, 'testFunction']
+        ]);
         $this->assertEquals('custom-callable-value', $identity->getOpenIdConnectClaimValue($claim, $response));
     }
 

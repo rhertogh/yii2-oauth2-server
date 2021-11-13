@@ -48,18 +48,22 @@ class Oauth2RepositoryIdentifierTest extends TestCase
 
             public function hasAttribute($name)
             {
-                return false;
-            } // Avoid database usage
+                return false; // Avoid database usage
+            }
             public function loadDefaultValues($skipIfSet = true)
             {
-            } // Avoid database usage
+                // Avoid database usage
+            }
         };
 
         $modelClass = get_class($model);
 
         Yii::$container->set(Oauth2ActiveRecordInterface::class, $modelClass);
 
-        $this->expectExceptionMessage($modelClass . '::findByIdentifier() returns stdClass which must implement ' . Oauth2ActiveRecordInterface::class);
+        $this->expectExceptionMessage(
+            $modelClass . '::findByIdentifier() returns stdClass which must implement '
+                . Oauth2ActiveRecordInterface::class
+        );
         $model->findModelByIdentifier('test');
     }
 }

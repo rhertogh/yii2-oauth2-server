@@ -60,8 +60,14 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
     /**
      * @dataProvider finalizeScopesProvider
      */
-    public function testFinalizeScopes($clientId, $userId, $requestedScopeIdentifiers, $scopeAccess, $grantType, $expectedScopes)
-    {
+    public function testFinalizeScopes(
+        $clientId,
+        $userId,
+        $requestedScopeIdentifiers,
+        $scopeAccess,
+        $grantType,
+        $expectedScopes
+    ) {
         $scopeRepository = $this->getScopeRepository();
 
         $client = Oauth2Client::findOne($clientId);

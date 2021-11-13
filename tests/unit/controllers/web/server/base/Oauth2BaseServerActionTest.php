@@ -67,7 +67,8 @@ class Oauth2BaseServerActionTest extends TestCase
         $this->assertEquals(HttpCode::BAD_REQUEST, $response->statusCode);
         $this->assertEquals('unsupported_grant_type', $response->data['error']);
         $this->assertEquals(
-            'The authorization grant type is not supported by the authorization server. Check that all required parameters have been provided',
+            'The authorization grant type is not supported by the authorization server.'
+            . ' Check that all required parameters have been provided',
             $response->data['error_description']
         );
     }
@@ -102,8 +103,10 @@ class Oauth2BaseServerActionTest extends TestCase
     /**
      * @dataProvider processExceptionDisplayConfidentialExceptionMessagesProvider
      */
-    public function testProcessExceptionDisplayConfidentialExceptionMessages($displayConfidentialExceptionMessages, $expectMessage)
-    {
+    public function testProcessExceptionDisplayConfidentialExceptionMessages(
+        $displayConfidentialExceptionMessages,
+        $expectMessage
+    ) {
         $this->mockWebApplication([
             'modules' => [
                 'oauth2' => [

@@ -17,6 +17,7 @@ class Oauth2HttpBearerAuthTest extends TestCase
 {
     public function testAuthenticate()
     {
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         $this->mockWebApplication([
             'modules' => [
                 'oauth2' => [
@@ -24,6 +25,7 @@ class Oauth2HttpBearerAuthTest extends TestCase
                 ]
             ]
         ]);
+        // phpcs:enable Generic.Files.LineLength.TooLong
 
         $request = Yii::$app->request;
         $request->headers->set('Authorization', 'Bearer ' . $this->validAccessToken);
@@ -70,6 +72,7 @@ class Oauth2HttpBearerAuthTest extends TestCase
 
     public function testAuthenticateNonExistingIdentity()
     {
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         $this->mockWebApplication([
             'modules' => [
                 'oauth2' => [
@@ -87,6 +90,7 @@ class Oauth2HttpBearerAuthTest extends TestCase
                 ],
             ],
         ]);
+        // phpcs:enable Generic.Files.LineLength.TooLong
 
         $request = Yii::$app->request;
         $response = Yii::$app->response;

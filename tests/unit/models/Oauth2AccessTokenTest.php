@@ -194,6 +194,8 @@ class Oauth2AccessTokenTest extends BaseOauth2ActiveRecordTest
     public function testGetScopesRelationClassName()
     {
         $accessToken = $this->getMockModel();
-        $this->assertTrue(is_a($accessToken->getScopesRelationClassName(), Oauth2AccessTokenScopeInterface::class, true));
+        $this->assertTrue(
+            is_a($accessToken->getScopesRelationClassName(), Oauth2AccessTokenScopeInterface::class, true)
+        );
     }
 }
