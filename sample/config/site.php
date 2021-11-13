@@ -1,6 +1,7 @@
 <?php
 
-/// WARNING! This configuration is optimized for local development and should not be used in any other environment (for both security and performance) ///
+/// WARNING! This configuration is optimized for local development and should NOT be used in any other environment
+/// (for both security and performance)!
 
 use sample\components\UserComponent;
 use sample\modules\api\ApiModule;
@@ -9,6 +10,7 @@ use yii\web\Request;
 use yii\web\User;
 use sample\models\User as UserIdentity;
 
+// phpcs:disable Generic.Files.LineLength.TooLong  -- Sample documentation
 return ArrayHelper::merge(require('main.php'), [
 
     'bootstrap' => [

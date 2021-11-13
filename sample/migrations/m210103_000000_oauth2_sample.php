@@ -5,6 +5,11 @@ use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
 use yii\db\Migration;
 use yii\db\Schema;
 
+/**
+ * phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
+ * phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
+ * phpcs:disable Generic.Files.LineLength.TooLong
+ */
 class m210103_000000_oauth2_sample extends Migration
 {
     public function safeUp()

@@ -34,7 +34,10 @@ class AccountSelectionForm extends Model
             ['identityId', 'integer'],
             ['identityId', function ($attribute) {
                 if (!$this->user->hasLinkedIdentity($this->$attribute)) {
-                    $this->addError($attribute, 'The current user does not have access to account ' . $this->$attribute);
+                    $this->addError(
+                        $attribute,
+                        'The current user does not have access to account ' . $this->$attribute
+                    );
                 }
             }],
         ];

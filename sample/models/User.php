@@ -32,8 +32,10 @@ class User extends ActiveRecord implements
     Oauth2OidcUserInterface, # Optional interface, only required when OpenID Connect support is enabled
     Oauth2PasswordGrantUserInterface # Optional interface, only required when `password` grant type is used
 {
+    // phpcs:disable Generic.Files.LineLength.TooLong, PSR12.Traits.UseDeclaration.NoBlankLineAfterUse -- Sample documentation
     use Oauth2UserIdentityTrait; # Helper trait for Oauth2UserInterface
     use Oauth2OidcUserIdentityTrait; # Optional helper trait for Oauth2OidcUserInterface, only required when OpenID Connect support is enabled
+    // phpcs:enable Generic.Files.LineLength.TooLong, PSR12.Traits.UseDeclaration.NoBlankLineAfterUse
 
     # region IdentityInterface (Default Yii interface)
     /**
@@ -107,7 +109,8 @@ class User extends ActiveRecord implements
      */
     public function canAccessOauth2ClientAndGrantType(ClientEntityInterface $clientEntity, $grantType)
     {
-        // Just always allow access in the sample app. For your application you might limit the access to certain clients.
+        // Just always allow access in the sample app,
+        // for your application you might limit the access to certain clients.
         return true;
     }
     # endregion Oauth2PasswordGrantUserInterface

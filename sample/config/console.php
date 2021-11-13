@@ -1,12 +1,14 @@
 <?php
 
-/// WARNING! This configuration is optimized for local development and should not be used in any other environment (for both security and performance) ///
+/// WARNING! This configuration is optimized for local development and should NOT be used in any other environment
+/// (for both security and performance)!
 
 use rhertogh\Yii2Oauth2Server\models\base\Oauth2BaseActiveRecord;
 use sample\dev\giiant\generators\model\Generator as ModelGenerator;
 use yii\console\controllers\MigrateController;
 use yii\helpers\ArrayHelper;
 
+// phpcs:disable Generic.Files.LineLength.TooLong  -- Sample documentation
 return ArrayHelper::merge(require('main.php'), [
     'bootstrap' => [
         'gii',

@@ -34,7 +34,8 @@ class UserComponent extends User implements Oauth2OidcUserComponentInterface
     }
     # endregion Oauth2OidcUserComponentInterface
 
-    # region Updates User's `latest_authenticated_at` which is used for Oauth2OidcUserInterface::getLatestAuthenticatedAt()
+    # region Updates User's `latest_authenticated_at`
+    # which is used for Oauth2OidcUserInterface::getLatestAuthenticatedAt()
     /**
      * @inheritDoc
      * @param \sample\models\User $identity

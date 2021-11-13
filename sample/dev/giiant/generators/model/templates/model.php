@@ -48,6 +48,8 @@ use <?php echo $timestamp['timestampBehaviorClass']; ?>;
 <?php endforeach; ?>
 <?php endif; ?>
  * @property string $aliasModel
+ *
+ * phpcs:disable Generic.Files.LineLength.TooLong
  */
 abstract class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {

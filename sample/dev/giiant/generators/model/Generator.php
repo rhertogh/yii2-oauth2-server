@@ -25,11 +25,19 @@ class Generator extends \schmunk42\giiant\generators\model\Generator
                 }
 
                 // hardcoded fix for https://github.com/yiisoft/yii2-gii/issues/55
-                if ($tableName === 'oauth2_user_client_scope' && $relationName === 'User' && $relationConfig[1] === 'Oauth2UserClient') {
+                if (
+                    $tableName === 'oauth2_user_client_scope'
+                    && $relationName === 'User'
+                    && $relationConfig[1] === 'Oauth2UserClient'
+                ) {
                     $relations['UserClient'] = $relations['User'];
                     unset($relations['User']);
                 }
-                if ($tableName === 'oauth2_scope' && $relationName === 'Users' && $relationConfig[1] === 'Oauth2UserClient') {
+                if (
+                    $tableName === 'oauth2_scope'
+                    && $relationName === 'Users'
+                    && $relationConfig[1] === 'Oauth2UserClient'
+                ) {
                     $relations['UserClients'] = $relations['Users'];
                     unset($relations['Users']);
                 }

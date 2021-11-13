@@ -3,6 +3,10 @@
 use yii\db\Migration;
 use yii\db\Schema;
 
+/**
+ * phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
+ * phpcs:disable PSR1.Classes.ClassDeclaration.MissingNamespace
+ */
 class m210101_000000_create_user_table extends Migration
 {
     public function safeUp()

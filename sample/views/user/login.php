@@ -29,7 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $form->field($model, 'password')->passwordInput() ?>
 
     <?= $form->field($model, 'rememberMe')->checkbox([
-        'template' => "<div class=\"offset-lg-1 col-lg-3 custom-control custom-checkbox\">{input} {label}</div>\n<div class=\"col-lg-8\">{error}</div>",
+        'template' => <<<HTML
+            <div class="offset-lg-1 col-lg-3 custom-control custom-checkbox">
+                {input} {label}
+            </div>
+            <div class="col-lg-8">
+                {error}
+            </div>
+            HTML,
     ]) ?>
 
     <div class="form-group">

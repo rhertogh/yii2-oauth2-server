@@ -6,10 +6,14 @@ use rhertogh\Yii2Oauth2Server\migrations\Oauth2_00001_CreateOauth2TablesMigratio
 
 /**
  * Class sample\migrations\oauth2\M211107164800_Oauth2_00001_CreateOauth2TablesMigration
+ *
+ * phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
+ * phpcs:disable Generic.Files.LineLength.TooLong
  */
 class M210102000000_Oauth2_00001_CreateOauth2TablesMigration extends Oauth2_00001_CreateOauth2TablesMigration
 {
     /**
-     * Wrapper class for rhertogh\Yii2Oauth2Server\migrations\Oauth2_00001_CreateOauth2TablesMigration, no further implementation required.
+     * Wrapper class for rhertogh\Yii2Oauth2Server\migrations\Oauth2_00001_CreateOauth2TablesMigration,
+     * no further implementation required.
      */
 }
