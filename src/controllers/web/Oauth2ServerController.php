@@ -33,8 +33,8 @@ class Oauth2ServerController extends Oauth2BaseApiController implements Oauth2Se
     public function actions()
     {
         return [
-             static::ACTION_NAME_ACCESS_TOKEN => Oauth2AccessTokenAction::class,
-             static::ACTION_NAME_AUTHORIZE => Oauth2AuthorizeAction::class,
+            static::ACTION_NAME_ACCESS_TOKEN => Oauth2AccessTokenAction::class,
+            static::ACTION_NAME_AUTHORIZE => Oauth2AuthorizeAction::class,
         ];
     }
 }

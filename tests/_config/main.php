@@ -60,7 +60,7 @@ return [
                 'file' => [
                     'class' => yii\log\FileTarget::class,
                     'exportInterval' => 1,
-                    'levels' => ['error', 'warning', 'info', 'trace',],
+                    'levels' => ['error', 'warning', 'info', 'trace'],
                 ],
             ],
         ],

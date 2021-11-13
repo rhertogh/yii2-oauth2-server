@@ -27,7 +27,7 @@ interface Oauth2ScopeRepositoryInterface extends
      */
     public function finalizeScopes(
         array $scopes,
-              $grantType,
+        $grantType,
         ClientEntityInterface $clientEntity,
         $userIdentifier = null
     );

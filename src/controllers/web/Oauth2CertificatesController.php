@@ -31,7 +31,7 @@ class Oauth2CertificatesController extends Oauth2BaseApiController implements Oa
     public function actions()
     {
         return [
-             static::ACTION_NAME_JWKS => Oauth2JwksAction::class,
+            static::ACTION_NAME_JWKS => Oauth2JwksAction::class,
         ];
     }
 }

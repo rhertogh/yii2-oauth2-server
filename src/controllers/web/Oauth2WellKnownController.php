@@ -31,7 +31,7 @@ class Oauth2WellKnownController extends Oauth2BaseApiController implements Oauth
     public function actions()
     {
         return [
-             static::ACTION_NAME_OPENID_CONFIGURATION => Oauth2OpenidConfigurationAction::class,
+            static::ACTION_NAME_OPENID_CONFIGURATION => Oauth2OpenidConfigurationAction::class,
         ];
     }
 }
