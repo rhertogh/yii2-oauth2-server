@@ -69,6 +69,25 @@ use yii\web\UrlRule;
 class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
 {
     /**
+     * Application type "web": http response.
+     * @since 1.0.0
+     */
+    public const APPLICATION_TYPE_WEB = 'web';
+    /**
+     * Application type "console": cli response.
+     * @since 1.0.0
+     */
+    public const APPLICATION_TYPE_CONSOLE = 'console';
+    /**
+     * Supported Application types.
+     * @since 1.0.0
+     */
+    public const APPLICATION_TYPES = [
+        self::APPLICATION_TYPE_WEB,
+        self::APPLICATION_TYPE_CONSOLE,
+    ];
+
+    /**
      * "Authorization Server" Role, please see guide for details.
      * @since 1.0.0
      */
@@ -109,7 +128,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
      * @since 1.0.0
      */
     protected const CONTROLLER_MAP = [
-        'web' => [
+        self::APPLICATION_TYPE_WEB => [
             Oauth2ServerControllerInterface::CONTROLLER_NAME => [
                 'controller' => Oauth2ServerControllerInterface::class,
                 'serverRole' => self::SERVER_ROLE_AUTHORIZATION_SERVER,
@@ -131,7 +150,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
                 'serverRole' => self::SERVER_ROLE_AUTHORIZATION_SERVER,
             ],
         ],
-        'console' => [
+        self::APPLICATION_TYPE_CONSOLE => [
             'migrations' => [
                 'controller' => Oauth2MigrationsController::class,
                 'serverRole' => self::SERVER_ROLE_AUTHORIZATION_SERVER | self::SERVER_ROLE_RESOURCE_SERVER,
@@ -151,6 +170,12 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
      * @inheritdoc
      */
     public $controllerNamespace = __NAMESPACE__ . '\-'; // Set explicitly via $controllerMap in `init()`
+
+    /**
+     * @var string|null The application type. If `null` the type will be automatically detected.
+     * @see APPLICATION_TYPES
+     */
+    public $appType = null;
 
     /**
      * @var int The Oauth 2.0 Server Roles the module will perform.
@@ -396,10 +421,12 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
 
         $app = Yii::$app;
 
-        if ($app instanceof WebApplication) {
-            $controllerMap = static::CONTROLLER_MAP['web'];
-        } elseif ($app instanceof ConsoleApplication) {
-            $controllerMap = static::CONTROLLER_MAP['console'];
+        if ($app instanceof WebApplication || $this->appType == static::APPLICATION_TYPE_WEB) {
+            $controllerMap = static::CONTROLLER_MAP[static::APPLICATION_TYPE_WEB];
+        } elseif ($app instanceof ConsoleApplication || $this->appType == static::APPLICATION_TYPE_CONSOLE) {
+            $controllerMap = static::CONTROLLER_MAP[static::APPLICATION_TYPE_CONSOLE];
+        } else {
+            throw new InvalidConfigException('Unable to detect application type, configure it manually by setting `$appType`.');
         }
         $controllerMap = array_filter(
             $controllerMap,
