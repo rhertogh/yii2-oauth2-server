@@ -70,6 +70,15 @@ src/        Yii2-Oauth2-Server source
 tests/      Codeception unit and functional tests
 ```
 
+Change Log
+----------
+Please see the [Change Log](CHANGELOG.md) for more information on version history.
+
+Credits
+-------
+- [Rutger Hertogh](https://github.com/rhertogh)
+- [All Contributors](https://github.com/rhertogh/yii2-oauth2-server/graphs/contributors)
+
 ## License
 
 The Yii2-Oauth2-Server is free software. It is released under the terms of the Apache License.
