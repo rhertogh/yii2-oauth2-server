@@ -393,7 +393,7 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $this->mockConsoleApplication([
             'modules' => [
                 'oauth2' => [
-                    'openIdConnectScopes' => function() use ($oidcScope) {
+                    'openIdConnectScopes' => function () use ($oidcScope) {
                         return new Oauth2OidcScopeCollection([
                             'oidcScopes' => [
                                 $oidcScope,
@@ -660,7 +660,6 @@ class Oauth2ModuleTest extends DatabaseTestCase
         Yii::$app->session->set($key, $clientAuthorizationRequest);
         $this->assertEquals($clientAuthorizationRequest, $module->getClientAuthReqSession($requestId));
         $this->assertEquals($module, $module->getClientAuthReqSession($requestId)->getModule());
-
     }
 
     public function testSetClientAuthReqSession()
@@ -771,11 +770,21 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $this->mockWebApplication();
         $module = Oauth2Module::getInstance();
         $user = new class implements IdentityInterface {
-            public static function findIdentity($id) {}
-            public static function findIdentityByAccessToken($token, $type = null) {}
-            public function getId() {}
-            public function getAuthKey() {}
-            public function validateAuthKey($authKey) {}
+            public static function findIdentity($id)
+            {
+            }
+            public static function findIdentityByAccessToken($token, $type = null)
+            {
+            }
+            public function getId()
+            {
+            }
+            public function getAuthKey()
+            {
+            }
+            public function validateAuthKey($authKey)
+            {
+            }
         };
 
         Yii::$app->user->setIdentity($user);

@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\unit\models;
 
 use DateTimeImmutable;

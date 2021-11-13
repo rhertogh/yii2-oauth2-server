@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\functional\_base;
 
 use Codeception\Example;
@@ -91,6 +92,5 @@ abstract class BaseSimpleGrantCest extends BaseGrantCest
             $this->testAuthenticatedRequest($I, $token, ['id']);
             # endregion
         }
-
     }
 }

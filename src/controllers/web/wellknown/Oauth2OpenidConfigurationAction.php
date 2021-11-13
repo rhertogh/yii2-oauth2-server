@@ -51,21 +51,24 @@ class Oauth2OpenidConfigurationAction extends Action
             $responseTypeCombinations = array_merge($responseTypeCombinations, $newCombinations);
         }
 
-        $authorizationEndpoint = Url::to([
-            Oauth2ServerControllerInterface::CONTROLLER_NAME
-                . '/' . Oauth2ServerControllerInterface::ACTION_NAME_AUTHORIZE
+        $authorizationEndpoint = Url::to(
+            [
+                Oauth2ServerControllerInterface::CONTROLLER_NAME
+                    . '/' . Oauth2ServerControllerInterface::ACTION_NAME_AUTHORIZE
             ],
             true
         );
-        $tokenEndpoint = Url::to([
-            Oauth2ServerControllerInterface::CONTROLLER_NAME
-                . '/' . Oauth2ServerControllerInterface::ACTION_NAME_ACCESS_TOKEN,
+        $tokenEndpoint = Url::to(
+            [
+                Oauth2ServerControllerInterface::CONTROLLER_NAME
+                    . '/' . Oauth2ServerControllerInterface::ACTION_NAME_ACCESS_TOKEN,
             ],
             true
         );
-        $jwksUri = Url::to([
-            Oauth2CertificatesControllerInterface::CONTROLLER_NAME
-                . '/' . Oauth2CertificatesControllerInterface::ACTION_NAME_JWKS,
+        $jwksUri = Url::to(
+            [
+                Oauth2CertificatesControllerInterface::CONTROLLER_NAME
+                    . '/' . Oauth2CertificatesControllerInterface::ACTION_NAME_JWKS,
             ],
             true
         );
@@ -80,9 +83,10 @@ class Oauth2OpenidConfigurationAction extends Action
         // Add 'userinfo_endpoint' if configured
         if (!empty($module->openIdConnectUserinfoEndpoint)) {
             if ($module->openIdConnectUserinfoEndpoint === true) {
-                $openIdConfig['userinfo_endpoint'] = Url::to([
-                    Oauth2OidcControllerInterface::CONTROLLER_NAME
-                        . '/' . Oauth2OidcControllerInterface::ACTION_NAME_USERINFO,
+                $openIdConfig['userinfo_endpoint'] = Url::to(
+                    [
+                        Oauth2OidcControllerInterface::CONTROLLER_NAME
+                            . '/' . Oauth2OidcControllerInterface::ACTION_NAME_USERINFO,
                     ],
                     true
                 );

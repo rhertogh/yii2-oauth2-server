@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\unit\components\repositories;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
@@ -42,7 +43,6 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
         } else {
             $this->assertNull($client);
         }
-
     }
 
     /**
@@ -209,10 +209,18 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
         $scopeRepository = $this->getScopeRepository();
 
         $client = new class implements ClientEntityInterface {
-            public function getIdentifier() {}
-            public function getName() {}
-            public function getRedirectUri() {}
-            public function isConfidential() {}
+            public function getIdentifier()
+            {
+            }
+            public function getName()
+            {
+            }
+            public function getRedirectUri()
+            {
+            }
+            public function isConfidential()
+            {
+            }
         };
 
         $this->expectExceptionMessage(get_class($client) . ' must implement ' . Oauth2ClientInterface::class);

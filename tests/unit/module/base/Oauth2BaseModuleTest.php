@@ -31,11 +31,11 @@ class Oauth2BaseModuleTest extends TestCase
 {
     public function testGetGrantTypeId()
     {
-        $this->assertEquals(Oauth2Module::GRANT_TYPE_AUTH_CODE , Oauth2Module::getGrantTypeId('authorization_code'));
-        $this->assertEquals(Oauth2Module::GRANT_TYPE_CLIENT_CREDENTIALS , Oauth2Module::getGrantTypeId('client_credentials'));
-        $this->assertEquals(Oauth2Module::GRANT_TYPE_REFRESH_TOKEN , Oauth2Module::getGrantTypeId('refresh_token'));
-        $this->assertEquals(Oauth2Module::GRANT_TYPE_IMPLICIT , Oauth2Module::getGrantTypeId('implicit'));
-        $this->assertEquals(Oauth2Module::GRANT_TYPE_PASSWORD , Oauth2Module::getGrantTypeId('password'));
+        $this->assertEquals(Oauth2Module::GRANT_TYPE_AUTH_CODE, Oauth2Module::getGrantTypeId('authorization_code'));
+        $this->assertEquals(Oauth2Module::GRANT_TYPE_CLIENT_CREDENTIALS, Oauth2Module::getGrantTypeId('client_credentials'));
+        $this->assertEquals(Oauth2Module::GRANT_TYPE_REFRESH_TOKEN, Oauth2Module::getGrantTypeId('refresh_token'));
+        $this->assertEquals(Oauth2Module::GRANT_TYPE_IMPLICIT, Oauth2Module::getGrantTypeId('implicit'));
+        $this->assertEquals(Oauth2Module::GRANT_TYPE_PASSWORD, Oauth2Module::getGrantTypeId('password'));
 
         $this->assertNull(Oauth2Module::getGrantTypeId('non-exiting-grant-type'));
     }
@@ -97,7 +97,7 @@ class Oauth2BaseModuleTest extends TestCase
     {
         $this->mockConsoleApplication();
         $module = Oauth2Module::getInstance();
-        $repository = $module->{'get'.$repositoryName}();
+        $repository = $module->{'get' . $repositoryName}();
         $this->assertInstanceOf($repositoryInterface, $repository);
     }
 
@@ -125,9 +125,11 @@ class Oauth2BaseModuleTest extends TestCase
      */
     public function testRequestOauthClaimGetters($getterName, $expected)
     {
-        $baseModule = new class('testOauth2BaseModule') extends Oauth2BaseModule {
+        $baseModule = new class ('testOauth2BaseModule') extends Oauth2BaseModule {
 
-            public function getOidcScopeCollection() {}
+            public function getOidcScopeCollection()
+            {
+            }
 
             protected function getRequestOauthClaim($attribute, $default = null)
             {
@@ -162,10 +164,12 @@ class Oauth2BaseModuleTest extends TestCase
 
     public function testRequestHasScope()
     {
-        $baseModule = new class('testOauth2BaseModule') extends Oauth2BaseModule {
+        $baseModule = new class ('testOauth2BaseModule') extends Oauth2BaseModule {
             public $claims;
 
-            public function getOidcScopeCollection() {}
+            public function getOidcScopeCollection()
+            {
+            }
 
             protected function getRequestOauthClaim($attribute, $default = null)
             {
@@ -195,9 +199,13 @@ class Oauth2BaseModuleTest extends TestCase
 
     public function testGetSetOpenIdConnectScopes()
     {
-        $baseModule = new class('testOauth2BaseModule') extends Oauth2BaseModule {
-            public function getOidcScopeCollection() {}
-            protected function getRequestOauthClaim($attribute, $default = null) {}
+        $baseModule = new class ('testOauth2BaseModule') extends Oauth2BaseModule {
+            public function getOidcScopeCollection()
+            {
+            }
+            protected function getRequestOauthClaim($attribute, $default = null)
+            {
+            }
         };
 
         $this->assertEquals(
@@ -238,14 +246,14 @@ class Oauth2BaseModuleTest extends TestCase
         $mockUser->expects($this->exactly(18))
             ->method('getOpenIdConnectClaimValue')
             ->with(
-                $this->callback(function($claim) {
+                $this->callback(function ($claim) {
                     return $claim instanceof Oauth2OidcClaimInterface;
                 }),
-                $this->callback(function($module) {
+                $this->callback(function ($module) {
                     return $module === Oauth2Module::getInstance();
                 }),
             )
-            ->willReturnCallback(function(...$parameters) use ($mockUser) {
+            ->willReturnCallback(function (...$parameters) use ($mockUser) {
                 $reflectionMethod = new \ReflectionMethod(TestUserModelOidc::class, 'getOpenIdConnectClaimValue');
                 return $reflectionMethod->invoke($mockUser, ...$parameters);
             });

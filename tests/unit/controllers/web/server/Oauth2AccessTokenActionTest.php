@@ -27,7 +27,7 @@ class Oauth2AccessTokenActionTest extends TestCase
         $config = $this->getMockWebAppConfig();
         $moduleConfig = $config['modules']['oauth2'];
         unset($moduleConfig['class']);
-        $module = new class('test', Yii::$app, $moduleConfig) extends Oauth2Module {
+        $module = new class ('test', Yii::$app, $moduleConfig) extends Oauth2Module {
             public function getAuthorizationServer()
             {
                 return new class {
@@ -60,7 +60,7 @@ class Oauth2AccessTokenActionTest extends TestCase
         $config = $this->getMockWebAppConfig();
         $moduleConfig = $config['modules']['oauth2'];
         unset($moduleConfig['class']);
-        $module = new class('test', Yii::$app, $moduleConfig) extends Oauth2Module {
+        $module = new class ('test', Yii::$app, $moduleConfig) extends Oauth2Module {
             public function getAuthorizationServer()
             {
                 throw OAuthServerException::invalidCredentials();
@@ -82,7 +82,7 @@ class Oauth2AccessTokenActionTest extends TestCase
         $config = $this->getMockWebAppConfig();
         $moduleConfig = $config['modules']['oauth2'];
         unset($moduleConfig['class']);
-        $module = new class('test', Yii::$app, $moduleConfig) extends Oauth2Module {
+        $module = new class ('test', Yii::$app, $moduleConfig) extends Oauth2Module {
             public function getAuthorizationServer()
             {
                 throw new InvalidCallException();

@@ -13,6 +13,7 @@ use yii\helpers\Console;
 use yii\helpers\FileHelper;
 use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
+
 use function PHPUnit\Framework\fileExists;
 
 /**
@@ -44,7 +45,6 @@ class Oauth2GenerateMigrationsAction extends Action
 
         $generateMigrations = [];
         foreach ($sourceMigrationClasses as $sourceMigrationClass) {
-
             $sourceMigrationName = StringHelper::basename($sourceMigrationClass);
             $wrapperName = $sourceMigrationName . 'Wrapper';
             /** @var string|Oauth2BaseMigration $sourceMigrationWrapper */
@@ -53,7 +53,8 @@ class Oauth2GenerateMigrationsAction extends Action
                 eval('namespace ' . __NAMESPACE__ . '; class ' . $wrapperName . ' extends \\' . $sourceMigrationClass . ' {}');
             }
 
-            if ($sourceMigrationWrapper::generationIsActive($module)
+            if (
+                $sourceMigrationWrapper::generationIsActive($module)
                 && ($this->controller->force || !array_key_exists($sourceMigrationName, $existingMigrations))
             ) {
                 if ($this->controller->force && array_key_exists($sourceMigrationName, $existingMigrations)) {
@@ -68,8 +69,10 @@ class Oauth2GenerateMigrationsAction extends Action
                     'sourceClass' => $sourceMigrationClass
                 ]);
 
-                if (!file_exists($file)
-                    || file_get_contents($file) !== $content) {
+                if (
+                    !file_exists($file)
+                    || file_get_contents($file) !== $content
+                ) {
                     $generateMigrations[$file] = $content;
                 }
             }
@@ -101,12 +104,10 @@ class Oauth2GenerateMigrationsAction extends Action
         $this->controller->stdout("\n");
 
         if ($this->controller->confirm("Generate new migration?")) {
-
             FileHelper::createDirectory($migrationsPath);
             FileHelper::changeOwnership($migrationsPath, $module->migrationsFileOwnership);
 
             foreach ($generateMigrations as $file => $content) {
-
                 if (!$this->writeFile($file, $content)) {
                     $this->controller->stdout("Failed to create new migration $file.\n", Console::FG_RED);
                     return ExitCode::IOERR;

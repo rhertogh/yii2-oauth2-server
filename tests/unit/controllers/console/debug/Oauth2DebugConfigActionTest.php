@@ -21,7 +21,7 @@ class Oauth2DebugConfigActionTest extends TestCase
             ],
         ]);
 
-        return new class('debug', Oauth2Module::getInstance(), $config) extends Oauth2DebugController {
+        return new class ('debug', Oauth2Module::getInstance(), $config) extends Oauth2DebugController {
             public function stdout($string)
             {
                 echo $string;
@@ -165,5 +165,4 @@ class Oauth2DebugConfigActionTest extends TestCase
             ],
         ];
     }
-
 }

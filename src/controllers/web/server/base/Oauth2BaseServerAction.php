@@ -49,7 +49,6 @@ abstract class Oauth2BaseServerAction extends Action
         }
 
         if ($exception instanceof OAuthServerException) {
-
             if ($exception->hasRedirect()) {
                 return $this->controller->redirect(UrlHelper::addQueryParams($exception->getRedirectUri(), [
                     'error' => $exception->getErrorType()
@@ -61,9 +60,7 @@ abstract class Oauth2BaseServerAction extends Action
             $error = $exception->getErrorType();
             $hint = $exception->getHint();
             $description = $exception->getMessage() . ($hint ? ' ' . $hint : '');
-
         } else {
-
             $response->setStatusCodeByException($exception);
 
             $error = ($exception instanceof Exception || $exception instanceof ErrorException) ? $exception->getName() : 'Exception';

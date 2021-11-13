@@ -66,7 +66,7 @@ class Oauth2DebugConfigAction extends Action
         $storageEncryptionKeys = $module->storageEncryptionKeys ? '[SET]' : '[NOT SET]';
 
         return [
-            'serverRole' => $module->serverRole . ' (' .implode(', ', $serverRoles) . ')',
+            'serverRole' => $module->serverRole . ' (' . implode(', ', $serverRoles) . ')',
 
             'privateKey' => $privateKey,
             'privateKeyPassphrase' => $privateKeyPassphrase,
@@ -140,7 +140,6 @@ class Oauth2DebugConfigAction extends Action
                 $oidcUserinfoValue = '[OpenID Connect is disabled]';
                 $oidcUserinfoSettings = '-';
             }
-
         } else {
             $authorizeClientValue = '[Only available for "authorization_server" role]';
             $authorizeClientSettings = '-';

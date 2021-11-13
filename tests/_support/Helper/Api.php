@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\Helper;
 
 // here you can define custom actions

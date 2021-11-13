@@ -1,4 +1,5 @@
 <?php
+
 namespace rhertogh\Yii2Oauth2Server\components\openidconnect\server;
 
 use Lcobucci\JWT\Configuration;
@@ -31,7 +32,8 @@ class Oauth2OidcBearerTokenResponse extends BearerTokenResponse implements Oauth
     /**
      * @inheritDoc
      */
-    public function __construct(Oauth2Module $module) {
+    public function __construct(Oauth2Module $module)
+    {
         $this->_module = $module;
     }
 

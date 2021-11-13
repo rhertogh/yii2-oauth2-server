@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\unit\components\repositories\base;
 
 use rhertogh\Yii2Oauth2Server\components\repositories\base\Oauth2BaseTokenRepository;
@@ -42,15 +43,32 @@ class Oauth2BaseTokenRepositoryTest extends DatabaseTestCase
             use Oauth2EntityIdentifierTrait;
             use Oauth2ScopesRelationTrait;
 
-            public function persist($runValidation = true, $attributeNames = null) {return true;} // Persistence of main model is tested in implementation classes
-            public function identifierExists() {return false;} // Existence of main model is tested in implementation classes
+            public function persist($runValidation = true, $attributeNames = null)
+            {
+                return true;
+            } // Persistence of main model is tested in implementation classes
+            public function identifierExists()
+            {
+                return false;
+            } // Existence of main model is tested in implementation classes
 
-            public function hasAttribute($name) {return false;} // Avoid database usage
-            public function loadDefaultValues($skipIfSet = true) {} // Avoid database usage
+            public function hasAttribute($name)
+            {
+                return false;
+            } // Avoid database usage
+            public function loadDefaultValues($skipIfSet = true)
+            {
+            } // Avoid database usage
 
-            public function getScopesRelationClassName() { return null; }
+            public function getScopesRelationClassName()
+            {
+                return null;
+            }
 
-            public function getPrimaryKey($asArray = false) { return null; }
+            public function getPrimaryKey($asArray = false)
+            {
+                return null;
+            }
 
             public function getScopes()
             {
@@ -80,7 +98,8 @@ class Oauth2BaseTokenRepositoryTest extends DatabaseTestCase
     {
         return new class extends Oauth2BaseTokenRepository {
 
-            public function getModelClass() {
+            public function getModelClass()
+            {
                 return Oauth2ActiveRecordInterface::class;
             }
 

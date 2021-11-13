@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\unit\migrations;
 
 use rhertogh\Yii2Oauth2Server\migrations\Oauth2_00001_CreateOauth2TablesMigration;
@@ -83,7 +84,7 @@ class CreateOauth2TablesMigrationTest extends BaseMigrationTest
     public function testNumTables()
     {
         $migration = $this->getMockMigration();
-        $this->setInaccessibleProperty($migration, 'numTables',9999);
+        $this->setInaccessibleProperty($migration, 'numTables', 9999);
 
         $this->expectExceptionMessage('Incorrect number of tables in definition. Are the Active Record classes correctly configured?');
         $migration->getTablesWrapper();

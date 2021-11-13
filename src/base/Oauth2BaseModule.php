@@ -621,10 +621,12 @@ abstract class Oauth2BaseModule extends Module
         $claims = $oidcScopeCollection->getFilteredClaims($scopeIdentifiers);
 
         foreach ($claims as $claim) {
-            if (in_array(
-                $claim->getIdentifier(),
-                Oauth2OidcScopeInterface::OPENID_CONNECT_DEFAULT_SCOPE_CLAIMS[Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OPENID]
-            )) {
+            if (
+                in_array(
+                    $claim->getIdentifier(),
+                    Oauth2OidcScopeInterface::OPENID_CONNECT_DEFAULT_SCOPE_CLAIMS[Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OPENID]
+                )
+            ) {
                 // Skip default claims for OpenID (already set above)
                 continue;
             }

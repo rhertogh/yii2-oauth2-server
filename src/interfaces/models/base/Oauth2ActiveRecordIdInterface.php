@@ -1,8 +1,6 @@
 <?php
 
-
 namespace rhertogh\Yii2Oauth2Server\interfaces\models\base;
-
 
 interface Oauth2ActiveRecordIdInterface extends Oauth2ActiveRecordInterface
 {

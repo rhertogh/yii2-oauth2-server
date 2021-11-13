@@ -1,4 +1,5 @@
 <?php
+
 namespace sample\dev\giiant\generators\model;
 
 /**
@@ -60,13 +61,12 @@ class Generator extends \schmunk42\giiant\generators\model\Generator
     /**
      * @inheritDoc
      */
-    public function generateRelationName($relations, $table, $key, $multiple) {
+    public function generateRelationName($relations, $table, $key, $multiple)
+    {
         $name = parent::generateRelationName($relations, $table, $key, $multiple);
         if (strpos($name, 'Oauth2') === 0) {
             $name = substr($name, strlen('Oauth2'));
         }
         return $name;
     }
-
 }
-

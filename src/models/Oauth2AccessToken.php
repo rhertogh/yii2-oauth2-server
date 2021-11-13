@@ -1,8 +1,6 @@
 <?php
 
-
 namespace rhertogh\Yii2Oauth2Server\models;
-
 
 use DateTimeImmutable;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
@@ -72,7 +70,8 @@ class Oauth2AccessToken extends base\Oauth2AccessToken implements Oauth2AccessTo
     /**
      * @inheritDoc
      */
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         $this->clientRelationSetter($name, $value); // wrapper function to ensure the __set function of the Oauth2ClientRelationTrait is never overwritten
     }
 

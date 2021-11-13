@@ -23,12 +23,14 @@ class Oauth2AuthCodeGrant extends AuthCodeGrant implements Oauth2AuthCodeGrantIn
      */
     protected function issueRefreshToken(AccessTokenEntityInterface $accessToken)
     {
-        if ($this->module->enableOpenIdConnect
+        if (
+            $this->module->enableOpenIdConnect
             && !$this->module->openIdConnectIssueRefreshTokenWithoutOfflineAccessScope
         ) {
             $scopeIdentifiers = array_map(fn($scope) => $scope->getIdentifier(), $accessToken->getScopes());
 
-            if (in_array(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OPENID, $scopeIdentifiers)
+            if (
+                in_array(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OPENID, $scopeIdentifiers)
                 && !in_array(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OFFLINE_ACCESS, $scopeIdentifiers)
             ) {
                 // Don't issue refresh token when offline access scope is not authorized

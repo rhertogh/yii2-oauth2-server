@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\unit\models\_base;
 
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ActiveRecordInterface;
@@ -11,7 +12,7 @@ use Yii2Oauth2ServerTests\unit\models\_traits\_base\Oauth2BaseModelTestTrait;
 
 abstract class BaseOauth2ActiveRecordTest extends DatabaseTestCase
 {
-    Use Oauth2BaseModelTestTrait;
+    use Oauth2BaseModelTestTrait;
 
     /**
      * @return array[]

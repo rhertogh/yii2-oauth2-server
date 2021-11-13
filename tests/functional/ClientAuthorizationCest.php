@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\functional;
 
 use Codeception\Example;
@@ -50,7 +51,6 @@ class ClientAuthorizationCest extends BaseGrantCest
         $I->seeElement('#oauth2clientauthorizationrequest-selectedscopeidentifiers-user_id_read[type="hidden"]');
         $I->seeElement('#oauth2clientauthorizationrequest-selectedscopeidentifiers-applied_by_default_by_client_not_required_for_client[type="checkbox"]');
         # endregion authorize client
-
     }
 
     public function newClientWithoutScopeAuthorizationTest(ApiTester $I)

@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\unit\models\base\_base;
 
 use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2RefreshTokenQueryInterface;
@@ -39,7 +40,7 @@ abstract class BaseOauth2BaseModelsTest extends TestCase
     public function testRules()
     {
         $class = $this->getBaseClassWrapper();
-        $this->assertIsArray((new $class)->rules());
+        $this->assertIsArray((new $class())->rules());
     }
 
     /**
@@ -51,7 +52,7 @@ abstract class BaseOauth2BaseModelsTest extends TestCase
     {
         $class = $this->getBaseClassWrapper();
         /** @var Oauth2BaseActiveRecord $baseModel */
-        $baseModel = new $class;
+        $baseModel = new $class();
 
         $this->assertEquals($attributeLabels, $baseModel->attributeLabels());
     }
@@ -66,7 +67,7 @@ abstract class BaseOauth2BaseModelsTest extends TestCase
     {
         $class = $this->getBaseClassWrapper();
         /** @var Oauth2BaseActiveRecord $baseModel */
-        $baseModel = new $class;
+        $baseModel = new $class();
 
         $relationName = 'get' . ucfirst($name);
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\unit\migrations\base;
 
 use rhertogh\Yii2Oauth2Server\migrations\base\Oauth2BaseMigration;
@@ -21,7 +22,9 @@ class Oauth2BaseMigrationTest extends DatabaseTestCase
         });
 
         $migration = new class extends Oauth2BaseMigration {
-            public static function generationIsActive($module) {}
+            public static function generationIsActive($module)
+            {
+            }
 
             public function pubGetTableName($tableClass)
             {
@@ -42,7 +45,9 @@ class Oauth2BaseMigrationTest extends DatabaseTestCase
         });
 
         $migration = new class extends Oauth2BaseMigration {
-            public static function generationIsActive($module) {}
+            public static function generationIsActive($module)
+            {
+            }
             public function pubGetTableSchema($tableClass)
             {
                 return $this->getTableSchema($tableClass);

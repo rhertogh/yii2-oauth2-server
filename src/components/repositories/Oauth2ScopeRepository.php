@@ -1,8 +1,6 @@
 <?php
 
-
 namespace rhertogh\Yii2Oauth2Server\components\repositories;
-
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use rhertogh\Yii2Oauth2Server\components\repositories\base\Oauth2BaseRepository;
@@ -58,7 +56,6 @@ class Oauth2ScopeRepository extends Oauth2BaseRepository implements Oauth2ScopeR
         $clientAllowedScopes = $client->getAllowedScopes($requestedScopeIdentifiers);
 
         if (empty($userIdentifier)) {
-
             // Only allow scopes without user if grant type is 'client_credentials'
             if ($grantType !== Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS) {
                 throw new InvalidArgumentException('$userIdentifier is required when $grantType is not "client_credentials"');

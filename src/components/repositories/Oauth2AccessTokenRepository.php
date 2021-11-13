@@ -1,8 +1,6 @@
 <?php
 
-
 namespace rhertogh\Yii2Oauth2Server\components\repositories;
-
 
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
@@ -102,6 +100,4 @@ class Oauth2AccessTokenRepository extends Oauth2BaseTokenRepository implements O
         $this->_revocationValidation = $validation;
         return $this;
     }
-
-
 }

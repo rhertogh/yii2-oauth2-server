@@ -22,7 +22,7 @@ class Oauth2GenerateMigrationsActionTest extends TestCase
 
     public function _before()
     {
-        $this->runId = uniqid('test_'.gmdate('y-m-d_H-i-s') . '_');
+        $this->runId = uniqid('test_' . gmdate('y-m-d_H-i-s') . '_');
     }
 
     protected function getMigrationsNamespace()
@@ -43,7 +43,7 @@ class Oauth2GenerateMigrationsActionTest extends TestCase
             ],
         ]);
 
-        return new class('migrations', Oauth2Module::getInstance(), $config) extends Oauth2MigrationsController {
+        return new class ('migrations', Oauth2Module::getInstance(), $config) extends Oauth2MigrationsController {
             public function stdout($string)
             {
                 echo $string;
@@ -207,7 +207,7 @@ class Oauth2GenerateMigrationsActionTest extends TestCase
             ]
         );
 
-        $action = new class('generate', $controller) extends Oauth2GenerateMigrationsAction {
+        $action = new class ('generate', $controller) extends Oauth2GenerateMigrationsAction {
             protected function writeFile($file, $data)
             {
                 return false;

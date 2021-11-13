@@ -28,12 +28,12 @@ class Oauth2RefreshTokenGrant extends RefreshTokenGrant implements Oauth2Refresh
     ) {
 
         if ($this->module->enableOpenIdConnect) {
-
             $client = $this->validateClient($request);
             $oldRefreshToken = $this->validateOldRefreshToken($request, $client->getIdentifier());
             $scopes = $oldRefreshToken['scopes'] ?? [];
 
-            if (in_array(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OPENID, $scopes)
+            if (
+                in_array(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OPENID, $scopes)
                 && !in_array(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OFFLINE_ACCESS, $scopes)
             ) {
                 // Refresh tokens are not issued when `openIdConnectIssueRefreshTokenWithoutOfflineAccessScope` is disabled, but let's ensure setting hasn't changed
@@ -43,7 +43,7 @@ class Oauth2RefreshTokenGrant extends RefreshTokenGrant implements Oauth2Refresh
 
                 $user = $this->module->getUserRepository()->getUserEntityByIdentifier($oldRefreshToken['user_id']);
                 if (empty($user)) {
-                    throw new NotFoundHttpException( Yii::t('oauth2', 'Unable to find user with id "' . $oldRefreshToken['user_id'] . '".'));
+                    throw new NotFoundHttpException(Yii::t('oauth2', 'Unable to find user with id "' . $oldRefreshToken['user_id'] . '".'));
                 }
                 if (!($user instanceof Oauth2OidcUserSessionStatusInterface)) {
                     throw new InvalidConfigException('In order to support OpenId Connect Refresh Tokens without offline_access scope '

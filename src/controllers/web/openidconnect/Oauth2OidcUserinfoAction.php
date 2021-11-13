@@ -52,13 +52,10 @@ class Oauth2OidcUserinfoAction extends Action
         $userInfoAlg = $client->getOpenIdConnectUserinfoEncryptedResponseAlg();
 
         if (empty($userInfoAlg)) {
-
             $response->format = Response::FORMAT_JSON;
             $response->data = $this->generateOpenIdConnectUserClaims($identity, $module, $nonce);
             return $response;
-
-        } elseif($userInfoAlg == 'RS256') {
-
+        } elseif ($userInfoAlg == 'RS256') {
             $response->format = Response::FORMAT_RAW;
             $response->headers->add('Content-Type', 'application/jwt');
             $response->data = $module
@@ -72,7 +69,6 @@ class Oauth2OidcUserinfoAction extends Action
                 ->toString();
 
             return $response;
-
         } else {
             throw new InvalidConfigException('Unknown userinfo response algorithm "' . $userInfoAlg . '".');
         }

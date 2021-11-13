@@ -1,8 +1,6 @@
 <?php
 
-
 namespace rhertogh\Yii2Oauth2Server\components\repositories;
-
 
 use League\OAuth2\Server\Entities\AuthCodeEntityInterface;
 use rhertogh\Yii2Oauth2Server\components\repositories\base\Oauth2BaseTokenRepository;

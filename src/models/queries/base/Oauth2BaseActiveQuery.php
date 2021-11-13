@@ -2,7 +2,6 @@
 
 namespace rhertogh\Yii2Oauth2Server\models\queries\base;
 
-
 use yii\db\ActiveQuery;
 
 class Oauth2BaseActiveQuery extends ActiveQuery

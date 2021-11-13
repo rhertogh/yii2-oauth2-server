@@ -30,7 +30,6 @@ class Oauth2ClientCredentialsGrant extends ClientCredentialsGrant implements Oau
         if ($userIdentifier === null) {
             $clientCredentialsGrantUserId = $client->getClientCredentialsGrantUserId();
             if ($clientCredentialsGrantUserId) {
-
                 $clientCredentialsGrantUser = $this->module->getUserRepository()->getUserEntityByIdentifier($clientCredentialsGrantUserId);
                 $scopeIdentifiers = array_map(fn($scope) => $scope->getIdentifier(), $scopes);
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace rhertogh\Yii2Oauth2Server\migrations;
 
 use rhertogh\Yii2Oauth2Server\components\openidconnect\scopes\Oauth2OidcScope;

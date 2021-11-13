@@ -1,4 +1,5 @@
 <?php
+
 namespace rhertogh\Yii2Oauth2Server\components\openidconnect\scopes;
 
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcClaimInterface;

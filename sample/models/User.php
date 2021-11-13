@@ -187,5 +187,4 @@ class User extends ActiveRecord implements
         return $this->hasMany(User::class, ['id' => 'linked_user_id'])->via('userIdentityLinks');
     }
     # endregion
-
 }

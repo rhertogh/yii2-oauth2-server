@@ -16,8 +16,7 @@ class DatabaseFixtures
         $runPreMigrationsFixtures = true,
         $runMigrations = true,
         $runPostMigrationsFixtures = true
-    )
-    {
+    ) {
         $pdo_database = 'pdo_' . $driverName;
         if ($driverName === 'oci') {
             $pdo_database = 'oci8';
@@ -55,10 +54,12 @@ class DatabaseFixtures
             $transaction = Yii::$app->db->beginTransaction();
             try {
                 $transaction->commit();
-            } catch (\Exception $e) { }
+            } catch (\Exception $e) {
+            }
             try {
                 $transaction->commit();
-            } catch (\Exception $e) { }
+            } catch (\Exception $e) {
+            }
         }
 
         if ($driverName === 'oci') {

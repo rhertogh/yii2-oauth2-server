@@ -1,8 +1,6 @@
 <?php
 
-
 namespace rhertogh\Yii2Oauth2Server\interfaces\models\queries;
-
 
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use yii\db\ActiveQueryInterface;

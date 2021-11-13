@@ -22,6 +22,7 @@ use yii\web\Controller;
 use yii\web\Response;
 use Yii2Oauth2ServerTests\_helpers\TestUserModel;
 use Yii2Oauth2ServerTests\unit\TestCase;
+
 use function PHPUnit\Framework\assertInstanceOf;
 
 /**
@@ -33,7 +34,7 @@ class Oauth2BaseServerActionTest extends TestCase
     {
         $this->mockWebApplication();
         $controller = new Controller('test', Oauth2Module::getInstance());
-        $baseServerAction = new class('test', $controller) extends Oauth2BaseServerAction {
+        $baseServerAction = new class ('test', $controller) extends Oauth2BaseServerAction {
             public function processExceptionTest($e)
             {
                 return $this->processException($e);
@@ -53,7 +54,7 @@ class Oauth2BaseServerActionTest extends TestCase
     {
         $this->mockWebApplication();
         $controller = new Controller('test', Oauth2Module::getInstance());
-        $baseServerAction = new class('test', $controller) extends Oauth2BaseServerAction{
+        $baseServerAction = new class ('test', $controller) extends Oauth2BaseServerAction{
             public function processExceptionTest($e)
             {
                 return $this->processException($e);
@@ -76,7 +77,7 @@ class Oauth2BaseServerActionTest extends TestCase
         $this->mockWebApplication();
 
         $controller = new Controller('test', Oauth2Module::getInstance());
-        $baseServerAction = new class('test', $controller) extends Oauth2BaseServerAction {
+        $baseServerAction = new class ('test', $controller) extends Oauth2BaseServerAction {
             public function processExceptionTest($e)
             {
                 return $this->processException($e);
@@ -112,7 +113,7 @@ class Oauth2BaseServerActionTest extends TestCase
         ]);
 
         $controller = new Controller('test', Oauth2Module::getInstance());
-        $baseServerAction = new class('test', $controller) extends Oauth2BaseServerAction {
+        $baseServerAction = new class ('test', $controller) extends Oauth2BaseServerAction {
             public function processExceptionTest($e)
             {
                 return $this->processException($e);

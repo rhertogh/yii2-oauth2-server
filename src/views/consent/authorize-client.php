@@ -100,7 +100,7 @@ use yii\widgets\ActiveForm;
     <div class="oauth2_authorize-client-modal">
         <?php $form = ActiveForm::begin(['id' => 'oauth2-client-authorization-request-form']) ?>
         <div class="oauth2_authorize-client-content">
-        <?php if ($approvalPendingScopes): ?>
+        <?php if ($approvalPendingScopes) : ?>
             <h3 class="oauth2_authorize-client-modal-title oauth2_authorize-client-modal-title_requests-scopes">
                 <?= Yii::t('oauth2', '{clientName} would like to:', [
                     'clientName' => Html::encode($clientAuthorizationRequest->getClient()->getName()),
@@ -114,7 +114,7 @@ use yii\widgets\ActiveForm;
                 ]); ?>
                 <hr>
             </div>
-            <?php if ($previouslyApprovedScopes): ?>
+            <?php if ($previouslyApprovedScopes) : ?>
                 <div class="oauth2_authorize-client-previously-approved-scopes">
                     <a href="#" id="oauth2_authorize-client-previously-approved-scopes-toggle">
                         <?= Yii::t('oauth2', 'Previously accepted access:') ?>
@@ -130,7 +130,7 @@ use yii\widgets\ActiveForm;
                     </div>
                 </div>
             <?php endif; ?>
-        <?php else: ?>
+        <?php else : ?>
             <h3 class="oauth2_authorize-client-modal-title oauth2_authorize-client-modal-title_no-scopes">
                 <?= Yii::t('oauth2', '{clientName} would like to access {appName} on your behalf.', [
                     'clientName' => Html::encode($clientAuthorizationRequest->getClient()->getName()),

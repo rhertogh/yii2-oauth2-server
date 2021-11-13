@@ -1,9 +1,11 @@
 <?php
+
 /**
  * This view is used by src/controllers/console/migrations/Oauth2GenerateAction.php.
  *
  * The following variables are available in this view:
  */
+
 /* @var $class string the new migration class name including namespace */
 /* @var $sourceClass string the source class to extend */
 

@@ -228,5 +228,4 @@ class Oauth2OidcScopeCollectionTest extends TestCase
         $this->assertEquals(['1.1', '1.2', '2.1', '2.2'], array_column($collection->getFilteredClaims(['scope1', 'scope2']), 'identifier'));
         $this->assertEquals(['2.1', '2.2'], array_column($collection->getFilteredClaims(['scope2']), 'identifier'));
     }
-
 }

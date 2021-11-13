@@ -14,7 +14,7 @@ trait Oauth2EnabledQueryTrait
     {
         /** @var ActiveQuery $this */
         if (!is_null($enabled)) {
-            if (is_null($this->from)){
+            if (is_null($this->from)) {
                 /** @var Oauth2ActiveRecordInterface $modelClass */
                 $modelClass = $this->modelClass;
                 $table = $modelClass::tableName();

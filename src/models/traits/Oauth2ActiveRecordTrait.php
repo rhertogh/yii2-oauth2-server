@@ -35,8 +35,7 @@ trait Oauth2ActiveRecordTrait
         if (!$this->save($runValidation, $attributeNames)) {
             throw new DbException('Could not save ' . static::class .
                 (YII_DEBUG ? PHP_EOL . print_r($this->attributes, true) : '') .
-                ' Errors: ' . PHP_EOL . implode(', ', $this->getErrorSummary(true))
-            );
+                ' Errors: ' . PHP_EOL . implode(', ', $this->getErrorSummary(true)));
         }
 
         return $this;

@@ -73,7 +73,6 @@ trait Oauth2OidcUserIdentityTrait
 
         throw new InvalidArgumentException('Invalid determiner '
             . '"' . (is_object($determiner) ? get_class($determiner) : gettype($determiner)) . '"'
-            . ' for claim "' . $claim->getIdentifier() . '".'
-        );
+            . ' for claim "' . $claim->getIdentifier() . '".');
     }
 }

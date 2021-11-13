@@ -1,4 +1,5 @@
 <?php
+
 /// WARNING! This configuration is optimized for local development and should not be used in any other environment (for both security and performance) ///
 
 use rhertogh\Yii2Oauth2Server\models\base\Oauth2BaseActiveRecord;

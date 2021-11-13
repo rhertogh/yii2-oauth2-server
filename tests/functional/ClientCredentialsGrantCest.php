@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\functional;
 
 use Codeception\Example;
@@ -32,7 +33,7 @@ class ClientCredentialsGrantCest extends BaseSimpleGrantCest
 
             // OK
             [
-                'grant'=> Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS,
+                'grant' => Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS,
                 'accessTokenTTL' => 'PT10M',
                 'providerOptions' => [
                     'clientId' => 'test-client-type-client-credentials-valid',
@@ -44,11 +45,11 @@ class ClientCredentialsGrantCest extends BaseSimpleGrantCest
 
             // UNAUTHORIZED
             [
-                'grant'=> Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS,
+                'grant' => Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS,
                 'accessTokenTTL' => 'PT10M',
                 'providerOptions' => [
                     'clientId' => 'test-client-type-client-credentials-valid',
-                    'clientSecret'=> 'incorrect',
+                    'clientSecret' => 'incorrect',
                 ],
                 'tokenOptions' => [],
                 'responseCode' => HttpCode::UNAUTHORIZED

@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Nick van der Meij
- * Date: 4-5-2016
- * Time: 10:28
- */
 
 namespace rhertogh\Yii2Oauth2Server\models\behaviors;
-
 
 use yii\db\BaseActiveRecord;
 

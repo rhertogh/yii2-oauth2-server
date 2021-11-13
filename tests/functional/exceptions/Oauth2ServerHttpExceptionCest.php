@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\functional\exceptions;
 
 use Codeception\Example;

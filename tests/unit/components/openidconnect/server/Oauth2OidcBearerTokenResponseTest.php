@@ -31,7 +31,7 @@ class Oauth2OidcBearerTokenResponseTest extends DatabaseTestCase
 {
     protected function getMockOidcBearerTokenResponse()
     {
-        return new class(Oauth2Module::getInstance()) extends Oauth2OidcBearerTokenResponse {
+        return new class (Oauth2Module::getInstance()) extends Oauth2OidcBearerTokenResponse {
             public function pubGetExtraParams(AccessTokenEntityInterface $accessToken)
             {
                 return $this->getExtraParams($accessToken);

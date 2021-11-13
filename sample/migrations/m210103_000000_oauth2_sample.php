@@ -160,6 +160,5 @@ class m210103_000000_oauth2_sample extends Migration
 
     public function safeDown()
     {
-
     }
 }

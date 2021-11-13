@@ -47,7 +47,6 @@ class Oauth2AuthorizeClientAction extends Action
             return $this->controller->render($this->clientAuthorizationView, [
                 'clientAuthorizationRequest' => $clientAuthorizationRequest,
             ]);
-
         } catch (\Exception $e) {
             $message = Yii::t('oauth2', 'Unable to respond to client authorization request.');
             if ($e instanceof HttpException) {

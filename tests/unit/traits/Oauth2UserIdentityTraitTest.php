@@ -32,7 +32,10 @@ class Oauth2UserIdentityTraitTest extends DatabaseTestCase
         $modelClass = get_class(new class {
             use Oauth2UserIdentityTrait;
 
-            public function getId() {return 0;} // not used
+            public function getId()
+            {
+                return 0;
+            } // not used
         });
 
         $identity = $modelClass::findIdentityByAccessToken($this->validAccessToken, Oauth2HttpBearerAuth::class);
@@ -43,7 +46,7 @@ class Oauth2UserIdentityTraitTest extends DatabaseTestCase
     {
         $this->mockConsoleApplication([
             'modules' => [
-                'oauth2-test' => get_class(new class('oauth2-test') extends Module {
+                'oauth2-test' => get_class(new class ('oauth2-test') extends Module {
                     public function findIdentityByAccessToken($token, $type)
                     {
                         return new class {
@@ -59,7 +62,10 @@ class Oauth2UserIdentityTraitTest extends DatabaseTestCase
             public static $oauth2ModuleName = 'oauth2-test';
             use Oauth2UserIdentityTrait;
 
-            public function getId() {return 0;} // not used
+            public function getId()
+            {
+                return 0; // not used
+            }
         });
 
         $user = $modelClass::findIdentityByAccessToken('test.token', 'test.type');

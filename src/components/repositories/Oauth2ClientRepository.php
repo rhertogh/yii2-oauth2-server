@@ -1,8 +1,6 @@
 <?php
 
-
 namespace rhertogh\Yii2Oauth2Server\components\repositories;
-
 
 use rhertogh\Yii2Oauth2Server\components\repositories\base\Oauth2BaseRepository;
 use rhertogh\Yii2Oauth2Server\components\repositories\traits\Oauth2RepositoryIdentifierTrait;

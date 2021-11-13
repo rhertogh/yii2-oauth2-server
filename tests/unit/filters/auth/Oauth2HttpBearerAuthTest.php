@@ -39,7 +39,7 @@ class Oauth2HttpBearerAuthTest extends TestCase
     {
         $this->mockWebApplication([
             'modules' => [
-                'customOauth2' => get_class(new class('test') extends Module {
+                'customOauth2' => get_class(new class ('test') extends Module {
                     public function validateAuthenticatedRequest()
                     {
                         throw OAuthServerException::accessDenied();
@@ -98,7 +98,8 @@ class Oauth2HttpBearerAuthTest extends TestCase
 
         try {
             $httpBearerAuth->authenticate(Yii::$app->user, $request, $response);
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         $this->assertInstanceOf(UnauthorizedHttpException::class, $e);
         $this->assertEquals('Bearer realm="test-realm"', $response->headers->get('WWW-Authenticate'));

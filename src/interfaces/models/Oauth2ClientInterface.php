@@ -1,8 +1,6 @@
 <?php
 
-
 namespace rhertogh\Yii2Oauth2Server\interfaces\models;
-
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2EncryptorInterface;

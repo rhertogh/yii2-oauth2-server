@@ -1,4 +1,5 @@
 <?php
+
 /// WARNING! This configuration is optimized for local development and should not be used in any other environment (for both security and performance) ///
 
 // rhertogh\Yii2Oauth2Server\models\Oauth2Scope::$tableName = 'my_custom_table_name'; // Configure the table name for the Oauth2Scope

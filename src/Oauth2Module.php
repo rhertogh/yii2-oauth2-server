@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -459,10 +460,10 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
      */
     public function bootstrap($app)
     {
-        if ($app instanceof WebApplication
+        if (
+            $app instanceof WebApplication
             && $this->serverRole & static::SERVER_ROLE_AUTHORIZATION_SERVER
         ) {
-
             $rules = [
                 $this->accessTokenPath => Oauth2ServerControllerInterface::CONTROLLER_NAME
                     . '/' . Oauth2ServerControllerInterface::ACTION_NAME_ACCESS_TOKEN,
@@ -566,7 +567,6 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
         }
 
         if (!$this->_authorizationServer) {
-
             $this->ensureProperties(static::REQUIRED_SETTINGS_AUTHORIZATION_SERVER);
 
             if (empty($this->storageEncryptionKeys[$this->defaultStorageEncryptionKey])) {
@@ -600,19 +600,16 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
             ]);
 
             if (!empty($this->grantTypes)) {
-
                 $grantTypes = $this->grantTypes;
 
                 if (is_callable($grantTypes)) {
                     call_user_func($grantTypes, $this->_authorizationServer, $this);
                 } else {
-
                     if (!is_array($grantTypes)) {
                         $grantTypes = [$grantTypes];
                     }
 
                     foreach ($grantTypes as $grantTypeDefinition) {
-
                         if ($grantTypeDefinition instanceof GrantTypeInterface) {
                             $accessTokenTTL = $this->defaultAccessTokenTTL ? new \DateInterval($this->defaultAccessTokenTTL) : null;
                             $this->_authorizationServer->enableGrantType($grantTypeDefinition, $accessTokenTTL);
@@ -623,7 +620,8 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
                             )
                             || is_a($grantTypeDefinition, Oauth2GrantTypeFactoryInterface::class, true)
                         ) {
-                            if (is_numeric($grantTypeDefinition)
+                            if (
+                                is_numeric($grantTypeDefinition)
                                 && array_key_exists($grantTypeDefinition, static::DEFAULT_GRANT_TYPE_FACTORIES)
                             ) {
                                 $grantTypeDefinition = static::DEFAULT_GRANT_TYPE_FACTORIES[$grantTypeDefinition];
@@ -693,7 +691,6 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
         }
 
         if (!$this->_resourceServer) {
-
             $this->ensureProperties(static::REQUIRED_SETTINGS_RESOURCE_SERVER);
 
             $accessTokenRepository = $this->getAccessTokenRepository()
@@ -897,7 +894,8 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
             throw new InvalidCallException($type . ' must implement ' . Oauth2HttpBearerAuthInterface::class);
         }
 
-        if (!preg_match('/^Bearer\s+(.*?)$/', $this->_oauthClaimsAuthorizationHeader, $matches)
+        if (
+            !preg_match('/^Bearer\s+(.*?)$/', $this->_oauthClaimsAuthorizationHeader, $matches)
             || !Yii::$app->security->compareString($matches[1], $token)
         ) {
             throw new InvalidCallException('validateAuthenticatedRequest() must be called before findIdentityByAccessToken().');

@@ -2,12 +2,12 @@
 
 namespace rhertogh\Yii2Oauth2Server\models\behaviors;
 
-
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
 use yii\db\Schema;
 
-class BooleanBehavior extends Behavior {
+class BooleanBehavior extends Behavior
+{
 
     /**
      * Nummeric database schema types.

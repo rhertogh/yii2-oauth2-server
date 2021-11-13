@@ -82,7 +82,8 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
 
             if ($clientAuthorizationRequestId) {
                 $clientAuthorizationRequest = $module->getClientAuthReqSession($clientAuthorizationRequestId);
-                if ($clientAuthorizationRequest
+                if (
+                    $clientAuthorizationRequest
                     && $clientAuthorizationRequest->getState()
                     && !Yii::$app->security->compareString($clientAuthorizationRequest->getState(), $authRequest->getState())
                 ) {
@@ -91,10 +92,10 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
             }
 
             if (empty($clientAuthorizationRequest)) {
-
                 $prompts = explode(' ', $this->getRequestParam($request, OidcAuthRequestInterface::REQUEST_PARAMETER_PROMPT)) ?? [];
 
-                if (in_array(OidcAuthRequestInterface::REQUEST_PARAMETER_PROMPT_NONE, $prompts)
+                if (
+                    in_array(OidcAuthRequestInterface::REQUEST_PARAMETER_PROMPT_NONE, $prompts)
                     && (count($prompts) > 1)
                 ) {
                     throw new BadRequestHttpException('When the "prompt" parameter contains "none" other values are not allowed.');
@@ -102,7 +103,8 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
 
                 // Ignore `offline_access` scope if prompt doesn't contain 'consent' (or pre-approved via config)
                 // https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess
-                if (in_array(OidcScopeInterface::OPENID_CONNECT_SCOPE_OFFLINE_ACCESS, $requestedScopeIdentifiers)
+                if (
+                    in_array(OidcScopeInterface::OPENID_CONNECT_SCOPE_OFFLINE_ACCESS, $requestedScopeIdentifiers)
                     && !in_array(OidcAuthRequestInterface::REQUEST_PARAMETER_PROMPT_CONSENT, $prompts)
                     && !$client->getOpenIdConnectAllowOfflineAccessWithoutConsent()
                 ) {
@@ -115,7 +117,7 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
                 $maxAge = $this->getRequestParam($request, OidcAuthRequestInterface::REQUEST_PARAMETER_MAX_AGE);
                 if ($maxAge === '') {
                     $maxAge = null;
-                } elseif($maxAge !== null) {
+                } elseif ($maxAge !== null) {
                     $maxAge = (int)$maxAge;
                 }
 
@@ -151,7 +153,8 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
             }
 
             // Check if reauthentication is required
-            if ((
+            if (
+                (
                     ( // true in case user was authenticated before request and oidc prompt requires login
                         in_array(OidcAuthRequestInterface::REQUEST_PARAMETER_PROMPT_LOGIN, $clientAuthorizationRequest->getPrompts())
                         && $clientAuthorizationRequest->wasUserAuthenticatedBeforeRequest()
@@ -211,7 +214,8 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
                 }
             }
 
-            if ($clientAuthorizationRequest->isAuthorizationNeeded()
+            if (
+                $clientAuthorizationRequest->isAuthorizationNeeded()
                 || in_array(OidcAuthRequestInterface::REQUEST_PARAMETER_PROMPT_CONSENT, $clientAuthorizationRequest->getPrompts())
             ) {
                 if (in_array(OidcAuthRequestInterface::REQUEST_PARAMETER_PROMPT_NONE, $clientAuthorizationRequest->getPrompts())) {

@@ -11,14 +11,14 @@ use yii\widgets\ActiveForm;
  * @var ActiveForm $form
  */
 
-foreach ($scopeRequests as $scopeRequest): ?>
+foreach ($scopeRequests as $scopeRequest) : ?>
     <hr>
     <div>
         <?php
         $scope = $scopeRequest->getScope();
         $inputId = Html::getInputId($clientAuthorizationRequest, 'selectedScopeIdentifiers')
                         . '-'
-                        . preg_replace('/[^a-z0-9_]/','_',  mb_strtolower($scope->getIdentifier()));
+                        . preg_replace('/[^a-z0-9_]/', '_', mb_strtolower($scope->getIdentifier()));
 
         $authorizationMessage = $scope->getAuthorizationMessage() ?? $scope->getDescription() ?? $scope->getIdentifier();
 

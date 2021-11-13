@@ -2,7 +2,6 @@
 
 namespace rhertogh\Yii2Oauth2Server\components\openidconnect\claims;
 
-
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\claims\Oauth2OidcAddressClaimInterface;
 use yii\base\Arrayable;
 use yii\base\BaseObject;
@@ -175,6 +174,4 @@ class Oauth2OidcAddressClaim extends BaseObject implements Oauth2OidcAddressClai
             'country' => $this->getCountry(),
         ];
     }
-
-
 }

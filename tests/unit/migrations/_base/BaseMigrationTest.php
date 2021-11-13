@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\unit\migrations\_base;
 
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
@@ -67,6 +68,6 @@ abstract class BaseMigrationTest extends DatabaseTestCase
             'compact' => true,
         ]);
 
-        return $migration->{'safe'. $direction}();
+        return $migration->{'safe' . $direction}();
     }
 }

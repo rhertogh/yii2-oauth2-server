@@ -1,4 +1,5 @@
 <?php
+
 namespace rhertogh\Yii2Oauth2Server\components\openidconnect\claims;
 
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcClaimInterface;
@@ -75,5 +76,4 @@ class Oauth2OidcClaim extends BaseObject implements Oauth2OidcClaimInterface
         $this->_defaultValue = $defaultValue;
         return $this;
     }
-
 }

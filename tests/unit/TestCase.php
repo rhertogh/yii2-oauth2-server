@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -140,7 +141,8 @@ abstract class TestCase extends \Codeception\Test\Unit
                 ],
             ],
             $this->getMockBaseAppConfig(),
-            $config);
+            $config
+        );
     }
 
     /**
@@ -230,7 +232,8 @@ abstract class TestCase extends \Codeception\Test\Unit
         return $reflectionClass->getConstant($constantName);
     }
 
-    protected function callInaccessibleMethod($object, $method, $args = [], $revoke = true) {
+    protected function callInaccessibleMethod($object, $method, $args = [], $revoke = true)
+    {
         $class = new \ReflectionClass(get_class($object));
         $method = $class->getMethod($method);
         $method->setAccessible(true);
@@ -264,7 +267,7 @@ abstract class TestCase extends \Codeception\Test\Unit
     {
         $keyPath = Yii::getAlias($this->privateCryptKeyPath);
         chmod($keyPath, 0660);
-        return New CryptKey($keyPath, $this->privateCryptKeyPassPhrase);
+        return new CryptKey($keyPath, $this->privateCryptKeyPassPhrase);
     }
 
     /**
@@ -274,7 +277,7 @@ abstract class TestCase extends \Codeception\Test\Unit
     {
         $keyPath = Yii::getAlias($this->publicCryptKeyPath);
         chmod($keyPath, 0660);
-        return New CryptKey($keyPath);
+        return new CryptKey($keyPath);
     }
 
     /**

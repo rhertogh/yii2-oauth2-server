@@ -1,8 +1,6 @@
 <?php
 
-
 namespace rhertogh\Yii2Oauth2Server\models;
-
 
 use DateTimeImmutable;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AuthCodeInterface;
@@ -54,7 +52,8 @@ class Oauth2AuthCode extends base\Oauth2AuthCode implements Oauth2AuthCodeInterf
     /**
      * @inheritDoc
      */
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         $this->clientRelationSetter($name, $value); // wrapper function to ensure the __set function of the Oauth2ClientRelationTrait is never overwritten
     }
 
@@ -81,5 +80,4 @@ class Oauth2AuthCode extends base\Oauth2AuthCode implements Oauth2AuthCodeInterf
     {
         return Oauth2AuthCodeScopeInterface::class;
     }
-
 }

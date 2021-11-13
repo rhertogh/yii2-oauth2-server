@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\functional;
 
 use Codeception\Example;
@@ -88,7 +89,7 @@ class OpenIdConnectCest extends BaseGrantCest
         # endregion fetch access token
 
         # region make authenticated request
-        $this->testAuthenticatedRequest($I, $accessToken,  ['id']);
+        $this->testAuthenticatedRequest($I, $accessToken, ['id']);
         # endregion
 
         # region refresh access token
@@ -98,7 +99,8 @@ class OpenIdConnectCest extends BaseGrantCest
         if (!$example['expectedOfflineAccess']) {
             try {
                 $oauthClient->refreshAccessToken($accessToken);
-            } catch (\Exception $e) {}
+            } catch (\Exception $e) {
+            }
             $I->assertEquals(HttpCode::UNAUTHORIZED, $e->getCode());
 
             TestUserModelOidc::$hasActiveSession = true;

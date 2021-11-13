@@ -33,10 +33,11 @@ class Oauth2RefreshTokenGrantTest extends DatabaseTestCase
 
         TestUserModelOidc::$hasActiveSession = $userHasActiveSession;
 
-        $refreshTokenGrant = new class($module->getRefreshTokenRepository()) extends Oauth2RefreshTokenGrant {
+        $refreshTokenGrant = new class ($module->getRefreshTokenRepository()) extends Oauth2RefreshTokenGrant {
             static $scopes;
             static $userId;
-            protected function validateClient(ServerRequestInterface $request) {
+            protected function validateClient(ServerRequestInterface $request)
+            {
                 return new Oauth2Client([
                     'id' => 1003000,
                     //'identifier' => 'test-client-type-auth-code-valid',

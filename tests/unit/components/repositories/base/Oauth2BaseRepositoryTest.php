@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\unit\components\repositories\base;
 
 use rhertogh\Yii2Oauth2Server\components\repositories\base\Oauth2BaseRepository;
@@ -24,7 +25,8 @@ class Oauth2BaseRepositoryTest extends DatabaseTestCase
     protected function getMockBaseRepository()
     {
         return new class extends Oauth2BaseRepository {
-            public function getModelClass() {
+            public function getModelClass()
+            {
                 return Oauth2ActiveRecordInterface::class;
             }
         };

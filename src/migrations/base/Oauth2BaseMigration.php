@@ -1,4 +1,5 @@
 <?php
+
 namespace rhertogh\Yii2Oauth2Server\migrations\base;
 
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
@@ -20,6 +21,7 @@ use yii\base\InvalidConfigException;
 use yii\db\Migration;
 use yii\db\Schema;
 use yii\db\TableSchema;
+
 use function rhertogh\Yii2Oauth2Server\migrations\count;
 
 abstract class Oauth2BaseMigration extends Migration

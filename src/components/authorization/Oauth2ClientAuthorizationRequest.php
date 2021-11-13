@@ -433,7 +433,7 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
                 $userClient->setEnabled(true);
                 $userClient->persist();
             }
-        } else if ($userClient->isEnabled() != $this->isApproved()) {
+        } elseif ($userClient->isEnabled() != $this->isApproved()) {
             $userClient->setEnabled($this->isApproved());
             $userClient->persist();
         }

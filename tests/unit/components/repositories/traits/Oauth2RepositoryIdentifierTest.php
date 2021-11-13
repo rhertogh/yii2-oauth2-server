@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\unit\components\repositories\traits;
 
 use rhertogh\Yii2Oauth2Server\components\repositories\traits\Oauth2RepositoryIdentifierTrait;
@@ -45,8 +46,13 @@ class Oauth2RepositoryIdentifierTest extends TestCase
                 return new \stdClass();
             }
 
-            public function hasAttribute($name) {return false;} // Avoid database usage
-            public function loadDefaultValues($skipIfSet = true) {} // Avoid database usage
+            public function hasAttribute($name)
+            {
+                return false;
+            } // Avoid database usage
+            public function loadDefaultValues($skipIfSet = true)
+            {
+            } // Avoid database usage
         };
 
         $modelClass = get_class($model);

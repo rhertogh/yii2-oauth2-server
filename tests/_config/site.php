@@ -54,7 +54,7 @@ return ArrayHelper::merge(require('main.php'), [
             'init' => function () {
                 parent::init();
             },
-            'publish' => function($path, $options = []) {
+            'publish' => function ($path, $options = []) {
                 return ['', ''];
             },
         ]),

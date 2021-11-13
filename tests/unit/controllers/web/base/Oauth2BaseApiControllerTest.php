@@ -17,7 +17,8 @@ class Oauth2BaseApiControllerTest extends Oauth2BaseWebControllerTest
     protected function getMockController()
     {
         $this->mockWebApplication();
-        return new class('base', Oauth2Module::getInstance()) extends Oauth2BaseApiController {};
+        return new class ('base', Oauth2Module::getInstance()) extends Oauth2BaseApiController {
+        };
     }
 
     /**

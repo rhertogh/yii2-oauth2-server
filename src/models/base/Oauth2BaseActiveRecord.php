@@ -1,8 +1,6 @@
 <?php
 
-
 namespace rhertogh\Yii2Oauth2Server\models\base;
-
 
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ActiveRecordInterface;
 use rhertogh\Yii2Oauth2Server\models\behaviors\BooleanBehavior;

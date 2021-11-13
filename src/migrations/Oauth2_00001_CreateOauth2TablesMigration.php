@@ -1,4 +1,5 @@
 <?php
+
 namespace rhertogh\Yii2Oauth2Server\migrations;
 
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenInterface;
@@ -117,7 +118,7 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                     ->comment('Skip user authorization of client if there are no scopes that require authorization.'),
                 'client_credentials_grant_user_id' => ($userTable ? $userPkSchema->dbType : Schema::TYPE_STRING)
                     . ' COMMENT "Optional user id to use in case of grant type \'client_credentials\'.'
-                    . ' This user account should also be connected to the client via the `'.$userClientTable.'` table and, if applicable, the `'.$userClientScopeTable.'` table."',
+                    . ' This user account should also be connected to the client via the `' . $userClientTable . '` table and, if applicable, the `' . $userClientScopeTable . '` table."',
                 'oidc_allow_offline_access_without_consent' => $this->boolean()->notNull()->defaultValue(0)
                     ->comment('Allow the OpenID Connect "offline_access" scope for this client without the "prompt" parameter contains "consent".'),
                 'oidc_userinfo_encrypted_response_alg' => $this->string(),
@@ -231,7 +232,7 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
 
             $refreshTokenTable => [
                 'id' => $this->bigPrimaryKey()->unsigned(),
-                'access_token_id' =>$this->bigInteger()->unsigned(),
+                'access_token_id' => $this->bigInteger()->unsigned(),
                 'identifier' => $this->string()->notNull()->unique(),
                 'expiry_date_time' => $this->dateTime()->notNull(),
                 'enabled' => $this->boolean()->notNull()->defaultValue(1),
@@ -295,5 +296,4 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
 //
 //        return $activeRecord;
 //    }
-
 }

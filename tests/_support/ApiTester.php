@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests;
 
 use Psr\Http\Message\RequestInterface;
@@ -49,6 +50,5 @@ class ApiTester extends \Codeception\Actor
      */
     public function sendYiiHttpClientRequest($request)
     {
-
     }
 }

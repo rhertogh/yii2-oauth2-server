@@ -23,8 +23,13 @@ class Oauth2BaseScopeAuthorizationRequestTest extends TestCase
     {
         $this->mockWebApplication();
         $scope = new class extends Oauth2Scope {
-            public function hasAttribute($name) { return false; }
-            public function loadDefaultValues($skipIfSet = true) {}
+            public function hasAttribute($name)
+            {
+                return false;
+            }
+            public function loadDefaultValues($skipIfSet = true)
+            {
+            }
         };
         $baseScopeAuthorizationRequest = $this->getMockBaseScopeAuthorizationRequest();
 

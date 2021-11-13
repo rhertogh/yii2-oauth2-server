@@ -1,6 +1,5 @@
 <?php
 
-
 namespace rhertogh\Yii2Oauth2Server\interfaces\models\base;
 
 use yii\db\ActiveRecordInterface;

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace rhertogh\Yii2Oauth2Server\models;
-
 
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserClientScopeInterface;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2EnabledTrait;

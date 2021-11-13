@@ -19,6 +19,6 @@ trait Oauth2ExpiryDateTimeTrait
      */
     public function setExpiryDateTime(DateTimeImmutable $dateTime)
     {
-        $this->expiry_date_time =$dateTime;
+        $this->expiry_date_time = $dateTime;
     }
 }

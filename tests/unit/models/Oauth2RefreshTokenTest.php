@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\unit\models;
 
 use DateTimeImmutable;
@@ -145,7 +146,7 @@ class Oauth2RefreshTokenTest extends BaseOauth2ActiveRecordTest
         $accessToken = $mocks['accessToken'];
 
         $model->setAccessToken($accessToken);
-        $model->access_token_id= 456;
+        $model->access_token_id = 456;
         $this->assertNull($model->getAccessToken());
     }
 

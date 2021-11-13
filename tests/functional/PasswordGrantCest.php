@@ -1,4 +1,5 @@
 <?php
+
 namespace Yii2Oauth2ServerTests\functional;
 
 use Codeception\Example;
@@ -42,7 +43,7 @@ class PasswordGrantCest extends BaseSimpleGrantCest
         return [
             // OK
             [
-                'grant'=> Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD,
+                'grant' => Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD,
                 'accessTokenTTL' => 'PT10M',
                 'providerOptions' => [
                     'clientId' => 'test-client-type-password-public-valid',
@@ -56,7 +57,7 @@ class PasswordGrantCest extends BaseSimpleGrantCest
 
             // UNAUTHORIZED
             [
-                'grant'=> Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD,
+                'grant' => Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD,
                 'accessTokenTTL' => 'PT10M',
                 'providerOptions' => [
                     'clientId' => 'test-client-type-password-public-valid',

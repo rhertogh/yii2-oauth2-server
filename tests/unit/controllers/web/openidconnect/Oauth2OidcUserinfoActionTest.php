@@ -169,6 +169,4 @@ class Oauth2OidcUserinfoActionTest extends DatabaseTestCase
         $this->expectExceptionMessage('Client "nope" not found or disabled.');
         $userinfoAction->run();
     }
-
-
 }

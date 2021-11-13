@@ -2,7 +2,6 @@
 
 namespace rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\claims;
 
-
 /**
  * @see https://openid.net/specs/openid-connect-core-1_0.html#AddressClaim
  */
