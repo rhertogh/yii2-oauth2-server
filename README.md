@@ -16,6 +16,7 @@
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/rhertogh/yii2-oauth2-server.svg)](https://packagist.org/packages/rhertogh/yii2-oauth2-server)
 [![build Status](https://github.com/rhertogh/yii2-oauth2-server/actions/workflows/build.yml/badge.svg)](https://github.com/rhertogh/yii2-oauth2-server/actions/workflows/build.yml)
+[![Code Coverage](https://scrutinizer-ci.com/g/rhertogh/yii2-oauth2-server/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/rhertogh/yii2-oauth2-server/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/rhertogh/yii2-oauth2-server/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/rhertogh/yii2-oauth2-server/?branch=master)
 [![GitHub](https://img.shields.io/github/license/rhertogh/yii2-oauth2-server)](https://github.com/rhertogh/yii2-oauth2-server/blob/master/LICENSE.md)
 
