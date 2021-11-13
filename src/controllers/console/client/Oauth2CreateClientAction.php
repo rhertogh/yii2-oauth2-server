@@ -49,7 +49,7 @@ class Oauth2CreateClientAction extends Action
 
         $this->controller->stdout("Creating new Oath2 Client\n");
 
-        if (empty($identifer)){
+        if (empty($identifier)){
             $identifier = $this->controller->prompt('Client Identifier?', [
                 'required' => true,
                 'default' => $defaultIdentifier ?? null,
