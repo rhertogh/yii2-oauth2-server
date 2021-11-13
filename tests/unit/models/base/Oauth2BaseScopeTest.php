@@ -46,6 +46,7 @@ class Oauth2BaseScopeTest extends BaseOauth2BaseModelsTest
             'id' => 'ID',
             'identifier' => 'Identifier',
             'description' => 'Description',
+            'authorization_message' => 'Authorization Message',
             'applied_by_default' => 'Applied By Default',
             'required_on_authorization' => 'Required On Authorization',
             'enabled' => 'Enabled',
