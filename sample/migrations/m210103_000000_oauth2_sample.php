@@ -99,6 +99,7 @@ class m210103_000000_oauth2_sample extends Migration
             [
                 'identifier',
                 'description',
+                'authorization_message',
                 'created_at',
                 'updated_at',
             ],
