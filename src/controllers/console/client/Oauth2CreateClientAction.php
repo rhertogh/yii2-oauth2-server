@@ -78,8 +78,11 @@ class Oauth2CreateClientAction extends Action
                 Oauth2ClientInterface::TYPE_PUBLIC => 'Public',
             ];
             $clientTypeOptionsWithDetails = [
-                Oauth2ClientInterface::TYPE_CONFIDENTIAL => 'Confidential: Identifies the client via a shared secret. Note: This should only be trusted in case the client can store the secret securely (e.g. another server).',
-                Oauth2ClientInterface::TYPE_PUBLIC => 'Public: In case the client can not store a secret securely it should be declared public (e.g. web- or mobile applications).',
+                Oauth2ClientInterface::TYPE_CONFIDENTIAL => 'Confidential: Identifies the client via a shared secret.'
+                    . ' Note: This should only be trusted in case the client can store the secret securely'
+                    . ' (e.g. another server).',
+                Oauth2ClientInterface::TYPE_PUBLIC => 'Public: In case the client can not store a secret securely'
+                    . ' it should be declared public (e.g. web- or mobile applications).',
             ];
             $this->controller->stdout("Client Type options:\n");
             foreach ($clientTypeOptions as $key => $value) {
@@ -159,7 +162,8 @@ class Oauth2CreateClientAction extends Action
                 $clientScope = Yii::createObject([
                     'class' => Oauth2ClientScopeInterface::class,
                     'client_id' => $client->getPrimaryKey(),
-                    'scope_id' => $module->getScopeRepository()->findModelByIdentifier($scopeIdentifier)->getPrimaryKey(),
+                    'scope_id' => $module->getScopeRepository()
+                        ->findModelByIdentifier($scopeIdentifier)->getPrimaryKey(),
                 ]);
                 $clientScope->persist();
             }

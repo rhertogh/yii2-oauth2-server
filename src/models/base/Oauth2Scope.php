@@ -13,6 +13,7 @@ use Yii;
  * @property integer $id
  * @property string $identifier
  * @property string $description
+ * @property string $authorization_message
  * @property string $applied_by_default
  * @property integer $required_on_authorization
  * @property integer $enabled
@@ -28,6 +29,8 @@ use Yii;
  * @property \rhertogh\Yii2Oauth2Server\models\Oauth2UserClientScope[] $userClientScopes
  * @property \rhertogh\Yii2Oauth2Server\models\Oauth2UserClient[] $userClients
  * @property string $aliasModel
+ *
+ * phpcs:disable Generic.Files.LineLength.TooLong
  */
 abstract class Oauth2Scope extends \rhertogh\Yii2Oauth2Server\models\base\Oauth2BaseActiveRecord
 {
@@ -47,7 +50,7 @@ abstract class Oauth2Scope extends \rhertogh\Yii2Oauth2Server\models\base\Oauth2
     {
         return [
             [['identifier', 'created_at', 'updated_at'], 'required'],
-            [['description'], 'string'],
+            [['description', 'authorization_message'], 'string'],
             [['required_on_authorization', 'enabled', 'created_at', 'updated_at'], 'integer'],
             [['identifier', 'applied_by_default'], 'string', 'max' => 255],
             [['identifier'], 'unique']
@@ -63,6 +66,7 @@ abstract class Oauth2Scope extends \rhertogh\Yii2Oauth2Server\models\base\Oauth2
             'id' => Yii::t('oauth2', 'ID'),
             'identifier' => Yii::t('oauth2', 'Identifier'),
             'description' => Yii::t('oauth2', 'Description'),
+            'authorization_message' => Yii::t('oauth2', 'Authorization Message'),
             'applied_by_default' => Yii::t('oauth2', 'Applied By Default'),
             'required_on_authorization' => Yii::t('oauth2', 'Required On Authorization'),
             'enabled' => Yii::t('oauth2', 'Enabled'),

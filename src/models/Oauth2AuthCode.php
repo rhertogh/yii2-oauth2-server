@@ -54,7 +54,8 @@ class Oauth2AuthCode extends base\Oauth2AuthCode implements Oauth2AuthCodeInterf
      */
     public function __set($name, $value)
     {
-        $this->clientRelationSetter($name, $value); // wrapper function to ensure the __set function of the Oauth2ClientRelationTrait is never overwritten
+        // wrapper function to ensure the __set function of the Oauth2ClientRelationTrait is never overwritten.
+        $this->clientRelationSetter($name, $value);
     }
 
     /**

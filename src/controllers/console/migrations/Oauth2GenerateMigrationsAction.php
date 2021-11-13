@@ -29,7 +29,8 @@ class Oauth2GenerateMigrationsAction extends Action
         $migrationsNamespace = $module->migrationsNamespace;
 
         $applyInfo = "Add the '" . addslashes($migrationsNamespace) . "' namespace to `\$migrationNamespaces` of the"
-            . " migration controller (https://www.yiiframework.com/doc/guide/2.0/en/db-migrations#namespaced-migrations)"
+            . ' migration controller'
+            . ' (https://www.yiiframework.com/doc/guide/2.0/en/db-migrations#namespaced-migrations)'
             . " and run the `migrate/up` to apply them.\n";
 
         if (empty($migrationsNamespace)) {
@@ -50,7 +51,10 @@ class Oauth2GenerateMigrationsAction extends Action
             /** @var string|Oauth2BaseMigration $sourceMigrationWrapper */
             $sourceMigrationWrapper = __NAMESPACE__ . '\\' . $wrapperName;
             if (!class_exists($sourceMigrationWrapper, false)) {
-                eval('namespace ' . __NAMESPACE__ . '; class ' . $wrapperName . ' extends \\' . $sourceMigrationClass . ' {}');
+                eval(
+                    'namespace ' . __NAMESPACE__ . ';'
+                    . ' class ' . $wrapperName . ' extends \\' . $sourceMigrationClass . ' {}'
+                );
             }
 
             if (

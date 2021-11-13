@@ -15,23 +15,23 @@ interface Oauth2ScopeInterface extends
      * Applied by Default "No": Do not apply the scope automatically.
      * @since 1.0.0
      */
-    const APPLIED_BY_DEFAULT_NO = 0;
+    public const APPLIED_BY_DEFAULT_NO = 0;
     /**
      * Applied by Default "Yes": Apply the scope automatically (without the client requesting it via the
      * authorization request's scope parameter), the user still has to approve the scope.
      * @since 1.0.0
      */
-    const APPLIED_BY_DEFAULT_CONFIRM = 1;
+    public const APPLIED_BY_DEFAULT_CONFIRM = 1;
     /**
      * Applied by Default "Automatically": Apply the scope automatically (without the client requesting it via the
      * authorization request's scope parameter), the user will *not* be prompted to approve the scope.
      * @since 1.0.0
      */
-    const APPLIED_BY_DEFAULT_AUTOMATICALLY = 2;
+    public const APPLIED_BY_DEFAULT_AUTOMATICALLY = 2;
     /**
      * @since 1.0.0
      */
-    const APPLIED_BY_DEFAULT_OPTIONS = [
+    public const APPLIED_BY_DEFAULT_OPTIONS = [
         self::APPLIED_BY_DEFAULT_NO,
         self::APPLIED_BY_DEFAULT_CONFIRM,
         self::APPLIED_BY_DEFAULT_AUTOMATICALLY,

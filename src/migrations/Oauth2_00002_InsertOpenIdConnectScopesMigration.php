@@ -10,6 +10,10 @@ use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use rhertogh\Yii2Oauth2Server\migrations\base\Oauth2BaseMigration;
 use yii\helpers\ArrayHelper;
 
+/**
+ * phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
+ * phpcs:disable Generic.Files.LineLength.TooLong
+ */
 abstract class Oauth2_00002_InsertOpenIdConnectScopesMigration extends Oauth2BaseMigration
 {
     /**

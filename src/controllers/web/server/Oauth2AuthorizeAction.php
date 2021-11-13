@@ -9,11 +9,11 @@ use rhertogh\Yii2Oauth2Server\controllers\web\server\base\Oauth2BaseServerAction
 use rhertogh\Yii2Oauth2Server\exceptions\Oauth2OidcServerException;
 use rhertogh\Yii2Oauth2Server\helpers\Psr7Helper;
 use rhertogh\Yii2Oauth2Server\helpers\UrlHelper;
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface as ClientAuthRequestInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\request\Oauth2OidcAuthenticationRequestInterface as OidcAuthRequestInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeInterface as OidcScopeInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\user\Oauth2OidcUserComponentInterface as OidcUserComponentInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface as ClientInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\request\Oauth2OidcAuthenticationRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\user\Oauth2OidcUserComponentInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -37,16 +37,25 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
             $module = $this->controller->module;
 
             if ($module->enableOpenIdConnect) {
-                if (!($user instanceof OidcUserComponentInterface)) {
-                    throw new InvalidConfigException('OpenId Connect is enabled but user component does not implement ' . OidcUserComponentInterface::class);
+                if (!($user instanceof Oauth2OidcUserComponentInterface)) {
+                    throw new InvalidConfigException(
+                        'OpenId Connect is enabled but user component does not implement '
+                        . Oauth2OidcUserComponentInterface::class
+                    );
                 }
 
-                $oidcRequest = $this->getRequestParam($request, OidcAuthRequestInterface::REQUEST_PARAMETER_REQUEST);
+                $oidcRequest = $this->getRequestParam(
+                    $request,
+                    Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_REQUEST
+                );
                 if ($oidcRequest !== null) {
                     throw Oauth2OidcServerException::requestParameterNotSupported();
                 }
 
-                $oidcRequestUri = $this->getRequestParam($request, OidcAuthRequestInterface::REQUEST_PARAMETER_REQUEST_URI);
+                $oidcRequestUri = $this->getRequestParam(
+                    $request,
+                    Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_REQUEST_URI
+                );
                 if ($oidcRequestUri !== null) {
                     throw Oauth2OidcServerException::requestUriParameterNotSupported();
                 }
@@ -58,11 +67,14 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
 
             $requestedScopeIdentifiers = array_map(fn($scope) => $scope->getIdentifier(), $authRequest->getScopes());
 
-            /** @var ClientInterface $client */
+            /** @var Oauth2ClientInterface $client */
             $client = $authRequest->getClient();
 
             if (!$client->validateAuthRequestScopes($requestedScopeIdentifiers, $unauthorizedScopes)) {
-                throw OAuthServerException::invalidScope(array_shift($unauthorizedScopes), $authRequest->getRedirectUri());
+                throw OAuthServerException::invalidScope(
+                    array_shift($unauthorizedScopes),
+                    $authRequest->getRedirectUri()
+                );
             }
 
             //Orig $openIdConnectActive, if ($openIdConnectActive) {
@@ -71,10 +83,14 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
 
             if (
                 !$client->isAuthCodeWithoutPkceAllowed()
-                && $authRequest->getGrantTypeId() != Oauth2Module::GRANT_TYPE_IDENTIFIER_IMPLICIT // PKCE is not supported in the implicit flow
+                // PKCE is not supported in the implicit flow:
+                && $authRequest->getGrantTypeId() != Oauth2Module::GRANT_TYPE_IDENTIFIER_IMPLICIT
             ) {
                 if (empty($request->get('code_challenge'))) {
-                    throw new BadRequestHttpException('PKCE is required for this client when using grant type "' . $authRequest->getGrantTypeId() . '".');
+                    throw new BadRequestHttpException(
+                        'PKCE is required for this client when using grant type "'
+                            . $authRequest->getGrantTypeId() . '".'
+                    );
                 } elseif ($request->get('code_challenge_method', 'plain') === 'plain') {
                     throw new BadRequestHttpException('PKCE code challenge mode "plain" is not allowed.');
                 }
@@ -85,45 +101,60 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
                 if (
                     $clientAuthorizationRequest
                     && $clientAuthorizationRequest->getState()
-                    && !Yii::$app->security->compareString($clientAuthorizationRequest->getState(), $authRequest->getState())
+                    && !Yii::$app->security->compareString(
+                        $clientAuthorizationRequest->getState(),
+                        $authRequest->getState()
+                    )
                 ) {
                     throw new UnauthorizedHttpException('Invalid state.');
                 }
             }
 
             if (empty($clientAuthorizationRequest)) {
-                $prompts = explode(' ', $this->getRequestParam($request, OidcAuthRequestInterface::REQUEST_PARAMETER_PROMPT)) ?? [];
+                $prompts = explode(
+                    ' ',
+                    $this->getRequestParam(
+                        $request,
+                        Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT
+                    )
+                )
+                    ?? [];
 
                 if (
-                    in_array(OidcAuthRequestInterface::REQUEST_PARAMETER_PROMPT_NONE, $prompts)
+                    in_array(Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_NONE, $prompts)
                     && (count($prompts) > 1)
                 ) {
-                    throw new BadRequestHttpException('When the "prompt" parameter contains "none" other values are not allowed.');
+                    throw new BadRequestHttpException(
+                        'When the "prompt" parameter contains "none" other values are not allowed.'
+                    );
                 }
 
                 // Ignore `offline_access` scope if prompt doesn't contain 'consent' (or pre-approved via config)
                 // https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess
                 if (
-                    in_array(OidcScopeInterface::OPENID_CONNECT_SCOPE_OFFLINE_ACCESS, $requestedScopeIdentifiers)
-                    && !in_array(OidcAuthRequestInterface::REQUEST_PARAMETER_PROMPT_CONSENT, $prompts)
+                    in_array(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OFFLINE_ACCESS, $requestedScopeIdentifiers)
+                    && !in_array(Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_CONSENT, $prompts)
                     && !$client->getOpenIdConnectAllowOfflineAccessWithoutConsent()
                 ) {
                     $requestedScopeIdentifiers = array_diff(
                         $requestedScopeIdentifiers,
-                        [OidcScopeInterface::OPENID_CONNECT_SCOPE_OFFLINE_ACCESS]
+                        [Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OFFLINE_ACCESS]
                     );
                 }
 
-                $maxAge = $this->getRequestParam($request, OidcAuthRequestInterface::REQUEST_PARAMETER_MAX_AGE);
+                $maxAge = $this->getRequestParam(
+                    $request,
+                    Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_MAX_AGE
+                );
                 if ($maxAge === '') {
                     $maxAge = null;
                 } elseif ($maxAge !== null) {
                     $maxAge = (int)$maxAge;
                 }
 
-                /** @var ClientAuthRequestInterface $clientAuthorizationRequest */
+                /** @var Oauth2ClientAuthorizationRequestInterface $clientAuthorizationRequest */
                 $clientAuthorizationRequest = Yii::createObject([
-                    'class' => ClientAuthRequestInterface::class,
+                    'class' => Oauth2ClientAuthorizationRequestInterface::class,
                     'module' => $module,
                     'userAuthenticatedBeforeRequest' => !$user->isGuest,
                     'clientIdentifier' => $authRequest->getClient()->getIdentifier(),
@@ -138,7 +169,12 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
             }
 
             if ($user->isGuest) {
-                if (in_array(OidcAuthRequestInterface::REQUEST_PARAMETER_PROMPT_NONE, $clientAuthorizationRequest->getPrompts())) {
+                if (
+                    in_array(
+                        Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_NONE,
+                        $clientAuthorizationRequest->getPrompts()
+                    )
+                ) {
                     // User authentication disallowed by OpenID Connect
                     throw Oauth2OidcServerException::loginRequired($authRequest->getRedirectUri());
                 }
@@ -156,13 +192,19 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
             if (
                 (
                     ( // true in case user was authenticated before request and oidc prompt requires login
-                        in_array(OidcAuthRequestInterface::REQUEST_PARAMETER_PROMPT_LOGIN, $clientAuthorizationRequest->getPrompts())
+                        in_array(
+                            Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_LOGIN,
+                            $clientAuthorizationRequest->getPrompts()
+                        )
                         && $clientAuthorizationRequest->wasUserAuthenticatedBeforeRequest()
                     )
                     ||
                     ( // true in case oidc max_age is set and the user was authenticated before the maximum time allowed
                         $clientAuthorizationRequest->getMaxAge() !== null
-                        && (time() - $module->getUserIdentity()->getLatestAuthenticatedAt()->getTimestamp()) > $clientAuthorizationRequest->getMaxAge()
+                        && (
+                            (time() - $module->getUserIdentity()->getLatestAuthenticatedAt()->getTimestamp())
+                            > $clientAuthorizationRequest->getMaxAge()
+                        )
                     )
                 )
                 && !$clientAuthorizationRequest->wasUserAthenticatedDuringRequest()
@@ -170,16 +212,21 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
                 // Prevent redirect loop
                 $redirectAttempt = (int)$request->get('redirectAttempt', 0);
                 if ($redirectAttempt > 3) {
-                    // This error most likely occurs if the User Controller does not correctly perform user reauthentication
-                    // and redirect back to this action without calling `setUserAuthenticatedDuringRequest(true)`
-                    // on the $clientAuthorizationRequest
-                    throw new HttpException(501, 'Reauthentication not correctly implemented, aborting due to redirect loop.');
+                    // This error most likely occurs if the User Controller does not correctly performs
+                    // user reauthentication and redirect back to this action without calling
+                    // `setUserAuthenticatedDuringRequest(true)` on the $clientAuthorizationRequest.
+                    throw new HttpException(
+                        501,
+                        'Reauthentication not correctly implemented, aborting due to redirect loop.'
+                    );
                 }
 
                 $module->setClientAuthReqSession($clientAuthorizationRequest);
-                $user->setReturnUrl(UrlHelper::addQueryParams($clientAuthorizationRequest->getAuthorizationRequestUrl(), [
-                    'redirectAttempt' => $redirectAttempt + 1,
-                ]));
+                $user->setReturnUrl(
+                    UrlHelper::addQueryParams($clientAuthorizationRequest->getAuthorizationRequestUrl(), [
+                        'redirectAttempt' => $redirectAttempt + 1,
+                    ])
+                );
                 return $user->reauthenticationRequired($clientAuthorizationRequest);
             }
 
@@ -190,10 +237,18 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
                     ($userAccountSelection === Oauth2Module::USER_ACCOUNT_SELECTION_ALWAYS)
                     || (
                         $userAccountSelection === Oauth2Module::USER_ACCOUNT_SELECTION_UPON_CLIENT_REQUEST
-                        && in_array(OidcAuthRequestInterface::REQUEST_PARAMETER_PROMPT_SELECT_ACCOUNT, $clientAuthorizationRequest->getPrompts())
+                        && in_array(
+                            Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_SELECT_ACCOUNT,
+                            $clientAuthorizationRequest->getPrompts()
+                        )
                     )
                 ) {
-                    if (in_array(OidcAuthRequestInterface::REQUEST_PARAMETER_PROMPT_NONE, $clientAuthorizationRequest->getPrompts())) {
+                    if (
+                        in_array(
+                            Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_NONE,
+                            $clientAuthorizationRequest->getPrompts()
+                        )
+                    ) {
                         throw Oauth2OidcServerException::accountSelectionRequired(
                             'User account selection is required but the "prompt" parameter is set to "none".',
                             $authRequest->getRedirectUri()
@@ -216,9 +271,17 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
 
             if (
                 $clientAuthorizationRequest->isAuthorizationNeeded()
-                || in_array(OidcAuthRequestInterface::REQUEST_PARAMETER_PROMPT_CONSENT, $clientAuthorizationRequest->getPrompts())
+                || in_array(
+                    Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_CONSENT,
+                    $clientAuthorizationRequest->getPrompts()
+                )
             ) {
-                if (in_array(OidcAuthRequestInterface::REQUEST_PARAMETER_PROMPT_NONE, $clientAuthorizationRequest->getPrompts())) {
+                if (
+                    in_array(
+                        Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_NONE,
+                        $clientAuthorizationRequest->getPrompts()
+                    )
+                ) {
                     // User consent is disallowed by OpenID Connect
                     throw Oauth2OidcServerException::consentRequired($authRequest->getRedirectUri());
                 }

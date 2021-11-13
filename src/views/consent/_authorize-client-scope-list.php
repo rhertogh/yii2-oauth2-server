@@ -20,7 +20,9 @@ foreach ($scopeRequests as $scopeRequest) : ?>
                         . '-'
                         . preg_replace('/[^a-z0-9_]/', '_', mb_strtolower($scope->getIdentifier()));
 
-        $authorizationMessage = $scope->getAuthorizationMessage() ?? $scope->getDescription() ?? $scope->getIdentifier();
+        $authorizationMessage = $scope->getAuthorizationMessage()
+            ?? $scope->getDescription()
+            ?? $scope->getIdentifier();
 
         $field = $form
             ->field($clientAuthorizationRequest, 'selectedScopeIdentifiers[]', [

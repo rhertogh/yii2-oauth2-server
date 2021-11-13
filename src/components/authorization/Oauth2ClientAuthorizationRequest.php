@@ -490,6 +490,11 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
      */
     public function getAuthorizationRequestUrl()
     {
-        return UrlHelper::addQueryParams($this->getAuthorizeUrl(), ['clientAuthorizationRequestId' => $this->getRequestId()]);
+        return UrlHelper::addQueryParams(
+            $this->getAuthorizeUrl(),
+            [
+                'clientAuthorizationRequestId' => $this->getRequestId()
+            ]
+        );
     }
 }

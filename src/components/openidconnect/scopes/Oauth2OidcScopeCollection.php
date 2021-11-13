@@ -63,7 +63,9 @@ class Oauth2OidcScopeCollection extends BaseObject implements Oauth2OidcScopeCol
                     ]);
                 }
             } else {
-                throw new InvalidArgumentException('Elements should be of type array, string or ' . Oauth2OidcScopeInterface::class);
+                throw new InvalidArgumentException(
+                    'Elements should be of type array, string or ' . Oauth2OidcScopeInterface::class
+                );
             }
         }
 
@@ -133,7 +135,10 @@ class Oauth2OidcScopeCollection extends BaseObject implements Oauth2OidcScopeCol
     public function getDefaultOidcScope($scopeIdentifier)
     {
         if (!in_array($scopeIdentifier, static::OPENID_CONNECT_DEFAULT_SCOPES)) {
-            throw new InvalidArgumentException('Invalid $scopeName "' . $scopeIdentifier . '", it must be an OpenID Connect default claims scope (' . implode(', ', static::OPENID_CONNECT_DEFAULT_SCOPES) . ').');
+            throw new InvalidArgumentException(
+                'Invalid $scopeName "' . $scopeIdentifier . '", it must be an OpenID Connect default claims scope ('
+                    . implode(', ', static::OPENID_CONNECT_DEFAULT_SCOPES) . ').'
+            );
         }
 
         return Yii::createObject([

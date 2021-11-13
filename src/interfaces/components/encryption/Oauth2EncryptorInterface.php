@@ -23,7 +23,8 @@ interface Oauth2EncryptorInterface
     /**
      * Encrypt the specified data.
      * @param string $data
-     * @param string|null $keyName The name of the key to use for the encryption (must be present in the available keys).
+     * @param string|null $keyName The name of the key to use for the encryption
+     * (must be present in the available keys).
      * if `null` the default key name will be used.
      * @return string The encrypted data in format "keyName:encrypted_data".
      * @see setKeys()
@@ -33,7 +34,8 @@ interface Oauth2EncryptorInterface
     public function encryp($data, $keyName = null);
 
     /**
-     * Decrypt the specified data, the key (identified by the "keyName" part of the data must be present in the available keys.
+     * Decrypt the specified data, the key (identified by the "keyName" part of the data)
+     * must be present in the available keys.
      * @param string $data in format "keyName:encrypted_data".
      * @return string
      * @since 1.0.0

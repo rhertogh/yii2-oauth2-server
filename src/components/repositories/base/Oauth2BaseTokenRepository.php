@@ -55,7 +55,10 @@ abstract class Oauth2BaseTokenRepository extends Oauth2BaseRepository
         }
 
         if ($model->identifierExists()) {
-            throw UniqueTokenIdentifierConstraintViolationException::create('A token of class ' . $modelClass . ' with identifier "' . $model->getIdentifier() . '" already exists');
+            throw UniqueTokenIdentifierConstraintViolationException::create(
+                'A token of class ' . $modelClass
+                    . ' with identifier "' . $model->getIdentifier() . '" already exists.'
+            );
         }
 
         /** @var Connection $db */
@@ -78,7 +81,9 @@ abstract class Oauth2BaseTokenRepository extends Oauth2BaseRepository
                 $scopeRelationClass = DiHelper::getClassName($model->getScopesRelationClassName());
                 foreach ($model->getScopes() as $scope) {
                     if (!($scope instanceof Oauth2ScopeInterface)) {
-                        throw new InvalidConfigException(get_class($scope) . ' must implement ' . Oauth2ScopeInterface::class);
+                        throw new InvalidConfigException(
+                            get_class($scope) . ' must implement ' . Oauth2ScopeInterface::class
+                        );
                     }
                     /** @var Oauth2ActiveRecordInterface $scopeRelation */
                     $scopeRelation = Yii::createObject([

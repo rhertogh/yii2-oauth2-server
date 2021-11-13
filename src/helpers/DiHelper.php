@@ -58,7 +58,9 @@ class DiHelper
 
         if (interface_exists($class)) {
             if (empty($classDefinition) || $classDefinition === $class) {
-                throw new InvalidConfigException($class . ' must be configured in the application dependency injection container.');
+                throw new InvalidConfigException(
+                    $class . ' must be configured in the application dependency injection container.'
+                );
             } elseif (!is_a($classDefinition, $class, true)) {
                 throw new InvalidConfigException($classDefinition . ' must implement ' . $class);
             }

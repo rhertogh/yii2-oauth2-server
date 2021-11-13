@@ -42,10 +42,16 @@ class Oauth2ScopeRepository extends Oauth2BaseRepository implements Oauth2ScopeR
     /**
      * @inheritDoc
      */
-    public function finalizeScopes(array $scopes, $grantType, ClientEntityInterface $clientEntity, $userIdentifier = null)
-    {
+    public function finalizeScopes(
+        array $scopes,
+        $grantType,
+        ClientEntityInterface $clientEntity,
+        $userIdentifier = null
+    ) {
         if (!($clientEntity instanceof Oauth2ClientInterface)) {
-            throw new InvalidArgumentException(get_class($clientEntity) . ' must implement ' . Oauth2ClientInterface::class);
+            throw new InvalidArgumentException(
+                get_class($clientEntity) . ' must implement ' . Oauth2ClientInterface::class
+            );
         } else {
             /** @var Oauth2ClientInterface $client */
             $client = $clientEntity;
@@ -58,7 +64,9 @@ class Oauth2ScopeRepository extends Oauth2BaseRepository implements Oauth2ScopeR
         if (empty($userIdentifier)) {
             // Only allow scopes without user if grant type is 'client_credentials'
             if ($grantType !== Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS) {
-                throw new InvalidArgumentException('$userIdentifier is required when $grantType is not "client_credentials"');
+                throw new InvalidArgumentException(
+                    '$userIdentifier is required when $grantType is not "client_credentials".'
+                );
             }
 
             return $clientAllowedScopes;

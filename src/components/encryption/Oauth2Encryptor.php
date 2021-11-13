@@ -43,9 +43,17 @@ class Oauth2Encryptor extends Component implements Oauth2EncryptorInterface
             try {
                 $this->_keys[$keyName] = $keyFactory->createFromAsciiSafeString($key);
             } catch (BadFormatException $e) {
-                throw new InvalidConfigException('Encryption key "' . $keyName . '" is malformed: ' . $e->getMessage(), 0, $e);
+                throw new InvalidConfigException(
+                    'Encryption key "' . $keyName . '" is malformed: ' . $e->getMessage(),
+                    0,
+                    $e
+                );
             } catch (EnvironmentIsBrokenException $e) {
-                throw new InvalidConfigException('Could not instantiate key "' . $keyName . '": ' . $e->getMessage(), 0, $e);
+                throw new InvalidConfigException(
+                    'Could not instantiate key "' . $keyName . '": ' . $e->getMessage(),
+                    0,
+                    $e
+                );
             }
         }
     }
@@ -65,7 +73,9 @@ class Oauth2Encryptor extends Component implements Oauth2EncryptorInterface
     {
         if (empty($keyName)) {
             if (empty($this->_defaultKeyName)) {
-                throw new \BadMethodCallException('Unable to encrypt, $keyName is empty and $defaultKeyName is not set');
+                throw new \BadMethodCallException(
+                    'Unable to encrypt, $keyName is empty and $defaultKeyName is not set.'
+                );
             } else {
                 $keyName = $this->_defaultKeyName;
             }
@@ -80,7 +90,9 @@ class Oauth2Encryptor extends Component implements Oauth2EncryptorInterface
         }
 
         if (strpos($keyName, $this->dataSeparator) !== false) {
-            throw new \BadMethodCallException('Unable to encrypt, key name "' . $keyName . '" contains dataSeparator "' . $this->dataSeparator . '"');
+            throw new \BadMethodCallException(
+                'Unable to encrypt, key name "' . $keyName . '" contains dataSeparator "' . $this->dataSeparator . '".'
+            );
         }
 
         return $keyName
@@ -96,7 +108,9 @@ class Oauth2Encryptor extends Component implements Oauth2EncryptorInterface
         try {
             list($keyName, $ciphertext) = explode($this->dataSeparator, $data, 2);
         } catch (\Throwable $e) {
-            throw new \InvalidArgumentException('Unable to decrypt, $data must be in format "keyName' . $this->dataSeparator . 'ciphertext"');
+            throw new \InvalidArgumentException(
+                'Unable to decrypt, $data must be in format "keyName' . $this->dataSeparator . 'ciphertext".'
+            );
         }
 
         if (empty($this->_keys[$keyName])) {

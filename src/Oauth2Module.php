@@ -258,21 +258,24 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     public $jwksPath = 'certs';
 
     /**
-     * The URL to the page where the user can perform the client/scope authorization (if `null` the build in page will be used).
+     * The URL to the page where the user can perform the client/scope authorization
+     * (if `null` the build in page will be used).
      * @return string
      * @since 1.0.0
      */
     public $clientAuthorizationUrl = null;
 
     /**
-     * @var string The URL path to the build in page where the user can authorize the client for the requested scopes (will be prefixed with $urlRulesPrefix).
+     * @var string The URL path to the build in page where the user can authorize the client for the requested scopes
+     * (will be prefixed with $urlRulesPrefix).
      * Note: This setting will only be used if $clientAuthorizationUrl is `null`.
      * @since 1.0.0
      */
     public $clientAuthorizationPath = 'authorize-client';
 
     /**
-     * @var string The view to use in the "client authorization action" for the page where the user can authorize the client for the requested scopes.
+     * @var string The view to use in the "client authorization action" for the page where the user can
+     * authorize the client for the requested scopes.
      * Note: This setting will only be used if $clientAuthorizationUrl is `null`.
      * @since 1.0.0
      */
@@ -326,8 +329,8 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     public $openIdConnectDiscoveryIncludeSupportedGrantTypes = true;
 
     /**
-     * @var string URL to include in the OpenID Connect Discovery Service of a page containing human-readable information
-     * that developers might want or need to know when using the OpenID Provider.
+     * @var string URL to include in the OpenID Connect Discovery Service of a page containing
+     * human-readable information that developers might want or need to know when using the OpenID Provider.
      * @see 'service_documentation' in https://openid.net/specs/openid-connect-discovery-1_0.html#rfc.section.3
      * @since 1.0.0
      */
@@ -340,7 +343,8 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     public $openIdConnectUserinfoEndpoint = true;
 
     /**
-     * Warning! Enabling this setting might introduce privacy concerns since the client could poll for the online status of a user.
+     * Warning! Enabling this setting might introduce privacy concerns since the client could poll for the
+     * online status of a user.
      *
      * @var bool If this setting is disabled in case of OpenID Connect Context the Access Token won't include a
      * Refresh Token when the 'offline_access' scope is not included in the authorization request.
@@ -427,7 +431,9 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
         } elseif ($app instanceof ConsoleApplication || $this->appType == static::APPLICATION_TYPE_CONSOLE) {
             $controllerMap = static::CONTROLLER_MAP[static::APPLICATION_TYPE_CONSOLE];
         } else {
-            throw new InvalidConfigException('Unable to detect application type, configure it manually by setting `$appType`.');
+            throw new InvalidConfigException(
+                'Unable to detect application type, configure it manually by setting `$appType`.'
+            );
         }
         $controllerMap = array_filter(
             $controllerMap,
@@ -438,7 +444,9 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
         if (empty($this->identityClass)) {
             throw new InvalidConfigException('$identityClass must be set.');
         } elseif (!is_a($this->identityClass, Oauth2UserInterface::class, true)) {
-            throw new InvalidConfigException($this->identityClass . ' must implement ' . Oauth2UserInterface::class);
+            throw new InvalidConfigException(
+                $this->identityClass . ' must implement ' . Oauth2UserInterface::class
+            );
         }
 
         foreach (static::DEFAULT_INTERFACE_IMPLEMENTATIONS as $interface => $implementation) {
@@ -570,7 +578,9 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
             $this->ensureProperties(static::REQUIRED_SETTINGS_AUTHORIZATION_SERVER);
 
             if (empty($this->storageEncryptionKeys[$this->defaultStorageEncryptionKey])) {
-                throw new InvalidConfigException('Key "' . $this->defaultStorageEncryptionKey . '" is not set in $storageEncryptionKeys');
+                throw new InvalidConfigException(
+                    'Key "' . $this->defaultStorageEncryptionKey . '" is not set in $storageEncryptionKeys'
+                );
             }
 
             /** @var Oauth2EncryptionKeyFactoryInterface $keyFactory */
@@ -578,9 +588,17 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
             try {
                 $codesEncryptionKey = $keyFactory->createFromAsciiSafeString($this->codesEncryptionKey);
             } catch (BadFormatException $e) {
-                throw new InvalidConfigException('$codesEncryptionKey is malformed: ' . $e->getMessage(), 0, $e);
+                throw new InvalidConfigException(
+                    '$codesEncryptionKey is malformed: ' . $e->getMessage(),
+                    0,
+                    $e
+                );
             } catch (EnvironmentIsBrokenException $e) {
-                throw new InvalidConfigException('Could not instantiate $codesEncryptionKey: ' . $e->getMessage(), 0, $e);
+                throw new InvalidConfigException(
+                    'Could not instantiate $codesEncryptionKey: ' . $e->getMessage(),
+                    0,
+                    $e
+                );
             }
 
             $responseType = null;
@@ -611,7 +629,9 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
 
                     foreach ($grantTypes as $grantTypeDefinition) {
                         if ($grantTypeDefinition instanceof GrantTypeInterface) {
-                            $accessTokenTTL = $this->defaultAccessTokenTTL ? new \DateInterval($this->defaultAccessTokenTTL) : null;
+                            $accessTokenTTL = $this->defaultAccessTokenTTL
+                                ? new \DateInterval($this->defaultAccessTokenTTL)
+                                : null;
                             $this->_authorizationServer->enableGrantType($grantTypeDefinition, $accessTokenTTL);
                         } elseif (
                             (
@@ -640,7 +660,10 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
                         } else {
                             throw new InvalidConfigException(
                                 'Unknown grantType '
-                                . (is_scalar($grantTypeDefinition) ? '"' . $grantTypeDefinition . '".' : 'with data type ' . gettype($grantTypeDefinition))
+                                . (is_scalar($grantTypeDefinition)
+                                    ? '"' . $grantTypeDefinition . '".'
+                                    : 'with data type ' . gettype($grantTypeDefinition)
+                                )
                             );
                         }
                     }
@@ -664,7 +687,10 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
             } elseif (is_callable($openIdConnectScopes)) {
                 $this->_oidcScopeCollection = call_user_func($openIdConnectScopes, $this);
                 if (!($this->_oidcScopeCollection instanceof Oauth2OidcScopeCollectionInterface)) {
-                    throw new InvalidConfigException('$openIdConnectScopes must return an instance of ' . Oauth2OidcScopeCollectionInterface::class);
+                    throw new InvalidConfigException(
+                        '$openIdConnectScopes must return an instance of '
+                            . Oauth2OidcScopeCollectionInterface::class
+                    );
                 }
             } elseif (is_array($openIdConnectScopes) || is_string($openIdConnectScopes)) {
                 $this->_oidcScopeCollection = Yii::createObject([
@@ -672,7 +698,10 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
                     'oidcScopes' => (array)$openIdConnectScopes,
                 ]);
             } else {
-                throw new InvalidConfigException('$openIdConnectScopes must be a callable, array, string or ' . Oauth2OidcScopeCollectionInterface::class);
+                throw new InvalidConfigException(
+                    '$openIdConnectScopes must be a callable, array, string or '
+                        . Oauth2OidcScopeCollectionInterface::class
+                );
             }
         }
 
@@ -761,12 +790,18 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
         $clientAuthorizationRequest = Yii::$app->session->get($key);
         if (!($clientAuthorizationRequest instanceof Oauth2ClientAuthorizationRequestInterface)) {
             if (!empty($clientAuthorizationRequest)) {
-                Yii::warning('Found a ClientAuthorizationRequestSession with key "' . $key . '", but it\'s not a ' . Oauth2ClientAuthorizationRequestInterface::class);
+                Yii::warning(
+                    'Found a ClientAuthorizationRequestSession with key "' . $key
+                        . '", but it\'s not a ' . Oauth2ClientAuthorizationRequestInterface::class
+                );
             }
             return null;
         }
         if ($clientAuthorizationRequest->getRequestId() !== $requestId) {
-            Yii::warning('Found a ClientAuthorizationRequestSession with key "' . $key . '", but it\'s request id does not match "' . $requestId . '".');
+            Yii::warning(
+                'Found a ClientAuthorizationRequestSession with key "' . $key
+                    . '", but it\'s request id does not match "' . $requestId . '".'
+            );
             return null;
         }
         $clientAuthorizationRequest->setModule($this);
@@ -794,8 +829,10 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
      * @param Oauth2ClientAuthorizationRequestInterface $clientAuthorizationRequest
      * @since 1.0.0
      */
-    public function setUserAuthenticatedDuringClientAuthRequest($clientAuthorizationRequestId, $authenticatedDuringRequest)
-    {
+    public function setUserAuthenticatedDuringClientAuthRequest(
+        $clientAuthorizationRequestId,
+        $authenticatedDuringRequest
+    ) {
         $clientAuthorizationRequest = $this->getClientAuthReqSession($clientAuthorizationRequestId);
         if ($clientAuthorizationRequest) {
             $clientAuthorizationRequest->setUserAuthenticatedDuringRequest($authenticatedDuringRequest);
@@ -855,7 +892,10 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     {
         $user = Yii::$app->user->identity;
         if (!empty($user) && !($user instanceof Oauth2UserInterface)) {
-            throw new InvalidConfigException('Yii::$app->user->identity (currently ' . get_class($user) . ') must implement ' . Oauth2UserInterface::class);
+            throw new InvalidConfigException(
+                'Yii::$app->user->identity (currently ' . get_class($user)
+                    . ') must implement ' . Oauth2UserInterface::class
+            );
         }
         return $user;
     }
@@ -898,7 +938,9 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
             !preg_match('/^Bearer\s+(.*?)$/', $this->_oauthClaimsAuthorizationHeader, $matches)
             || !Yii::$app->security->compareString($matches[1], $token)
         ) {
-            throw new InvalidCallException('validateAuthenticatedRequest() must be called before findIdentityByAccessToken().');
+            throw new InvalidCallException(
+                'validateAuthenticatedRequest() must be called before findIdentityByAccessToken().'
+            );
         }
 
         $userId = $this->getRequestOauthUserId();
@@ -919,7 +961,9 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
             return $default;
         }
         if (Yii::$app->request->getHeaders()->get('Authorization') !== $this->_oauthClaimsAuthorizationHeader) {
-            throw new InvalidCallException('App Request Authorization header does not match the processed Oauth header.');
+            throw new InvalidCallException(
+                'App Request Authorization header does not match the processed Oauth header.'
+            );
         }
         return $this->_oauthClaims[$attribute] ?? $default;
     }

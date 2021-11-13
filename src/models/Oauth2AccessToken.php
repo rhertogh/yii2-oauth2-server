@@ -37,8 +37,8 @@ class Oauth2AccessToken extends base\Oauth2AccessToken implements Oauth2AccessTo
         setClient as clientSetter;
     }
 
-    const TYPE_BEARER = 1;
-    const TYPE_MAC = 2;
+    public const TYPE_BEARER = 1;
+    public const TYPE_MAC = 2;
 
     /////////////////////////////
     /// ActiveRecord Settings ///
@@ -72,7 +72,8 @@ class Oauth2AccessToken extends base\Oauth2AccessToken implements Oauth2AccessTo
      */
     public function __set($name, $value)
     {
-        $this->clientRelationSetter($name, $value); // wrapper function to ensure the __set function of the Oauth2ClientRelationTrait is never overwritten
+        // wrapper function to ensure the __set function of the Oauth2ClientRelationTrait is never overwritten.
+        $this->clientRelationSetter($name, $value);
     }
 
     /**

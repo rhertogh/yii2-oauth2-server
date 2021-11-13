@@ -81,7 +81,9 @@ class Oauth2RefreshToken extends base\Oauth2RefreshToken implements Oauth2Refres
     public function setAccessToken(AccessTokenEntityInterface $accessToken)
     {
         if (!($accessToken instanceof Oauth2AccessTokenInterface)) {
-            throw new InvalidConfigException(get_class($accessToken) . ' must implement ' . Oauth2AccessTokenInterface::class);
+            throw new InvalidConfigException(
+                get_class($accessToken) . ' must implement ' . Oauth2AccessTokenInterface::class
+            );
         }
 
         $this->access_token_id = $accessToken->getPrimaryKey();

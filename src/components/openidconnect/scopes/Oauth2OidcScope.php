@@ -81,7 +81,10 @@ class Oauth2OidcScope extends BaseObject implements Oauth2OidcScopeInterface
                 }
             } elseif (is_array($claimConfig)) {
                 if (is_numeric($claimIdentifier) && !array_key_exists('identifier', $claimConfig)) {
-                    throw new InvalidArgumentException('If an element is an array it should either be declared as an associative element or contain an "identifier" key.');
+                    throw new InvalidArgumentException(
+                        'If an element is an array it should either be declared as an associative element'
+                            . ' or contain an "identifier" key.'
+                    );
                 }
                 // e.g. ['claim' => [...]]
                 $this->addClaim(ArrayHelper::merge(
@@ -91,7 +94,9 @@ class Oauth2OidcScope extends BaseObject implements Oauth2OidcScopeInterface
                     $claimConfig
                 ));
             } else {
-                throw new InvalidArgumentException('Elements must either be an array, string or a ' . Oauth2OidcClaimInterface::class);
+                throw new InvalidArgumentException(
+                    'Elements must either be an array, string or a ' . Oauth2OidcClaimInterface::class
+                );
             }
         }
 

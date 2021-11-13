@@ -17,6 +17,8 @@ use Yii;
  * @property \rhertogh\Yii2Oauth2Server\models\Oauth2AuthCode $authCode
  * @property \rhertogh\Yii2Oauth2Server\models\Oauth2Scope $scope
  * @property string $aliasModel
+ *
+ * phpcs:disable Generic.Files.LineLength.TooLong
  */
 abstract class Oauth2AuthCodeScope extends \rhertogh\Yii2Oauth2Server\models\base\Oauth2BaseActiveRecord
 {

@@ -35,7 +35,9 @@ class Oauth2UserRepository extends Oauth2BaseRepository implements Oauth2UserRep
         }
 
         if (!($user instanceof Oauth2UserInterface)) {
-            throw new \TypeError($userClass . '::findIdentity() must return an instance of ' . Oauth2UserInterface::class);
+            throw new \TypeError(
+                $userClass . '::findIdentity() must return an instance of ' . Oauth2UserInterface::class
+            );
         }
 
         return $user;
@@ -45,11 +47,18 @@ class Oauth2UserRepository extends Oauth2BaseRepository implements Oauth2UserRep
      * @inheritDoc
      * @throws InvalidConfigException
      */
-    public function getUserEntityByUserCredentials($username, $password, $grantType, ClientEntityInterface $clientEntity)
-    {
+    public function getUserEntityByUserCredentials(
+        $username,
+        $password,
+        $grantType,
+        ClientEntityInterface $clientEntity
+    ) {
         $userClass = $this->getModelClass();
         if (!is_a($userClass, Oauth2PasswordGrantUserInterface::class, true)) {
-            throw new \TypeError('In order to support the `password` grant type, ' . $userClass . ' must implement ' . Oauth2PasswordGrantUserInterface::class);
+            throw new \TypeError(
+                'In order to support the `password` grant type, ' . $userClass
+                    . ' must implement ' . Oauth2PasswordGrantUserInterface::class
+            );
         }
 
         /** @var Oauth2UserInterface|null $user */
@@ -58,10 +67,15 @@ class Oauth2UserRepository extends Oauth2BaseRepository implements Oauth2UserRep
             return null;
         }
         if (!($user instanceof Oauth2UserInterface)) {
-            throw new \TypeError($userClass . '::findByUsername() must return an instance of ' . Oauth2UserInterface::class);
+            throw new \TypeError(
+                $userClass . '::findByUsername() must return an instance of ' . Oauth2UserInterface::class
+            );
         }
         if (!($user instanceof Oauth2PasswordGrantUserInterface)) {
-            throw new \TypeError('In order to support the `password` grant type, ' . $userClass . '::findByUsername() must return an instance of ' . Oauth2PasswordGrantUserInterface::class);
+            throw new \TypeError(
+                'In order to support the `password` grant type, ' . $userClass
+                    . '::findByUsername() must return an instance of ' . Oauth2PasswordGrantUserInterface::class
+            );
         }
 
         if (

@@ -232,7 +232,11 @@ interface Oauth2OidcClaimInterface extends Configurable
      *         the BaseObject will try to return a value for the getter. In our example `getEmail()`.
      * callable: The callable will be called in order to get the value. The format of the callable should be:
      *           ```php
-     *           function (Oauth2OidcUserInterface $userIdentity, Oauth2OidcClaimInterface $claim, Oauth2Module $module) {
+     *           function (
+     *               Oauth2OidcUserInterface $userIdentity,
+     *               Oauth2OidcClaimInterface $claim,
+     *               Oauth2Module $module
+     *           ) {
      *               return "your return value";
      *           }
      *           ```

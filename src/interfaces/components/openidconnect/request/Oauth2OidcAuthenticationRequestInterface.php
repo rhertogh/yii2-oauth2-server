@@ -53,7 +53,8 @@ interface Oauth2OidcAuthenticationRequestInterface
      */
     public const REQUEST_PARAMETER_PROMPT_LOGIN = 'login';
     /**
-     * Prompt option: The Authorization Server SHOULD prompt the End-User for consent before returning information to the Client.
+     * Prompt option: The Authorization Server SHOULD prompt the End-User for consent before returning information
+     * to the Client.
      * @since 1.0.0
      */
     public const REQUEST_PARAMETER_PROMPT_CONSENT = 'consent';

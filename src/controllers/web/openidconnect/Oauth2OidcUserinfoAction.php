@@ -33,7 +33,9 @@ class Oauth2OidcUserinfoAction extends Action
         }
 
         if (!$module->requestHasScope(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OPENID)) {
-            throw new ForbiddenHttpException('Request authentication does not contain the required OpenID Connect "openid" scope.');
+            throw new ForbiddenHttpException(
+                'Request authentication does not contain the required OpenID Connect "openid" scope.'
+            );
         }
 
         /** @var Oauth2OidcUserInterface $identity */

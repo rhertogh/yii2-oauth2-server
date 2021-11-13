@@ -153,7 +153,8 @@ interface Oauth2OidcScopeInterface extends Configurable
      * @param Oauth2OidcClaimInterface|array|string $claim The value type determines the behavior:
      *  - Oauth2OidcClaimInterface: will be used as is.
      *  - string: Will be used as the 'identifier' for the claim.
-     *  - array:  Will be used as Claim config e.g. ['identifier' => 'my_claim_identifier', 'determiner' => 'my_determiner'].
+     *  - array:  Will be used as Claim config
+     *            e.g. ['identifier' => 'my_claim_identifier', 'determiner' => 'my_determiner'].
      * @return $this
      * @since 1.0.0
      */

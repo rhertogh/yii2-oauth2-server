@@ -38,7 +38,8 @@ interface Oauth2OidcScopeCollectionInterface extends Configurable
 
     /**
      * Add scopes to this collection.
-     * @param Oauth2OidcScopeInterface[]|array[]|string[] $oidcScopes The value type of each item determines the behavior:
+     * @param Oauth2OidcScopeInterface[]|array[]|string[] $oidcScopes The value type of each item determines
+     * the behavior:
      *  - Oauth2OidcScopeInterface: will be used as is.
      *  - string: will be added as default OpenID Connect scope by its name.
      *  - array: If the item's key is numeric the value is used as scope configuration (see addOidcScope()),
@@ -72,7 +73,8 @@ interface Oauth2OidcScopeCollectionInterface extends Configurable
      * @param Oauth2OidcScopeInterface|array|string $oidcScope The value type determines the behavior:
      *  - Oauth2OidcScopeInterface: will be used as is.
      *  - string: Will add a default OpenID Connect scope
-     *  - array:  Will be used as Scope config e.g. ['identifier' => 'my_scope_identifier', 'claims' => ['my_claim_identifier']].
+     *  - array:  Will be used as Scope config
+     *            e.g. ['identifier' => 'my_scope_identifier', 'claims' => ['my_claim_identifier']].
      * @return $this
      * @see getDefaultOidcScope()
      * @since 1.0.0

@@ -107,7 +107,12 @@ class Oauth2OpenidConfigurationAction extends Action
             $supportedGrantTypes = [];
             foreach ($enabledGrantTypes as $grantType) {
                 $grantTypeIdentifier = $grantType->getIdentifier();
-                if (in_array($grantTypeIdentifier, Oauth2OidcAuthenticationRequestInterface::SUPPORTED_AUTHENTICATION_FLOWS)) {
+                if (
+                    in_array(
+                        $grantTypeIdentifier,
+                        Oauth2OidcAuthenticationRequestInterface::SUPPORTED_AUTHENTICATION_FLOWS
+                    )
+                ) {
                     $supportedGrantTypes[] = $grantTypeIdentifier;
                 }
             }

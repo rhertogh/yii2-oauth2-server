@@ -63,13 +63,19 @@ abstract class Oauth2BaseServerAction extends Action
         } else {
             $response->setStatusCodeByException($exception);
 
-            $error = ($exception instanceof Exception || $exception instanceof ErrorException) ? $exception->getName() : 'Exception';
+            $error = ($exception instanceof Exception || $exception instanceof ErrorException)
+                ? $exception->getName()
+                : 'Exception';
 
             $displayNonHttpExceptionMessages = $this->controller->module->displayConfidentialExceptionMessages !== null
                 ? $this->controller->module->displayConfidentialExceptionMessages
                 : YII_DEBUG;
 
-            if (!$displayNonHttpExceptionMessages && !$exception instanceof UserException && !$exception instanceof HttpException) {
+            if (
+                !$displayNonHttpExceptionMessages
+                && !$exception instanceof UserException
+                && !$exception instanceof HttpException
+            ) {
                 $description = Yii::t('yii', 'An internal server error occurred.');
             } else {
                 $description = (string)$exception;

@@ -36,22 +36,33 @@ class Oauth2RefreshTokenGrant extends RefreshTokenGrant implements Oauth2Refresh
                 in_array(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OPENID, $scopes)
                 && !in_array(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OFFLINE_ACCESS, $scopes)
             ) {
-                // Refresh tokens are not issued when `openIdConnectIssueRefreshTokenWithoutOfflineAccessScope` is disabled, but let's ensure setting hasn't changed
+                // Refresh tokens are not issued when `openIdConnectIssueRefreshTokenWithoutOfflineAccessScope`
+                // is disabled, but let's ensure setting hasn't changed.
                 if (!$this->module->openIdConnectIssueRefreshTokenWithoutOfflineAccessScope) {
-                    throw OAuthServerException::accessDenied('The refresh token grant type is unavailable in OpenID Connect context when `openIdConnectIssueRefreshTokenWithoutOfflineAccessScope` is disabled.');
+                    throw OAuthServerException::accessDenied(
+                        'The refresh token grant type is unavailable in OpenID Connect context when'
+                            . ' `openIdConnectIssueRefreshTokenWithoutOfflineAccessScope` is disabled.'
+                    );
                 }
 
                 $user = $this->module->getUserRepository()->getUserEntityByIdentifier($oldRefreshToken['user_id']);
                 if (empty($user)) {
-                    throw new NotFoundHttpException(Yii::t('oauth2', 'Unable to find user with id "' . $oldRefreshToken['user_id'] . '".'));
+                    throw new NotFoundHttpException(
+                        Yii::t('oauth2', 'Unable to find user with id "' . $oldRefreshToken['user_id'] . '".')
+                    );
                 }
                 if (!($user instanceof Oauth2OidcUserSessionStatusInterface)) {
-                    throw new InvalidConfigException('In order to support OpenId Connect Refresh Tokens without offline_access scope '
-                        . get_class($user) . ' must implement ' . Oauth2OidcUserSessionStatusInterface::class);
+                    throw new InvalidConfigException(
+                        'In order to support OpenId Connect Refresh Tokens without offline_access scope '
+                            . get_class($user) . ' must implement ' . Oauth2OidcUserSessionStatusInterface::class
+                    );
                 }
 
                 if (!$user->hasActiveSession()) {
-                    throw OAuthServerException::accessDenied('The refresh token grant type is unavailable in OpenID Connect context when the user is offline and the authorized scope does not include "offline_access".');
+                    throw OAuthServerException::accessDenied(
+                        'The refresh token grant type is unavailable in OpenID Connect context when the user is'
+                        . ' offline and the authorized scope does not include "offline_access".'
+                    );
                 }
             }
         }

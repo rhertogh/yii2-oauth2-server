@@ -167,7 +167,9 @@ abstract class Oauth2BaseClientAuthorizationRequest extends Model implements Oau
     public function getUserIdentity()
     {
         if ($this->_userIdentity === null && $this->_userIdentifier !== null) {
-            $this->_userIdentity = $this->getModule()->getUserRepository()->getUserEntityByIdentifier($this->_userIdentifier);
+            $this->_userIdentity = $this->getModule()
+                ->getUserRepository()
+                ->getUserEntityByIdentifier($this->_userIdentifier);
         }
         return $this->_userIdentity;
     }

@@ -4,7 +4,8 @@ namespace rhertogh\Yii2Oauth2Server\components\server\grants;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Grant\ClientCredentialsGrant;
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface as ClientAuthRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface
+    as ClientAuthRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ScopeAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2ClientCredentialsGrantInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
@@ -30,7 +31,8 @@ class Oauth2ClientCredentialsGrant extends ClientCredentialsGrant implements Oau
         if ($userIdentifier === null) {
             $clientCredentialsGrantUserId = $client->getClientCredentialsGrantUserId();
             if ($clientCredentialsGrantUserId) {
-                $clientCredentialsGrantUser = $this->module->getUserRepository()->getUserEntityByIdentifier($clientCredentialsGrantUserId);
+                $clientCredentialsGrantUser = $this->module->getUserRepository()
+                    ->getUserEntityByIdentifier($clientCredentialsGrantUserId);
                 $scopeIdentifiers = array_map(fn($scope) => $scope->getIdentifier(), $scopes);
 
                 /** @var ClientAuthRequestInterface $clientAuthorizationRequest */

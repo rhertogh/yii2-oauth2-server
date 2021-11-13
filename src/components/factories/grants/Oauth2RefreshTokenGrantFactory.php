@@ -12,7 +12,8 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2RefreshTo
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2RefreshTokenGrantInterface;
 use Yii;
 
-class Oauth2RefreshTokenGrantFactory extends base\Oauth2BaseGrantTypeFactory implements Oauth2RefreshTokenGrantFactoryInterface
+class Oauth2RefreshTokenGrantFactory extends base\Oauth2BaseGrantTypeFactory implements
+    Oauth2RefreshTokenGrantFactoryInterface
 {
     /**
      * @var string Time To Live for the authorization code, default value: 1 month.

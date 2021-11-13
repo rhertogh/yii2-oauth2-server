@@ -122,7 +122,8 @@ use yii\helpers\StringHelper;
  */
 abstract class Oauth2BaseModule extends Module
 {
-    # region Supported grant types. Note: These should match League\OAuth2\Server\Grant\GrantTypeInterface::getIdentifier() for their respective type
+    # region Supported grant types.
+    # Note: These should match League\OAuth2\Server\Grant\GrantTypeInterface::getIdentifier() for their respective type.
     /**
      * "authorization_code" Grant Type.
      * @since 1.0.0
@@ -624,7 +625,9 @@ abstract class Oauth2BaseModule extends Module
             if (
                 in_array(
                     $claim->getIdentifier(),
-                    Oauth2OidcScopeInterface::OPENID_CONNECT_DEFAULT_SCOPE_CLAIMS[Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OPENID]
+                    Oauth2OidcScopeInterface::OPENID_CONNECT_DEFAULT_SCOPE_CLAIMS[
+                        Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OPENID
+                    ]
                 )
             ) {
                 // Skip default claims for OpenID (already set above)

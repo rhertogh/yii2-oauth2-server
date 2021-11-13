@@ -20,6 +20,10 @@ use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\base\InvalidConfigException;
 use yii\db\Schema;
 
+/**
+ * phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
+ * phpcs:disable Generic.Files.LineLength.TooLong
+ */
 abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigration
 {
     /**

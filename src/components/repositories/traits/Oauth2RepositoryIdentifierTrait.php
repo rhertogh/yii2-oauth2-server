@@ -29,7 +29,10 @@ trait Oauth2RepositoryIdentifierTrait
 
         $result = $className::findByIdentifier($identifier);
         if ($result !== null && !($result instanceof $class)) {
-            throw new InvalidConfigException($className . '::findByIdentifier() returns ' . get_class($result) . ' which must implement ' . $class);
+            throw new InvalidConfigException(
+                $className . '::findByIdentifier() returns '
+                    . get_class($result) . ' which must implement ' . $class
+            );
         }
 
         return $result;

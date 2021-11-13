@@ -29,6 +29,8 @@ use Yii;
  * @property \rhertogh\Yii2Oauth2Server\models\Oauth2RefreshToken[] $refreshTokens
  * @property \rhertogh\Yii2Oauth2Server\models\Oauth2Scope[] $scopes
  * @property string $aliasModel
+ *
+ * phpcs:disable Generic.Files.LineLength.TooLong
  */
 abstract class Oauth2AccessToken extends \rhertogh\Yii2Oauth2Server\models\base\Oauth2BaseActiveRecord
 {

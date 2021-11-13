@@ -188,7 +188,9 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
             $this->setAttribute('secret', $encryptor->encryp($secret));
         } else {
             if ($secret !== null) {
-                throw new InvalidArgumentException('The secret for a non-confidential client can only be set to `null`');
+                throw new InvalidArgumentException(
+                    'The secret for a non-confidential client can only be set to `null`'
+                );
             }
 
             $this->setAttribute('secret', null);
@@ -290,7 +292,10 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
                 [$clientScopeTableName . '.client_id' => $this->getPrimaryKey()],
                 [$clientScopeTableName . '.enabled' => 1],
                 ['OR',
-                    ...(!empty($requestedScopeIdentifiers) ? [[$scopeTableName . '.identifier' => $requestedScopeIdentifiers]] : []),
+                    ...(!empty($requestedScopeIdentifiers)
+                        ? [[$scopeTableName . '.identifier' => $requestedScopeIdentifiers]]
+                        : []
+                    ),
                     ['NOT', [$clientScopeTableName . '.applied_by_default' => Oauth2Scope::APPLIED_BY_DEFAULT_NO]],
                     ['AND',
                         [$clientScopeTableName . '.applied_by_default' => null],
@@ -306,7 +311,10 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
             $possibleScopesConditions[] = ['AND',
                 [$clientScopeTableName . '.client_id' => null],
                 ['OR',
-                    ...(!empty($requestedScopeIdentifiers) ? [[$scopeTableName . '.identifier' => $requestedScopeIdentifiers]] : []),
+                    ...(!empty($requestedScopeIdentifiers)
+                        ? [[$scopeTableName . '.identifier' => $requestedScopeIdentifiers]]
+                        : []
+                    ),
                     ['NOT', [$scopeTableName . '.applied_by_default' => Oauth2Scope::APPLIED_BY_DEFAULT_NO]],
                 ],
             ];

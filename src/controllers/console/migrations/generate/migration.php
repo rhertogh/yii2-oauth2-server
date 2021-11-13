@@ -20,11 +20,15 @@ use <?= $sourceClass ?>;
 
 /**
  * Class <?= $class . "\n" ?>
+ *
+ * phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
+ * phpcs:disable Generic.Files.LineLength.TooLong
  */
 class <?= StringHelper::basename($class) ?> extends <?= StringHelper::basename($sourceClass) ?>
 
 {
     /**
-     * Wrapper class for <?= $sourceClass ?>, no further implementation required.
+     * Wrapper class for <?= $sourceClass ?>,
+     * no further implementation required.
      */
 }

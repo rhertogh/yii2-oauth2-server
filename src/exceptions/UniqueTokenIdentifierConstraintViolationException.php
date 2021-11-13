@@ -2,6 +2,7 @@
 
 namespace rhertogh\Yii2Oauth2Server\exceptions;
 
+// phpcs:ignore Generic.Files.LineLength.TooLong
 class UniqueTokenIdentifierConstraintViolationException extends \League\OAuth2\Server\Exception\UniqueTokenIdentifierConstraintViolationException
 {
     /**

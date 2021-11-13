@@ -12,7 +12,7 @@ class BooleanBehavior extends Behavior
     /**
      * Nummeric database schema types.
      */
-    const NUMERIC_SCHEMA_TYPES = [
+    public const NUMERIC_SCHEMA_TYPES = [
         Schema::TYPE_INTEGER,
         Schema::TYPE_BIGINT,
         Schema::TYPE_SMALLINT,

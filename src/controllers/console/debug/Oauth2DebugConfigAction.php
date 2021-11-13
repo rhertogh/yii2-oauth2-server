@@ -93,14 +93,18 @@ class Oauth2DebugConfigAction extends Action
 
             'enableOpenIdConnect' => $module->enableOpenIdConnect ? 'true' : 'false',
             'enableOpenIdConnectDiscovery' => $module->enableOpenIdConnectDiscovery ? 'true' : 'false',
-            'openIdConnectDiscoveryIncludeSupportedGrantTypes' => $module->openIdConnectDiscoveryIncludeSupportedGrantTypes ? 'true' : 'false',
+            'openIdConnectDiscoveryIncludeSupportedGrantTypes' =>
+                $module->openIdConnectDiscoveryIncludeSupportedGrantTypes ? 'true' : 'false',
             'openIdConnectUserinfoEndpoint' => $module->openIdConnectUserinfoEndpoint ? 'true' : 'false',
             'openIdConnectDiscoveryServiceDocumentationUrl' => $module->openIdConnectDiscoveryServiceDocumentationUrl,
-            'openIdConnectIssueRefreshTokenWithoutOfflineAccessScope' => $module->openIdConnectIssueRefreshTokenWithoutOfflineAccessScope ? 'true' : 'false',
+            'openIdConnectIssueRefreshTokenWithoutOfflineAccessScope' =>
+                $module->openIdConnectIssueRefreshTokenWithoutOfflineAccessScope ? 'true' : 'false',
 
             'defaultUserAccountSelection' => $module->defaultUserAccountSelection,
 
-            'displayConfidentialExceptionMessages' => $module->displayConfidentialExceptionMessages === null ? 'null' : ($module->displayConfidentialExceptionMessages ? 'true' : 'false'),
+            'displayConfidentialExceptionMessages' => $module->displayConfidentialExceptionMessages === null
+                ? 'null'
+                : ($module->displayConfidentialExceptionMessages ? 'true' : 'false'),
         ];
     }
 

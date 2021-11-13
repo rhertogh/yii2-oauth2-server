@@ -66,7 +66,9 @@ class Oauth2OidcBearerTokenResponse extends BearerTokenResponse implements Oauth
         $user = $module->getUserRepository()->getUserEntityByIdentifier($accessToken->getUserIdentifier());
 
         if ($user === null) {
-            throw new InvalidArgumentException('No user with identifier "' . $accessToken->getUserIdentifier() . '" found.');
+            throw new InvalidArgumentException(
+                'No user with identifier "' . $accessToken->getUserIdentifier() . '" found.'
+            );
         }
 
         $nonce = Yii::$app->request->post(Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_NONCE);
