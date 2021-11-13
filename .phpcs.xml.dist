@@ -8,16 +8,25 @@
 
     <exclude-pattern>sample/runtime</exclude-pattern>
     <exclude-pattern>tests/_runtime</exclude-pattern>
+    <exclude-pattern>/sample/dev/giiant/generators/model/templates</exclude-pattern>
 
     <arg name="basepath" value="."/>
     <arg name="colors"/>
     <arg name="parallel" value="75"/>
     <arg name="encoding" value="utf-8"/>
+    <arg name="report-width" value="120"/>
     <!--<arg value="n"/> Do not print warnings -->
     <arg value="p"/><!-- Show progress of the run -->
+    <arg value="s"/><!-- Show sniff codes in all reports -->
 
     <rule ref="PSR1"/>
-    <rule ref="PSR12"/>
+
+    <rule ref="PSR12">
+
+        <!-- Disable warning for property declaration with underscores for now -->
+        <exclude name="PSR2.Classes.PropertyDeclaration.Underscore"/>
+
+    </rule>
 
 <!--    &lt;!&ndash; Don't hide tokenizer exceptions &ndash;&gt;-->
 <!--    <rule ref="Internal.Tokenizer.Exception">-->
