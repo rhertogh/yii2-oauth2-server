@@ -8,6 +8,6 @@ class NoHeadersResponse extends Response
 {
     protected function sendHeaders()
     {
-        // Don't send headers in test cases
+        // Don't send headers in test cases.
     }
 }

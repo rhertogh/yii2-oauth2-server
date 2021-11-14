@@ -77,13 +77,9 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
                 );
             }
 
-            //Orig $openIdConnectActive, if ($openIdConnectActive) {
-
-
-
             if (
                 !$client->isAuthCodeWithoutPkceAllowed()
-                // PKCE is not supported in the implicit flow:
+                // PKCE is not supported in the implicit flow.
                 && $authRequest->getGrantTypeId() != Oauth2Module::GRANT_TYPE_IDENTIFIER_IMPLICIT
             ) {
                 if (empty($request->get('code_challenge'))) {
@@ -129,8 +125,8 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
                     );
                 }
 
-                // Ignore `offline_access` scope if prompt doesn't contain 'consent' (or pre-approved via config)
-                // https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess
+                // Ignore `offline_access` scope if prompt doesn't contain 'consent' (or pre-approved via config).
+                // See https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess.
                 if (
                     in_array(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OFFLINE_ACCESS, $requestedScopeIdentifiers)
                     && !in_array(Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_CONSENT, $prompts)
@@ -175,7 +171,7 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
                         $clientAuthorizationRequest->getPrompts()
                     )
                 ) {
-                    // User authentication disallowed by OpenID Connect
+                    // User authentication disallowed by OpenID Connect.
                     throw Oauth2OidcServerException::loginRequired($authRequest->getRedirectUri());
                 }
 
@@ -188,10 +184,10 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
                 return Yii::$app->response->redirect($user->loginUrl);
             }
 
-            // Check if reauthentication is required
+            // Check if reauthentication is required.
             if (
                 (
-                    ( // true in case user was authenticated before request and oidc prompt requires login
+                    (// true in case user was authenticated before request and oidc prompt requires login.
                         in_array(
                             Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_LOGIN,
                             $clientAuthorizationRequest->getPrompts()
@@ -199,7 +195,7 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
                         && $clientAuthorizationRequest->wasUserAuthenticatedBeforeRequest()
                     )
                     ||
-                    ( // true in case oidc max_age is set and the user was authenticated before the maximum time allowed
+                    (// true in case oidc max_age is set and the user was authenticated before the maximum time allowed.
                         $clientAuthorizationRequest->getMaxAge() !== null
                         && (
                             (time() - $module->getUserIdentity()->getLatestAuthenticatedAt()->getTimestamp())
@@ -209,7 +205,7 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
                 )
                 && !$clientAuthorizationRequest->wasUserAthenticatedDuringRequest()
             ) {
-                // Prevent redirect loop
+                // Prevent redirect loop.
                 $redirectAttempt = (int)$request->get('redirectAttempt', 0);
                 if ($redirectAttempt > 3) {
                     // This error most likely occurs if the User Controller does not correctly performs
@@ -282,12 +278,12 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
                         $clientAuthorizationRequest->getPrompts()
                     )
                 ) {
-                    // User consent is disallowed by OpenID Connect
+                    // User consent is disallowed by OpenID Connect.
                     throw Oauth2OidcServerException::consentRequired($authRequest->getRedirectUri());
                 }
                 if ($clientAuthorizationRequest->isCompleted()) {
                     $authorizationApproved = $clientAuthorizationRequest->isApproved();
-                    // Cleanup session data
+                    // Cleanup session data.
                     $module->removeClientAuthReqSession($clientAuthorizationRequest->getRequestId());
                 } else {
                     return $module->generateClientAuthReqRedirectResponse($clientAuthorizationRequest);

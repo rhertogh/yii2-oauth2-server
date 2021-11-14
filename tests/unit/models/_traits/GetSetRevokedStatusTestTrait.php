@@ -14,7 +14,7 @@ trait GetSetRevokedStatusTestTrait
     public function testGetSetRevokedStatus()
     {
         $model = $this->getMockModel();
-        $this->assertFalse($model->getRevokedStatus()); // Default value
+        $this->assertFalse($model->getRevokedStatus()); // Default value.
         $model->setRevokedStatus(true);
         $this->assertTrue($model->getRevokedStatus());
         $model->setRevokedStatus(false);

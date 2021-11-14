@@ -35,7 +35,7 @@ class Oauth2BaseUserClientScopeTest extends BaseOauth2BaseModelsTest
      */
     public function attributeLabelsProvider()
     {
-        // Note: when changing these, also update translation files
+        // Note: when changing these, also update translation files.
         return [[[
             'user_id' => 'User ID',
             'client_id' => 'Client ID',

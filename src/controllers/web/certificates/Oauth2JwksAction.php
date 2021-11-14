@@ -17,7 +17,11 @@ use yii\helpers\StringHelper;
 class Oauth2JwksAction extends Action
 {
     /**
+     * RFC7517: JSON Web Key (JWK)
      * https://datatracker.ietf.org/doc/html/rfc7517
+     *
+     * For algorithms see RFC7518: JSON Web Algorithms - Parameters for RSA Keys
+     * https://datatracker.ietf.org/doc/html/rfc7518#section-6.3.
      */
     public function run()
     {
@@ -27,11 +31,10 @@ class Oauth2JwksAction extends Action
 
         $keyInfo = openssl_pkey_get_details(openssl_pkey_get_public($publicKey->getKeyContents()));
 
-        // https://datatracker.ietf.org/doc/html/rfc7518#section-6.3
         $keys = [new JWK([
-            //ToDo 'kid' => '',
+            // ToDo 'kid' => '', // https://datatracker.ietf.org/doc/html/rfc7517#section-4.5.
             'kty' => 'RSA',
-            'alg' => 'RS256',
+            'alg' => 'RS256', // https://datatracker.ietf.org/doc/html/rfc7518#section-6.3.
             'use' => 'sig',
             'n' => rtrim(StringHelper::base64UrlEncode($keyInfo['rsa']['n']), '='),
             'e' => rtrim(StringHelper::base64UrlEncode($keyInfo['rsa']['e']), '='),

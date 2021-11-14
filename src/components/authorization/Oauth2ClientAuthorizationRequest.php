@@ -255,9 +255,9 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
      */
     public function isAuthorizationNeeded()
     {
-        // Prevent Client Impersonation (https://datatracker.ietf.org/doc/html/rfc6749#section-10.2)
+        // Prevent Client Impersonation (https://datatracker.ietf.org/doc/html/rfc6749#section-10.2).
         if (!$this->isClientIdentifiable()) {
-            return true; // Always require authorization of non-identifiable clients
+            return true; // Always require authorization of non-identifiable clients.
         }
 
         return

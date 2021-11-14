@@ -77,7 +77,7 @@ abstract class BaseGrantCest
             'updated_at' => ['type' => 'integer', 'minimum' => 1609455600],
         ];
 
-        // ensure only requested scopes are included
+        // ensure only requested scopes are included.
         $properties = array_intersect_key($propertyDefinitions, array_flip($expectedProperties))
             + array_fill_keys(array_diff(array_keys($propertyDefinitions), $expectedProperties), ['not' => []]);
 

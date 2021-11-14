@@ -20,7 +20,7 @@ class Oauth2UserIdentityTraitTest extends DatabaseTestCase
         $this->mockWebApplication([
             'modules' => [
                 'oauth2' => [
-                    // Token revocation validation is tested during functional testing
+                    // Token revocation validation is tested during functional testing.
                     'resourceServerAccessTokenRevocationValidation' => false,
                 ]
             ]
@@ -35,7 +35,7 @@ class Oauth2UserIdentityTraitTest extends DatabaseTestCase
 
             public function getId()
             {
-                return 0; // not used
+                return 0; // not used.
             }
         });
 
@@ -66,7 +66,7 @@ class Oauth2UserIdentityTraitTest extends DatabaseTestCase
 
             public function getId()
             {
-                return 0; // not used
+                return 0; // not used.
             }
         });
 

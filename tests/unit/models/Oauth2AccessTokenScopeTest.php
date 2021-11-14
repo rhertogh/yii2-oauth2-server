@@ -36,7 +36,7 @@ class Oauth2AccessTokenScopeTest extends BaseOauth2ActiveRecordTest
     {
         $this->mockConsoleApplication();
         return [
-            // Valid
+            // Valid.
             [
                 [
                     'access_token_id' => 1001000,
@@ -44,7 +44,7 @@ class Oauth2AccessTokenScopeTest extends BaseOauth2ActiveRecordTest
                 ],
                 true,
             ],
-            // Invalid (non-existing access token)
+            // Invalid (non-existing access token).
             [
                 [
                     'access_token_id' => 999999,
@@ -52,7 +52,7 @@ class Oauth2AccessTokenScopeTest extends BaseOauth2ActiveRecordTest
                 ],
                 false,
             ],
-            // Invalid (non-existing scope)
+            // Invalid (non-existing scope).
             [
                 [
                     'access_token_id' => 1001000,

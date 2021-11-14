@@ -38,7 +38,7 @@ class Oauth2BaseClientTest extends BaseOauth2BaseModelsTest
      */
     public function attributeLabelsProvider()
     {
-        // Note: when changing these, also update translation files
+        // Note: when changing these, also update translation files.
         return [[[
             'id' => 'ID',
             'identifier' => 'Identifier',

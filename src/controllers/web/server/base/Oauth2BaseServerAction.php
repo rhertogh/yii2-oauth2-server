@@ -19,15 +19,6 @@ use yii\web\Response;
  */
 abstract class Oauth2BaseServerAction extends Action
 {
-//    protected function processOAuthServerException(OAuthServerException $e)
-//    {
-//        if ($e->hasRedirect()) {
-//            return $this->controller->redirect(UrlHelper::addQueryParams($e->getRedirectUri(), [
-//                'error' => $e->getErrorType()
-//            ]));
-//        }
-//        throw Oauth2ServerHttpException::createFromOAuthServerException($e);
-//    }
 
     /**
      * @param \Exception $exception

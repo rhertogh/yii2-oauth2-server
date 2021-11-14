@@ -49,7 +49,8 @@ class DatabaseFixtures
     {
         Yii::$app->db->open();
 
-        // Force committing of any active transactions for PHP < 8 due to pdo->inTransaction() bug after implicit commit
+        // Force committing of any active transactions for PHP < 8
+        // due to pdo->inTransaction() bug after implicit commit.
         if (PHP_MAJOR_VERSION < 8) {
             $transaction = Yii::$app->db->beginTransaction();
             try {

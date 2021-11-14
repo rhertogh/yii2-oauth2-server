@@ -22,7 +22,7 @@ abstract class BaseController extends Controller
         return ArrayHelper::merge(parent::behaviors(), [
             'authenticator' => [
                 // Use Oauth2HttpBearerAuth. To support multiple authentication methods please see:
-                // https://www.yiiframework.com/doc/guide/2.0/en/rest-authentication#authentication
+                // https://www.yiiframework.com/doc/guide/2.0/en/rest-authentication#authentication.
                 'class' => Oauth2HttpBearerAuth::class,
             ],
         ]);

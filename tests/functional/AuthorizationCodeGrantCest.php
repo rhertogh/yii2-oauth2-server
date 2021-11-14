@@ -78,7 +78,7 @@ class AuthorizationCodeGrantCest extends BaseGrantCest
         $location = $I->grabHttpHeader('Location');
         # endregion
 
-        // Simulate re-initialization of provider
+        // Simulate re-initialization of provider.
         $provider = $this->getProvider([
             'clientId' => 'test-client-type-auth-code-valid',
             'clientSecret' => 'secret',
@@ -111,7 +111,7 @@ class AuthorizationCodeGrantCest extends BaseGrantCest
         ]);
 
 
-        $expirationTime = (new \DateTimeImmutable('@' . time())) // ensure no micro seconds
+        $expirationTime = (new \DateTimeImmutable('@' . time())) // ensure no micro seconds.
             ->add(new \DateInterval($example['accessTokenTTL']));
         $I->sendPsr7Request($accessTokenRequest);
         $this->validateAccessTokenResponse($I);

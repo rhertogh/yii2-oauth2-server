@@ -31,7 +31,7 @@ class ClientCredentialsGrantCest extends BaseSimpleGrantCest
     {
         return [
 
-            // OK
+            // OK.
             [
                 'grant' => Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS,
                 'accessTokenTTL' => 'PT10M',
@@ -43,7 +43,7 @@ class ClientCredentialsGrantCest extends BaseSimpleGrantCest
                 'responseCode' => HttpCode::OK
             ],
 
-            // UNAUTHORIZED
+            // UNAUTHORIZED.
             [
                 'grant' => Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS,
                 'accessTokenTTL' => 'PT10M',

@@ -93,7 +93,7 @@ class Oauth2RefreshTokenGrantTest extends DatabaseTestCase
     public function respondToAccessTokenRequestProvider()
     {
         return [
-            [// OpenId Connect disabled
+            [// OpenId Connect disabled.
                 'moduleConfig' => [
                     'identityClass' => TestUserModelOidc::class,
                     'enableOpenIdConnect' => false,
@@ -105,7 +105,7 @@ class Oauth2RefreshTokenGrantTest extends DatabaseTestCase
                 'expectTokenResponse' => true,
                 'expectExceptionMessage' => null,
             ],
-            [// OpenId Connect enabled, Refresh Token Without Offline Access disabled
+            [// OpenId Connect enabled, Refresh Token Without Offline Access disabled.
                 'moduleConfig' => [
                     'identityClass' => TestUserModelOidc::class,
                     'enableOpenIdConnect' => true,
@@ -117,7 +117,7 @@ class Oauth2RefreshTokenGrantTest extends DatabaseTestCase
                 'expectTokenResponse' => false,
                 'expectExceptionMessage' => 'The resource owner or authorization server denied the request.',
             ],
-            [// OpenId Connect enabled (but scope is not present), Refresh Token Without Offline Access disabled
+            [// OpenId Connect enabled (but scope is not present), Refresh Token Without Offline Access disabled.
                 'moduleConfig' => [
                     'enableOpenIdConnect' => true,
                     'openIdConnectIssueRefreshTokenWithoutOfflineAccessScope' => false,
@@ -128,7 +128,7 @@ class Oauth2RefreshTokenGrantTest extends DatabaseTestCase
                 'expectRefreshToken' => true,
                 'expectExceptionMessage' => null,
             ],
-            [// OpenId Connect enabled, Refresh Token Without Offline Access enabled, user offline
+            [// OpenId Connect enabled, Refresh Token Without Offline Access enabled, user offline.
                 'moduleConfig' => [
                     'identityClass' => TestUserModelOidc::class,
                     'enableOpenIdConnect' => true,
@@ -140,7 +140,7 @@ class Oauth2RefreshTokenGrantTest extends DatabaseTestCase
                 'expectTokenResponse' => false,
                 'expectExceptionMessage' => 'The resource owner or authorization server denied the request.',
             ],
-            [// OpenId Connect enabled, Refresh Token Without Offline Access enabled, user online
+            [// OpenId Connect enabled, Refresh Token Without Offline Access enabled, user online.
                 'moduleConfig' => [
                     'identityClass' => TestUserModelOidc::class,
                     'enableOpenIdConnect' => true,
@@ -152,7 +152,7 @@ class Oauth2RefreshTokenGrantTest extends DatabaseTestCase
                 'expectTokenResponse' => true,
                 'expectExceptionMessage' => null,
             ],
-            [// OpenId Connect enabled, Refresh Token Without Offline Access disabled,
+            [// OpenId Connect enabled, Refresh Token Without Offline Access disabled.
                 'moduleConfig' => [
                     'identityClass' => TestUserModelOidc::class,
                     'enableOpenIdConnect' => true,
@@ -164,7 +164,7 @@ class Oauth2RefreshTokenGrantTest extends DatabaseTestCase
                 'expectTokenResponse' => true,
                 'expectExceptionMessage' => null,
             ],
-            [// invalid user id,
+            [// invalid user id.
                 'moduleConfig' => [
                     'identityClass' => TestUserModel::class,
                     'enableOpenIdConnect' => true,
@@ -176,7 +176,7 @@ class Oauth2RefreshTokenGrantTest extends DatabaseTestCase
                 'expectTokenResponse' => false,
                 'expectExceptionMessage' => 'Unable to find user with id "99999".',
             ],
-            [// invalid user class,
+            [// invalid user class.
                 'moduleConfig' => [
                     'identityClass' => TestUserModel::class,
                     'enableOpenIdConnect' => true,

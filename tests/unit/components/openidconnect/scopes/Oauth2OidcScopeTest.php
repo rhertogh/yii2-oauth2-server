@@ -64,7 +64,7 @@ class Oauth2OidcScopeTest extends TestCase
 
         // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
 
-        // Dummy that should be cleared by `setClaims`
+        // Dummy that should be cleared by `setClaims`.
         $oidcScope->setClaims([new Oauth2OidcClaim([
             'identifier' => 'dummy',
         ])]);
@@ -73,38 +73,38 @@ class Oauth2OidcScopeTest extends TestCase
         $this->assertEquals($oidcScope, $oidcScope->setClaims($claims));
         $this->assertFalse($oidcScope->hasClaim('dummy'));
 
-        // Oauth2OidcClaim
+        // Oauth2OidcClaim.
         $this->assertNull($oidcScope->getClaim('ignored-claim-identifier'));
         $this->assertEquals($testClaim, $oidcScope->getClaim('test-claim-object'));
-        // Duplicate identifier
+        // Duplicate identifier.
         $this->assertEquals('test-duplicate-determiner-overwritten', $oidcScope->getClaim('test-duplicate')->getDeterminer());
-        // Indexed string
+        // Indexed string.
         $testClaimIndexedString = $oidcScope->getClaim('test-claim-string-indexed');
         $this->assertInstanceOf(Oauth2OidcClaimInterface::class, $testClaimIndexedString);
         $this->assertEquals('test-claim-string-indexed', $testClaimIndexedString->getIdentifier());
-        // Associative string
+        // Associative string.
         $testClaimAssociativeString = $oidcScope->getClaim('test-claim-string-associative');
         $this->assertInstanceOf(Oauth2OidcClaimInterface::class, $testClaimAssociativeString);
         $this->assertEquals('test-claim-string-associative', $testClaimAssociativeString->getIdentifier());
         $this->assertEquals('test-claim-string-associative-determiner', $testClaimAssociativeString->getDeterminer());
-        // Indexed array
+        // Indexed array.
         $testClaimIndexedArray = $oidcScope->getClaim('test-claim-array-indexed');
         $this->assertInstanceOf(Oauth2OidcClaimInterface::class, $testClaimIndexedArray);
         $this->assertEquals('test-claim-array-indexed', $testClaimIndexedArray->getIdentifier());
         $this->assertEquals('test-claim-array-indexed-determiner', $testClaimIndexedArray->getDeterminer());
-        // Associative array
+        // Associative array.
         $testClaimAssociativeArray = $oidcScope->getClaim('test-claim-array-associative');
         $this->assertInstanceOf(Oauth2OidcClaimInterface::class, $testClaimAssociativeArray);
         $this->assertEquals('test-claim-array-associative', $testClaimAssociativeArray->getIdentifier());
         $this->assertEquals('test-claim-array-associative-determiner', $testClaimAssociativeArray->getDeterminer());
-        // Associative array with its own identifier
+        // Associative array with its own identifier.
         $testClaimAssociativeArrayIdentifier = $oidcScope->getClaim('test-claim-array-associative-identifier');
         $this->assertNull($oidcScope->getClaim('test-claim-array-associative-ignored'));
         $this->assertInstanceOf(Oauth2OidcClaimInterface::class, $testClaimAssociativeArrayIdentifier);
         $this->assertEquals('test-claim-array-associative-identifier', $testClaimAssociativeArrayIdentifier->getIdentifier());
         $this->assertEquals('test-claim-array-associative-identifier-determiner', $testClaimAssociativeArrayIdentifier->getDeterminer());
 
-        // Add extra claims
+        // Add extra claims.
         $extraClaims = [
             new Oauth2OidcClaim([
                 'identifier' => 'test-duplicate',
@@ -119,7 +119,7 @@ class Oauth2OidcScopeTest extends TestCase
         $this->assertEquals($testClaim, $oidcScope->getClaim('test-claim-object'));
         $this->assertTrue($oidcScope->hasClaim('test-claim-extra'));
 
-        // Clear Claims
+        // Clear Claims.
         $this->assertEquals($oidcScope, $oidcScope->clearClaims());
         $this->assertEquals([], $oidcScope->getClaims());
 

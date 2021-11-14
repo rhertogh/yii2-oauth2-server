@@ -1,6 +1,6 @@
 <?php
 
-// Workaround for PhpStorm bug. https://stackoverflow.com/a/55040543/7702252
+// Workaround for PhpStorm bug. https://stackoverflow.com/a/55040543/7702252.
 use yii\helpers\Json;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -9,7 +9,7 @@ if (in_array('reporters: report: PhpStorm_Codeception_ReportPrinter', $_SERVER['
     ob_start();
 }
 
-// ensure we get report on all possible php errors
+// ensure we get report on all possible php errors.
 error_reporting(-1);
 
 define('YII_ENABLE_ERROR_HANDLER', false);

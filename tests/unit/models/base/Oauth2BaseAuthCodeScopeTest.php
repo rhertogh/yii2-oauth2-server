@@ -35,7 +35,7 @@ class Oauth2BaseAuthCodeScopeTest extends BaseOauth2BaseModelsTest
      */
     public function attributeLabelsProvider()
     {
-        // Note: when changing these, also update translation files
+        // Note: when changing these, also update translation files.
         return [[[
             'auth_code_id' => 'Auth Code ID',
             'scope_id' => 'Scope ID',

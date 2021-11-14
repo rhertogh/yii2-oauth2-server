@@ -33,7 +33,7 @@ return ArrayHelper::merge(require('main.php'), [
                 '@sample/migrations',
             ],
             'migrationNamespaces' => [
-                'sample\\migrations\\oauth2', // Add the `Oauth2Module::$migrationsNamespace` to your Migration Controller
+                'sample\\migrations\\oauth2', // Add the `Oauth2Module::$migrationsNamespace` to your Migration Controller.
             ],
             'newFileOwnership' => '1000:1000', # Default WSL user id
             'newFileMode' => 0660,

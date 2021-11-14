@@ -71,7 +71,7 @@ class Oauth2AccessTokenRepositoryTest extends BaseOauth2RepositoryTest
         $this->assertEquals($identifier, $validateAccessToken->getIdentifier());
         $this->assertEquals($client->getIdentifier(), $validateAccessToken->getClient()->getIdentifier());
         $this->assertEquals($userIdentifier, $validateAccessToken->getUserIdentifier());
-        $this->assertEquals(Oauth2AccessToken::TYPE_BEARER, $validateAccessToken->type); // Fixed for now
+        $this->assertEquals(Oauth2AccessToken::TYPE_BEARER, $validateAccessToken->type); // Fixed type for now.
         $this->assertEquals($expiryDateTime->getTimestamp(), $validateAccessToken->getExpiryDateTime()->getTimestamp());
         $this->assertEquals(false, $validateAccessToken->getRevokedStatus());
         $this->assertEquals($scopes, $validateAccessToken->getScopes());

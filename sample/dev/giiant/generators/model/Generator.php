@@ -24,7 +24,7 @@ class Generator extends \schmunk42\giiant\generators\model\Generator
                     unset($relations[$relationName]);
                 }
 
-                // hardcoded fix for https://github.com/yiisoft/yii2-gii/issues/55
+                // hardcoded fix for https://github.com/yiisoft/yii2-gii/issues/55.
                 if (
                     $tableName === 'oauth2_user_client_scope'
                     && $relationName === 'User'

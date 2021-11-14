@@ -35,7 +35,7 @@ class Oauth2BaseAccessTokenScopeTest extends BaseOauth2BaseModelsTest
      */
     public function attributeLabelsProvider()
     {
-        // Note: when changing these, also update translation files
+        // Note: when changing these, also update translation files.
         return [[[
             'access_token_id' => 'Access Token ID',
             'scope_id' => 'Scope ID',

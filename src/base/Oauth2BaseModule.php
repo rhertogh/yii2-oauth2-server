@@ -183,12 +183,12 @@ abstract class Oauth2BaseModule extends Module
      * Numeric id for "implicit" Grant Type. Note: This is a legacy Grant Type.
      * @since 1.0.0
      */
-    public const GRANT_TYPE_PASSWORD = 1024; // Legacy Grant
+    public const GRANT_TYPE_PASSWORD = 1024; // Legacy Grant.
     /**
      * Numeric id for "password" Grant Type. Note: This is a legacy Grant Type.
      * @since 1.0.0
      */
-    public const GRANT_TYPE_IMPLICIT = 2048; // Legacy Grant
+    public const GRANT_TYPE_IMPLICIT = 2048; // Legacy Grant.
     # endregion Numeric IDs for Supported grant types
 
     /**
@@ -199,8 +199,8 @@ abstract class Oauth2BaseModule extends Module
         Oauth2Module::GRANT_TYPE_IDENTIFIER_AUTH_CODE => self::GRANT_TYPE_AUTH_CODE,
         Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS => self::GRANT_TYPE_CLIENT_CREDENTIALS,
         Oauth2Module::GRANT_TYPE_IDENTIFIER_REFRESH_TOKEN => self::GRANT_TYPE_REFRESH_TOKEN,
-        Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD => self::GRANT_TYPE_PASSWORD, // Legacy Grant
-        Oauth2Module::GRANT_TYPE_IDENTIFIER_IMPLICIT => self::GRANT_TYPE_IMPLICIT, // Legacy Grant
+        Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD => self::GRANT_TYPE_PASSWORD, // Legacy Grant.
+        Oauth2Module::GRANT_TYPE_IDENTIFIER_IMPLICIT => self::GRANT_TYPE_IMPLICIT, // Legacy Grant.
     ];
 
     /**
@@ -227,8 +227,8 @@ abstract class Oauth2BaseModule extends Module
         self::GRANT_TYPE_AUTH_CODE => Oauth2AuthCodeGrantFactoryInterface::class,
         self::GRANT_TYPE_CLIENT_CREDENTIALS => Oauth2ClientCredentialsGrantFactoryInterface::class,
         self::GRANT_TYPE_REFRESH_TOKEN => Oauth2RefreshTokenGrantFactoryInterface::class,
-        self::GRANT_TYPE_IMPLICIT => Oauth2ImplicitGrantFactoryInterface::class, // Legacy Grant
-        self::GRANT_TYPE_PASSWORD => Oauth2PasswordGrantFactoryInterface::class, // Legacy Grant
+        self::GRANT_TYPE_IMPLICIT => Oauth2ImplicitGrantFactoryInterface::class, // Legacy Grant.
+        self::GRANT_TYPE_PASSWORD => Oauth2PasswordGrantFactoryInterface::class, // Legacy Grant.
     ];
 
     /**
@@ -630,7 +630,7 @@ abstract class Oauth2BaseModule extends Module
                     ]
                 )
             ) {
-                // Skip default claims for OpenID (already set above)
+                // Skip default claims for OpenID (already set above).
                 continue;
             }
             $claimValue = $user->getOpenIdConnectClaimValue($claim, $this);

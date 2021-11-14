@@ -54,7 +54,7 @@ class Oauth2OidcUserinfoActionTest extends DatabaseTestCase
         $authClaims = [
             'oauth_user_id' => $user->getIdentifier(),
             'oauth_scopes' => ['openid', 'profile'],
-            'oauth_access_token_id' => null, // not used during test
+            'oauth_access_token_id' => null, // not used during test.
             'oauth_client_id' => $clientIdentifier,
         ];
 
@@ -162,8 +162,8 @@ class Oauth2OidcUserinfoActionTest extends DatabaseTestCase
         $authClaims = [
             'oauth_user_id' => $user->getIdentifier(),
             'oauth_scopes' => ['openid'],
-            'oauth_access_token_id' => null, // not used during test
-            'oauth_client_id' => 'nope', // non-existing client
+            'oauth_access_token_id' => null, // not used during test.
+            'oauth_client_id' => 'nope', // non-existing client.
         ];
 
         Yii::$app->request->headers->set('Authorization', $authHeaderDummy);

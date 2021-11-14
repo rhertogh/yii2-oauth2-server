@@ -62,6 +62,6 @@ class Oauth2ServerHttpExceptionCest extends BaseGrantCest
         ]);
 
         $I->sendGet($provider->getAuthorizationUrl());
-        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST); // pkceMethod missing
+        $I->seeResponseCodeIs(HttpCode::BAD_REQUEST); // pkceMethod missing.
     }
 }

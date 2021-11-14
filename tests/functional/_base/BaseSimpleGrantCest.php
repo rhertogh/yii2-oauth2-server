@@ -40,7 +40,7 @@ abstract class BaseSimpleGrantCest extends BaseGrantCest
             InMemory::plainText('')
         );
 
-        $expirationTime = (new \DateTimeImmutable('@' . time())) // ensure no micro seconds
+        $expirationTime = (new \DateTimeImmutable('@' . time())) // ensure no micro seconds.
             ->add(new \DateInterval($example['accessTokenTTL']));
 
         $accessTokenRequest = $provider->getAccessTokenRequestWrapper($example['grant'], $example['tokenOptions']);

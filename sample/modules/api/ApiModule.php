@@ -18,7 +18,7 @@ class ApiModule extends Module
         parent::init();
 
         // Only allow "stateless" access to the api, for more information see
-        // https://www.yiiframework.com/doc/guide/2.0/en/rest-authentication#authentication)
+        // https://www.yiiframework.com/doc/guide/2.0/en/rest-authentication#authentication.
         Yii::$app->user->enableSession = false;
     }
 }

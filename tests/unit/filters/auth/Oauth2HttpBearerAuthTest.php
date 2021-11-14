@@ -21,7 +21,7 @@ class Oauth2HttpBearerAuthTest extends TestCase
         $this->mockWebApplication([
             'modules' => [
                 'oauth2' => [
-                    'resourceServerAccessTokenRevocationValidation' => false, // Token revocation validation is tested during functional testing
+                    'resourceServerAccessTokenRevocationValidation' => false, // Token revocation validation is tested during functional testing.
                 ]
             ]
         ]);
@@ -76,7 +76,7 @@ class Oauth2HttpBearerAuthTest extends TestCase
         $this->mockWebApplication([
             'modules' => [
                 'oauth2' => [
-                    'resourceServerAccessTokenRevocationValidation' => false, // Token revocation validation is tested during functional testing
+                    'resourceServerAccessTokenRevocationValidation' => false, // Token revocation validation is tested during functional testing.
                 ]
             ],
             'components' => [

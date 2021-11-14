@@ -45,20 +45,20 @@ class Oauth2BaseTokenRepositoryTest extends DatabaseTestCase
 
             public function persist($runValidation = true, $attributeNames = null)
             {
-                return true; // Persistence of main model is tested in implementation classes
+                return true; // Persistence of main model is tested in implementation classes.
             }
             public function identifierExists()
             {
-                return false; // Existence of main model is tested in implementation classes
+                return false; // Existence of main model is tested in implementation classes.
             }
 
             public function hasAttribute($name)
             {
-                return false; // Avoid database usage
+                return false; // Avoid database usage.
             }
             public function loadDefaultValues($skipIfSet = true)
             {
-                // Avoid database usage
+                // Avoid database usage.
             }
 
             public function getScopesRelationClassName()

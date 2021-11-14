@@ -23,7 +23,7 @@ return ArrayHelper::merge(require('main.php'), [
 
     'modules' => [
         'api' => [
-            'class' => ApiModule::class, // Just a sample api
+            'class' => ApiModule::class, // Just a sample api.
         ],
         'debug' => [
             'class' => yii\debug\Module::class,

@@ -18,7 +18,7 @@ trait Oauth2GetSetClientTestTrait
 
     public function testGetSetClient()
     {
-        $mocks = $this->getMockModelAndClient(); // Workaround for https://youtrack.jetbrains.com/issue/WI-61907
+        $mocks = $this->getMockModelAndClient(); // Workaround for https://youtrack.jetbrains.com/issue/WI-61907.
         $model = $mocks['model'];
         $clientId = $mocks['clientId'];
         $client = $mocks['client'];
@@ -35,7 +35,7 @@ trait Oauth2GetSetClientTestTrait
      */
     public function testSetAttributeClientId()
     {
-        $mocks = $this->getMockModelAndClient(); // Workaround for https://youtrack.jetbrains.com/issue/WI-61907
+        $mocks = $this->getMockModelAndClient(); // Workaround for https://youtrack.jetbrains.com/issue/WI-61907.
         $model = $mocks['model'];
         $client = $mocks['client'];
 
@@ -49,7 +49,7 @@ trait Oauth2GetSetClientTestTrait
      */
     public function testSetClientId()
     {
-        $mocks = $this->getMockModelAndClient(); // Workaround for https://youtrack.jetbrains.com/issue/WI-61907
+        $mocks = $this->getMockModelAndClient(); // Workaround for https://youtrack.jetbrains.com/issue/WI-61907.
         $model = $mocks['model'];
         $client = $mocks['client'];
 

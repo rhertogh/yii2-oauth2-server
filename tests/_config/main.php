@@ -29,9 +29,9 @@ return [
             'privateKey' => '@Yii2Oauth2ServerTests/_config/keys/private.key',
             'publicKey' => '@Yii2Oauth2ServerTests/_config/keys/public.key', // Path to the public key.
             'privateKeyPassphrase' => getenv('YII2_OAUTH2_SERVER_PRIVATE_KEY_PASSPHRASE'), // The private key passphrase (if used).
-            'codesEncryptionKey' => getenv('YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY'), // The encryption key for authorization and refresh codes
+            'codesEncryptionKey' => getenv('YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY'), // The encryption key for authorization and refresh codes.
             'storageEncryptionKeys' => [
-                '2021-01-01' => getenv('YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEY'), // The encryption key for storage like client secrets
+                '2021-01-01' => getenv('YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEY'), // The encryption key for storage like client secrets.
             ],
             'defaultStorageEncryptionKey' => '2021-01-01',
             'grantTypes' => [

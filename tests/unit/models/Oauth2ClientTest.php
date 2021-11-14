@@ -54,7 +54,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
     {
         $this->mockConsoleApplication();
         return [
-            // Valid
+            // Valid.
             [
                 [
                     'identifier' => 'my-test-client',
@@ -69,7 +69,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
                     $model->setSecret('my-test-secret', Oauth2Module::getInstance()->getEncryptor());
                 }
             ],
-            // Valid, multiple redirect URIs
+            // Valid, multiple redirect URIs.
             [
                 [
                     'identifier' => 'my-test-client',
@@ -84,7 +84,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
                     $model->setSecret('my-test-secret', Oauth2Module::getInstance()->getEncryptor());
                 }
             ],
-            // Invalid (missing secret for type confidential)
+            // Invalid (missing secret for type confidential).
             [
                 [
                     'identifier' => 'my-test-client',
@@ -131,7 +131,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
 
     public function testIsEnabled()
     {
-        $enabledClient = $this->getMockModel(); // enabled by default
+        $enabledClient = $this->getMockModel(); // enabled by default.
         $disabledClient = $this->getMockModel(['enabled' => 0]);
 
         $this->assertEquals(true, $enabledClient->isEnabled());
@@ -288,11 +288,11 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
 
         $this->assertNotEmpty($client->secret);
         $client->type = Oauth2ClientInterface::TYPE_PUBLIC;
-        $client->setSecret(null, $encryptor); // Setting secret to `null` on public type should be allowed
+        $client->setSecret(null, $encryptor); // Setting secret to `null` on public type should be allowed.
         $this->assertNull($client->secret);
 
         $this->expectExceptionMessage('The secret for a non-confidential client can only be set to `null`');
-        $client->setSecret('my-test-secret', $encryptor);  // Setting secret to a value on public type should be allowed
+        $client->setSecret('my-test-secret', $encryptor);
     }
 
     public function testValidateGrantType()

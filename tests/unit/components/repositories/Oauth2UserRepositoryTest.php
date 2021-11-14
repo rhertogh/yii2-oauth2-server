@@ -201,7 +201,7 @@ class Oauth2UserRepositoryTest extends BaseOauth2RepositoryTest
 
     public function testGetUserEntityByUserCredentialsWithoutOauth2PasswordGrantUserInterface()
     {
-        // Run with default TestUserModel set as Oauth2UserInterface
+        // Run with default TestUserModel set as Oauth2UserInterface.
         $client = static::getClientClass()::findOne(['identifier' => 'test-client-type-password-public-valid']);
         $this->expectExceptionMessage(
             'In order to support the `password` grant type, ' . TestUserModel::class

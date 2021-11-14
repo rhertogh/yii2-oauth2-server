@@ -73,14 +73,14 @@ class Oauth2OpenidConfigurationAction extends Action
             true
         );
 
-        // https://openid.net/specs/openid-connect-discovery-1_0.html#rfc.section.3
+        // See https://openid.net/specs/openid-connect-discovery-1_0.html#rfc.section.3.
         $openIdConfig = [
             'issuer' => Yii::$app->request->getHostInfo(),
             'authorization_endpoint' => $authorizationEndpoint,
             'token_endpoint' => $tokenEndpoint
         ];
 
-        // Add 'userinfo_endpoint' if configured
+        // Add 'userinfo_endpoint' if configured.
         if (!empty($module->openIdConnectUserinfoEndpoint)) {
             if ($module->openIdConnectUserinfoEndpoint === true) {
                 $openIdConfig['userinfo_endpoint'] = Url::to(

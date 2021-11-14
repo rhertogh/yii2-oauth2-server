@@ -29,16 +29,16 @@ return [
     'modules' => [
         'oauth2' => [
             'class' => rhertogh\Yii2Oauth2Server\Oauth2Module::class,
-            'identityClass' => sample\models\User::class, // The Identity Class of your application (most likely the same as the 'identityClass' of your application's User Component)
+            'identityClass' => sample\models\User::class, // The Identity Class of your application (most likely the same as the 'identityClass' of your application's User Component).
             'privateKey' => '@app/config/keys/private.key', // Path to the private key.
             'publicKey' => '@app/config/keys/public.key', // Path to the public key.
             'privateKeyPassphrase' => getenv('YII2_OAUTH2_SERVER_PRIVATE_KEY_PASSPHRASE'), // The private key passphrase (if used).
-            'codesEncryptionKey' => getenv('YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY'), // The encryption key for authorization and refresh codes
+            'codesEncryptionKey' => getenv('YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY'), // The encryption key for authorization and refresh codes.
             'storageEncryptionKeys' => [
-                '2021-01-01' => getenv('YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEY'), // The encryption key for storage like client secrets
+                '2021-01-01' => getenv('YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEY'), // The encryption key for storage like client secrets.
             ],
-            'defaultStorageEncryptionKey' => '2021-01-01', // The index of the default key in storageEncryptionKeys
-            'grantTypes' => [ // For more information which grant types to use, please see https://oauth2.thephpleague.com/authorization-server/which-grant/
+            'defaultStorageEncryptionKey' => '2021-01-01', // The index of the default key in storageEncryptionKeys.
+            'grantTypes' => [ // For more information which grant types to use, please see https://oauth2.thephpleague.com/authorization-server/which-grant/.
                 Oauth2Module::GRANT_TYPE_AUTH_CODE,
                 Oauth2Module::GRANT_TYPE_CLIENT_CREDENTIALS,
                 Oauth2Module::GRANT_TYPE_IMPLICIT,
@@ -46,8 +46,8 @@ return [
                 Oauth2Module::GRANT_TYPE_REFRESH_TOKEN,
             ],
             'migrationsNamespace' => 'sample\\migrations\\oauth2',  // The namespace with which migrations will be created (and by which they will be located).
-            'enableOpenIdConnect' => true, // Only required if OpenID Connect support is required
-            'defaultUserAccountSelection' => Oauth2Module::USER_ACCOUNT_SELECTION_UPON_CLIENT_REQUEST, // Allow clients to request user account selection (OpenID Connect)
+            'enableOpenIdConnect' => true, // Only required if OpenID Connect support is required.
+            'defaultUserAccountSelection' => Oauth2Module::USER_ACCOUNT_SELECTION_UPON_CLIENT_REQUEST, // Allow clients to request user account selection (OpenID Connect).
             'migrationsFileOwnership' => '1000:1000',
             'migrationsFileMode' => 0660
         ],
@@ -71,7 +71,7 @@ return [
             'password' => getenv('MYSQL_USER_PASSWORD'),
             'charset' => 'utf8mb4',
             'enableSchemaCache' => true,
-            'schemaCacheDuration' => 0, //never expire
+            'schemaCacheDuration' => 0, // never expire.
             'enableLogging' => YII_DEBUG,
             'enableProfiling' => YII_DEBUG,
         ],

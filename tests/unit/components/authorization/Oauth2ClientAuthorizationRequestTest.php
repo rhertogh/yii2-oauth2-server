@@ -249,37 +249,37 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $user123 = TestUserModel::findOne(123);
         $user124 = TestUserModel::findOne(124);
 
-        // Pre-approved client for user
+        // Pre-approved client for user.
         $clientAuthorizationRequest->setClientIdentifier('test-client-type-password-public-valid');
         $clientAuthorizationRequest->setUserIdentity($user124);
-        $clientAuthorizationRequest->setRedirectUri('https://localhost/redirect_uri');  // Note the https protocol
+        $clientAuthorizationRequest->setRedirectUri('https://localhost/redirect_uri');  // Note the https protocol.
         $this->assertFalse($clientAuthorizationRequest->isAuthorizationNeeded());
 
-        // Client not yet authorized by user
+        // Client not yet authorized by user.
         $clientAuthorizationRequest->setUserIdentity($user123);
         $this->assertTrue($clientAuthorizationRequest->isAuthorizationNeeded());
 
-        // [restore config to Pre-approved client for user]
+        // [restore config to Pre-approved client for user].
         $clientAuthorizationRequest->setUserIdentity($user124);
         $this->assertFalse($clientAuthorizationRequest->isAuthorizationNeeded());
 
-        // Unidentifiable Client
-        $clientAuthorizationRequest->setRedirectUri('http://localhost/redirect_uri'); // Note the http protocol
+        // Unidentifiable Client.
+        $clientAuthorizationRequest->setRedirectUri('http://localhost/redirect_uri'); // Note the http protocol.
         $this->assertTrue($clientAuthorizationRequest->isAuthorizationNeeded());
 
-        // [restore config to Pre-approved client for user]
-        $clientAuthorizationRequest->setRedirectUri('https://localhost/redirect_uri'); // Note the https protocol
-        $this->assertFalse($clientAuthorizationRequest->isAuthorizationNeeded()); // Note the https protocol
+        // [restore config to Pre-approved client for user].
+        $clientAuthorizationRequest->setRedirectUri('https://localhost/redirect_uri'); // Note the https protocol.
+        $this->assertFalse($clientAuthorizationRequest->isAuthorizationNeeded()); // Note the https protocol.
 
-        // Additional scope for pre-approved client for user
+        // Additional scope for pre-approved client for user.
         $clientAuthorizationRequest->setRequestedScopeIdentifiers(['user.enabled.read']);
         $this->assertTrue($clientAuthorizationRequest->isAuthorizationNeeded());
 
-        // [restore config to Pre-approved client for user]
+        // [restore config to Pre-approved client for user].
         $clientAuthorizationRequest->setRequestedScopeIdentifiers([]);
         $this->assertFalse($clientAuthorizationRequest->isAuthorizationNeeded());
 
-        // Do not skipAuthorizationIfScopeIsAllowed
+        // Do not skipAuthorizationIfScopeIsAllowed.
         $clientAuthorizationRequest->getClient()->skip_authorization_if_scope_is_allowed = false;
         $this->assertTrue($clientAuthorizationRequest->isAuthorizationNeeded());
     }
@@ -308,13 +308,13 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $clientAuthorizationRequest->setClientIdentifier('test-client-type-password-public-valid');
         $clientAuthorizationRequest->setRequestedScopeIdentifiers($requestedScopes);
 
-        // User with no pre-approved scopes
+        // User with no pre-approved scopes.
         $clientAuthorizationRequest->setUserIdentity($user123);
         $approvalPendingScopes = $clientAuthorizationRequest->getApprovalPendingScopes();
         $this->assertEquals($expectedScopes, array_keys($approvalPendingScopes));
         $this->assertEquals([], $clientAuthorizationRequest->getPreviouslyApprovedScopes());
 
-        // User with pre-approved scopes
+        // User with pre-approved scopes.
         $clientAuthorizationRequest->setUserIdentity($user124);
         $approvalPendingScopes = $clientAuthorizationRequest->getApprovalPendingScopes();
         $previouslyApprovedScopes = $clientAuthorizationRequest->getPreviouslyApprovedScopes();

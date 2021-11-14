@@ -33,7 +33,7 @@ class Oauth2AuthCodeGrant extends AuthCodeGrant implements Oauth2AuthCodeGrantIn
                 in_array(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OPENID, $scopeIdentifiers)
                 && !in_array(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OFFLINE_ACCESS, $scopeIdentifiers)
             ) {
-                // Don't issue refresh token when offline access scope is not authorized
+                // Don't issue refresh token when offline access scope is not authorized.
                 return null;
             }
         }

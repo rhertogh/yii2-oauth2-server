@@ -85,7 +85,7 @@ class Oauth2BaseServerActionTest extends TestCase
             }
         };
 
-        // Clear request component
+        // Clear request component.
         $appComponents = $this->getInaccessibleProperty(Yii::$app, '_components');
         unset($appComponents['response']);
         $this->setInaccessibleProperty(Yii::$app, '_components', $appComponents);

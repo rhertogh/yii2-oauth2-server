@@ -36,7 +36,7 @@ class Oauth2ClientScopeTest extends BaseOauth2ActiveRecordTest
     {
         $this->mockConsoleApplication();
         return [
-            // Valid
+            // Valid.
             [
                 [
                     'client_id' => 1003000,
@@ -44,7 +44,7 @@ class Oauth2ClientScopeTest extends BaseOauth2ActiveRecordTest
                 ],
                 true,
             ],
-            // Invalid (non-existing client)
+            // Invalid (non-existing client).
             [
                 [
                     'client_id' => 999999,
@@ -52,7 +52,7 @@ class Oauth2ClientScopeTest extends BaseOauth2ActiveRecordTest
                 ],
                 false,
             ],
-            // Invalid (non-existing scope)
+            // Invalid (non-existing scope).
             [
                 [
                     'client_id' => 1003000,

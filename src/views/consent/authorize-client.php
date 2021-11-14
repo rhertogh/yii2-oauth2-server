@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
  */
 
 
-// Note: using long class names to avoid any conflict
+// Note: using long class names to avoid any conflict.
 ?>
 <style>
     .oauth2_authorize-client-wrapper {

@@ -112,7 +112,7 @@ class Oauth2CreateClientAction extends Action
             }
         }
 
-        //ToDo: start transaction when DB specification is supported
+        //ToDo: start transaction when DB specification is supported.
 
         /** @var Oauth2ClientInterface $client */
         $client = Yii::createObject([

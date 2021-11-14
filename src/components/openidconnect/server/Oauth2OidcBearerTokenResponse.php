@@ -55,7 +55,7 @@ class Oauth2OidcBearerTokenResponse extends BearerTokenResponse implements Oauth
     {
         $scopeIdentifiers = array_map(fn($scope) => $scope->getIdentifier(), $accessToken->getScopes());
 
-        // Not a OpenId Connect request if OpenId scope is not present
+        // Not a OpenId Connect request if OpenId scope is not present.
         if (!in_array(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OPENID, $scopeIdentifiers)) {
             return [];
         }

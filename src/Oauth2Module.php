@@ -170,7 +170,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     /**
      * @inheritdoc
      */
-    public $controllerNamespace = __NAMESPACE__ . '\-'; // Set explicitly via $controllerMap in `init()`
+    public $controllerNamespace = __NAMESPACE__ . '\-'; // Set explicitly via $controllerMap in `init()`.
 
     /**
      * @var string|null The application type. If `null` the type will be automatically detected.
@@ -957,7 +957,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     protected function getRequestOauthClaim($attribute, $default = null)
     {
         if (empty($this->_oauthClaimsAuthorizationHeader)) {
-            // User authorization was not processed by Oauth2Module
+            // User authorization was not processed by Oauth2Module.
             return $default;
         }
         if (Yii::$app->request->getHeaders()->get('Authorization') !== $this->_oauthClaimsAuthorizationHeader) {

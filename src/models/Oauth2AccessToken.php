@@ -64,7 +64,7 @@ class Oauth2AccessToken extends base\Oauth2AccessToken implements Oauth2AccessTo
     public function setClient(ClientEntityInterface $client)
     {
         $this->clientSetter($client);
-        $this->type = Oauth2AccessToken::TYPE_BEARER; // Fixed for now
+        $this->type = Oauth2AccessToken::TYPE_BEARER; // Fixed for now.
     }
 
     /**

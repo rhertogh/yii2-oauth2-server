@@ -32,22 +32,22 @@ class Oauth2OidcClaimTest extends TestCase
         $identifier = 'test-claim';
         $claim->setIdentifier($identifier);
 
-        // string
+        // string.
         $determiner = 'test-determiner';
         $this->assertEquals($claim, $claim->setDeterminer($determiner));
         $this->assertEquals($determiner, $claim->getDeterminer());
 
-        // array
+        // array.
         $determiner = ['test-determiner1', 'test-determiner2'];
         $this->assertEquals($claim, $claim->setDeterminer($determiner));
         $this->assertEquals($determiner, $claim->getDeterminer());
 
-        // callable
+        // callable.
         $determiner = 'test-determiner';
         $this->assertEquals($claim, $claim->setDeterminer($determiner));
         $this->assertEquals($determiner, $claim->getDeterminer());
 
-        // default to identifier if determiner is null
+        // default to identifier if determiner is null.
         $this->assertEquals($claim, $claim->setDeterminer(null));
         $this->assertEquals($identifier, $claim->getDeterminer());
     }

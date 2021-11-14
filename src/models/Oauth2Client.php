@@ -56,7 +56,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
      */
     public function __set($name, $value)
     {
-        if ($name === 'secret') { // Don't allow setting the secret via magic method
+        if ($name === 'secret') { // Don't allow setting the secret via magic method.
             throw new UnknownPropertyException('For security the "secret" property must be set via setSecret()');
         } else {
             parent::__set($name, $value);
@@ -256,7 +256,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     {
         if (
             empty($scopeIdentifiers)
-            // Quiet mode will always allow the request (scopes will silently be limited to the defined ones)
+            // Quiet mode will always allow the request (scopes will silently be limited to the defined ones).
             || $this->getScopeAccess() === static::SCOPE_ACCESS_STRICT_QUIET
         ) {
             $unauthorizedScopes = [];
@@ -287,7 +287,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
         $scopeTableName = $scopeClass::tableName();
 
         $possibleScopesConditions = [
-            // Default scopes defined for this client
+            // Default scopes defined for this client.
             ['AND',
                 [$clientScopeTableName . '.client_id' => $this->getPrimaryKey()],
                 [$clientScopeTableName . '.enabled' => 1],
@@ -307,7 +307,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
 
         $scopeAccess = $this->getScopeAccess();
         if ($scopeAccess === Oauth2Client::SCOPE_ACCESS_PERMISSIVE) {
-            // Default scopes defined by scope for all client
+            // Default scopes defined by scope for all client.
             $possibleScopesConditions[] = ['AND',
                 [$clientScopeTableName . '.client_id' => null],
                 ['OR',
@@ -322,7 +322,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
             ($scopeAccess !== Oauth2Client::SCOPE_ACCESS_STRICT)
             && ($scopeAccess !== Oauth2Client::SCOPE_ACCESS_STRICT_QUIET)
         ) {
-            // safeguard against unknown types
+            // safeguard against unknown types.
             throw new \LogicException('Unknown scope_access: "' . $scopeAccess . '".');
         }
 

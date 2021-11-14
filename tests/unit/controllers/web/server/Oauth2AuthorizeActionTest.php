@@ -62,7 +62,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         Yii::$app->request->setQueryParams([
             'response_type' => 'code',
-            'client_id' => 'test-client-type-auth-code-valid', // Note, using `confidential` client, public clients always require a code challenge
+            'client_id' => 'test-client-type-auth-code-valid', // Note, using `confidential` client, public clients always require a code challenge.
             'secret' => 'secret',
             'state' => '12345',
             'scope' => 'user.username.read user.email_address.read',
@@ -111,7 +111,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         $this->mockWebApplication();
         $module = Oauth2Module::getInstance();
 
-        Yii::$app->user->setIdentity(TestUserModel::findOne(123)); // test.user
+        Yii::$app->user->setIdentity(TestUserModel::findOne(123)); // 'test.user'.
         $controller = new Controller('test', $module);
         $accessTokenAction = new Oauth2AuthorizeAction('test', $controller);
 
@@ -138,7 +138,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         $this->mockWebApplication();
         $module = Oauth2Module::getInstance();
 
-        $user = TestUserModel::findOne(123); // test.user
+        $user = TestUserModel::findOne(123); // 'test.user'.
         $clientIdentifier = 'test-client-type-password-public-valid';
         $ScopeIdentifiers = ['user.username.read', 'user.email_address.read'];
         $state = '12345';
@@ -182,7 +182,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         $this->mockWebApplication();
         $module = Oauth2Module::getInstance();
 
-        $user = TestUserModel::findOne(123); // test.user
+        $user = TestUserModel::findOne(123); // 'test.user'.
         $clientIdentifier = 'test-client-type-password-public-valid';
         $ScopeIdentifiers = ['user.username.read', 'user.email_address.read'];
         $state = '12345';
@@ -226,7 +226,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         $this->mockWebApplication();
         $module = Oauth2Module::getInstance();
 
-        $user = TestUserModel::findOne(124); // test.user2
+        $user = TestUserModel::findOne(124); // 'test.user2'.
         $clientIdentifier = 'test-client-type-password-public-valid';
         $ScopeIdentifiers = ['user.username.read', 'user.email_address.read'];
         $state = '12345';
@@ -273,7 +273,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         $this->mockWebApplication();
         $module = Oauth2Module::getInstance();
 
-        $user = TestUserModel::findOne(124); // test.user2
+        $user = TestUserModel::findOne(124); // 'test.user2'.
         $clientIdentifier = 'test-client-type-password-public-valid';
         $ScopeIdentifiers = ['user.username.read', 'user.email_address.read'];
         $state = '12345';
@@ -301,7 +301,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
             'grantType' => Oauth2Module::GRANT_TYPE_AUTH_CODE,
             'authorizeUrl' => 'http://localhost/oauth2/authorize-client',
             'redirectUri' => $redirectUri,
-            'authorizationStatus' => Oauth2ClientAuthorizationRequest::AUTHORIZATION_APPROVED, // Note, should be set before `completed`
+            'authorizationStatus' => Oauth2ClientAuthorizationRequest::AUTHORIZATION_APPROVED, // Note, should be set before `completed`.
             'completed' => true,
             'state' => $state,
         ]);
@@ -322,11 +322,11 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         $this->mockWebApplication();
         $module = Oauth2Module::getInstance();
 
-        $user = TestUserModel::findOne(124); // test.user2
+        $user = TestUserModel::findOne(124); // 'test.user2'.
         $clientIdentifier = 'test-client-type-password-public-valid';
         $ScopeIdentifiers = ['user.username.read', 'user.email_address.read'];
 
-        // Using https to allow pre-approved client autorization
+        // Using https to allow pre-approved client autorization.
         $redirectUri = 'https://localhost/redirect_uri/';
         $client = Oauth2Client::findOne(['identifier' => $clientIdentifier]);
         $client->setRedirectUri($redirectUri);
@@ -360,7 +360,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         $this->mockWebApplication();
         $module = Oauth2Module::getInstance();
 
-        Yii::$app->user->setIdentity(TestUserModel::findOne(123)); // test.user
+        Yii::$app->user->setIdentity(TestUserModel::findOne(123)); // 'test.user'.
         $controller = new Controller('test', $module);
         $accessTokenAction = new Oauth2AuthorizeAction('test', $controller);
 
@@ -480,7 +480,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         $this->mockWebApplication();
         $module = Oauth2Module::getInstance();
 
-        Yii::$app->user->setIdentity(TestUserModel::findOne(123)); // test.user
+        Yii::$app->user->setIdentity(TestUserModel::findOne(123)); // 'test.user'.
 
         $controller = new Controller('test', $module);
         $accessTokenAction = new Oauth2AuthorizeAction('test', $controller);
@@ -564,7 +564,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
 
         $module = Oauth2Module::getInstance();
 
-        Yii::$app->user->setIdentity(TestUserModelOidc::findOne(123)); // test.user
+        Yii::$app->user->setIdentity(TestUserModelOidc::findOne(123)); // 'test.user'.
 
         $controller = new Controller('test', $module);
         $accessTokenAction = new Oauth2AuthorizeAction('test', $controller);
@@ -622,17 +622,17 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
             ],
             [
                 'prompt' => null,
-                'maxAge' => 3000, // test.user latest_authenticated_at is set to creation time - 3600
+                'maxAge' => 3000, // 'test.user'. latest_authenticated_at is set to creation time - 3600.
                 'expectLoginPrompt' => true,
             ],
             [
                 'prompt' => null,
-                'maxAge' => 4000, // test.user latest_authenticated_at is set to creation time - 3600
+                'maxAge' => 4000, // 'test.user'. latest_authenticated_at is set to creation time - 3600.
                 'expectLoginPrompt' => false,
             ],
             [
                 'prompt' => null,
-                'maxAge' => '', // expect empty string to be threaded as `null`
+                'maxAge' => '', // expect empty string to be threaded as `null`.
                 'expectLoginPrompt' => false,
             ],
         ];
@@ -658,7 +658,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
 
         $module = Oauth2Module::getInstance();
 
-        Yii::$app->user->setIdentity(TestUserModel::findOne(123)); // test.user
+        Yii::$app->user->setIdentity(TestUserModel::findOne(123)); // 'test.user'.
 
         $controller = new Controller('test', $module);
         $accessTokenAction = new Oauth2AuthorizeAction('test', $controller);
@@ -736,7 +736,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
 
         $module = Oauth2Module::getInstance();
 
-        Yii::$app->user->setIdentity(TestUserModel::findOne(123)); // test.user
+        Yii::$app->user->setIdentity(TestUserModel::findOne(123)); // 'test.user'.
 
         $controller = new Controller('test', $module);
         $accessTokenAction = new Oauth2AuthorizeAction('test', $controller);
@@ -773,7 +773,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
 
         $module = Oauth2Module::getInstance();
 
-        Yii::$app->user->setIdentity(TestUserModel::findOne(123)); // test.user
+        Yii::$app->user->setIdentity(TestUserModel::findOne(123)); // 'test.user'.
 
         $controller = new Controller('test', $module);
         $accessTokenAction = new Oauth2AuthorizeAction('test', $controller);
@@ -883,7 +883,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
             'code_challenge_method' => 'S256',
         ]);
 
-        Yii::$app->user->setIdentity(TestUserModel::findOne(123)); // test.user
+        Yii::$app->user->setIdentity(TestUserModel::findOne(123)); // 'test.user'.
 
         $response = $accessTokenAction->run();
         $this->assertEquals(HttpCode::FOUND, $response->statusCode);
@@ -898,6 +898,6 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         $clientAuthReqSession =  $module->getClientAuthReqSession($clientAuthorizationRequestId);
         $scopeIdentifiers = $clientAuthReqSession->getRequestedScopeIdentifiers();
 
-        $this->assertEquals(['openid'], $scopeIdentifiers); // The 'offline_access' scope should be ignored
+        $this->assertEquals(['openid'], $scopeIdentifiers); // The 'offline_access' scope should be ignored.
     }
 }

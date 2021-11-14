@@ -46,7 +46,7 @@ class Oauth2AuthCodeGrantTest extends DatabaseTestCase
     public function issueRefreshTokenProvider()
     {
         return [
-            [// OpenId Connect disabled, openid scope enabled
+            [// OpenId Connect disabled, openid scope enabled.
                 'moduleConfig' => [
                     'enableOpenIdConnect' => false,
                     'openIdConnectIssueRefreshTokenWithoutOfflineAccessScope' => false,
@@ -54,7 +54,7 @@ class Oauth2AuthCodeGrantTest extends DatabaseTestCase
                 'scopes' => ['openid'],
                 'expectRefreshToken' => true,
             ],
-            [// OpenId Connect enabled, Refresh Token Without Offline Access disabled
+            [// OpenId Connect enabled, Refresh Token Without Offline Access disabled.
                 'moduleConfig' => [
                     'enableOpenIdConnect' => true,
                     'openIdConnectIssueRefreshTokenWithoutOfflineAccessScope' => false,
@@ -62,7 +62,7 @@ class Oauth2AuthCodeGrantTest extends DatabaseTestCase
                 'scopes' => ['openid'],
                 'expectRefreshToken' => false,
             ],
-            [// OpenId Connect enabled (but scope is not present), Refresh Token Without Offline Access disabled
+            [// OpenId Connect enabled (but scope is not present), Refresh Token Without Offline Access disabled.
                 'moduleConfig' => [
                     'enableOpenIdConnect' => true,
                     'openIdConnectIssueRefreshTokenWithoutOfflineAccessScope' => false,
@@ -70,7 +70,7 @@ class Oauth2AuthCodeGrantTest extends DatabaseTestCase
                 'scopes' => [],
                 'expectRefreshToken' => true,
             ],
-            [// OpenId Connect enabled, Refresh Token Without Offline Access enabled
+            [// OpenId Connect enabled, Refresh Token Without Offline Access enabled.
                 'moduleConfig' => [
                     'enableOpenIdConnect' => true,
                     'openIdConnectIssueRefreshTokenWithoutOfflineAccessScope' => true,
@@ -78,7 +78,7 @@ class Oauth2AuthCodeGrantTest extends DatabaseTestCase
                 'scopes' => ['openid'],
                 'expectRefreshToken' => true,
             ],
-            [// OpenId Connect enabled, Refresh Token Without Offline Access disabled,
+            [// OpenId Connect enabled, Refresh Token Without Offline Access disabled.
                 'moduleConfig' => [
                     'enableOpenIdConnect' => true,
                     'openIdConnectIssueRefreshTokenWithoutOfflineAccessScope' => false,

@@ -23,7 +23,7 @@ class Oauth2OidcScopeCollection extends BaseObject implements Oauth2OidcScopeCol
     public function getOidcScopes()
     {
         if (!array_key_exists(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OPENID, $this->_oidcScopes)) {
-            $this->_oidcScopes = array_merge( // ensure openid scope is always the first element
+            $this->_oidcScopes = array_merge( // ensure openid scope is always the first element.
                 [
                     Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OPENID =>
                         $this->getDefaultOidcScope(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OPENID)

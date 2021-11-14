@@ -48,26 +48,26 @@ class Oauth2OidcUserIdentityTraitTest extends TestCase
             }
         };
 
-        // object method
+        // object method.
         $claim = new Oauth2OidcClaim(['determiner' => 'customFunction']);
         $this->assertEquals('custom-function-value', $identity->getOpenIdConnectClaimValue($claim, $response));
 
-        // object property
+        // object property.
         $claim = new Oauth2OidcClaim(['determiner' => 'email']);
         $this->assertEquals('test@test.test', $identity->getOpenIdConnectClaimValue($claim, $response));
 
-        // object nested property
+        // object nested property.
         $claim = new Oauth2OidcClaim(['determiner' => 'nested1.nested2']);
         $this->assertEquals('nested-value', $identity->getOpenIdConnectClaimValue($claim, $response));
 
         // virtual property via getter function, not defined by trait but by component,
-        // however we should still validate it works (both via getter and direct function call)
+        // however we should still validate it works (both via getter and direct function call).
         $claim = new Oauth2OidcClaim(['determiner' => 'emailAddress']);
         $this->assertEquals('test@test.test', $identity->getOpenIdConnectClaimValue($claim, $response));
         $claim = new Oauth2OidcClaim(['determiner' => 'getEmailAddress']);
         $this->assertEquals('test@test.test', $identity->getOpenIdConnectClaimValue($claim, $response));
 
-        // default value
+        // default value.
         $claim = new Oauth2OidcClaim(['determiner' => 'non-existing']);
         $this->assertNull($identity->getOpenIdConnectClaimValue($claim, $response));
         $claim = new Oauth2OidcClaim(['determiner' => 'non-existing', 'defaultValue' => 'test-default-value']);

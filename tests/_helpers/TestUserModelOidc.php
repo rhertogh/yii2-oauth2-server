@@ -16,7 +16,7 @@ class TestUserModelOidc extends TestUserModel implements
 
     // phpcs:enable Generic.Files.LineLength.TooLong
 
-    // placeholder for test setting
+    // placeholder for test setting.
     public static $hasActiveSession = false;
 
     /**
@@ -32,7 +32,7 @@ class TestUserModelOidc extends TestUserModel implements
      */
     public function hasActiveSession()
     {
-        // use test setting
+        // use test setting.
         return static::$hasActiveSession;
     }
 

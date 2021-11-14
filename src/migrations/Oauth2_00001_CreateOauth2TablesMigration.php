@@ -98,7 +98,8 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
             $userPkSchema = null;
         }
 
-        // See https://datatracker.ietf.org/doc/html/rfc7591#section-2 (although not yet fully implemented, some fields follow this standard)
+        // See https://datatracker.ietf.org/doc/html/rfc7591#section-2
+        // (although not yet fully implemented, some fields follow this standard).
         $tables = [
             $clientTable => [
                 'id' => $this->primaryKey(),

@@ -24,7 +24,7 @@ class Psr7HelperTest extends TestCase
         $bodyParams = ['test-body-param' => 'test-body-param-content'];
 
         $_SERVER['SERVER_NAME'] = $server;
-        $_SERVER['REQUEST_METHOD'] = $method; // Yii2 Request->$method is read only, using workaround
+        $_SERVER['REQUEST_METHOD'] = $method; // Yii2 Request->$method is read only, using workaround.
         $request = new Request([
             'url' => $path,
             'rawBody' => $rawBody,

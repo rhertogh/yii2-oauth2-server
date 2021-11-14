@@ -70,10 +70,10 @@ class Oauth2OidcScope extends BaseObject implements Oauth2OidcScopeInterface
                 $this->addClaim($claimConfig);
             } elseif (is_string($claimConfig)) {
                 if (is_numeric($claimIdentifier)) {
-                    // e.g. ['claim_identifier']
+                    // e.g. ['claim_identifier'].
                     $this->addClaim($claimConfig);
                 } else {
-                    // e.g. ['claim_identifier' => 'determiner']
+                    // e.g. ['claim_identifier' => 'determiner'].
                     $this->addClaim([
                         'identifier' => $claimIdentifier,
                         'determiner' => $claimConfig,
@@ -86,7 +86,7 @@ class Oauth2OidcScope extends BaseObject implements Oauth2OidcScopeInterface
                             . ' or contain an "identifier" key.'
                     );
                 }
-                // e.g. ['claim' => [...]]
+                // e.g. ['claim' => [...]].
                 $this->addClaim(ArrayHelper::merge(
                     [
                         'identifier' => $claimIdentifier,

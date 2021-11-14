@@ -55,7 +55,7 @@ class Oauth2AuthCodeTest extends BaseOauth2ActiveRecordTest
     {
         $this->mockConsoleApplication();
         return [
-            // Valid
+            // Valid.
             [
                 [
                     'identifier' => 'my-test-auth-code',
@@ -66,7 +66,7 @@ class Oauth2AuthCodeTest extends BaseOauth2ActiveRecordTest
                 ],
                 true,
             ],
-            // Invalid (non-existing client)
+            // Invalid (non-existing client).
             [
                 [
                     'identifier' => 'my-test-auth-code',

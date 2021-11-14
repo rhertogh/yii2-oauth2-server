@@ -96,7 +96,7 @@ class ClientTokenProvider extends GenericProvider
         }
 
         // Business code layer might set a different redirect_uri parameter
-        // depending on the context, leave it as-is
+        // depending on the context, leave it as-is.
         if (!isset($options['redirect_uri'])) {
             $options['redirect_uri'] = $this->redirectUri;
         }

@@ -43,7 +43,7 @@ class Oauth2ScopeTest extends BaseOauth2ActiveRecordTest
     {
         $this->mockConsoleApplication();
         return [
-            // Valid
+            // Valid.
             [
                 [
                     'identifier' => 'my-test-scope',
@@ -114,7 +114,7 @@ class Oauth2ScopeTest extends BaseOauth2ActiveRecordTest
         $scope = Oauth2Scope::findOne(['identifier' => 'user.id.read']);
         $this->assertEquals('test-client-type-auth-code-valid', $scope->getClientScope(1003000)->client->identifier);
 
-        //Pre-populated relation test
+        // Pre-populated relation test.
         $clientScope = new Oauth2ClientScope([
             'client_id' => 1,
         ]);

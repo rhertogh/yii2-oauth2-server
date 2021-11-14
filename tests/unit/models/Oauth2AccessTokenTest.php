@@ -61,7 +61,7 @@ class Oauth2AccessTokenTest extends BaseOauth2ActiveRecordTest
     {
         $this->mockConsoleApplication();
         return [
-            // Valid
+            // Valid.
             [
                 [
                     'identifier' => 'my-test-access-token',
@@ -72,7 +72,7 @@ class Oauth2AccessTokenTest extends BaseOauth2ActiveRecordTest
                 ],
                 true,
             ],
-            // Valid (but disabled)
+            // Valid (but disabled).
             [
                 [
                     'identifier' => 'my-test-access-token',
@@ -84,7 +84,7 @@ class Oauth2AccessTokenTest extends BaseOauth2ActiveRecordTest
                 ],
                 true,
             ],
-            // Invalid (missing identifier)
+            // Invalid (missing identifier).
             [
                 [
                     'client_id' => 1003000,

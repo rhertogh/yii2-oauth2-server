@@ -290,7 +290,7 @@ class Oauth2BaseModuleTest extends TestCase
         $nonce = Yii::$app->security->generateRandomString();
         $expiryDateTime = new \DateTimeImmutable('+1 hour');
 
-        $issueTime = (new \DateTimeImmutable('@' . time())); // ensure no micro seconds
+        $issueTime = (new \DateTimeImmutable('@' . time())); // ensure no micro seconds.
 
         $idToken = $this->callInaccessibleMethod($module, 'generateOpenIdConnectUserClaimsToken', [
             $mockUser,
@@ -311,12 +311,12 @@ class Oauth2BaseModuleTest extends TestCase
         $this->assertEquals($latestAuthenticatedAt->getTimestamp(), $claims['auth_time']);
         $this->assertEquals($nonce, $claims['nonce']);
 
-        // Requested
+        // Requested.
         $this->assertArrayHasKey('profile', $claims);
         $this->assertArrayHasKey('email', $claims);
         $this->assertArrayHasKey('address', $claims);
         $this->assertEquals('custom-claim-value', $claims['custom-claim']);
-        // Not requested
+        // Not requested.
         $this->assertArrayNotHasKey('phone_number', $claims);
         $this->assertArrayNotHasKey('phone_number_verified', $claims);
     }

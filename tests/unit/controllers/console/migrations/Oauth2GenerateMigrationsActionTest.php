@@ -109,7 +109,7 @@ class Oauth2GenerateMigrationsActionTest extends TestCase
         }
         closedir($handle);
 
-        // Ensure existing migrations were correctly injected
+        // Ensure existing migrations were correctly injected.
         $this->assertEquals(
             $expectedDummyCount,
             count($foundDummies),

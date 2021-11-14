@@ -73,7 +73,7 @@ class Oauth2ClientCredentialsGrantTest extends DatabaseTestCase
     public function issueAccessTokenProvider()
     {
         return [
-            [// clientCredentialsGrantUserId disabled
+            [// clientCredentialsGrantUserId disabled.
                 'moduleConfig' => [],
                 'clientIdentifier' => 'test-client-type-client-credentials-valid',
                 'clientCredentialsGrantUserId' => null,
@@ -83,7 +83,7 @@ class Oauth2ClientCredentialsGrantTest extends DatabaseTestCase
                 'expectedScopeIdentifiers' => [],
                 'expectExceptionMessage' => null,
             ],
-            [// clientCredentialsGrantUserId authorized
+            [// clientCredentialsGrantUserId authorized.
                 'moduleConfig' => [],
                 'clientIdentifier' => 'test-client-type-client-credentials-valid',
                 'clientCredentialsGrantUserId' => 123,
@@ -91,11 +91,11 @@ class Oauth2ClientCredentialsGrantTest extends DatabaseTestCase
                 'expectAccessToken' => true,
                 'expectUserIdentifier' => 123,
                 'expectedScopeIdentifiers' => [
-                    'user.id.read', // applied by default automatically
+                    'user.id.read', // applied by default automatically.
                 ],
                 'expectExceptionMessage' => null,
             ],
-            [// clientCredentialsGrantUserId unauthorized client
+            [// clientCredentialsGrantUserId unauthorized client.
                 'moduleConfig' => [],
                 'clientIdentifier' => 'test-client-type-client-credentials-valid',
                 'clientCredentialsGrantUserId' => 124,
@@ -107,7 +107,7 @@ class Oauth2ClientCredentialsGrantTest extends DatabaseTestCase
                     'User id "124" is set as default "client credentials grant user" for client'
                     . ' "test-client-type-client-credentials-valid" but the client is not authorized for this user.',
             ],
-            [// clientCredentialsGrantUserId unauthorized scope
+            [// clientCredentialsGrantUserId unauthorized scope.
                 'moduleConfig' => [],
                 'clientIdentifier' => 'test-client-type-client-credentials-valid',
                 'clientCredentialsGrantUserId' => 123,
@@ -115,12 +115,12 @@ class Oauth2ClientCredentialsGrantTest extends DatabaseTestCase
                 'expectAccessToken' => true,
                 'expectUserIdentifier' => 123,
                 'expectedScopeIdentifiers' => [
-                    'user.id.read', // applied by default automatically
+                    'user.id.read', // applied by default automatically.
                     'user.username.read',
                 ],
                 'expectExceptionMessage' => null,
             ],
-            [// clientCredentialsGrantUserId unauthorized scope
+            [// clientCredentialsGrantUserId unauthorized scope.
                 'moduleConfig' => [],
                 'clientIdentifier' => 'test-client-type-client-credentials-valid',
                 'clientCredentialsGrantUserId' => 123,
@@ -133,7 +133,7 @@ class Oauth2ClientCredentialsGrantTest extends DatabaseTestCase
                     . ' but the following scopes are not approved: user.email_address.read',
             ],
             [// clientCredentialsGrantUserId unauthorized scope but not active for the client
-             //(should silently reject scope)
+             // (should silently reject scope).
                 'moduleConfig' => [],
                 'clientIdentifier' => 'test-client-type-client-credentials-valid',
                 'clientCredentialsGrantUserId' => 123,
@@ -141,7 +141,7 @@ class Oauth2ClientCredentialsGrantTest extends DatabaseTestCase
                 'expectAccessToken' => true,
                 'expectUserIdentifier' => 123,
                 'expectedScopeIdentifiers' => [
-                    'user.id.read', // applied by default automatically
+                    'user.id.read', // applied by default automatically.
                 ],
                 'expectExceptionMessage' => null,
             ],

@@ -51,10 +51,10 @@ class Oauth2DebugConfigActionTest extends TestCase
         $ignoreModuleProperties = [
             'appType', // Irrelevant for the cli actions (always console).
             'controllerNamespace', // Only defined in module to override default Yii behavior.
-            'migrationsFileMode', // Only used for local development
-            'migrationsFileOwnership', // Only used for local development
-            'migrationsNamespace', // Only used for local development
-            'migrationsPrefix', // Only used for local development
+            'migrationsFileMode', // Only used for local development.
+            'migrationsFileOwnership', // Only used for local development.
+            'migrationsNamespace', // Only used for local development.
+            'migrationsPrefix', // Only used for local development.
         ];
 
         $controller = $this->getMockController([], $moduleConfig);
@@ -81,10 +81,10 @@ class Oauth2DebugConfigActionTest extends TestCase
     public function getConfigurationProvider()
     {
         return [
-            [ // Default module test config
+            [ // Default module test config.
                 [],
             ],
-            [ // Server role doesn't include "authorization_server"
+            [ // Server role doesn't include "authorization_server".
                 [
                     'serverRole' => Oauth2Module::SERVER_ROLE_RESOURCE_SERVER,
                 ],
@@ -125,11 +125,11 @@ class Oauth2DebugConfigActionTest extends TestCase
     public function getEndpointsProvider()
     {
         return [
-            [ // Default module test config
+            [ // Default module test config.
                 [],
-                [], // Expect default test endpoints
+                [], // Expect default test endpoints.
             ],
-            [ // Server role doesn't include "authorization_server"
+            [ // Server role doesn't include "authorization_server".
                 [
                     'serverRole' => Oauth2Module::SERVER_ROLE_RESOURCE_SERVER,
                 ],
@@ -143,7 +143,7 @@ class Oauth2DebugConfigActionTest extends TestCase
                         ['OpenId Connect Userinfo', '[Only available for "authorization_server" role]', '-'],
                 ],
             ],
-            [ // OpenID Connect disabled
+            [ // OpenID Connect disabled.
                 [
                     'enableOpenIdConnect' => false,
                 ],
@@ -151,7 +151,7 @@ class Oauth2DebugConfigActionTest extends TestCase
                     'oidcUserinfo' => ['OpenId Connect Userinfo', '[OpenID Connect is disabled]', '-'],
                 ],
             ],
-            [ // OpenID Connect Userinfo disabled
+            [ // OpenID Connect Userinfo disabled.
                 [
                     'openIdConnectUserinfoEndpoint' => false,
                 ],
@@ -159,7 +159,7 @@ class Oauth2DebugConfigActionTest extends TestCase
                     'oidcUserinfo' => ['OpenId Connect Userinfo', '[Userinfo Endpoint is disabled]', '-'],
                 ],
             ],
-            [ // OpenID Connect custom Userinfo endpoint
+            [ // OpenID Connect custom Userinfo endpoint.
                 [
                     'openIdConnectUserinfoEndpoint' => 'https://custom_openIdConnectUserinfoEndpoint',
                 ],

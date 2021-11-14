@@ -34,7 +34,7 @@ class Oauth2BaseRefreshTokenTest extends BaseOauth2BaseModelsTest
      */
     public function attributeLabelsProvider()
     {
-        // Note: when changing these, also update translation files
+        // Note: when changing these, also update translation files.
         return [[[
             'id' => 'ID',
             'access_token_id' => 'Access Token ID',

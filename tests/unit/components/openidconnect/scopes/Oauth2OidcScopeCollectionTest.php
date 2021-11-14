@@ -17,7 +17,7 @@ class Oauth2OidcScopeCollectionTest extends TestCase
         $this->mockConsoleApplication();
         $collection = new Oauth2OidcScopeCollection();
 
-        // Ensure we have the default openid scope
+        // Ensure we have the default openid scope.
         $this->assertCount(1, $collection->getOidcScopes());
         $this->assertTrue($collection->hasOidcScope('openid'));
         $openIdScope = $collection->getOidcScope('openid');
@@ -64,23 +64,23 @@ class Oauth2OidcScopeCollectionTest extends TestCase
 
         $this->assertEquals($collection, $collection->setOidcScopes($scopes));
 
-        // Ensure we still got the openid scope
+        // Ensure we still got the openid scope.
         $this->assertTrue($collection->hasOidcScope('openid'));
-        // Oauth2OidcClaim
+        // Oauth2OidcClaim.
         $this->assertNull($collection->getOidcScope('ignored-scope-identifier'));
         $this->assertEquals($testScope, $collection->getOidcScope('test-scope-object'));
-        // Duplicate identifier
+        // Duplicate identifier.
         $this->assertTrue($collection->getOidcScope('test-duplicate')->hasClaim('test-duplicate-scope-overwritten'));
-        // Indexed string
+        // Indexed string.
         $testScopeIndexedString = $collection->getOidcScope('email');
         $this->assertInstanceOf(Oauth2OidcScopeInterface::class, $testScopeIndexedString);
         $this->assertTrue($testScopeIndexedString->hasClaim('email_verified'));
-        // Associative array, indexed claims
+        // Associative array, indexed claims.
         $testScopeAssociativeArrayClaimsIndexed = $collection->getOidcScope('test-scope-array-associative-claims-indexed');
         $this->assertInstanceOf(Oauth2OidcScopeInterface::class, $testScopeAssociativeArrayClaimsIndexed);
         $this->assertEquals('test-scope-array-associative-claims-indexed', $testScopeAssociativeArrayClaimsIndexed->getIdentifier());
         $this->assertTrue($testScopeAssociativeArrayClaimsIndexed->hasClaim('test-scope-array-associative-claims-indexed-claim'));
-        // Associative array, associative claims
+        // Associative array, associative claims.
         $testScopeAssociativeArrayClaimsAssociative = $collection->getOidcScope('test-scope-array-associative-claims-associative');
         $this->assertInstanceOf(Oauth2OidcScopeInterface::class, $testScopeAssociativeArrayClaimsAssociative);
         $this->assertEquals('test-scope-array-associative-claims-associative', $testScopeAssociativeArrayClaimsAssociative->getIdentifier());
@@ -89,7 +89,7 @@ class Oauth2OidcScopeCollectionTest extends TestCase
             'test-scope-array-associative-claims-associative-claim-determiner',
             $testScopeAssociativeArrayClaimsAssociative->getClaim('test-scope-array-associative-claims-associative-claim-identifier')->getDeterminer()
         );
-        // Associative array, array claims
+        // Associative array, array claims.
         $testScopeAssociativeArrayClaimsArray = $collection->getOidcScope('test-scope-array-associative-claims-array');
         $this->assertInstanceOf(Oauth2OidcScopeInterface::class, $testScopeAssociativeArrayClaimsArray);
         $this->assertEquals('test-scope-array-associative-claims-array', $testScopeAssociativeArrayClaimsArray->getIdentifier());
@@ -98,13 +98,13 @@ class Oauth2OidcScopeCollectionTest extends TestCase
             'test-scope-array-associative-claims-array-claim-determiner',
             $testScopeAssociativeArrayClaimsArray->getClaim('test-scope-array-associative-claims-array-claim-identifier')->getDeterminer()
         );
-        // Indexed array, indexed claims
+        // Indexed array, indexed claims.
         $testScopeIndexedArrayClaimsIndexed = $collection->getOidcScope('test-scope-array-indexed-claims-indexed');
         $this->assertInstanceOf(Oauth2OidcScopeInterface::class, $testScopeIndexedArrayClaimsIndexed);
         $this->assertEquals('test-scope-array-indexed-claims-indexed', $testScopeIndexedArrayClaimsIndexed->getIdentifier());
         $this->assertTrue($testScopeIndexedArrayClaimsIndexed->hasClaim('test-scope-array-indexed-claims-indexed-claim'));
 
-        // Add extra scopes
+        // Add extra scopes.
         $extraScopes = [
             new Oauth2OidcScope([
                 'identifier' => 'test-duplicate',
@@ -119,7 +119,7 @@ class Oauth2OidcScopeCollectionTest extends TestCase
         $this->assertEquals($testScope, $collection->getOidcScope('test-scope-object'));
         $this->assertTrue($collection->hasOidcScope('test-scope-extra'));
 
-        // Clear Claims
+        // Clear Claims.
         $this->assertEquals($collection, $collection->clearOidcScopes());
         $this->assertCount(1, $collection->getOidcScopes());
         $this->assertTrue($collection->hasOidcScope('openid'));

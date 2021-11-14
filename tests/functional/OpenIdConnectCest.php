@@ -36,7 +36,7 @@ class OpenIdConnectCest extends BaseGrantCest
     {
         parent::_before($I);
 
-        // Using TestUserModelOidc as definition for the Oauth2Module's and user component identityClass
+        // Using TestUserModelOidc as definition for the Oauth2Module's and user component identityClass.
         Oauth2Module::getInstance()->identityClass = TestUserModelOidc::class;
         Yii::$app->user->identityClass = TestUserModelOidc::class;
     }
@@ -82,7 +82,7 @@ class OpenIdConnectCest extends BaseGrantCest
         # endregion
 
         # region fetch access token
-        $accessToken = $oauthClient->fetchAccessToken($code); // Get access token
+        $accessToken = $oauthClient->fetchAccessToken($code); // Get access token.
         foreach ($example['expectedParams'] as $expectedParamName => $expectedParamValue) {
             $I->assertEquals($expectedParamValue, $accessToken->getParam($expectedParamName));
         }
@@ -106,7 +106,7 @@ class OpenIdConnectCest extends BaseGrantCest
             TestUserModelOidc::$hasActiveSession = true;
         }
 
-        // Expected to be available (either via "offline_access" scope or `hasActiveSession == true`)
+        // Expected to be available (either via "offline_access" scope or `hasActiveSession == true`).
         $refreshedAccessToken = $oauthClient->refreshAccessToken($accessToken);
         $I->assertEquals(123, $refreshedAccessToken->getParam('sub'));
         # endregion
@@ -174,7 +174,7 @@ class OpenIdConnectCest extends BaseGrantCest
         $I->startFollowingRedirects();
         $I->sendGet($authorizationUrl);
         $I->seeCurrentUrlMatches('%^/site/login%');
-        // get $clientAuthorizationRequestId
+        // get `$clientAuthorizationRequestId`.
         $urlParts = parse_url($I->grabFromCurrentUrl());
         $I->assertArrayHasKey('query', $urlParts);
         parse_str($urlParts['query'], $queryParts);
@@ -182,7 +182,7 @@ class OpenIdConnectCest extends BaseGrantCest
         $I->assertEquals(1, $queryParts['reauthenticate']);
         $I->assertArrayHasKey('clientAuthorizationRequestId', $queryParts);
         $clientAuthorizationRequestId = $queryParts['clientAuthorizationRequestId'];
-        // get ClientAuthorizationRequest and set reauthenticated (normally this would be done in controller)
+        // get ClientAuthorizationRequest and set reauthenticated (normally this would be done in controller).
         $clientAuthorizationRequest = $module->getClientAuthReqSession($clientAuthorizationRequestId);
         $clientAuthorizationRequest->setUserAuthenticatedDuringRequest(true);
         $module->setClientAuthReqSession($clientAuthorizationRequest);
@@ -214,7 +214,7 @@ class OpenIdConnectCest extends BaseGrantCest
         # endregion
 
         # region fetch access token
-        $accessToken = $oauthClient->fetchAccessToken($code); // Get access token
+        $accessToken = $oauthClient->fetchAccessToken($code); // Get access token.
         $I->assertEquals(123, $accessToken->getParam('sub'));
         # endregion fetch access token
     }
@@ -251,25 +251,25 @@ class OpenIdConnectCest extends BaseGrantCest
         ]);
 
         # region account selection
-        $I->amLoggedInAs(123); // Note: using test.user as identity
+        $I->amLoggedInAs(123); // Note: using test.user as identity.
         $I->startFollowingRedirects();
         $I->sendGet($authorizationUrl);
         $I->seeCurrentUrlMatches('%^/site/account-selection%');
-        // get $clientAuthorizationRequestId
+        // get `$clientAuthorizationRequestId`.
         $urlParts = parse_url($I->grabFromCurrentUrl());
         $I->assertArrayHasKey('query', $urlParts);
         parse_str($urlParts['query'], $queryParts);
         $I->assertArrayHasKey('clientAuthorizationRequestId', $queryParts);
         $clientAuthorizationRequestId = $queryParts['clientAuthorizationRequestId'];
-        // get ClientAuthorizationRequest and set identity (normally this would be done in controller)
+        // get ClientAuthorizationRequest and set identity (normally this would be done in controller).
         $clientAuthorizationRequest = $module->getClientAuthReqSession($clientAuthorizationRequestId);
-        // Note: using test.user2 as identity
+        // Note: using test.user2 as identity.
         $clientAuthorizationRequest->setUserIdentity(TestUserModelOidc::findIdentity(124));
         $module->setClientAuthReqSession($clientAuthorizationRequest);
         # endregion
 
         # region authorize client
-        $I->amLoggedInAs(123); // Note: using test.user as identity
+        $I->amLoggedInAs(123); // Note: using test.user as identity.
         $I->startFollowingRedirects();
         $I->sendGet($clientAuthorizationRequest->getAuthorizationRequestUrl());
         $I->seeCurrentUrlMatches('%^/oauth2/authorize-client%');
@@ -293,9 +293,9 @@ class OpenIdConnectCest extends BaseGrantCest
         $code = $queryParts['code'];
         # endregion
 
-        $accessToken = $oauthClient->fetchAccessToken($code); // Get access token
+        $accessToken = $oauthClient->fetchAccessToken($code); // Get access token.
 
-        // Expect test.user2 as subject
+        // Expect test.user2 as subject.
         $I->assertEquals(124, $accessToken->getParam('sub'));
     }
 

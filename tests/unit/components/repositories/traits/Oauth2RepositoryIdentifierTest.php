@@ -48,11 +48,11 @@ class Oauth2RepositoryIdentifierTest extends TestCase
 
             public function hasAttribute($name)
             {
-                return false; // Avoid database usage
+                return false; // Avoid database usage.
             }
             public function loadDefaultValues($skipIfSet = true)
             {
-                // Avoid database usage
+                // Avoid database usage.
             }
         };
 

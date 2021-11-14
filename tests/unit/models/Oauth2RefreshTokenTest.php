@@ -57,7 +57,7 @@ class Oauth2RefreshTokenTest extends BaseOauth2ActiveRecordTest
     {
         $this->mockConsoleApplication();
         return [
-            // Valid
+            // Valid.
             [
                 [
                     'access_token_id' => 1001000,
@@ -66,7 +66,7 @@ class Oauth2RefreshTokenTest extends BaseOauth2ActiveRecordTest
                 ],
                 true,
             ],
-            // Invalid (non-existing access token)
+            // Invalid (non-existing access token).
             [
                 [
                     'access_token_id' => 999999,
@@ -110,7 +110,7 @@ class Oauth2RefreshTokenTest extends BaseOauth2ActiveRecordTest
 
     public function testGetSetAccessToken()
     {
-        $mocks = $this->getMockModelAndAccessToken(); // Workaround for https://youtrack.jetbrains.com/issue/WI-61907
+        $mocks = $this->getMockModelAndAccessToken(); // Workaround for https://youtrack.jetbrains.com/issue/WI-61907.
         $model = $mocks['model'];
         $accessTokenId = $mocks['accessTokenId'];
         $accessToken = $mocks['accessToken'];
@@ -127,7 +127,7 @@ class Oauth2RefreshTokenTest extends BaseOauth2ActiveRecordTest
      */
     public function testSetAttributeAccessTokenId()
     {
-        $mocks = $this->getMockModelAndAccessToken(); // Workaround for https://youtrack.jetbrains.com/issue/WI-61907
+        $mocks = $this->getMockModelAndAccessToken(); // Workaround for https://youtrack.jetbrains.com/issue/WI-61907.
         $model = $mocks['model'];
         $accessToken = $mocks['accessToken'];
 
@@ -141,7 +141,7 @@ class Oauth2RefreshTokenTest extends BaseOauth2ActiveRecordTest
      */
     public function testSetAccessTokenId()
     {
-        $mocks = $this->getMockModelAndAccessToken(); // Workaround for https://youtrack.jetbrains.com/issue/WI-61907
+        $mocks = $this->getMockModelAndAccessToken(); // Workaround for https://youtrack.jetbrains.com/issue/WI-61907.
         $model = $mocks['model'];
         $accessToken = $mocks['accessToken'];
 

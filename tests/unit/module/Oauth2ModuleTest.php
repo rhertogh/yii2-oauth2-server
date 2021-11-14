@@ -153,16 +153,16 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $keyAlias = '@Yii2Oauth2ServerTests/_config/keys/private.key';
         $keyFile = Yii::getAlias($keyAlias);
         return [
-            [ // Alias path
+            [ // Alias path.
                 $keyAlias,
             ],
-            [ // Absolute path
+            [ // Absolute path.
                 $keyFile,
             ],
-            [ // Absolute path with file URI scheme
+            [ // Absolute path with file URI scheme.
                 'file://' . $keyFile,
             ],
-            [ // Key content
+            [ // Key content.
                 file_get_contents($keyFile),
             ]
         ];
@@ -196,16 +196,16 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $keyAlias = '@Yii2Oauth2ServerTests/_config/keys/public.key';
         $keyFile = Yii::getAlias($keyAlias);
         return [
-            [ // Alias path
+            [ // Alias path.
                 $keyAlias,
             ],
-            [ // Absolute path
+            [ // Absolute path.
                 $keyFile,
             ],
-            [ // Absolute path with file URI scheme
+            [ // Absolute path with file URI scheme.
                 'file://' . $keyFile,
             ],
-            [ // Key content
+            [ // Key content.
                 file_get_contents($keyFile),
             ]
         ];
@@ -568,7 +568,7 @@ class Oauth2ModuleTest extends DatabaseTestCase
 
     public function testGrantTypeInterfaceGrantTypesConfig()
     {
-        // Just using the app to create our mock $grantType
+        // Just using the app to create our mock $grantType.
         $this->mockConsoleApplication();
         $factory = Yii::createObject([
             'class' => Oauth2AuthCodeGrantFactory::class,
@@ -653,11 +653,11 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $this->assertNull($module->getClientAuthReqSession($requestId));
         $key = $keyPrefix . $requestId;
         Yii::$app->session->set($key, new \stdClass());
-        $this->assertNull( // Expect `null` since it's not an instance of Oauth2ClientAuthorizationRequestInterface
+        $this->assertNull( // Expect `null` since it's not an instance of Oauth2ClientAuthorizationRequestInterface.
             $module->getClientAuthReqSession($requestId)
         );
         Yii::$app->session->set($key, new Oauth2ClientAuthorizationRequest());
-        $this->assertNull($module->getClientAuthReqSession($requestId)); // Expect `null` since id doesn't match
+        $this->assertNull($module->getClientAuthReqSession($requestId)); // Expect `null` since id doesn't match.
 
         $clientAuthorizationRequest = new Oauth2ClientAuthorizationRequest([
             'userIdentifier' => $user->getIdentifier(),
@@ -857,7 +857,7 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $this->mockWebApplication([
             'modules' => [
                 'oauth2' => [
-                    // Token revocation validation is tested during functional testing
+                    // Token revocation validation is tested during functional testing.
                     'resourceServerAccessTokenRevocationValidation' => false,
                 ]
             ]

@@ -42,7 +42,7 @@ class PasswordGrantCest extends BaseSimpleGrantCest
     protected function simpleGrantTestProvider()
     {
         return [
-            // OK
+            // OK.
             [
                 'grant' => Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD,
                 'accessTokenTTL' => 'PT10M',
@@ -56,7 +56,7 @@ class PasswordGrantCest extends BaseSimpleGrantCest
                 'responseCode' => HttpCode::OK,
             ],
 
-            // UNAUTHORIZED
+            // UNAUTHORIZED.
             [
                 'grant' => Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD,
                 'accessTokenTTL' => 'PT10M',
