@@ -25,8 +25,8 @@ abstract class Oauth2AccessTokenScope extends \rhertogh\Yii2Oauth2Server\models\
 
 
     /**
-    * @inheritdoc
-    */
+     * @inheritdoc
+     */
     //public static $tableName = 'oauth2_access_token_scope';
 
 

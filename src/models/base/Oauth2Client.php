@@ -46,8 +46,8 @@ abstract class Oauth2Client extends \rhertogh\Yii2Oauth2Server\models\base\Oauth
 
 
     /**
-    * @inheritdoc
-    */
+     * @inheritdoc
+     */
     //public static $tableName = 'oauth2_client';
 
 

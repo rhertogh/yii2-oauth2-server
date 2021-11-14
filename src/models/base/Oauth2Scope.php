@@ -37,8 +37,8 @@ abstract class Oauth2Scope extends \rhertogh\Yii2Oauth2Server\models\base\Oauth2
 
 
     /**
-    * @inheritdoc
-    */
+     * @inheritdoc
+     */
     //public static $tableName = 'oauth2_scope';
 
 

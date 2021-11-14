@@ -32,8 +32,8 @@ abstract class Oauth2AuthCode extends \rhertogh\Yii2Oauth2Server\models\base\Oau
 
 
     /**
-    * @inheritdoc
-    */
+     * @inheritdoc
+     */
     //public static $tableName = 'oauth2_auth_code';
 
 

@@ -28,8 +28,8 @@ abstract class Oauth2RefreshToken extends \rhertogh\Yii2Oauth2Server\models\base
 
 
     /**
-    * @inheritdoc
-    */
+     * @inheritdoc
+     */
     //public static $tableName = 'oauth2_refresh_token';
 
 

@@ -37,8 +37,8 @@ abstract class Oauth2AccessToken extends \rhertogh\Yii2Oauth2Server\models\base\
 
 
     /**
-    * @inheritdoc
-    */
+     * @inheritdoc
+     */
     //public static $tableName = 'oauth2_access_token';
 
 

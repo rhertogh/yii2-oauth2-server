@@ -12,7 +12,7 @@ interface Oauth2OidcAddressClaimInterface
      * This field MAY contain multiple lines, separated by newlines. Newlines can be represented either as
      * a carriage return/line feed pair ("\r\n") or as a single line feed character ("\n").
      * @return string
-     *@since 1.0.0
+     * @since 1.0.0
      */
     public function getFormatted();
 
