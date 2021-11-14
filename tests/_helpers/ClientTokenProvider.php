@@ -119,7 +119,7 @@ class ClientTokenProvider extends GenericProvider
         $params   = $grant->prepareRequestParameters($params, $options);
         $request  = $this->getAccessTokenRequest($params);
         $response = $this->getParsedResponse($request);
-        if (false === is_array($response)) {
+        if (is_array($response) === false) {
             throw new UnexpectedValueException(
                 'Invalid response received from Authorization Server. Expected JSON.'
             );
