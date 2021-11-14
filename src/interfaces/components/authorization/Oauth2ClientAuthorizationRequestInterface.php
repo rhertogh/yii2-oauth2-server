@@ -5,7 +5,6 @@ namespace rhertogh\Yii2Oauth2Server\interfaces\components\authorization;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
-use rhertogh\Yii2Oauth2Server\traits\models\Oauth2UserIdentityTrait;
 use yii\base\Configurable;
 
 interface Oauth2ClientAuthorizationRequestInterface extends Configurable

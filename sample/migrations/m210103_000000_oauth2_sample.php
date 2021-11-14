@@ -1,9 +1,7 @@
 <?php
 
-use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
 use yii\db\Migration;
-use yii\db\Schema;
 
 /**
  * phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps

@@ -3,7 +3,6 @@
 namespace rhertogh\Yii2Oauth2Server\controllers\web\server;
 
 use GuzzleHttp\Psr7\Response as Psr7Response;
-use League\OAuth2\Server\Exception\OAuthServerException;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ServerController;
 use rhertogh\Yii2Oauth2Server\controllers\web\server\base\Oauth2BaseServerAction;
 use rhertogh\Yii2Oauth2Server\exceptions\Oauth2ServerHttpException;

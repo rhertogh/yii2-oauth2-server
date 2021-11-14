@@ -2,8 +2,6 @@
 
 namespace Yii2Oauth2ServerTests\_helpers;
 
-use League\OAuth2\Server\Entities\ClientEntityInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2PasswordGrantUserInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use rhertogh\Yii2Oauth2Server\traits\models\Oauth2UserIdentityTrait;

@@ -2,20 +2,12 @@
 
 namespace Yii2Oauth2ServerTests\functional\exceptions;
 
-use Codeception\Example;
 use Codeception\Util\HttpCode;
 use League\OAuth2\Server\Oauth2AuthorizationServerInterface;
-use League\OAuth2\Server\Exception\OAuthServerException;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Json;
-use Yii2Oauth2ServerTests\_helpers\ClientTokenProvider;
-use Yii2Oauth2ServerTests\_helpers\TestUserModelPasswordGrant;
-use Yii2Oauth2ServerTests\functional\_base\BaseGrantCest;
-use Yii2Oauth2ServerTests\functional\_base\BaseSimpleGrantCest;
 use Yii2Oauth2ServerTests\ApiTester;
+use Yii2Oauth2ServerTests\functional\_base\BaseGrantCest;
 
 /**
  * @covers \rhertogh\Yii2Oauth2Server\controllers\web\server\Oauth2AccessTokenAction

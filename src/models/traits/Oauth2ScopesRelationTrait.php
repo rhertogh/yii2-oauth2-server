@@ -4,7 +4,6 @@ namespace rhertogh\Yii2Oauth2Server\models\traits;
 
 use League\OAuth2\Server\Entities\ScopeEntityInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface;
 use yii\base\InvalidConfigException;
 
 /**

@@ -7,7 +7,6 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2Oi
 use Yii;
 use yii\base\BaseObject;
 use yii\base\InvalidArgumentException;
-use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
 
 class Oauth2OidcScopeCollection extends BaseObject implements Oauth2OidcScopeCollectionInterface

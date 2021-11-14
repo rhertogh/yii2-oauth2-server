@@ -3,10 +3,10 @@
 namespace Yii2Oauth2ServerTests\unit\components\repositories\_base;
 
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
+use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\base\Oauth2RepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\base\Oauth2RepositoryInterface;
 use rhertogh\Yii2Oauth2Server\models\base\Oauth2BaseActiveRecord;
 use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
 

@@ -2,16 +2,8 @@
 
 namespace Yii2Oauth2ServerTests\unit\components\authorization\base;
 
-use Defuse\Crypto\Exception\EnvironmentIsBrokenException;
-use rhertogh\Yii2Oauth2Server\components\authorization\base\Oauth2BaseClientAuthorizationRequest;
 use rhertogh\Yii2Oauth2Server\components\authorization\base\Oauth2BaseScopeAuthorizationRequest;
-use rhertogh\Yii2Oauth2Server\components\encryption\Oauth2Encryptor;
-use rhertogh\Yii2Oauth2Server\components\repositories\base\Oauth2BaseRepository;
-use rhertogh\Yii2Oauth2Server\interfaces\components\factories\encryption\Oauth2EncryptionKeyFactoryInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ActiveRecordInterface;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
-use rhertogh\Yii2Oauth2Server\Oauth2Module;
-use Yii2Oauth2ServerTests\_helpers\TestUserModel;
 use Yii2Oauth2ServerTests\unit\TestCase;
 
 /**

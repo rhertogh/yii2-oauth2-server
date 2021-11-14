@@ -20,7 +20,6 @@ use yii\base\InvalidConfigException;
 use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
 use yii\web\Request;
-use yii\web\ServerErrorHttpException;
 use yii\web\UnauthorizedHttpException;
 
 /**

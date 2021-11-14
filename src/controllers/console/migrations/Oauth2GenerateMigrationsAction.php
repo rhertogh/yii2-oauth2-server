@@ -7,14 +7,10 @@ use rhertogh\Yii2Oauth2Server\migrations\base\Oauth2BaseMigration;
 use Yii;
 use yii\base\Action;
 use yii\base\InvalidConfigException;
-use yii\console\controllers\BaseMigrateController;
 use yii\console\ExitCode;
 use yii\helpers\Console;
 use yii\helpers\FileHelper;
-use yii\helpers\Inflector;
 use yii\helpers\StringHelper;
-
-use function PHPUnit\Framework\fileExists;
 
 /**
  * @property Oauth2MigrationsController $controller

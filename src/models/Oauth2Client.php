@@ -3,18 +3,15 @@
 namespace rhertogh\Yii2Oauth2Server\models;
 
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
-use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2ActiveRecordIdTrait;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2EnabledTrait;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2EntityIdentifierTrait;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
 use yii\base\InvalidArgumentException;
-use yii\base\InvalidCallException;
 use yii\base\InvalidConfigException;
 use yii\base\UnknownPropertyException;
 use yii\helpers\ArrayHelper;

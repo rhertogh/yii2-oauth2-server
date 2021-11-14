@@ -2,10 +2,7 @@
 
 namespace rhertogh\Yii2Oauth2Server\migrations;
 
-use rhertogh\Yii2Oauth2Server\components\openidconnect\scopes\Oauth2OidcScope;
-use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeCollectionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use rhertogh\Yii2Oauth2Server\migrations\base\Oauth2BaseMigration;
 use yii\helpers\ArrayHelper;

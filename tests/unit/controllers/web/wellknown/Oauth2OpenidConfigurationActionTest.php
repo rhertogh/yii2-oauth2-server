@@ -10,7 +10,6 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2Oi
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
-use yii\helpers\ArrayHelper;
 use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
 
 /**

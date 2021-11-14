@@ -5,13 +5,11 @@ namespace Yii2Oauth2ServerTests\unit\components\authorization;
 use rhertogh\Yii2Oauth2Server\components\authorization\Oauth2ClientAuthorizationRequest;
 use rhertogh\Yii2Oauth2Server\components\authorization\Oauth2ScopeAuthorizationRequest;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ScopeAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
 use rhertogh\Yii2Oauth2Server\models\Oauth2UserClient;
 use rhertogh\Yii2Oauth2Server\models\Oauth2UserClientScope;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
-use yii\helpers\ArrayHelper;
 use Yii2Oauth2ServerTests\_helpers\TestUserModel;
 use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
 

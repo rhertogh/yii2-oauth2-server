@@ -3,7 +3,6 @@
 namespace Yii2Oauth2ServerTests;
 
 use Psr\Http\Message\RequestInterface;
-use yii\httpclient\Client;
 use yii\httpclient\Request as HttpClientRequest;
 use yii\httpclient\Response;
 

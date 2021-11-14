@@ -4,8 +4,8 @@ namespace rhertogh\Yii2Oauth2Server\components\repositories;
 
 use rhertogh\Yii2Oauth2Server\components\repositories\base\Oauth2BaseRepository;
 use rhertogh\Yii2Oauth2Server\components\repositories\traits\Oauth2RepositoryIdentifierTrait;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2ClientRepositoryInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use yii\base\InvalidConfigException;
 
 class Oauth2ClientRepository extends Oauth2BaseRepository implements Oauth2ClientRepositoryInterface

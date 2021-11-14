@@ -3,7 +3,6 @@
 namespace rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\user;
 
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\request\Oauth2OidcAuthenticationRequestInterface;
 use yii\web\Response;
 
 interface Oauth2OidcUserComponentInterface

@@ -3,7 +3,6 @@
 namespace rhertogh\Yii2Oauth2Server\models\queries;
 
 use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2UserClientQueryInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2UserClientScopeQueryInterface;
 use rhertogh\Yii2Oauth2Server\models\queries\base\Oauth2BaseActiveQuery;
 
 /**

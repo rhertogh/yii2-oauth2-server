@@ -5,8 +5,8 @@ namespace rhertogh\Yii2Oauth2Server\components\repositories;
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 use rhertogh\Yii2Oauth2Server\components\repositories\base\Oauth2BaseTokenRepository;
 use rhertogh\Yii2Oauth2Server\components\repositories\traits\Oauth2RepositoryIdentifierTrait;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2RefreshTokenInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2RefreshTokenRepositoryInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2RefreshTokenInterface;
 
 class Oauth2RefreshTokenRepository extends Oauth2BaseTokenRepository implements Oauth2RefreshTokenRepositoryInterface
 {

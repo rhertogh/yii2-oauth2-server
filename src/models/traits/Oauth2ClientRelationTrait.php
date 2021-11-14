@@ -5,7 +5,6 @@ namespace rhertogh\Yii2Oauth2Server\models\traits;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ClientQueryInterface;
-use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use yii\base\InvalidConfigException;
 
 trait Oauth2ClientRelationTrait

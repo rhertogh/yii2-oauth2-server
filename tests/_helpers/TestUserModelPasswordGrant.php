@@ -4,10 +4,7 @@ namespace Yii2Oauth2ServerTests\_helpers;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2PasswordGrantUserInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserInterface;
 use Yii;
-use yii\db\ActiveRecord;
-use yii\web\IdentityInterface;
 
 class TestUserModelPasswordGrant extends TestUserModel implements
     Oauth2PasswordGrantUserInterface # Optional interface, only required when `password` grant type is used

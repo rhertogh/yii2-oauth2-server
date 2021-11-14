@@ -2,7 +2,6 @@
 
 namespace rhertogh\Yii2Oauth2Server\interfaces\models;
 
-use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\UserEntityInterface;
 use yii\db\TableSchema;
 use yii\web\IdentityInterface;

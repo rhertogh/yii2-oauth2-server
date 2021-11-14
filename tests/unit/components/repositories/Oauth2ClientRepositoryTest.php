@@ -2,9 +2,8 @@
 
 namespace Yii2Oauth2ServerTests\unit\components\repositories;
 
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2ClientRepositoryInterface;
-use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
 use Yii2Oauth2ServerTests\unit\components\repositories\_base\BaseOauth2RepositoryTest;

@@ -5,25 +5,15 @@ namespace rhertogh\Yii2Oauth2Server\components\authorization;
 use rhertogh\Yii2Oauth2Server\components\authorization\base\Oauth2BaseClientAuthorizationRequest;
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\helpers\UrlHelper;
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ScopeAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserClientScopeInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ClientScopeQueryInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface;
-use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
 use Yii;
-use yii\base\Exception;
 use yii\base\InvalidCallException;
-use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
-use yii\helpers\Url;
-use yii\web\UnauthorizedHttpException;
 
 class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequest
 {

@@ -6,9 +6,7 @@ use rhertogh\Yii2Oauth2Server\components\repositories\base\Oauth2BaseTokenReposi
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ActiveRecordInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2IdentifierInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ScopeRelationInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AuthCodeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface;
 use rhertogh\Yii2Oauth2Server\models\base\Oauth2BaseActiveRecord;
 use rhertogh\Yii2Oauth2Server\models\Oauth2AuthCodeScope;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
@@ -16,10 +14,6 @@ use rhertogh\Yii2Oauth2Server\models\queries\Oauth2AuthCodeScopeQuery;
 use rhertogh\Yii2Oauth2Server\models\queries\Oauth2ScopeQuery;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2EntityIdentifierTrait;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2ScopesRelationTrait;
-use rhertogh\Yii2Oauth2Server\Oauth2Module;
-use Yii;
-use yii\base\InvalidConfigException;
-use yii\db\ActiveQuery;
 use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
 
 /**

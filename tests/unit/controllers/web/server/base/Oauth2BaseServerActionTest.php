@@ -4,26 +4,14 @@ namespace Yii2Oauth2ServerTests\unit\controllers\web\server\base;
 
 use Codeception\Util\HttpCode;
 use League\OAuth2\Server\Exception\OAuthServerException;
-use rhertogh\Yii2Oauth2Server\components\authorization\Oauth2ClientAuthorizationRequest;
-use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ConsentController;
-use rhertogh\Yii2Oauth2Server\controllers\web\consent\Oauth2AuthorizeClientAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\server\base\Oauth2BaseServerAction;
 use rhertogh\Yii2Oauth2Server\exceptions\Oauth2ServerHttpException;
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
-use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
 use yii\base\Exception;
-use yii\base\Module;
-use yii\helpers\ReplaceArrayValue;
-use yii\helpers\UnsetArrayValue;
-use yii\web\Application;
 use yii\web\Controller;
 use yii\web\Response;
-use Yii2Oauth2ServerTests\_helpers\TestUserModel;
 use Yii2Oauth2ServerTests\unit\TestCase;
-
-use function PHPUnit\Framework\assertInstanceOf;
 
 /**
  * @covers \rhertogh\Yii2Oauth2Server\controllers\web\server\base\Oauth2BaseServerAction

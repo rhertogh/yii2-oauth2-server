@@ -2,14 +2,8 @@
 
 namespace Yii2Oauth2ServerTests\unit\controllers\web;
 
-use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ConsentController;
-use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ServerController;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2WellKnownController;
-use rhertogh\Yii2Oauth2Server\controllers\web\server\Oauth2AccessTokenAction;
-use rhertogh\Yii2Oauth2Server\controllers\web\server\Oauth2AuthorizeAction;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
-use yii\filters\Cors;
-use yii\filters\VerbFilter;
 use Yii2Oauth2ServerTests\unit\controllers\web\_base\Oauth2BaseWebControllerTest;
 
 /**

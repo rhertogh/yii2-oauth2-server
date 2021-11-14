@@ -3,7 +3,6 @@
 namespace rhertogh\Yii2Oauth2Server\components\openidconnect\claims;
 
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\claims\Oauth2OidcAddressClaimInterface;
-use yii\base\Arrayable;
 use yii\base\BaseObject;
 
 /**

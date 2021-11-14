@@ -2,9 +2,6 @@
 
 namespace Yii2Oauth2ServerTests\_helpers;
 
-use yii\authclient\InvalidResponseException;
-use yii\authclient\OpenIdConnect;
-use yii\httpclient\Client;
 use yii\httpclient\Response;
 use yii\httpclient\Transport;
 use Yii2Oauth2ServerTests\ApiTester;

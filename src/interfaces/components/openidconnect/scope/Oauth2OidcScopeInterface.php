@@ -2,7 +2,6 @@
 
 namespace rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope;
 
-use rhertogh\Yii2Oauth2Server\components\openidconnect\scopes\Oauth2OidcScope;
 use yii\base\Configurable;
 
 interface Oauth2OidcScopeInterface extends Configurable

@@ -4,11 +4,10 @@
 /// (for both security and performance)!
 
 use sample\components\UserComponent;
+use sample\models\User as UserIdentity;
 use sample\modules\api\ApiModule;
 use yii\helpers\ArrayHelper;
 use yii\web\Request;
-use yii\web\User;
-use sample\models\User as UserIdentity;
 
 // phpcs:disable Generic.Files.LineLength.TooLong  -- Sample documentation
 return ArrayHelper::merge(require('main.php'), [

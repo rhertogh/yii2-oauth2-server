@@ -11,7 +11,6 @@ use rhertogh\Yii2Oauth2Server\exceptions\Oauth2ServerHttpException;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
 use yii\base\InvalidCallException;
-use yii\base\Module;
 use yii\web\Controller;
 use yii\web\Response;
 use Yii2Oauth2ServerTests\unit\TestCase;

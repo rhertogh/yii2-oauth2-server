@@ -4,10 +4,7 @@ namespace rhertogh\Yii2Oauth2Server\controllers\web\certificates;
 
 use Jose\Component\Core\JWK;
 use Jose\Component\Core\JWKSet;
-use Jose\Component\KeyManagement\KeyConverter\RSAKey;
-use League\OAuth2\Server\CryptKey;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2CertificatesController;
-use Yii;
 use yii\base\Action;
 use yii\helpers\StringHelper;
 

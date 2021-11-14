@@ -2,18 +2,11 @@
 
 namespace Yii2Oauth2ServerTests\functional;
 
-use Codeception\Example;
 use Codeception\Util\HttpCode;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
-use Yii;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Json;
-use Yii2Oauth2ServerTests\_helpers\ClientTokenProvider;
 use Yii2Oauth2ServerTests\_helpers\TestUserModelPasswordGrant;
-use Yii2Oauth2ServerTests\functional\_base\BaseGrantCest;
-use Yii2Oauth2ServerTests\functional\_base\BaseSimpleGrantCest;
 use Yii2Oauth2ServerTests\ApiTester;
+use Yii2Oauth2ServerTests\functional\_base\BaseSimpleGrantCest;
 
 /**
  * @covers \rhertogh\Yii2Oauth2Server\controllers\web\server\Oauth2AccessTokenAction

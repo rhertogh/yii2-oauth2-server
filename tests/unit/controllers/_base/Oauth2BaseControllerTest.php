@@ -2,11 +2,6 @@
 
 namespace Yii2Oauth2ServerTests\unit\controllers\_base;
 
-use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ConsentController;
-use rhertogh\Yii2Oauth2Server\Oauth2Module;
-use Yii;
-use yii\filters\Cors;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
 use Yii2Oauth2ServerTests\unit\TestCase;
 

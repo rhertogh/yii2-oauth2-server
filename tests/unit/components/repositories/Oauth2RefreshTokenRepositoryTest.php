@@ -4,12 +4,8 @@ namespace Yii2Oauth2ServerTests\unit\components\repositories;
 
 use DateTimeImmutable;
 use League\OAuth2\Server\Exception\UniqueTokenIdentifierConstraintViolationException;
-use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AuthCodeInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2RefreshTokenInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2AuthCodeRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2RefreshTokenRepositoryInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2RefreshTokenInterface;
 use Yii;
 use yii\base\InvalidConfigException;
 use Yii2Oauth2ServerTests\unit\components\repositories\_base\BaseOauth2RepositoryTest;

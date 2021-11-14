@@ -12,7 +12,6 @@ use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
 use yii\base\InvalidCallException;
-use yii\base\Module;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\web\User as UserComponent;

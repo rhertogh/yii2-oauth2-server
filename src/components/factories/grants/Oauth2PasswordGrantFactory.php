@@ -2,7 +2,6 @@
 
 namespace rhertogh\Yii2Oauth2Server\components\factories\grants;
 
-use League\OAuth2\Server\Grant\PasswordGrant;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\grants\Oauth2PasswordGrantFactoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2PasswordGrantInterface;
 use Yii;

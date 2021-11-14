@@ -115,7 +115,6 @@ use Yii;
 use yii\base\InvalidCallException;
 use yii\base\InvalidConfigException;
 use yii\base\Module;
-use yii\helpers\StringHelper;
 
 /**
  * @property Oauth2OidcScopeCollectionInterface|array|callable|string $openIdConnectScopes;

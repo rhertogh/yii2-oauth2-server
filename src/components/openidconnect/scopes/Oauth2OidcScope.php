@@ -8,7 +8,6 @@ use Yii;
 use yii\base\BaseObject;
 use yii\base\InvalidArgumentException;
 use yii\base\InvalidCallException;
-use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
 
 class Oauth2OidcScope extends BaseObject implements Oauth2OidcScopeInterface

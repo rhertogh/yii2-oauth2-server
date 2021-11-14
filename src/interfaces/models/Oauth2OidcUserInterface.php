@@ -2,7 +2,6 @@
 
 namespace rhertogh\Yii2Oauth2Server\interfaces\models;
 
-use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\server\Oauth2OidcBearerTokenResponseInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcClaimInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 
