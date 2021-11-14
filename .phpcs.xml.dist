@@ -68,7 +68,9 @@
         <include-pattern>*/src/*</include-pattern>
     </rule>
 
-    <rule ref="Squiz.ControlStructures.ControlSignature"/>
+    <rule ref="Squiz.ControlStructures.ControlSignature">
+        <exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen"/>
+    </rule>
     <rule ref="Squiz.Commenting.DocCommentAlignment"/>
     <rule ref="Generic.ControlStructures.DisallowYodaConditions"/>
 
