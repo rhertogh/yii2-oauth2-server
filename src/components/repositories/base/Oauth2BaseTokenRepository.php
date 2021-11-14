@@ -2,7 +2,7 @@
 
 namespace rhertogh\Yii2Oauth2Server\components\repositories\base;
 
-use rhertogh\Yii2Oauth2Server\exceptions\UniqueTokenIdentifierConstraintViolationException;
+use rhertogh\Yii2Oauth2Server\exceptions\Oauth2UniqueTokenIdentifierConstraintViolationException;
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ActiveRecordInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2IdentifierInterface;
@@ -40,7 +40,7 @@ abstract class Oauth2BaseTokenRepository extends Oauth2BaseRepository
     /**
      * @param Oauth2ActiveRecordInterface|Oauth2IdentifierInterface|Oauth2ScopeRelationInterface $model
      * @throws InvalidConfigException
-     * @throws UniqueTokenIdentifierConstraintViolationException
+     * @throws Oauth2UniqueTokenIdentifierConstraintViolationException
      * @throws \yii\db\Exception
      */
     protected function persistToken($model)
@@ -55,7 +55,7 @@ abstract class Oauth2BaseTokenRepository extends Oauth2BaseRepository
         }
 
         if ($model->identifierExists()) {
-            throw UniqueTokenIdentifierConstraintViolationException::create(
+            throw Oauth2UniqueTokenIdentifierConstraintViolationException::create(
                 'A token of class ' . $modelClass
                     . ' with identifier "' . $model->getIdentifier() . '" already exists.'
             );

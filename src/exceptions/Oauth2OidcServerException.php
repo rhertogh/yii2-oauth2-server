@@ -3,11 +3,12 @@
 namespace rhertogh\Yii2Oauth2Server\exceptions;
 
 use League\OAuth2\Server\Exception\OAuthServerException;
+use rhertogh\Yii2Oauth2Server\interfaces\exceptions\Oauth2OidcServerExceptionInterface;
 
 /**
  * @see https://openid.net/specs/openid-connect-core-1_0.html#AuthError
  */
-class Oauth2OidcServerException extends OAuthServerException
+class Oauth2OidcServerException extends OAuthServerException implements Oauth2OidcServerExceptionInterface
 {
     /**
      * Login Required error.

@@ -2,7 +2,7 @@
 
 namespace rhertogh\Yii2Oauth2Server\components\repositories\base;
 
-use rhertogh\Yii2Oauth2Server\exceptions\UniqueTokenIdentifierConstraintViolationException;
+use rhertogh\Yii2Oauth2Server\exceptions\Oauth2UniqueTokenIdentifierConstraintViolationException;
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ActiveRecordInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2IdentifierInterface;
