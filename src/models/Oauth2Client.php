@@ -26,6 +26,10 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     use Oauth2EntityIdentifierTrait;
     use Oauth2EnabledTrait;
 
+    /**
+     * Minimum lenght for client secret.
+     * @var int
+     */
     public $minimumSecretLenth = 10;
 
     /**

@@ -11,6 +11,9 @@ use yii\web\Response;
 
 abstract class Oauth2BaseApiController extends Oauth2BaseWebController
 {
+    /**
+     * @inheritDoc
+     */
     public $enableCsrfValidation = false;
 
     /**

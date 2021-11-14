@@ -16,6 +16,10 @@ use yii\web\ServerErrorHttpException;
  */
 class Oauth2AuthorizeClientAction extends Action
 {
+    /**
+     * Path to view file for client authorization.
+     * @var string|null
+     */
     public $clientAuthorizationView = null;
 
     public function init()

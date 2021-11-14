@@ -8,6 +8,10 @@ use yii\helpers\ArrayHelper;
 
 class Oauth2MigrationsController extends Oauth2BaseConsoleController
 {
+    /**
+     * Force generation of existing migrations.
+     * @var bool
+     */
     public $force = false;
 
     /**

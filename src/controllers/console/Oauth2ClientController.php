@@ -8,13 +8,44 @@ use yii\helpers\ArrayHelper;
 
 class Oauth2ClientController extends Oauth2BaseConsoleController
 {
+    /**
+     * @var string|null
+     */
     public $sample = null;
+
+    /**
+     * @var string|null
+     */
     public $identifier = null;
+
+    /**
+     * @var string|null
+     */
     public $name = null;
+
+    /**
+     * @var string|null
+     */
     public $type = null;
+
+    /**
+     * @var string|null
+     */
     public $redirectURIs = null;
+
+    /**
+     * @var string|null
+     */
     public $grantTypes = null;
+
+    /**
+     * @var string|null
+     */
     public $secret = null;
+
+    /**
+     * @var string|null
+     */
     public $scopes = null;
 
     /**

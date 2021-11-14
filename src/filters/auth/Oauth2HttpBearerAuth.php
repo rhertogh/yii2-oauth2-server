@@ -10,6 +10,10 @@ use yii\filters\auth\HttpBearerAuth;
 
 class Oauth2HttpBearerAuth extends HttpBearerAuth implements Oauth2HttpBearerAuthInterface
 {
+    /**
+     * Name of the Oauth2 Module in the app.
+     * @var string|null
+     */
     public $oauth2ModuleName = null;
 
     /**

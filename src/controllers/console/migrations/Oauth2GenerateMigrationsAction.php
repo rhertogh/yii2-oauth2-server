@@ -21,6 +21,10 @@ use function PHPUnit\Framework\fileExists;
  */
 class Oauth2GenerateMigrationsAction extends Action
 {
+    /**
+     * Template to use for the generated migrations.
+     * @var string
+     */
     public $templateFile = __DIR__ . DIRECTORY_SEPARATOR . 'generate' . DIRECTORY_SEPARATOR . 'migration.php';
 
     public function run()
