@@ -24,7 +24,6 @@ class Oauth2CreateClientAction extends Action
     {
         $module = $this->controller->module;
 
-        $sample = strtolower($this->controller->sample);
         $identifier = $this->controller->identifier;
         $name = $this->controller->name;
         $type = $this->controller->type;
@@ -33,7 +32,10 @@ class Oauth2CreateClientAction extends Action
         $secret = $this->controller->secret;
         $scopes = $this->controller->scopes;
 
-        if (!empty($sample)) {
+        if (!empty($this->controller->sample)) {
+
+            $sample = strtolower($this->controller->sample);
+
             if ($sample == 'postman') {
                 $defaultIdentifier = 'postman-sample-client';
                 $defaultName = 'Postman Sample Client';
