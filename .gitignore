@@ -35,3 +35,7 @@ tests/_runtime/
 tests/_output/
 src/.gii/
 tests/_data/*.local.sql
+
+# PHP_CodeSniffer
+.phpcs.xml
+
