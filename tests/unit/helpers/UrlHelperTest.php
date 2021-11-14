@@ -2,10 +2,7 @@
 
 namespace Yii2Oauth2ServerTests\unit\helpers;
 
-use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\helpers\UrlHelper;
-use Yii;
-use yii\di\Instance;
 use Yii2Oauth2ServerTests\unit\TestCase;
 
 /**

@@ -4,13 +4,9 @@ namespace Yii2Oauth2ServerTests\unit\models;
 
 use DateTimeImmutable;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
-use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\Traits\AccessTokenTrait;
-use League\OAuth2\Server\Entities\Traits\ClientTrait;
 use League\OAuth2\Server\Entities\Traits\TokenEntityTrait;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AuthCodeInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2RefreshTokenInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenQueryInterface;
 use Yii;

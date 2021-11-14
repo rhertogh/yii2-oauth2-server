@@ -3,9 +3,9 @@
 namespace Yii2Oauth2ServerTests\unit\models\_traits;
 
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
-use Yii2Oauth2ServerTests\unit\models\Oauth2AuthCodeTest;
 use Yii2Oauth2ServerTests\unit\models\_traits\_base\Oauth2BaseModelTestTrait;
 use Yii2Oauth2ServerTests\unit\models\_traits\_base\Oauth2BasePhpUnitTestCaseTrait;
+use Yii2Oauth2ServerTests\unit\models\Oauth2AuthCodeTest;
 
 trait GetSetRedirectUriTestTrait
 {

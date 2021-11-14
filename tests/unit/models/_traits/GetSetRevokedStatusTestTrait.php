@@ -2,7 +2,6 @@
 
 namespace Yii2Oauth2ServerTests\unit\models\_traits;
 
-use DateTimeImmutable;
 use Yii2Oauth2ServerTests\unit\models\_traits\_base\Oauth2BaseModelTestTrait;
 use Yii2Oauth2ServerTests\unit\models\_traits\_base\Oauth2BasePhpUnitTestCaseTrait;
 

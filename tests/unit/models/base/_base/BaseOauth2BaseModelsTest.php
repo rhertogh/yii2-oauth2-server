@@ -2,8 +2,6 @@
 
 namespace Yii2Oauth2ServerTests\unit\models\base\_base;
 
-use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2RefreshTokenQueryInterface;
-use rhertogh\Yii2Oauth2Server\models\base\Oauth2AccessToken;
 use rhertogh\Yii2Oauth2Server\models\base\Oauth2BaseActiveRecord;
 use yii\db\ActiveQuery;
 use yii\db\ActiveQueryInterface;

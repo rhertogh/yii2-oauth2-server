@@ -3,10 +3,8 @@
 namespace Yii2Oauth2ServerTests\unit\exceptions;
 
 use Codeception\Util\HttpCode;
-use League\OAuth2\Server\Exception\OAuthServerException;
 use rhertogh\Yii2Oauth2Server\exceptions\Oauth2OidcServerException;
 use rhertogh\Yii2Oauth2Server\exceptions\Oauth2ServerHttpException;
-use yii\web\HttpException;
 use Yii2Oauth2ServerTests\unit\TestCase;
 
 /**

@@ -37,7 +37,6 @@ use yii\web\GroupUrlRule;
 use yii\web\IdentityInterface;
 use Yii2Oauth2ServerTests\_helpers\TestUserModel;
 use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
-use Yii2Oauth2ServerTests\unit\TestCase;
 
 /**
  * @covers \rhertogh\Yii2Oauth2Server\Oauth2Module

@@ -8,7 +8,6 @@ use rhertogh\Yii2Oauth2Server\traits\models\Oauth2UserIdentityTrait;
 use Yii;
 use yii\base\Module;
 use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
-use Yii2Oauth2ServerTests\unit\TestCase;
 
 /**
  * @covers \rhertogh\Yii2Oauth2Server\traits\models\Oauth2UserIdentityTrait

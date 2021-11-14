@@ -2,16 +2,12 @@
 
 namespace Yii2Oauth2ServerTests\unit\models;
 
-use http\Url;
-use rhertogh\Yii2Oauth2Server\components\authorization\Oauth2ClientAuthorizationRequest;
-use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\models\Oauth2AccessToken;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\base\InvalidArgumentException;
 use yii\db\ActiveRecord;
-use yii\db\Exception as DbException;
 use yii\helpers\Json;
 use Yii2Oauth2ServerTests\unit\models\_base\BaseOauth2ActiveRecordTest;
 use Yii2Oauth2ServerTests\unit\models\_traits\Oauth2IdentifierTestTrait;
