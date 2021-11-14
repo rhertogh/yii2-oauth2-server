@@ -273,3 +273,8 @@ To assist in debugging and finding endpoint URLs you can run the `./yii oauth2/d
 It will list the curren Oauth2Module settings and the server endpoints (along with their settings for customization).
 
 If everything is set up correctly your application now supports Oauth 2.0 🥳
+
+OpenID Connect
+--------------
+Please see [OpenID Connect for the Yii2-Oauth2-Server](start-openid-connect.md)
+for more information on how to set up OpenID Connect.

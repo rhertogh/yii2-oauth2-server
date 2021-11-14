@@ -50,11 +50,7 @@ class User extends ActiveRecord implements IdentityInterface, Oauth2UserInterfac
      */
     public function getLatestAuthenticatedAt()
     {
-        if (!empty($this->latest_authenticated_at)) {
-            return new \DateTimeImmutable('@' . $this->latest_authenticated_at);
-        }
-
-        return null;
+        return new \DateTimeImmutable('@' . ($this->latest_authenticated_at ?? $this->created_at));
     }
 
     # Other methods are implemented via Oauth2OidcUserIdentityTrait
