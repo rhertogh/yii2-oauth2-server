@@ -4,6 +4,7 @@ namespace rhertogh\Yii2Oauth2Server\helpers;
 
 use GuzzleHttp\Psr7\Response as Psr7Response;
 use GuzzleHttp\Psr7\ServerRequest;
+use GuzzleHttp\Psr7\Utils as Psr7Utils;
 use Psr\Http\Message\ServerRequestInterface;
 use Yii;
 use yii\web\Request;
@@ -32,7 +33,27 @@ class Psr7Helper
     }
 
     /**
-     * Converts a PSR 7 request into a Yii2 request.
+     * Converts a Yii2 Response into a PSR 7 Response.
+     * @param Response $response
+     * @return Psr7Response
+     * @since 1.0.0
+     */
+    public static function yiiToPsr7Response($response)
+    {
+        /** @var Psr7Response $psr7Response */
+        $psr7Response = Yii::createObject(Psr7Response::class);
+
+        foreach ($response->headers as $name => $value) {
+            $psr7Response = $psr7Response->withHeader($name, $value);
+        }
+
+        return $psr7Response
+            ->withStatus($response->getStatusCode())
+            ->withBody(Psr7Utils::streamFor($response->content));
+    }
+
+    /**
+     * Converts a PSR 7 Response into a Yii2 Response.
      * @param Psr7Response $psr7Response
      * @return Response
      * @since 1.0.0

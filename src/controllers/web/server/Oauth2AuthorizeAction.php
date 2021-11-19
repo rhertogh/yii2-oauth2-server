@@ -295,7 +295,7 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
             $authRequest->setUser($clientAuthorizationRequest->getUserIdentity());
             $authRequest->setAuthorizationApproved($authorizationApproved);
 
-            $psr7Response = Yii::createObject(Psr7Response::class);
+            $psr7Response = Psr7Helper::yiiToPsr7Response(Yii::$app->response);
             $psr7Response = $server->completeAuthorizationRequest($authRequest, $psr7Response);
 
             return Psr7Helper::psr7ToYiiResponse($psr7Response);

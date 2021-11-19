@@ -21,7 +21,7 @@ class Oauth2ServerController extends Oauth2BaseApiController implements Oauth2Se
                 'class' => VerbFilter::class,
                 'actions' => [
                     static::ACTION_NAME_ACCESS_TOKEN => ['POST'],
-                    static::ACTION_NAME_AUTHORIZE => ['GET'],
+                    static::ACTION_NAME_AUTHORIZE => ['GET', 'POST'],
                 ],
             ],
         ]);
