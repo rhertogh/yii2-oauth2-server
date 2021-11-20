@@ -31,10 +31,15 @@ Documentation is at [docs/guide/README.md](docs/guide/README.md).
 If you're not yet familiar with Oauth 2 check out [An Illustrated Guide to OAuth and OpenID Connect](
 https://developer.okta.com/blog/2019/10/21/illustrated-guide-to-oauth-and-oidc)
 
+
 Installation
 ------------
 * The minimum required PHP version is 7.4.
 * The minimum required Yii version is 2.0.43.
+
+```bash
+composer install rhertogh/yii2-oauth2-server
+```
 
 Full installation details can be found in the docs under [Installing the Yii2-Oauth2-Server](docs/guide/start-installation.md)
 
