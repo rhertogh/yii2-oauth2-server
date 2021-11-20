@@ -103,16 +103,6 @@ class User extends ActiveRecord implements
     {
         return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function canAccessOauth2ClientAndGrantType(ClientEntityInterface $clientEntity, $grantType)
-    {
-        // Just always allow access in the sample app,
-        // for your application you might limit the access to certain clients.
-        return true;
-    }
     # endregion Oauth2PasswordGrantUserInterface
 
     # region Not Oauth specific but can be used with Oauth Scopes to hide/expose certain fields

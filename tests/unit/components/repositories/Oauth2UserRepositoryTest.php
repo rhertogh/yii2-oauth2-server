@@ -80,9 +80,6 @@ class Oauth2UserRepositoryTest extends BaseOauth2RepositoryTest
             public function validatePassword($password)
             {
             }
-            public function canAccessOauth2ClientAndGrantType(ClientEntityInterface $clientEntity, $grantType)
-            {
-            }
             public static function findByUsername($username)
             {
             }
@@ -166,9 +163,6 @@ class Oauth2UserRepositoryTest extends BaseOauth2RepositoryTest
             public function validatePassword($password)
             {
             }
-            public function canAccessOauth2ClientAndGrantType(ClientEntityInterface $clientEntity, $grantType)
-            {
-            }
 
             public static function findByUsername($username)
             {
@@ -217,9 +211,6 @@ class Oauth2UserRepositoryTest extends BaseOauth2RepositoryTest
         // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
         $mockTestUserModelClass = get_class(new class extends TestUserModel implements Oauth2PasswordGrantUserInterface {
             public function validatePassword($password)
-            {
-            }
-            public function canAccessOauth2ClientAndGrantType(ClientEntityInterface $clientEntity, $grantType)
             {
             }
 

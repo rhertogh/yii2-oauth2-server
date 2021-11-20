@@ -76,10 +76,7 @@ class Oauth2UserRepository extends Oauth2BaseRepository implements Oauth2UserRep
             );
         }
 
-        if (
-            $user->validatePassword($password)
-            && $user->canAccessOauth2ClientAndGrantType($clientEntity, $grantType)
-        ) {
+        if ($user->validatePassword($password)) {
             return $user;
         }
 

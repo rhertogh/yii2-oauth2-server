@@ -25,12 +25,4 @@ class TestUserModelPasswordGrant extends TestUserModel implements
     {
         return Yii::$app->security->validatePassword($password, $this->password_hash);
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function canAccessOauth2ClientAndGrantType(ClientEntityInterface $clientEntity, $grantType)
-    {
-        return true;
-    }
 }

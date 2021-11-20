@@ -5,7 +5,7 @@ use yii\helpers\ArrayHelper;
 use yii\web\AssetManager;
 use yii\web\Request;
 use Yii2Oauth2ServerTests\_helpers\NoHeadersResponse;
-use Yii2Oauth2ServerTests\_helpers\TestUserComponentOidc;
+use Yii2Oauth2ServerTests\_helpers\TestUserComponent;
 use Yii2Oauth2ServerTests\_helpers\TestUserModel;
 
 return ArrayHelper::merge(require('main.php'), [
@@ -16,7 +16,7 @@ return ArrayHelper::merge(require('main.php'), [
 
     'components' => [
         'user' => [
-            'class' => TestUserComponentOidc::class,
+            'class' => TestUserComponent::class,
             'identityClass' => TestUserModel::class,
         ],
         'urlManager' => [

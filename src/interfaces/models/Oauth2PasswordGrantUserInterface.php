@@ -2,8 +2,6 @@
 
 namespace rhertogh\Yii2Oauth2Server\interfaces\models;
 
-use League\OAuth2\Server\Entities\ClientEntityInterface;
-
 interface Oauth2PasswordGrantUserInterface extends Oauth2UserInterface
 {
     /**
@@ -19,11 +17,4 @@ interface Oauth2PasswordGrantUserInterface extends Oauth2UserInterface
      * @since 1.0.0
      */
     public function validatePassword($password);
-
-    /**
-     * Validates the user's access to the specified client and grant type.
-     * @return bool
-     * @since 1.0.0
-     */
-    public function canAccessOauth2ClientAndGrantType(ClientEntityInterface $clientEntity, $grantType);
 }

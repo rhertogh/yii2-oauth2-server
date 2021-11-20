@@ -15,7 +15,7 @@ use yii\base\InvalidCallException;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\web\User as UserComponent;
-use Yii2Oauth2ServerTests\_helpers\TestUserComponentOidc;
+use Yii2Oauth2ServerTests\_helpers\TestUserComponent;
 use Yii2Oauth2ServerTests\_helpers\TestUserModel;
 use Yii2Oauth2ServerTests\_helpers\TestUserModelOidc;
 use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
@@ -540,7 +540,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
     public function testPromptLoginForAuthenticatedUser($prompt, $maxAge, $expectLoginPrompt)
     {
 
-        $mockUserComponent = $this->getMockBuilder(TestUserComponentOidc::class)
+        $mockUserComponent = $this->getMockBuilder(TestUserComponent::class)
             ->onlyMethods([
                 'reauthenticationRequired',
             ])
@@ -707,7 +707,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
 
     public function testOidcAccountSelectionRequired()
     {
-        $mockUserComponent = $this->getMockBuilder(TestUserComponentOidc::class)
+        $mockUserComponent = $this->getMockBuilder(TestUserComponent::class)
             ->onlyMethods([
                 'accountSelectionRequired',
             ])
