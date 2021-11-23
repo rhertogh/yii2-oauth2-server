@@ -62,8 +62,12 @@ trait Oauth2OidcUserIdentityTrait
             return call_user_func($determiner, $this, $claim, $module);
         }
 
-        if (is_string($determiner) && $this->hasMethod($determiner)) {
-            return call_user_func([$this, $determiner], $claim, $module);
+        if (is_string($determiner)) {
+            if ($this->hasMethod($determiner)) {
+                return call_user_func([$this, $determiner], $claim, $module);
+            } elseif ($this->canGetProperty($determiner)) {
+                return $this->$determiner;
+            }
         }
 
         if (is_string($determiner) || is_array($determiner)) {
