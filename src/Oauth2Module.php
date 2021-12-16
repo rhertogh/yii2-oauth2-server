@@ -655,7 +655,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
                             $accessTokenTTL = $factory->accessTokenTTL ?? $this->defaultAccessTokenTTL ?? null;
                             $this->_authorizationServer->enableGrantType(
                                 $factory->getGrantType(),
-                                $accessTokenTTL ? new \DateInterval($this->defaultAccessTokenTTL) : null
+                                $accessTokenTTL ? new \DateInterval($accessTokenTTL) : null
                             );
                         } else {
                             throw new InvalidConfigException(
