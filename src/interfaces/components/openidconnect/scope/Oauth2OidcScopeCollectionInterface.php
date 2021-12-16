@@ -46,11 +46,12 @@ interface Oauth2OidcScopeCollectionInterface extends Configurable
      *           Otherwise, the key is used as scope 'identifier' and the value as claims,
      *           e.g. ['my_claim_identifier' => ['my_claim_identifier']].
      *
+     * @param boolean $merge In case a scope is already defined, its claims are merged. Otherwise, it's replaced.
      * @return $this
      * @see addOidcScope()
      * @since 1.0.0
      */
-    public function addOidcScopes($oidcScopes);
+    public function addOidcScopes($oidcScopes, $merge = true);
 
     /**
      * Removes all defined scopes from the collection.
@@ -74,11 +75,12 @@ interface Oauth2OidcScopeCollectionInterface extends Configurable
      *  - string: Will add a default OpenID Connect scope
      *  - array:  Will be used as Scope config
      *            e.g. ['identifier' => 'my_scope_identifier', 'claims' => ['my_claim_identifier']].
+     * @param boolean $merge In case the scope is already defined, its claims are merged. Otherwise, it's replaced.
      * @return $this
      * @see getDefaultOidcScope()
      * @since 1.0.0
      */
-    public function addOidcScope($oidcScope);
+    public function addOidcScope($oidcScope, $merge = true);
 
     /**
      * Remove a specific scope from the collection

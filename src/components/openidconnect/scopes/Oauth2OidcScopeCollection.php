@@ -45,21 +45,24 @@ class Oauth2OidcScopeCollection extends BaseObject implements Oauth2OidcScopeCol
     /**
      * @inheritDoc
      */
-    public function addOidcScopes($oidcScopes)
+    public function addOidcScopes($oidcScopes, $merge = true)
     {
         foreach ($oidcScopes as $scopeIdentifier => $scopeConfig) {
             if ($scopeConfig instanceof Oauth2OidcScopeInterface) {
-                $this->addOidcScope($scopeConfig);
+                $this->addOidcScope($scopeConfig, $merge);
             } elseif (is_string($scopeConfig)) {
-                $this->addOidcScope($scopeConfig);
+                $this->addOidcScope($scopeConfig, $merge);
             } elseif (is_array($scopeConfig)) {
                 if (is_numeric($scopeIdentifier)) {
-                    $this->addOidcScope($scopeConfig);
+                    $this->addOidcScope($scopeConfig, $merge);
                 } else {
-                    $this->addOidcScope([
-                        'identifier' => $scopeIdentifier,
-                        'claims' => $scopeConfig,
-                    ]);
+                    $this->addOidcScope(
+                        [
+                            'identifier' => $scopeIdentifier,
+                            'claims' => $scopeConfig,
+                        ],
+                        $merge
+                    );
                 }
             } else {
                 throw new InvalidArgumentException(
@@ -91,7 +94,7 @@ class Oauth2OidcScopeCollection extends BaseObject implements Oauth2OidcScopeCol
     /**
      * @inheritDoc
      */
-    public function addOidcScope($oidcScope)
+    public function addOidcScope($oidcScope, $merge = true)
     {
         if (is_string($oidcScope)) {
             $oidcScope = $this->getDefaultOidcScope($oidcScope);
@@ -107,7 +110,13 @@ class Oauth2OidcScopeCollection extends BaseObject implements Oauth2OidcScopeCol
         if (empty($identifier)) {
             throw new InvalidArgumentException('Scope identifier must be set.');
         }
-        $this->_oidcScopes[$identifier] = $oidcScope;
+
+        if ($merge && array_key_exists($identifier, $this->_oidcScopes)) {
+            $this->_oidcScopes[$identifier]->addClaims($oidcScope->getClaims());
+        } else {
+            $this->_oidcScopes[$identifier] = $oidcScope;
+        }
+
         return $this;
     }
 
@@ -136,7 +145,7 @@ class Oauth2OidcScopeCollection extends BaseObject implements Oauth2OidcScopeCol
         if (!in_array($scopeIdentifier, static::OPENID_CONNECT_DEFAULT_SCOPES)) {
             throw new InvalidArgumentException(
                 'Invalid $scopeName "' . $scopeIdentifier . '", it must be an OpenID Connect default claims scope ('
-                    . implode(', ', static::OPENID_CONNECT_DEFAULT_SCOPES) . ').'
+                . implode(', ', static::OPENID_CONNECT_DEFAULT_SCOPES) . ').'
             );
         }
 
