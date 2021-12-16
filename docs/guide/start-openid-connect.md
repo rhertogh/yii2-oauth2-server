@@ -166,3 +166,8 @@ class UserController extends Controller
     }
 }
 ```
+
+OpenID Connect Claims
+---------------------
+By default, the Yii2-Oauth2-Server comes pre-configured with the standard OIDC scopes and claims.  
+For customization of the scopes/claims please see [OpenID Connect Claims](start-openid-connect-claims.md)

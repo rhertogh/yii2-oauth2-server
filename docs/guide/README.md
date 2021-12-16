@@ -10,6 +10,7 @@ Getting Started
 * [What do you need to know before installing the Yii2-Oauth2-Server](start-prerequisites.md)
 * [Installing the Yii2-Oauth2-Server](start-installation.md)
 * [OpenID Connect for the Yii2-Oauth2-Server](start-openid-connect.md)
+* [OpenID Connect Claims](start-openid-connect-claims.md)
 
 Development
 -----------
