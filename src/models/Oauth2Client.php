@@ -164,7 +164,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
      */
     public function isConfidential()
     {
-        return $this->type !== static::TYPE_PUBLIC;
+        return (int)$this->type !== static::TYPE_PUBLIC;
     }
 
     /**
