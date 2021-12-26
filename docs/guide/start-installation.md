@@ -270,7 +270,7 @@ Check the [Client Configuration](appendix-client-configuration.md) on how to con
 Validating Installation
 ---------------------
 To assist in debugging and finding endpoint URLs you can run the `./yii oauth2/debug/config` command.
-It will list the curren Oauth2Module settings and the server endpoints (along with their settings for customization).
+It will list the current Oauth2Module settings and the server endpoints (along with their settings for customization).
 
 If everything is set up correctly your application now supports Oauth 2.0 🥳
 
