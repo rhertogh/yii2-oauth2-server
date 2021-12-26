@@ -53,7 +53,7 @@ There are two main sections in the documentation
 
 Contributing
 ------------
-The framework is [Open Source](LICENSE.md). You can help by:
+The Yii2-Oauth2-Server is [Open Source](LICENSE.md). You can help by:
 
 - [Report an issue](docs/internals/report-an-issue.md)
 - [Contribute with new features or bug fixes](docs/internals/pull-request-qa.md)
@@ -62,7 +62,7 @@ The framework is [Open Source](LICENSE.md). You can help by:
 Reporting Security issues
 -------------------------
 In case you found a security issue please [contact us directly](
-https://docs.google.com/forms/d/e/1FAIpQLSfiJD1loIfsPtdLi6e0d7cyqtElXOrX_mdVAF6cTJJRDy1JOA/viewform)
+https://forms.gle/8aEGxmN51Hvb7oLJ7)
 DO NOT use the issue tracker or discuss it in the public forum as it will cause more damage than help.
 
 
