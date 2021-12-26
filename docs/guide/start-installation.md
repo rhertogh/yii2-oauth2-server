@@ -154,12 +154,13 @@ Migrations
 Since this package closely connects to your User Model, and it's corresponding table, the creation date/time of the 
 migration matters. In order to solve this running the migrations for the Yii2-Oauth2-Server is a 2-step process:
 1. Generation of the migrations:  
-   * Make sure the `migrationsNamespace` of the Oauth2Module is set (e.g.'app\\migrations\\oauth2').  
-     Note: The specified namespace must be defined as a Yii alias (e.g. '@app'). 
+   * Make sure the `migrationsNamespace` of the Oauth2Module is set (e.g. `'app\\migrations\\oauth2'`).  
+     Note: The specified namespace must be defined as a Yii alias (e.g. `'@app'`). 
    * Run `./yii oauth2/migrations/generate`
      * Depending on your configuration one or more migrations will be proposed to generate.
      * Check the file paths and confirm the generation (or add `--interactive=0` as option to the `generate` command).
      * The migrations should now have been successfully generated.
+
 2 Run the migrations:
   * Make sure the `migrationsNamespace` as specified for the Oauth2Module is included in the `migrationNamespaces`
     of your Migration Controller.
@@ -207,7 +208,7 @@ abstract class BaseController extends Controller
     }
 }
 ```
-After creating the base controller for your api you can extend it to create a controller, for example:
+After creating the base controller for your api, you can extend it to create a controller. For example:
 ```php
 <?php
 namespace app\modules\api\controllers;
