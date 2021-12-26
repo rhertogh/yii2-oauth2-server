@@ -4,9 +4,9 @@ Appendix: Client Configuration
 This chapter describes how to set up different clients.
 
 ## Configuring Postman
-1. Create a new Collection
+1. Create a new Collection  
    ![Create new Collection in Postman](images/postman-new-collection.png)
-2. Set the authorization method of the new Collection to Oauth2   
+2. Set the authorization method of the new Collection to Oauth2  
    ![Set authorization method to Oauth2 in Postman](images/postman-collection-set-authorization-oauth2.png)
 3. Configure Oauth2
 
@@ -27,11 +27,11 @@ This chapter describes how to set up different clients.
     * The client is now authorized, and you will be redirected back to Postman.
 6. Click "Use Token" in Postman.
 7. Click "Save Collection".
-8. Create a new Request inside your Collection
+8. Create a new Request inside your Collection  
    ![Create new Request in Postman](images/postman-new-request.png)
 9. Configure the new Request
     * Set the request url.
       If you created the example API controller as described above you can use `http://localhost/api/user/me`.
-    * Make sure the "Authrization" is set to "Inherit auth from parent".
+    * Make sure the "Authorization" is set to "Inherit auth from parent".
 10. Send the Request by clicking "Send".  
-    The request will contain an Authorization header containing "Bearer eyJ0eXAiO...".
+    The request will contain an Authorization header containing `"Bearer eyJ0eXAiO..."`.
