@@ -162,6 +162,7 @@ class Oauth2OidcAddressClaim extends BaseObject implements Oauth2OidcAddressClai
     /**
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange] // Suppress "return type should be compatible" warning.
     public function jsonSerialize()
     {
         return [

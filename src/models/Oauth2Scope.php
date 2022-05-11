@@ -14,6 +14,7 @@ class Oauth2Scope extends base\Oauth2Scope implements Oauth2ScopeInterface
     /**
      * @inheritDoc
      */
+    #[\ReturnTypeWillChange] // Suppress "return type should be compatible" warning.
     public function jsonSerialize()
     {
         return $this->getIdentifier();
