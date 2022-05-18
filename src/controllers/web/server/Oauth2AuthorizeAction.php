@@ -108,7 +108,7 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
             if (empty($clientAuthorizationRequest)) {
                 $prompts = explode(
                     ' ',
-                    $this->getRequestParam(
+                    (string)$this->getRequestParam(
                         $request,
                         Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT
                     )

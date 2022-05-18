@@ -237,7 +237,7 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
     {
         return
             $this->getClient()->isConfidential()
-            || StringHelper::startsWith($this->getRedirectUri(), 'https://');
+            || StringHelper::startsWith((string)$this->getRedirectUri(), 'https://');
     }
 
     /**
