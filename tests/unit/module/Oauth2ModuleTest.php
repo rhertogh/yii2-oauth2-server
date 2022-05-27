@@ -27,7 +27,9 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\server\Oauth2O
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2AccessTokenRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ConsentControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\filters\auth\Oauth2HttpBearerAuthInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserInterface;
+use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
 use yii\filters\auth\HttpBearerAuth;
@@ -121,6 +123,82 @@ class Oauth2ModuleTest extends DatabaseTestCase
                 fn($property) => [$property, Oauth2Module::SERVER_ROLE_RESOURCE_SERVER],
                 $reflectionClass->getConstant('REQUIRED_SETTINGS_RESOURCE_SERVER')
             ),
+        );
+    }
+
+    public function testCreateClient()
+    {
+        $this->mockConsoleApplication();
+
+        $client = Oauth2Module::getInstance()->createClient(
+            'test',
+            'test',
+            Oauth2ClientInterface::TYPE_CONFIDENTIAL,
+            'very_secret',
+            Oauth2Module::GRANT_TYPE_AUTH_CODE,
+            'https://localhost/test',
+            'openid email',
+        );
+
+        $this->assertInstanceOf(Oauth2ClientInterface::class, $client);
+        $this->assertEquals(
+            ['openid', 'email'],
+            array_map(
+                fn($scope) => $scope->getIdentifier(),
+                $client->getAllowedScopes(['openid', 'email', 'address'])
+            )
+        );
+    }
+
+    public function testCreateClientNonExistingScope()
+    {
+        $this->mockConsoleApplication();
+
+        $this->expectExceptionMessage('No scope with identifier "does-not-exists" found.');
+        $client = Oauth2Module::getInstance()->createClient(
+            'test',
+            'test',
+            Oauth2ClientInterface::TYPE_CONFIDENTIAL,
+            'very_secret',
+            Oauth2Module::GRANT_TYPE_AUTH_CODE,
+            'https://localhost/test',
+            'does-not-exists',
+        );
+    }
+
+    public function testCreateClientInvalidSecret()
+    {
+        $this->mockConsoleApplication();
+
+        $this->expectExceptionMessage('Secret should be at least 10 characters.');
+        Oauth2Module::getInstance()->createClient(
+            'test',
+            'test',
+            Oauth2ClientInterface::TYPE_CONFIDENTIAL,
+            'test',
+            Oauth2Module::GRANT_TYPE_AUTH_CODE,
+            'https://localhost/test',
+        );
+    }
+
+    public function testCreateClientInvalidServerRole()
+    {
+        $this->mockConsoleApplication([
+            'modules' => [
+                'oauth2' => [
+                    'serverRole' => Oauth2Module::SERVER_ROLE_RESOURCE_SERVER,
+                ],
+            ],
+        ]);
+
+        $this->expectExceptionMessage('Oauth2 server role does not include authorization server.');
+        Oauth2Module::getInstance()->createClient(
+            'test',
+            'test',
+            Oauth2ClientInterface::TYPE_CONFIDENTIAL,
+            'test',
+            Oauth2Module::GRANT_TYPE_AUTH_CODE,
+            'https://localhost/test',
         );
     }
 

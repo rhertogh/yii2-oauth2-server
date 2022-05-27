@@ -3,9 +3,16 @@
 namespace rhertogh\Yii2Oauth2Server\interfaces\models\base;
 
 use yii\db\ActiveRecordInterface;
+use yii\db\Connection;
 
 interface Oauth2ActiveRecordInterface extends ActiveRecordInterface
 {
+    /**
+     * Returns the connection used by this AR class.
+     * @return Connection the database connection used by this AR class.
+     */
+    public static function getDb();
+
     /**
      * Declares the name of the database table associated with this AR class.
      * By default this method returns the class name as the table name by calling [[Inflector::camel2id()]]

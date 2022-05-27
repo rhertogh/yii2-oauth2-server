@@ -256,9 +256,13 @@ Defining a Client
 -----------------
 A new client can be defined in one of the following ways:
  * Manually via the command line with the `./yii oauth2/client/create` command. 
- * Programmatically by creating a new `\rhertogh\Yii2Oauth2Server\models\Oauth2Client` model and saving it.
- * Directly creating a record in the client table (named `oauth2_client` by default).  
-   Note: this option is *not* recommended since it requires manual encryption of the secrets.
+ * Programmatically via either:
+   * The `\rhertogh\Yii2Oauth2Server\Oauth2Module::createClient()` function.
+   * By creating a new `\rhertogh\Yii2Oauth2Server\models\Oauth2Client` model and, if required, 
+     `\rhertogh\Yii2Oauth2Server\models\Oauth2ClientScope` models and saving them.
+ * Directly creating a record in the client table (named `oauth2_client` by default) and, if required, adding
+   records in the client-scope junction table (named `oauth2_client_scope` by default).  
+   > Note: this option is *not* recommended since it requires manual encryption of the secrets.
 
 ### Sample client
 In order to quickly get started you can create a sample client for [Postman](https://www.postman.com/)

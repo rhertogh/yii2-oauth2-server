@@ -244,7 +244,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     {
         $grantTypeId = Oauth2Module::getGrantTypeId($grantTypeIdentifier);
         if (empty($grantTypeId)) {
-            throw new InvalidArgumentException('Unknown grant type "' . $grantTypeIdentifier . '"');
+            throw new InvalidArgumentException('Unknown grant type "' . $grantTypeIdentifier . '".');
         }
 
         return (bool)($this->getGrantTypes() & $grantTypeId);

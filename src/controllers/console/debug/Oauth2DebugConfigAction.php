@@ -20,7 +20,7 @@ class Oauth2DebugConfigAction extends Action
 
         $configuration = $this->getConfiguration($module);
 
-        $this->controller->stdout("Configuration:\n");
+        $this->controller->stdout('Configuration:' . PHP_EOL);
         $this->controller->stdout(Table::widget([
             'headers' => ['Setting', 'Value'],
             'rows' => array_map(fn($setting) => [$setting, $configuration[$setting]], array_keys($configuration)),
@@ -28,8 +28,8 @@ class Oauth2DebugConfigAction extends Action
 
         $endpoints = $this->getEndpoints($module);
 
-        $this->controller->stdout("\n");
-        $this->controller->stdout("Endpoints:\n");
+        $this->controller->stdout(PHP_EOL);
+        $this->controller->stdout('Endpoints:' . PHP_EOL);
         $this->controller->stdout(Table::widget([
             'headers' => ['Endpoint', 'URL', 'Setting(s)'],
             'rows' => $endpoints,

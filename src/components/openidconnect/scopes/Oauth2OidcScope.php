@@ -137,9 +137,6 @@ class Oauth2OidcScope extends BaseObject implements Oauth2OidcScopeInterface
         }
 
         $identifier = $claim->getIdentifier();
-        if (empty($identifier)) {
-            throw new InvalidArgumentException('Claim identifier must be set.');
-        }
         $this->_claims[$identifier] = $claim;
         return $this;
     }

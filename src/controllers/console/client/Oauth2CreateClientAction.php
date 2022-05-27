@@ -27,8 +27,8 @@ class Oauth2CreateClientAction extends Action
         $identifier = $this->controller->identifier;
         $name = $this->controller->name;
         $type = $this->controller->type;
-        $redirectURIs = $this->controller->redirectURIs;
         $grantTypes = $this->controller->grantTypes;
+        $redirectURIs = $this->controller->redirectURIs;
         $secret = $this->controller->secret;
         $scopes = $this->controller->scopes;
 
@@ -49,7 +49,7 @@ class Oauth2CreateClientAction extends Action
             }
         }
 
-        $this->controller->stdout("Creating new Oath2 Client\n");
+        $this->controller->stdout('Creating new Oath2 Client' . PHP_EOL);
 
         if (empty($identifier)) {
             $identifier = $this->controller->prompt('Client Identifier?', [
@@ -86,18 +86,11 @@ class Oauth2CreateClientAction extends Action
                 Oauth2ClientInterface::TYPE_PUBLIC => 'Public: In case the client can not store a secret securely'
                     . ' it should be declared public (e.g. web- or mobile applications).',
             ];
-            $this->controller->stdout("Client Type options:\n");
+            $this->controller->stdout('Client Type options:' . PHP_EOL);
             foreach ($clientTypeOptions as $key => $value) {
-                $this->controller->stdout(" $key - $value\n");
+                $this->controller->stdout(" $key - $value" . PHP_EOL);
             }
             $type = $this->controller->select('Client Type?', $clientTypeOptionsWithDetails);
-        }
-
-        if (empty($redirectURIs)) {
-            $redirectURIs = $this->controller->prompt('Client Redirect URIs (comma separated))?', [
-                'required' => true,
-            ]);
-            $redirectURIs = array_map('trim', explode(',', $redirectURIs));
         }
 
         if (empty($grantTypes)) {
@@ -114,41 +107,33 @@ class Oauth2CreateClientAction extends Action
             }
         }
 
-        //ToDo: start transaction when DB specification is supported.
+        if (empty($redirectURIs)) {
+            $redirectURIs = $this->controller->prompt('Client Redirect URIs (comma separated)?', [
+                'required' => true,
+            ]);
+            $redirectURIs = array_map('trim', explode(',', $redirectURIs));
+        }
 
-        /** @var Oauth2ClientInterface $client */
-        $client = Yii::createObject([
-            'class' => Oauth2ClientInterface::class,
-            'identifier' => $identifier,
-            'type' => $type,
-            'name' => $name,
-            'redirect_uris' => $redirectURIs,
-            'token_types' => 1, # Bearer
-            'grant_types' => $grantTypes,
-        ]);
+        $inputClient = Yii::createObject(Oauth2ClientInterface::class);
 
         if ($type == Oauth2ClientInterface::TYPE_CONFIDENTIAL) {
-            if (!empty($secret) && !$client->validateNewSecret($secret, $error)) {
-                $this->controller->stdout("Invalid secret: $error\n");
+            if (!empty($secret) && !$inputClient->validateNewSecret($secret, $error)) {
+                $this->controller->stdout("Invalid secret: $error" . PHP_EOL);
                 $secret = null;
             }
             if (empty($secret)) {
                 $secret = $this->controller->prompt('Client Secret?', [
                     'required' => true,
-                    'validator' => [$client, 'validateNewSecret'],
+                    'validator' => [$inputClient, 'validateNewSecret'],
                 ]);
             }
-
-            $client->setSecret($secret, $module->getEncryptor());
         }
-
-
-        $client->persist();
 
         if (!empty($scopes) && !$this->validateScope($scopes, $error)) {
-            $this->controller->stdout("Invalid scopes: $error\n");
+            $this->controller->stdout("Invalid scopes: $error" . PHP_EOL);
             $scopes = null;
         }
+
         if (empty($scopes)) {
             $scopes = $this->controller->prompt('Client Scopes?', [
                 'required' => false,
@@ -157,22 +142,10 @@ class Oauth2CreateClientAction extends Action
             ]);
         }
 
-        if (!empty($scopes)) {
-            $scopeIdentifiers = explode(' ', $scopes);
-            foreach ($scopeIdentifiers as $scopeIdentifier) {
-                /** @var Oauth2ClientScopeInterface $clientScope */
-                $clientScope = Yii::createObject([
-                    'class' => Oauth2ClientScopeInterface::class,
-                    'client_id' => $client->getPrimaryKey(),
-                    'scope_id' => $module->getScopeRepository()
-                        ->findModelByIdentifier($scopeIdentifier)->getPrimaryKey(),
-                ]);
-                $clientScope->persist();
-            }
-        }
+        $client = $module->createClient($identifier, $name, $type, $secret, $grantTypes, $redirectURIs, $scopes);
 
         $this->controller->stdout('Successfully created new client with identifier "' . $client->getIdentifier() .
-            '"' . ($scopes ? (' and scopes "' . $scopes . '"') : '') . ".\n", Console::FG_GREEN);
+            '"' . ($scopes ? (' and scopes "' . $scopes . '"') : '') . '.' . PHP_EOL, Console::FG_GREEN);
 
         return ExitCode::OK;
     }

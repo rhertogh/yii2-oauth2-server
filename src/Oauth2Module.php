@@ -16,7 +16,9 @@ use League\OAuth2\Server\Grant\GrantTypeInterface;
 use rhertogh\Yii2Oauth2Server\base\Oauth2BaseModule;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2ClientController;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2DebugController;
+use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2EncryptionController;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2MigrationsController;
+use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\helpers\Psr7Helper;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2EncryptorInterface;
@@ -32,6 +34,8 @@ use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2OidcControllerInt
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ServerControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2WellKnownControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\filters\auth\Oauth2HttpBearerAuthInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2OidcUserInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserInterface;
 use Yii;
@@ -533,6 +537,73 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
                 ],
             ];
         }
+    }
+
+    /**
+     * @param string $identifier
+     * @param string $name
+     * @param string $type
+     * @param string|string[]|null $scopes
+     * @param int $grantTypes
+     * @param string|string[] $redirectURIs
+     * @return Oauth2ClientInterface
+     * @throws InvalidConfigException
+     * @throws \yii\db\Exception
+     */
+    public function createClient($identifier, $name, $type, $secret, $grantTypes, $redirectURIs, $scopes = null)
+    {
+        if (!($this->serverRole & static::SERVER_ROLE_AUTHORIZATION_SERVER)) {
+            throw new InvalidCallException('Oauth2 server role does not include authorization server.');
+        }
+
+        /** @var Oauth2ClientInterface $client */
+        $client = Yii::createObject([
+            'class' => Oauth2ClientInterface::class,
+            'identifier' => $identifier,
+            'type' => $type,
+            'name' => $name,
+            'redirect_uris' => $redirectURIs,
+            'token_types' => 1, # Bearer
+            'grant_types' => $grantTypes,
+        ]);
+
+        $transaction = $client::getDb()->beginTransaction();
+
+        try {
+            if ($type == Oauth2ClientInterface::TYPE_CONFIDENTIAL) {
+                $client->setSecret($secret, $this->getEncryptor());
+            }
+
+            $client->persist();
+
+            if (!empty($scopes)) {
+                $scopeIdentifiers = explode(' ', $scopes);
+                foreach ($scopeIdentifiers as $scopeIdentifier) {
+
+                    $scope = $this->getScopeRepository()->findModelByIdentifier($scopeIdentifier);
+                    if (empty($scope)) {
+                        throw new InvalidArgumentException('No scope with identifier "'
+                            . $scopeIdentifier . '" found.');
+                    }
+
+                    /** @var Oauth2ClientScopeInterface $clientScope */
+                    $clientScope = Yii::createObject([
+                        'class' => Oauth2ClientScopeInterface::class,
+                        'client_id' => $client->getPrimaryKey(),
+                        'scope_id' => $scope->getPrimaryKey(),
+                    ]);
+                    $clientScope->persist();
+                }
+            }
+
+            $transaction->commit();
+
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+
+        return $client;
     }
 
     /**

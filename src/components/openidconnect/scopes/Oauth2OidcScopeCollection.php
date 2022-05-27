@@ -107,9 +107,6 @@ class Oauth2OidcScopeCollection extends BaseObject implements Oauth2OidcScopeCol
             ));
         }
         $identifier = $oidcScope->getIdentifier();
-        if (empty($identifier)) {
-            throw new InvalidArgumentException('Scope identifier must be set.');
-        }
 
         if ($merge && array_key_exists($identifier, $this->_oidcScopes)) {
             $this->_oidcScopes[$identifier]->addClaims($oidcScope->getClaims());
