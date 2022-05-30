@@ -5,7 +5,6 @@ namespace Yii2Oauth2ServerTests\unit\components\encryption;
 use Defuse\Crypto\Exception\EnvironmentIsBrokenException;
 use rhertogh\Yii2Oauth2Server\components\encryption\Oauth2Encryptor;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\encryption\Oauth2EncryptionKeyFactoryInterface;
-use yii\helpers\StringHelper;
 use Yii2Oauth2ServerTests\unit\TestCase;
 
 /**

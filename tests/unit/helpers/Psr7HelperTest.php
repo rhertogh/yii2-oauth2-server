@@ -7,6 +7,7 @@ use rhertogh\Yii2Oauth2Server\helpers\Psr7Helper;
 use yii\helpers\ArrayHelper;
 use yii\helpers\UnsetArrayValue;
 use yii\web\Request;
+use yii\web\Response;
 use Yii2Oauth2ServerTests\unit\TestCase;
 
 /**
@@ -42,6 +43,27 @@ class Psr7HelperTest extends TestCase
         );
         $this->assertEquals($rawBody, $psr7Request->getBody());
         $this->assertEquals($bodyParams, $psr7Request->getParsedBody());
+    }
+
+    public function testYiiToPsr7Response()
+    {
+        $this->mockConsoleApplication();
+
+        $status = 404;
+        $headers = ['test-header' => ['test-header-content']];
+        $rawBody = 'test-raw-body-content';
+
+        $response = new Response([
+            'statusCode' => $status,
+            'content' => $rawBody,
+        ]);
+        $response->headers->fromArray($headers);
+
+        $psr7Response = Psr7Helper::yiiToPsr7Response($response);
+
+        $this->assertEquals($rawBody, $psr7Response->getBody());
+        $this->assertEquals($status, $psr7Response->getStatusCode());
+        $this->assertEquals($headers, $psr7Response->getHeaders());
     }
 
     public function testPsr7ToYiiResponse()

@@ -157,6 +157,24 @@ class Oauth2BaseClientAuthorizationRequestTest extends TestCase
         $this->assertEquals($grantType, $baseClientAuthorizationRequest->getGrantType());
     }
 
+    public function testGetSetPrompt()
+    {
+        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
+
+        $prompts = ['test'];
+        $baseClientAuthorizationRequest->setPrompts($prompts);
+        $this->assertEquals($prompts, $baseClientAuthorizationRequest->getPrompts());
+    }
+
+    public function testGetSetMaxAge()
+    {
+        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
+
+        $maxAge = 123;
+        $baseClientAuthorizationRequest->setMaxAge($maxAge);
+        $this->assertEquals($maxAge, $baseClientAuthorizationRequest->getMaxAge());
+    }
+
     public function testIsApproved()
     {
         $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
