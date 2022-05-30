@@ -12,6 +12,7 @@ use rhertogh\Yii2Oauth2Server\models\traits\Oauth2EnabledTrait;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2EntityIdentifierTrait;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
+use yii\base\Exception;
 use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
 use yii\base\UnknownPropertyException;
@@ -23,6 +24,8 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     use Oauth2ActiveRecordIdTrait;
     use Oauth2EntityIdentifierTrait;
     use Oauth2EnabledTrait;
+
+    protected const ENCRYPTED_ATTRIBUTES = ['secret', 'old_secret'];
 
     /**
      * Minimum lenght for client secret.
@@ -190,6 +193,85 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
         return (int)$this->scope_access;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public static function getEncryptedAttributes()
+    {
+        return static::ENCRYPTED_ATTRIBUTES;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function rotateStorageEncryptionKeys($encryptor, $newKeyName = null)
+    {
+        $numUpdated = 0;
+        $encryptedAttributes = static::getEncryptedAttributes();
+        $query = static::find()->andWhere(['NOT', array_fill_keys($encryptedAttributes, null)]);
+
+        $transaction = static::getDb()->beginTransaction();
+        try {
+            /** @var static $client */
+            foreach ($query->each() as $client) {
+                $client->rotateStorageEncryptionKey($encryptor, $newKeyName);
+                if ($client->getDirtyAttributes($encryptedAttributes)) {
+                    $client->persist();
+                    $numUpdated++;
+                }
+            }
+            $transaction->commit();
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+
+        return $numUpdated;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getUsedStorageEncryptionKeys($encryptor)
+    {
+        $encryptedAttributes = static::getEncryptedAttributes();
+        $query = static::find()->andWhere(['NOT', array_fill_keys($encryptedAttributes, null)]);
+
+        $keyUsage = [];
+        foreach ($query->each() as $client) { /** @var  static $client */
+            foreach ($encryptedAttributes as $encryptedAttribute) {
+                $data = $client->$encryptedAttribute;
+                if (!empty($data)) {
+                    list('keyName' => $keyName) = $encryptor->parseData($data);
+                    if (array_key_exists($keyName, $keyUsage)) {
+                        $keyUsage[$keyName][] = $client->getPrimaryKey();
+                    } else {
+                        $keyUsage[$keyName] = [$client->getPrimaryKey()];
+                    }
+                }
+            }
+        }
+
+        return $keyUsage;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function rotateStorageEncryptionKey($encryptor, $newKeyName = null)
+    {
+        foreach (static::getEncryptedAttributes() as $attribute) {
+            $data = $this->getAttribute($attribute);
+            if ($data) {
+                try {
+                    $this->setAttribute($attribute, $encryptor->rotateKey($data, $newKeyName));
+                } catch (\Exception $e) {
+                    throw new Exception('Unable to rotate key for client "' . $this->identifier
+                        . '", attribute "' . $attribute . '": ' . $e->getMessage(), 0, $e);
+                }
+            }
+        }
+    }
 
     /**
      * @inheritDoc

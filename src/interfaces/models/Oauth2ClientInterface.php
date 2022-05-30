@@ -6,6 +6,7 @@ use League\OAuth2\Server\Entities\ClientEntityInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2EncryptorInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ActiveRecordIdInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2EnabledInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2EncryptedStorageInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2IdentifierInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ClientQueryInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
@@ -15,6 +16,7 @@ interface Oauth2ClientInterface extends
     Oauth2ActiveRecordIdInterface,
     Oauth2IdentifierInterface,
     Oauth2EnabledInterface,
+    Oauth2EncryptedStorageInterface,
     ClientEntityInterface
 {
     /**

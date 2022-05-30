@@ -239,6 +239,76 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $this->assertEquals(false, $publicClient->isConfidential());
     }
 
+    public function testRotateStorageEncryptionKeys()
+    {
+        $oldKeyName = '2021-01-01';
+        $newKeyName = '2022-01-01'; // default key name
+        $encryptor = Oauth2Module::getInstance()->getEncryptor();
+
+        Oauth2Client::updateAll(['old_secret' => new Expression('secret')], ['NOT', ['secret' => null]]);
+
+        $clients = Oauth2Client::find()->andWhere(['NOT', ['secret' => null]])->all();
+
+        foreach ($clients as $client) {
+            $ciphertext = $client->getAttribute('secret');
+            $this->assertStringStartsWith( $oldKeyName . '::', $ciphertext);
+
+            $ciphertext = $client->getAttribute('old_secret');
+            $this->assertStringStartsWith( $oldKeyName . '::', $ciphertext);
+        }
+
+        Oauth2Client::rotateStorageEncryptionKeys($encryptor);
+
+        foreach ($clients as $client) {
+            $client->refresh();
+
+            $ciphertext = $client->getAttribute('secret');
+            $this->assertStringStartsWith( $newKeyName . '::', $ciphertext);
+
+            $ciphertext = $client->getAttribute('old_secret');
+            $this->assertStringStartsWith( $newKeyName . '::', $ciphertext);
+        }
+    }
+
+    public function testRotateStorageEncryptionKeysFailure()
+    {
+        /** @var Oauth2Client|string $modelClass */
+        $modelClass = get_class(new class extends Oauth2Client {
+            public static function tableName()
+            {
+                return 'oauth2_client';
+            }
+
+            public function persist($runValidation = true, $attributeNames = null)
+            {
+                throw new \Exception('test');
+            }
+        });
+
+        $encryptor = Oauth2Module::getInstance()->getEncryptor();
+
+        $this->expectException(\Exception::class);
+        $modelClass::rotateStorageEncryptionKeys($encryptor);
+    }
+
+    public function testRotateStorageEncryptionKey()
+    {
+        $secret = 'my-test-secret';
+        $oldKeyName = '2021-01-01';
+        $newKeyName = '2022-01-01'; // default key name
+        $encryptor = Oauth2Module::getInstance()->getEncryptor();
+        $client = $this->getMockModel();
+        $client->setSecret($secret, $encryptor, null, $oldKeyName);
+
+        $ciphertext = $client->getAttribute('secret');
+        $this->assertStringStartsWith( $oldKeyName . '::', $ciphertext);
+
+        $client->rotateStorageEncryptionKey($encryptor);
+        $this->assertStringStartsWith( $newKeyName . '::', $client->getAttribute('secret'));
+
+        $this->assertEquals($secret, $client->getDecryptedSecret($encryptor));
+    }
+
     public function testSecret()
     {
         $oldKeyName = '2021-01-01';

@@ -16,10 +16,15 @@ Security
 --------
 * [Introduction](security-introduction.md)
 * [Client Secret Rotation](security-client-secret-rotation.md)
+* [Encryption Key Rotation](security-encryption-key-rotation.md)
 
 Development
 -----------
 * [Development Guide](../internals/README.md)
+
+FAQ
+--------
+* [Frequently Asked Questions](faq.md)
 
 Appendix
 --------

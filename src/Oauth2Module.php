@@ -34,6 +34,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2OidcControllerInt
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ServerControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2WellKnownControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\filters\auth\Oauth2HttpBearerAuthInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2EncryptedStorageInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2OidcUserInterface;
@@ -114,6 +115,16 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
         'privateKey',
         'publicKey',
     ];
+
+    /**
+     * Encrypted Models
+     *
+     * @since 1.0.0
+     */
+    protected const ENCRYPTED_MODELS = [
+        Oauth2ClientInterface::class,
+    ];
+
     /**
      * Required settings when the server role includes Resource Server
      * @since 1.0.0
@@ -162,6 +173,10 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
             ],
             'client' => [
                 'controller' => Oauth2ClientController::class,
+                'serverRole' => self::SERVER_ROLE_AUTHORIZATION_SERVER,
+            ],
+            'encryption' => [
+                'controller' => Oauth2EncryptionController::class,
                 'serverRole' => self::SERVER_ROLE_AUTHORIZATION_SERVER,
             ],
             'debug' => [
@@ -217,9 +232,13 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     public $codesEncryptionKey = null;
 
     /**
-     * @var string[]|null The encryption keys for storage like client secrets.
+     * @var string[]|string|null The encryption keys for storage like client secrets.
      * Where the array key is the name of the key, and the value the key itself. E.g.
-     * `['myKey' => 'def00000cb36fd6ed6641e0ad70805b28d....']`
+     * `['2022-01-01' => 'def00000cb36fd6ed6641e0ad70805b28d....']`
+     * If a string (instead of an array of strings) is specified it will be JSON decoded
+     * it should contain an object where each property name is the name of the key, its value the key itself. E.g.
+     * `{"2022-01-01": "def00000cb36fd6ed6641e0ad70805b28d...."}`
+     *
      * @since 1.0.0
      */
     public $storageEncryptionKeys = null;
@@ -648,7 +667,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
         if (!$this->_authorizationServer) {
             $this->ensureProperties(static::REQUIRED_SETTINGS_AUTHORIZATION_SERVER);
 
-            if (empty($this->storageEncryptionKeys[$this->defaultStorageEncryptionKey])) {
+            if (!$this->getEncryptor()->hasKey($this->defaultStorageEncryptionKey)) {
                 throw new InvalidConfigException(
                     'Key "' . $this->defaultStorageEncryptionKey . '" is not set in $storageEncryptionKeys'
                 );
@@ -821,6 +840,50 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
         }
 
         return $this->_encryptor;
+    }
+
+    /**
+     * @param string|null $newKeyName
+     * @return array
+     * @throws InvalidConfigException
+     */
+    public function rotateStorageEncryptionKeys($newKeyName = null)
+    {
+        $encryptor = $this->getEncryptor();
+
+        $result = [];
+        foreach (static::ENCRYPTED_MODELS as $modelInterface) {
+            $modelClass = DiHelper::getValidatedClassName($modelInterface);
+            if (!is_a($modelClass, Oauth2EncryptedStorageInterface::class, true)) {
+                throw new InvalidConfigException($modelInterface . ' must implement '
+                    . Oauth2EncryptedStorageInterface::class);
+            }
+            $result[$modelClass] = $modelClass::rotateStorageEncryptionKeys($encryptor, $newKeyName);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return array
+     * @throws InvalidConfigException
+     */
+    public function getStorageEncryptionKeyUsage()
+    {
+        $encryptor = $this->getEncryptor();
+
+        $result = [];
+        foreach (static::ENCRYPTED_MODELS as $modelInterface) {
+            $modelClass = DiHelper::getValidatedClassName($modelInterface);
+            if (!is_a($modelClass, Oauth2EncryptedStorageInterface::class, true)) {
+                throw new InvalidConfigException($modelInterface . ' must implement '
+                    . Oauth2EncryptedStorageInterface::class);
+            }
+
+            $result[$modelClass] = $modelClass::getUsedStorageEncryptionKeys($encryptor);
+        }
+
+        return $result;
     }
 
     /**

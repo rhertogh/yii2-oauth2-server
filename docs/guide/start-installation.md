@@ -95,7 +95,7 @@ Configuration
                'publicKey' => 'file:///path/to/public.key', // Path to the public key generated in step 1.
                'privateKeyPassphrase' => getenv('YII2_OAUTH2_SERVER_PRIVATE_KEY_PASSPHRASE'), // The private key passphrase (if used in step 1).
                'codesEncryptionKey' => getenv('YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY'), // The encryption key generated in step 2.
-               'storageEncryptionKeys' => [
+               'storageEncryptionKeys' => [ // For ease of use this can also be a JSON encoded string.
                    // The index represents the name of the key, this can be anything you like.
                    // However, for keeping track of different keys using (or prefixing it with) a date is advisable.
                    '2021-01-01' => getenv('YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEY'), // The encryption key generated in step 2.

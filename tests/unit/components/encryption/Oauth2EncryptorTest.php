@@ -5,6 +5,7 @@ namespace Yii2Oauth2ServerTests\unit\components\encryption;
 use Defuse\Crypto\Exception\EnvironmentIsBrokenException;
 use rhertogh\Yii2Oauth2Server\components\encryption\Oauth2Encryptor;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\encryption\Oauth2EncryptionKeyFactoryInterface;
+use yii\helpers\StringHelper;
 use Yii2Oauth2ServerTests\unit\TestCase;
 
 /**
@@ -12,14 +13,18 @@ use Yii2Oauth2ServerTests\unit\TestCase;
  */
 class Oauth2EncryptorTest extends TestCase
 {
+    protected $keys = [
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
+        'test' => 'def0000068fcf7a02625e841c263b227bb0ee04a42cb39b668a81e9b151e58f58d44fa15655e138a397b515482bea2688bd479647d41d084b82932215938d702f4e3b15c',
+        'new' => 'def0000068fcf7a02625e841c263b227bb0ee04a42cb39b668a81e9b151e58f58d44fa15655e138a397b515482bea2688bd479647d41d084b82932215938d702f4e3b15c',
+        // phpcs:enable Generic.Files.LineLength.TooLong
+    ];
+
     public function testEncAndDecryption()
     {
         $this->mockConsoleApplication();
         $encryptor = new Oauth2Encryptor([
-            'keys' => [
-                // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
-                'test' => 'def0000068fcf7a02625e841c263b227bb0ee04a42cb39b668a81e9b151e58f58d44fa15655e138a397b515482bea2688bd479647d41d084b82932215938d702f4e3b15c'
-            ],
+            'keys' => $this->keys,
             'defaultKeyName' => 'test',
         ]);
         $data = 'secret';
@@ -63,18 +68,23 @@ class Oauth2EncryptorTest extends TestCase
 
         $this->expectExceptionMessage('Could not instantiate key "test": test message');
         new Oauth2Encryptor([
-            'keys' => [
-                // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
-                'test' => 'def0000068fcf7a02625e841c263b227bb0ee04a42cb39b668a81e9b151e58f58d44fa15655e138a397b515482bea2688bd479647d41d084b82932215938d702f4e3b15c'
-            ],
+            'keys' => $this->keys,
         ]);
     }
 
-    public function testEncryptWithoutKeyName()
+    public function testGetSetDefaultKeyName()
     {
         $encryptor = new Oauth2Encryptor();
 
-        $this->expectExceptionMessage('Unable to encrypt, $keyName is empty and $defaultKeyName is not set');
+        $encryptor->setDefaultKeyName('test_default_key');
+        $this->assertEquals('test_default_key', $encryptor->getDefaultKeyName());
+    }
+
+    public function testGetDefaultKeyNameWithoutItBeingSet()
+    {
+        $encryptor = new Oauth2Encryptor();
+
+        $this->expectExceptionMessage('Unable to get the defaultKeyName since it is not set.');
         $encryptor->encryp('test');
     }
 
@@ -90,10 +100,7 @@ class Oauth2EncryptorTest extends TestCase
     {
         $this->mockConsoleApplication();
         $encryptor = new Oauth2Encryptor([
-            'keys' => [
-                // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
-                'test' => 'def0000068fcf7a02625e841c263b227bb0ee04a42cb39b668a81e9b151e58f58d44fa15655e138a397b515482bea2688bd479647d41d084b82932215938d702f4e3b15c',
-            ],
+            'keys' => $this->keys,
             'defaultKeyName' => 'test',
             'dataSeparator' => '',
         ]);
@@ -107,8 +114,7 @@ class Oauth2EncryptorTest extends TestCase
         $this->mockConsoleApplication();
         $encryptor = new Oauth2Encryptor([
             'keys' => [
-                // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
-                'test::' => 'def0000068fcf7a02625e841c263b227bb0ee04a42cb39b668a81e9b151e58f58d44fa15655e138a397b515482bea2688bd479647d41d084b82932215938d702f4e3b15c',
+                'test::' => $this->keys['test'],
             ],
             'defaultKeyName' => 'test::',
             'dataSeparator' => '::',
@@ -134,5 +140,33 @@ class Oauth2EncryptorTest extends TestCase
 
         $this->expectExceptionMessage('Unable to decrypt, no key with name "test" has been set');
         $encryptor->decrypt('test::data');
+    }
+
+    public function testRotateKey()
+    {
+        $this->mockConsoleApplication();
+        $encryptor = new Oauth2Encryptor([
+            'keys' => $this->keys,
+            'defaultKeyName' => 'test',
+        ]);
+        $data = 'secret';
+
+        $ciphertext = $encryptor->encryp($data);
+        $this->assertStringStartsWith( 'test::', $ciphertext);
+
+        $ciphertext = $encryptor->rotateKey($ciphertext, 'new');
+        $this->assertStringStartsWith( 'new::', $ciphertext);
+
+        // Same key shouldn't change the data.
+        $this->assertEquals($ciphertext, $encryptor->rotateKey($ciphertext, 'new'));
+
+        $plaintext = $encryptor->decrypt($ciphertext);
+        $this->assertEquals($data, $plaintext);
+
+        // Rotate back to default key (no `newKeyName` specified).
+        $ciphertext = $encryptor->rotateKey($ciphertext);
+        $this->assertStringStartsWith( 'test::', $ciphertext);
+        $plaintext = $encryptor->decrypt($ciphertext);
+        $this->assertEquals($data, $plaintext);
     }
 }

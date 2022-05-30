@@ -384,6 +384,18 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $this->assertEquals($data, $encryptor->decrypt($encryptor->encryp($data)));
     }
 
+    public function testRotateStorageEncryptionKeys()
+    {
+        $this->mockConsoleApplication();
+        $module = Oauth2Module::getInstance();
+
+        $numClientsWithSecret = Oauth2Client::find()->andWhere(['NOT', ['secret' => null]])->count();
+
+        $rotateResult = $module->rotateStorageEncryptionKeys();
+
+        $this->assertEquals($numClientsWithSecret, $rotateResult[Oauth2Client::class]);
+    }
+
     /**
      * @depends testInstantiateModule
      */
@@ -422,7 +434,7 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $this->mockConsoleApplication([
             'container' => [
                 'definitions' => [
-                    // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
+                    // phpcs:ignore Generic.Files.LineLength.TooLong -- readability actually better on single line
                     Oauth2EncryptionKeyFactoryInterface::class => new class () implements Oauth2EncryptionKeyFactoryInterface {
                         public function createFromAsciiSafeString($keyString, $doNotTrim = null)
                         {
@@ -433,7 +445,7 @@ class Oauth2ModuleTest extends DatabaseTestCase
             ],
         ]);
 
-        $this->expectExceptionMessage('Could not instantiate $codesEncryptionKey: test message');
+        $this->expectExceptionMessage('Could not instantiate key "2021-01-01": test message');
         Oauth2Module::getInstance()->getAuthorizationServer();
     }
 

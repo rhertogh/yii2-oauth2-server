@@ -20,3 +20,4 @@ the same applies for (client) secrets.
 
 The Yii2Oauth2Server supports seamless rotation of encryption keys and client secrets. For more information please see:
 * [Client Secret Rotation](security-client-secret-rotation.md)
+* [Encryption Key Rotation](security-encryption-key-rotation.md)

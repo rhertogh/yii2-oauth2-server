@@ -11,7 +11,9 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2EncryptorIn
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\encryption\Oauth2EncryptionKeyFactoryInterface;
 use Yii;
 use yii\base\Component;
+use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
+use yii\helpers\Json;
 
 class Oauth2Encryptor extends Component implements Oauth2EncryptorInterface
 {
@@ -37,6 +39,10 @@ class Oauth2Encryptor extends Component implements Oauth2EncryptorInterface
      */
     public function setKeys($keys)
     {
+        if ($keys && is_string($keys)) {
+            $keys = Json::decode($keys);
+        }
+
         /** @var Oauth2EncryptionKeyFactoryInterface $keyFactory */
         $keyFactory = Yii::createObject(Oauth2EncryptionKeyFactoryInterface::class);
         $this->_keys = [];
@@ -83,6 +89,15 @@ class Oauth2Encryptor extends Component implements Oauth2EncryptorInterface
 
     /**
      * @inheritDoc
+     */
+    public function hasKey($name)
+    {
+        return array_key_exists($name, $this->_keys);
+    }
+
+
+    /**
+     * @inheritDoc
      * @throws InvalidConfigException
      * @throws EnvironmentIsBrokenException
      */
@@ -113,13 +128,25 @@ class Oauth2Encryptor extends Component implements Oauth2EncryptorInterface
 
     /**
      * @inheritDoc
+     */
+    public function parseData($data)
+    {
+        $parts = explode($this->dataSeparator, $data);
+        if (count($parts) !== 2) {
+            throw new InvalidArgumentException('Could not parse encrypted data: invalid number of parts, expected 2 got ' . count($parts));
+        }
+        return array_combine(['keyName', 'ciphertext'], $parts);
+    }
+
+    /**
+     * @inheritDoc
      * @throws EnvironmentIsBrokenException
      * @throws WrongKeyOrModifiedCiphertextException
      */
     public function decrypt($data)
     {
         try {
-            list($keyName, $ciphertext) = explode($this->dataSeparator, $data, 2);
+            list('keyName' => $keyName, 'ciphertext' => $ciphertext) = $this->parseData($data);
         } catch (\Throwable $e) {
             throw new \InvalidArgumentException(
                 'Unable to decrypt, $data must be in format "keyName' . $this->dataSeparator . 'ciphertext".'

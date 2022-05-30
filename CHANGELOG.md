@@ -5,6 +5,7 @@ Yii2-Oauth2-Server Change Log
 --------------------------------
 
 - Enh: Added support for Client Secret Rotation (rhertogh)
+- Enh: Added support for Encryption Key Rotation (rhertogh)
 
 1.0.0-alpha2 (2022-05-27)
 -------------------------

@@ -48,6 +48,16 @@ interface Oauth2ActiveRecordInterface extends ActiveRecordInterface
     public function persist($runValidation = true, $attributeNames = null);
 
     /**
+     * Repopulates this active record with the latest data.
+     *
+     * If the refresh is successful, an [[EVENT_AFTER_REFRESH]] event will be triggered.
+     *
+     * @return bool whether the row still exists in the database. If `true`, the latest data
+     * will be populated to this active record. Otherwise, this record will remain unchanged.
+     */
+    public function refresh();
+
+    /**
      * Returns the errors for all attributes as a one-dimensional array.
      * @param bool $showAllErrors boolean, if set to true every error message for each attribute will be shown otherwise
      * only the first error message for each attribute will be shown.

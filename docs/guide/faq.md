@@ -1,7 +1,10 @@
-F.A.Q - Error Messages
-======================
+Frequently Asked Questions
+==========================
 
-This F.A.Q. describes common error messages and provides possible solutions for them.
+This FAQ describes common questions and errors and provides possible solutions for them.
+
+Error Messages
+--------------
 
 ### Error: Unable to read key from file -----BEGIN RSA PRIVATE KEY----- ...  
 This error could appear if the private key is set as string containing a private key with 
@@ -22,3 +25,13 @@ location ~ /\.(?!well-known).* {
 }
 ```
 This will deny access to all files and folders starting with `.` except `.well-known`.
+
+Encryption
+----------
+
+### Help, I lost my encryption key!
+Well, you're on your own. Until quantum computers get powerful enough there is no one that can help you.
+And even quantum computers might not be able to crack symmetric encryption[^1].
+
+[^1]: [Will Symmetric and Asymmetric Encryption Withstand the Might of Quantum Computing?](
+https://www.toolbox.com/it-security/encryption/articles/will-symmetric-and-asymmetric-encryption-withstand-the-might-of-quantum-computing)

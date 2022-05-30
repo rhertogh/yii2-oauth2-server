@@ -42,9 +42,11 @@ class Oauth2BaseClientTest extends BaseOauth2BaseModelsTest
         return [[[
             'id' => 'ID',
             'identifier' => 'Identifier',
+            'name' => 'Name',
             'type' => 'Type',
             'secret' => 'Secret',
-            'name' => 'Name',
+            'old_secret' => 'Old Secret',
+            'old_secret_valid_until' => 'Old Secret Valid Until',
             'logo_uri' => 'Logo Uri',
             'tos_uri' => 'Tos Uri',
             'contacts' => 'Contacts',
