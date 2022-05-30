@@ -12,11 +12,11 @@ use Yii;
  *
  * @property integer $id
  * @property string $identifier
+ * @property string $name
  * @property integer $type
  * @property string $secret
  * @property string $old_secret
  * @property string $old_secret_valid_until
- * @property string $name
  * @property string $logo_uri
  * @property string $tos_uri
  * @property string $contacts
@@ -73,11 +73,11 @@ abstract class Oauth2Client extends \rhertogh\Yii2Oauth2Server\models\base\Oauth
         return [
             'id' => Yii::t('oauth2', 'ID'),
             'identifier' => Yii::t('oauth2', 'Identifier'),
+            'name' => Yii::t('oauth2', 'Name'),
             'type' => Yii::t('oauth2', 'Type'),
             'secret' => Yii::t('oauth2', 'Secret'),
             'old_secret' => Yii::t('oauth2', 'Old Secret'),
             'old_secret_valid_until' => Yii::t('oauth2', 'Old Secret Valid Until'),
-            'name' => Yii::t('oauth2', 'Name'),
             'logo_uri' => Yii::t('oauth2', 'Logo Uri'),
             'tos_uri' => Yii::t('oauth2', 'Tos Uri'),
             'contacts' => Yii::t('oauth2', 'Contacts'),
