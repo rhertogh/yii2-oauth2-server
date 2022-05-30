@@ -4,6 +4,7 @@ namespace rhertogh\Yii2Oauth2Server\controllers\console;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\base\Oauth2BaseConsoleController;
 use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2CreateClientAction;
+use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2SetClientSecretAction;
 use yii\helpers\ArrayHelper;
 
 class Oauth2ClientController extends Oauth2BaseConsoleController
@@ -31,12 +32,12 @@ class Oauth2ClientController extends Oauth2BaseConsoleController
     /**
      * @var string|null
      */
-    public $redirectURIs = null;
+    public $grantTypes = null;
 
     /**
      * @var string|null
      */
-    public $grantTypes = null;
+    public $redirectURIs = null;
 
     /**
      * @var string|null
@@ -47,6 +48,13 @@ class Oauth2ClientController extends Oauth2BaseConsoleController
      * @var string|null
      */
     public $scopes = null;
+
+    /**
+     * @var string|null A PHP date/time string or, when starting with 'P', a PHP date interval string.
+     * @see https://www.php.net/manual/en/datetime.formats.php
+     * @see https://www.php.net/manual/en/dateinterval.construct.php
+     */
+    public $oldSecretValidUntil = null;
 
     /**
      * @inheritDoc
@@ -64,7 +72,14 @@ class Oauth2ClientController extends Oauth2BaseConsoleController
                 'secret',
                 'scopes',
             ];
+        } elseif ($actionID == 'set-secret') {
+            $options = [
+                'identifier',
+                'secret',
+                'oldSecretValidUntil',
+            ];
         }
+
         return ArrayHelper::merge(parent::options($actionID), $options ?? []);
     }
 
@@ -75,6 +90,7 @@ class Oauth2ClientController extends Oauth2BaseConsoleController
     {
         return [
             'create' => Oauth2CreateClientAction::class,
+            'set-secret' => Oauth2SetClientSecretAction::class,
         ];
     }
 }

@@ -101,11 +101,17 @@ interface Oauth2ClientInterface extends
 
     /**
      * Set the client secret. It will be encrypted by the encryptor.
+     * Note: For security if $oldSecretValidUntil is not specified the old secret will be cleared
+     * (regardless if it was expired or not).
+     *
      * @param string|null $secret
      * @param Oauth2EncryptorInterface $encryptor
+     * @param \DateTimeImmutable|\DateInterval|null $oldSecretValidUntil
+     * @param string|null $keyName The name of the key to use for the encryption
+     * (must be present in the available keys).
      * @since 1.0.0
      */
-    public function setSecret($secret, $encryptor);
+    public function setSecret($secret, $encryptor, $oldSecretValidUntil = null, $keyName = null);
 
     /**
      * Validate new secret against the validation rules.
@@ -125,7 +131,24 @@ interface Oauth2ClientInterface extends
     public function getDecryptedSecret($encryptor);
 
     /**
+     * Get the decrypted old secret.
+     * @param Oauth2EncryptorInterface $encryptor
+     * @return string
+     * @since 1.0.0
+     */
+    public function getDecryptedOldSecret($encryptor);
+
+    /**
+     * Get the old secret expiry date/time.
+     * @return \DateTimeImmutable
+     * @since 1.0.0
+     */
+    public function getOldSecretValidUntil();
+
+    /**
      * Validate a secret against the stored one.
+     * If an "old" secret is set (and it's "valid until" date is valid) the secret will also be validated against it
+     * in case the regular stored secret fails.
      * @param string $secret
      * @param Oauth2EncryptorInterface $encryptor
      * @return bool

@@ -106,6 +106,8 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                 'identifier' => $this->string()->notNull()->unique(),
                 'type' => $this->boolean()->notNull()->defaultValue(Oauth2ClientInterface::TYPE_CONFIDENTIAL),
                 'secret' => $this->text(),
+                'old_secret' => $this->text(),
+                'old_secret_valid_until' => $this->dateTime(),
                 'name' => $this->string()->notNull(),
                 'logo_uri' => $this->string(),
                 'tos_uri' => $this->string(),

@@ -34,7 +34,7 @@ https://developer.okta.com/blog/2019/10/21/illustrated-guide-to-oauth-and-oidc)
 
 Installation
 ------------
-* The minimum required PHP version is 7.4.
+* The minimum required PHP version is 7.4 (compatibility tested up till and including PHP 8.1).
 * The minimum required Yii version is 2.0.43.
 
 ```bash

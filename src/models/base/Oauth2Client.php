@@ -14,6 +14,8 @@ use Yii;
  * @property string $identifier
  * @property integer $type
  * @property string $secret
+ * @property string $old_secret
+ * @property string $old_secret_valid_until
  * @property string $name
  * @property string $logo_uri
  * @property string $tos_uri
@@ -56,8 +58,8 @@ abstract class Oauth2Client extends \rhertogh\Yii2Oauth2Server\models\base\Oauth
         return [
             [['identifier', 'name', 'created_at', 'updated_at'], 'required'],
             [['type', 'token_types', 'grant_types', 'scope_access', 'user_account_selection', 'allow_auth_code_without_pkce', 'skip_authorization_if_scope_is_allowed', 'client_credentials_grant_user_id', 'oidc_allow_offline_access_without_consent', 'enabled', 'created_at', 'updated_at'], 'integer'],
-            [['secret', 'contacts'], 'string'],
-            [['redirect_uris'], 'safe'],
+            [['secret', 'old_secret', 'contacts'], 'string'],
+            [['old_secret_valid_until', 'redirect_uris'], 'safe'],
             [['identifier', 'name', 'logo_uri', 'tos_uri', 'oidc_userinfo_encrypted_response_alg'], 'string', 'max' => 255],
             [['identifier'], 'unique']
         ];
@@ -73,6 +75,8 @@ abstract class Oauth2Client extends \rhertogh\Yii2Oauth2Server\models\base\Oauth
             'identifier' => Yii::t('oauth2', 'Identifier'),
             'type' => Yii::t('oauth2', 'Type'),
             'secret' => Yii::t('oauth2', 'Secret'),
+            'old_secret' => Yii::t('oauth2', 'Old Secret'),
+            'old_secret_valid_until' => Yii::t('oauth2', 'Old Secret Valid Until'),
             'name' => Yii::t('oauth2', 'Name'),
             'logo_uri' => Yii::t('oauth2', 'Logo Uri'),
             'tos_uri' => Yii::t('oauth2', 'Tos Uri'),

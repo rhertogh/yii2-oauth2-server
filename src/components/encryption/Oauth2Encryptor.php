@@ -5,6 +5,7 @@ namespace rhertogh\Yii2Oauth2Server\components\encryption;
 use Defuse\Crypto\Crypto;
 use Defuse\Crypto\Exception\BadFormatException;
 use Defuse\Crypto\Exception\EnvironmentIsBrokenException;
+use Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException;
 use Defuse\Crypto\Key;
 use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2EncryptorInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\encryption\Oauth2EncryptionKeyFactoryInterface;
@@ -61,6 +62,20 @@ class Oauth2Encryptor extends Component implements Oauth2EncryptorInterface
     /**
      * @inheritDoc
      */
+    public function getDefaultKeyName()
+    {
+        if (empty($this->_defaultKeyName)) {
+            throw new \BadMethodCallException(
+                'Unable to get the defaultKeyName since it is not set.'
+            );
+        }
+
+        return $this->_defaultKeyName;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function setDefaultKeyName($name)
     {
         $this->_defaultKeyName = $name;
@@ -68,25 +83,21 @@ class Oauth2Encryptor extends Component implements Oauth2EncryptorInterface
 
     /**
      * @inheritDoc
+     * @throws InvalidConfigException
+     * @throws EnvironmentIsBrokenException
      */
     public function encryp($data, $keyName = null)
     {
         if (empty($keyName)) {
-            if (empty($this->_defaultKeyName)) {
-                throw new \BadMethodCallException(
-                    'Unable to encrypt, $keyName is empty and $defaultKeyName is not set.'
-                );
-            } else {
-                $keyName = $this->_defaultKeyName;
-            }
+            $keyName = $this->getDefaultKeyName();
         }
 
         if (empty($this->_keys[$keyName])) {
-            throw new \BadMethodCallException('Unable to encrypt, no key with name "' . $keyName . '" has been set');
+            throw new \BadMethodCallException('Unable to encrypt, no key with name "' . $keyName . '" has been set.');
         }
 
         if (empty($this->dataSeparator)) {
-            throw new InvalidConfigException('Unable to encrypt, dataSeparator is empty');
+            throw new InvalidConfigException('Unable to encrypt, dataSeparator is empty.');
         }
 
         if (strpos($keyName, $this->dataSeparator) !== false) {
@@ -102,6 +113,8 @@ class Oauth2Encryptor extends Component implements Oauth2EncryptorInterface
 
     /**
      * @inheritDoc
+     * @throws EnvironmentIsBrokenException
+     * @throws WrongKeyOrModifiedCiphertextException
      */
     public function decrypt($data)
     {
@@ -114,9 +127,30 @@ class Oauth2Encryptor extends Component implements Oauth2EncryptorInterface
         }
 
         if (empty($this->_keys[$keyName])) {
-            throw new \BadMethodCallException('Unable to decrypt, no key with name "' . $keyName . '" has been set');
+            throw new \BadMethodCallException('Unable to decrypt, no key with name "' . $keyName . '" has been set.');
         }
 
         return Crypto::decrypt(base64_decode($ciphertext), $this->_keys[$keyName], true);
+    }
+
+    /**
+     * @inheritDoc
+     * @throws InvalidConfigException
+     * @throws EnvironmentIsBrokenException
+     * @throws WrongKeyOrModifiedCiphertextException
+     */
+    public function rotateKey($data, $newKeyName = null)
+    {
+        if (empty($newKeyName)) {
+            $newKeyName = $this->getDefaultKeyName();
+        }
+
+        list($keyName) = explode($this->dataSeparator, $data, 2);
+
+        if ($keyName === $newKeyName) {
+            return $data; // Key hasn't changed.
+        }
+
+        return $this->encryp($this->decrypt($data), $newKeyName);
     }
 }

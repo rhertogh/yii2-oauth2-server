@@ -6,6 +6,7 @@ use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
+use rhertogh\Yii2Oauth2Server\models\behaviors\DateTimeBehavior;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2ActiveRecordIdTrait;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2EnabledTrait;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2EntityIdentifierTrait;
@@ -28,6 +29,20 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
      * @var int
      */
     public $minimumSecretLenth = 10;
+
+    /////////////////////////////
+    /// ActiveRecord Settings ///
+    /////////////////////////////
+
+    /**
+     * @inheritDoc
+     */
+    public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'dateTimeBehavior' => DateTimeBehavior::class
+        ]);
+    }
 
     /**
      * @inheritDoc
@@ -179,18 +194,36 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritDoc
      */
-    public function setSecret($secret, $encryptor)
+    public function setSecret($secret, $encryptor, $oldSecretValidUntil = null, $keyName = null)
     {
         if ($this->isConfidential()) {
             if (!$this->validateNewSecret($secret, $error)) {
                 throw new InvalidArgumentException($error);
             }
 
-            $this->setAttribute('secret', $encryptor->encryp($secret));
+            // Ensure we clear out any old secret
+            $this->setAttribute('old_secret', null);
+            $this->setAttribute('old_secret_valid_until', null);
+
+            if ($oldSecretValidUntil) {
+                $oldSecretData = $this->getAttribute('secret') ?? null;
+                if ($oldSecretData) {
+                    // Ensure correct encryption key.
+                    $oldSecretData = $encryptor->encryp($encryptor->decrypt($oldSecretData), $keyName);
+                    $this->setAttribute('old_secret', $oldSecretData);
+
+                    if ($oldSecretValidUntil instanceof \DateInterval) {
+                        $oldSecretValidUntil = (new \DateTimeImmutable())->add($oldSecretValidUntil);
+                    }
+                    $this->setAttribute('old_secret_valid_until', $oldSecretValidUntil);
+                }
+            }
+
+            $this->setAttribute('secret', $encryptor->encryp($secret, $keyName));
         } else {
             if ($secret !== null) {
                 throw new InvalidArgumentException(
-                    'The secret for a non-confidential client can only be set to `null`'
+                    'The secret for a non-confidential client can only be set to `null`.'
                 );
             }
 
@@ -205,7 +238,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     {
         $error = null;
         if (mb_strlen($secret) < $this->minimumSecretLenth) {
-            $error = 'Secret should be at least ' . $this->minimumSecretLenth . ' characters';
+            $error = 'Secret should be at least ' . $this->minimumSecretLenth . ' characters.';
         }
 
         return $error === null;
@@ -220,13 +253,37 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getDecryptedOldSecret($encryptor)
+    {
+        return $encryptor->decrypt($this->old_secret);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getOldSecretValidUntil()
+    {
+        return $this->old_secret_valid_until;
+    }
+
+    /**
      * @inheritdoc
      */
     public function validateSecret($secret, $encryptor)
     {
         return is_string($secret)
             && strlen($secret)
-            && Yii::$app->security->compareString($this->getDecryptedSecret($encryptor), $secret);
+            && (
+                Yii::$app->security->compareString($this->getDecryptedSecret($encryptor), $secret)
+                || (
+                    !empty($this->old_secret)
+                    && !empty($this->old_secret_valid_until)
+                    && $this->old_secret_valid_until > (new \DateTime())
+                    && Yii::$app->security->compareString($encryptor->decrypt($this->old_secret), $secret)
+                )
+            );
     }
 
     /**

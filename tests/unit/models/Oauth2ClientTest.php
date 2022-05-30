@@ -8,6 +8,7 @@ use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\base\InvalidArgumentException;
 use yii\db\ActiveRecord;
+use yii\db\Expression;
 use yii\helpers\Json;
 use Yii2Oauth2ServerTests\unit\models\_base\BaseOauth2ActiveRecordTest;
 use Yii2Oauth2ServerTests\unit\models\_traits\Oauth2IdentifierTestTrait;
@@ -240,15 +241,44 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
 
     public function testSecret()
     {
+        $oldKeyName = '2021-01-01';
+        $newKeyName = '2022-01-01'; // default key name
+
         $secret = 'my-test-secret';
+        $secret2 = 'my-test-secret-2';
+        $secret3 = 'my-test-secret-3';
+
         $encryptor = Oauth2Module::getInstance()->getEncryptor();
+
         $client = $this->getMockModel();
         $client->setSecret($secret, $encryptor);
 
-        $this->assertFalse(strpos($secret, $client->secret));
+        $ciphertext = $client->getAttribute('secret');
+        $this->assertStringStartsWith( $newKeyName . '::', $ciphertext);
+        $this->assertFalse(strpos($secret, $client->getAttribute('secret')));
         $this->assertEquals($secret, $client->getDecryptedSecret($encryptor));
-        $this->assertEquals(true, $client->validateSecret($secret, $encryptor));
-        $this->assertEquals(false, $client->validateSecret('incorrect', $encryptor));
+        $this->assertTrue($client->validateSecret($secret, $encryptor));
+        $this->assertFalse($client->validateSecret('incorrect', $encryptor));
+
+        $client->setSecret($secret2, $encryptor, new \DateInterval('P1D'), $oldKeyName);
+        $ciphertext = $client->getAttribute('secret');
+        $this->assertStringStartsWith( $oldKeyName . '::', $ciphertext);
+        $ciphertext = $client->getAttribute('old_secret');
+        $this->assertStringStartsWith( $oldKeyName . '::', $ciphertext);
+        $this->assertEquals($secret2, $client->getDecryptedSecret($encryptor));
+        $this->assertTrue($client->validateSecret($secret2, $encryptor)); // new secret
+        $this->assertTrue($client->validateSecret($secret, $encryptor)); // old secret (which should still be valid)
+        $this->assertFalse($client->validateSecret('incorrect', $encryptor));
+
+        $client->setSecret($secret3, $encryptor, (new \DateTimeImmutable('yesterday')));
+        $ciphertext = $client->getAttribute('secret');
+        $this->assertStringStartsWith( $newKeyName . '::', $ciphertext);
+        $ciphertext = $client->getAttribute('old_secret');
+        $this->assertStringStartsWith( $newKeyName . '::', $ciphertext);
+        $this->assertEquals($secret3, $client->getDecryptedSecret($encryptor));
+        $this->assertTrue($client->validateSecret($secret3, $encryptor)); // new secret
+        $this->assertFalse($client->validateSecret($secret2, $encryptor)); // old secret (which has expired)
+        $this->assertFalse($client->validateSecret('incorrect', $encryptor));
     }
 
     /**

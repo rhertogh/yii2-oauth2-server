@@ -13,7 +13,15 @@ interface Oauth2EncryptorInterface
     public function setKeys($keys);
 
     /**
-     * Set the name default encryption key (must be present in the available keys).
+     * Get the name of the default encryption key.
+     * @param string $defaultKeyName
+     * @see setDefaultKeyName()
+     * @since 1.0.0
+     */
+    public function getDefaultKeyName();
+
+    /**
+     * Set the name of the default encryption key (must be present in the available keys).
      * @param string $defaultKeyName
      * @see setKeys()
      * @since 1.0.0

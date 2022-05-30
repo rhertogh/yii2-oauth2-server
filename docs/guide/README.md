@@ -12,6 +12,11 @@ Getting Started
 * [OpenID Connect for the Yii2-Oauth2-Server](start-openid-connect.md)
 * [OpenID Connect Claims](start-openid-connect-claims.md)
 
+Security
+--------
+* [Introduction](security-introduction.md)
+* [Client Secret Rotation](security-client-secret-rotation.md)
+
 Development
 -----------
 * [Development Guide](../internals/README.md)
