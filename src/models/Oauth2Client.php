@@ -379,6 +379,23 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritDoc
      */
+    public function setGrantTypes($grantTypes)
+    {
+        $grantTypeIds = array_flip(Oauth2Module::GRANT_TYPE_MAPPING);
+        for ($i = (int)log(PHP_INT_MAX, 2); $i >= 0; $i--) {
+            if ($grantTypes & pow(2, $i)) {
+                if (!array_key_exists(pow(2, $i), $grantTypeIds)) {
+                    throw new InvalidArgumentException('Unknown Grant Type ID: ' . pow(2, $i));
+                }
+            }
+        }
+
+        return $this->grant_types;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function validateGrantType($grantTypeIdentifier)
     {
         $grantTypeId = Oauth2Module::getGrantTypeId($grantTypeIdentifier);

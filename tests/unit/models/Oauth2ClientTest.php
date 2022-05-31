@@ -393,9 +393,9 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
 
     public function testValidateGrantType()
     {
-        $client = $this->getMockModel([
-            'grant_types' => Oauth2Module::GRANT_TYPE_AUTH_CODE | Oauth2Module::GRANT_TYPE_CLIENT_CREDENTIALS
-        ]);
+        $client = $this->getMockModel()->setGrantTypes(
+            Oauth2Module::GRANT_TYPE_AUTH_CODE | Oauth2Module::GRANT_TYPE_CLIENT_CREDENTIALS
+        );
 
         $this->assertEquals(true, $client->validateGrantType('authorization_code'));
         $this->assertEquals(true, $client->validateGrantType('client_credentials'));
@@ -414,6 +414,14 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
 
         $this->expectExceptionMessage('Unknown grant type "does-not-exist"');
         $client->validateGrantType('does-not-exist');
+    }
+
+    public function testSetInvalidGrantTypes()
+    {
+        $this->expectExceptionMessage('Unknown Grant Type ID: 8192');
+        $this->getMockModel()->setGrantTypes(
+            9999
+        );
     }
 
     /**

@@ -95,6 +95,14 @@ interface Oauth2ClientInterface extends
     public function getGrantTypes();
 
     /**
+     * Set the Grant Types enabled for the client.
+     *
+     * @param int $grantTypes
+     * @since 1.0.0
+     */
+    public function setGrantTypes($grantTypes);
+
+    /**
      * Validates if a Grant Type is enabled for the client.
      * @return bool
      * @since 1.0.0
