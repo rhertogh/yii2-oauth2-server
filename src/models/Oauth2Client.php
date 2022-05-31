@@ -390,7 +390,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
             }
         }
 
-        return $this->grant_types;
+        $this->grant_types = $grantTypes;
     }
 
     /**

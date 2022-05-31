@@ -393,7 +393,8 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
 
     public function testValidateGrantType()
     {
-        $client = $this->getMockModel()->setGrantTypes(
+        $client = $this->getMockModel();
+        $client->setGrantTypes(
             Oauth2Module::GRANT_TYPE_AUTH_CODE | Oauth2Module::GRANT_TYPE_CLIENT_CREDENTIALS
         );
 
