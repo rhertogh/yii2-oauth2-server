@@ -581,7 +581,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
             'identifier' => $identifier,
             'type' => $type,
             'name' => $name,
-            'redirectUris' => $redirectURIs,
+            'redirectUri' => $redirectURIs,
             'grantTypes' => $grantTypes,
         ]);
 
