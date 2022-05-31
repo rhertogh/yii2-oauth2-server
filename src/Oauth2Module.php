@@ -581,9 +581,8 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
             'identifier' => $identifier,
             'type' => $type,
             'name' => $name,
-            'redirect_uris' => $redirectURIs,
-            'token_types' => 1, # Bearer
-            'grant_types' => $grantTypes,
+            'redirectUris' => $redirectURIs,
+            'grantTypes' => $grantTypes,
         ]);
 
         $transaction = $client::getDb()->beginTransaction();
