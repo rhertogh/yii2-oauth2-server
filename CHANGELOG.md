@@ -6,6 +6,8 @@ Yii2-Oauth2-Server Change Log
 
 - Enh: Added support for Client Secret Rotation (rhertogh)
 - Enh: Added support for Encryption Key Rotation (rhertogh)
+- Bugfix: Accept string array for `$scopes` parameter in `Oauth2Module::createClient` (rhertogh)
+- Enh: changed signature for `Oauth2Module::createClient` to make `$secret` optional (rhertogh)
 
 1.0.0-alpha2 (2022-05-27)
 -------------------------
@@ -17,7 +19,7 @@ Yii2-Oauth2-Server Change Log
 - Added documentation for OIDC claims (rhertogh)
 - Bugfix: type-casted the type so the `Oauth2Client::isConfidential()` function works as intended (Roosh Ak)
 - Added support for PHP 8.1 (rhertogh)
-- Added `Oauth2Module::createClient()` method to aid in the programmatic creation of clients (rhertogh)
+- Enh: Added `Oauth2Module::createClient()` method to aid in the programmatic creation of clients (rhertogh)
 
 1.0.0-alpha (2021-11-11)
 ------------------------

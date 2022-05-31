@@ -18,11 +18,15 @@ Please see the [Change Log](CHANGELOG.md) for more information on version histor
 Upgrade from v1.0.0-alpha2
 --------------------------
 
-> Database changes will not be incremental till the first stable release.
+* > Note: Database changes will not be incremental till the first stable release.   
+  
+  v1.0.0-alpha3 introduces two new columns for the `oauth2_client` table.    
+  In order to apply these changes you can run the following statements:
+  ```SQL
+  ALTER TABLE `oauth2_client` ADD COLUMN `old_secret` TEXT AFTER `secret`;
+  ALTER TABLE `oauth2_client` ADD COLUMN `old_secret_valid_until` DATETIME AFTER `old_secret`;
+  ```
 
-v1.0.0-alpha3 introduces two new columns for the `oauth2_client` table.  
-In order to apply these changes you can run the following statements:
-```SQL
-ALTER TABLE `oauth2_client` ADD COLUMN `old_secret` TEXT AFTER `secret`;
-ALTER TABLE `oauth2_client` ADD COLUMN `old_secret_valid_until` DATETIME AFTER `old_secret`;
-```
+* The signature for `\rhertogh\Yii2Oauth2Server\Oauth2Module::createClient()` has changed.
+  The `$type` and `$secret` parameters have been moved and `$secret` is now optional.
+  If you use this method you'll need to update it accordingly.

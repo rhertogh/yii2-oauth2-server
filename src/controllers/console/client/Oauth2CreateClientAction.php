@@ -142,7 +142,7 @@ class Oauth2CreateClientAction extends Action
             ]);
         }
 
-        $client = $module->createClient($identifier, $name, $type, $secret, $grantTypes, $redirectURIs, $scopes);
+        $client = $module->createClient($identifier, $name, $grantTypes, $redirectURIs, $type, $secret, $scopes);
 
         $this->controller->stdout('Successfully created new client with identifier "' . $client->getIdentifier() .
             '"' . ($scopes ? (' and scopes "' . $scopes . '"') : '') . '.' . PHP_EOL, Console::FG_GREEN);

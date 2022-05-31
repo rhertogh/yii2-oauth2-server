@@ -561,15 +561,15 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     /**
      * @param string $identifier
      * @param string $name
-     * @param string $type
-     * @param string|string[]|null $scopes
      * @param int $grantTypes
      * @param string|string[] $redirectURIs
+     * @param string $type
+     * @param string|string[]|null $scopes
      * @return Oauth2ClientInterface
      * @throws InvalidConfigException
      * @throws \yii\db\Exception
      */
-    public function createClient($identifier, $name, $type, $secret, $grantTypes, $redirectURIs, $scopes = null)
+    public function createClient($identifier, $name, $grantTypes, $redirectURIs, $type, $secret = null, $scopes = null)
     {
         if (!($this->serverRole & static::SERVER_ROLE_AUTHORIZATION_SERVER)) {
             throw new InvalidCallException('Oauth2 server role does not include authorization server.');
@@ -596,7 +596,12 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
             $client->persist();
 
             if (!empty($scopes)) {
-                $scopeIdentifiers = explode(' ', $scopes);
+                if (is_string($scopes)) {
+                    $scopeIdentifiers = explode(' ', $scopes);
+                } else {
+                    $scopeIdentifiers = $scopes;
+                }
+
                 foreach ($scopeIdentifiers as $scopeIdentifier) {
 
                     $scope = $this->getScopeRepository()->findModelByIdentifier($scopeIdentifier);

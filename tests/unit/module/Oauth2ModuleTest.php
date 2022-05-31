@@ -133,10 +133,10 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $client = Oauth2Module::getInstance()->createClient(
             'test',
             'test',
-            Oauth2ClientInterface::TYPE_CONFIDENTIAL,
-            'very_secret',
             Oauth2Module::GRANT_TYPE_AUTH_CODE,
             'https://localhost/test',
+            Oauth2ClientInterface::TYPE_CONFIDENTIAL,
+            'very_secret',
             'openid email',
         );
 
@@ -158,10 +158,10 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $client = Oauth2Module::getInstance()->createClient(
             'test',
             'test',
-            Oauth2ClientInterface::TYPE_CONFIDENTIAL,
-            'very_secret',
             Oauth2Module::GRANT_TYPE_AUTH_CODE,
             'https://localhost/test',
+            Oauth2ClientInterface::TYPE_CONFIDENTIAL,
+            'very_secret',
             'does-not-exists',
         );
     }
@@ -174,10 +174,10 @@ class Oauth2ModuleTest extends DatabaseTestCase
         Oauth2Module::getInstance()->createClient(
             'test',
             'test',
-            Oauth2ClientInterface::TYPE_CONFIDENTIAL,
-            'test',
             Oauth2Module::GRANT_TYPE_AUTH_CODE,
             'https://localhost/test',
+            Oauth2ClientInterface::TYPE_CONFIDENTIAL,
+            'test',
         );
     }
 
@@ -195,10 +195,10 @@ class Oauth2ModuleTest extends DatabaseTestCase
         Oauth2Module::getInstance()->createClient(
             'test',
             'test',
-            Oauth2ClientInterface::TYPE_CONFIDENTIAL,
-            'test',
             Oauth2Module::GRANT_TYPE_AUTH_CODE,
             'https://localhost/test',
+            Oauth2ClientInterface::TYPE_CONFIDENTIAL,
+            'test',
         );
     }
 
