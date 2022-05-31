@@ -13,7 +13,7 @@ settings:
   memory_limit: 1024M
   colors: true
   shuffle: true
-  error_level: E_ALL
+  error_level: E_ALL & ~E_DEPRECATED # E_ALL is preferred, but league/oauth2-server v8.x is not yet fully compatible
 
 coverage:
   enabled: true
