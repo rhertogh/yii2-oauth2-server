@@ -6,5 +6,4 @@ use yii\db\ActiveQueryInterface;
 
 interface Oauth2RefreshTokenQueryInterface extends ActiveQueryInterface
 {
-
 }

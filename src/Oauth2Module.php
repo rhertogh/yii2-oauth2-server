@@ -571,8 +571,16 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
      * @throws InvalidConfigException
      * @throws \yii\db\Exception
      */
-    public function createClient($identifier, $name, $grantTypes, $redirectURIs, $type, $secret = null, $scopes = null, $userId = null)
-    {
+    public function createClient(
+        $identifier,
+        $name,
+        $grantTypes,
+        $redirectURIs,
+        $type,
+        $secret = null,
+        $scopes = null,
+        $userId = null
+    ) {
         if (!($this->serverRole & static::SERVER_ROLE_AUTHORIZATION_SERVER)) {
             throw new InvalidCallException('Oauth2 server role does not include authorization server.');
         }
@@ -623,7 +631,6 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
             }
 
             $transaction->commit();
-
         } catch (\Exception $e) {
             $transaction->rollBack();
             throw $e;

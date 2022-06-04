@@ -9,5 +9,4 @@ interface Oauth2ScopeQueryInterface extends
     Oauth2EnabledQueryInterface,
     ActiveQueryInterface
 {
-
 }

@@ -10,7 +10,6 @@ use Yii2Oauth2ServerTests\unit\TestCase;
  */
 class UrlHelperTest extends TestCase
 {
-
     /**
      * @param string $url
      * @param array|null $params

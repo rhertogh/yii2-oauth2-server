@@ -10,5 +10,4 @@ use yii\console\Controller;
  */
 class Oauth2BaseConsoleController extends Controller
 {
-
 }

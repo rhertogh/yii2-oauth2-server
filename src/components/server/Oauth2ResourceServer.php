@@ -7,5 +7,4 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\server\Oauth2ResourceServerI
 
 class Oauth2ResourceServer extends ResourceServer implements Oauth2ResourceServerInterface
 {
-
 }

@@ -10,9 +10,13 @@ use Psr\Http\Message\ServerRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2PasswordGrantInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\user\Oauth2PasswordGrantUserComponentInterface;
 use Yii;
+use yii\web\User;
 
 class Oauth2PasswordGrant extends PasswordGrant implements Oauth2PasswordGrantInterface
 {
+    /**
+     * @var User|null
+     */
     protected $validatedUser = null;
 
     /**
@@ -39,8 +43,7 @@ class Oauth2PasswordGrant extends PasswordGrant implements Oauth2PasswordGrantIn
         ServerRequestInterface $request,
         ResponseTypeInterface $responseType,
         \DateInterval $accessTokenTTL
-    )
-    {
+    ) {
         $responseType = parent::respondToAccessTokenRequest($request, $responseType, $accessTokenTTL);
         if (Yii::$app->user instanceof Oauth2PasswordGrantUserComponentInterface) {
             Yii::$app->user->afterOauth2PasswordGrantLogin($this->validatedUser, $this);

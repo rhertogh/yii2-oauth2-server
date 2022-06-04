@@ -283,7 +283,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
                 throw new InvalidArgumentException($error);
             }
 
-            // Ensure we clear out any old secret
+            // Ensure we clear out any old secret.
             $this->setAttribute('old_secret', null);
             $this->setAttribute('old_secret_valid_until', null);
 

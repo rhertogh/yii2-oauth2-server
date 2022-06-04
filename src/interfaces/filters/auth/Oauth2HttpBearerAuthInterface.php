@@ -9,5 +9,4 @@ interface Oauth2HttpBearerAuthInterface extends
     AuthInterface,
     Configurable
 {
-
 }

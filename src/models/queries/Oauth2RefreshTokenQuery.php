@@ -12,5 +12,4 @@ use rhertogh\Yii2Oauth2Server\models\queries\base\Oauth2BaseActiveQuery;
  */
 class Oauth2RefreshTokenQuery extends Oauth2BaseActiveQuery implements Oauth2RefreshTokenQueryInterface
 {
-
 }

@@ -242,7 +242,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
     public function testRotateStorageEncryptionKeys()
     {
         $oldKeyName = '2021-01-01';
-        $newKeyName = '2022-01-01'; // default key name
+        $newKeyName = '2022-01-01'; // default key name.
         $encryptor = Oauth2Module::getInstance()->getEncryptor();
 
         Oauth2Client::updateAll(['old_secret' => new Expression('secret')], ['NOT', ['secret' => null]]);
@@ -251,10 +251,10 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
 
         foreach ($clients as $client) {
             $ciphertext = $client->getAttribute('secret');
-            $this->assertStringStartsWith( $oldKeyName . '::', $ciphertext);
+            $this->assertStringStartsWith($oldKeyName . '::', $ciphertext);
 
             $ciphertext = $client->getAttribute('old_secret');
-            $this->assertStringStartsWith( $oldKeyName . '::', $ciphertext);
+            $this->assertStringStartsWith($oldKeyName . '::', $ciphertext);
         }
 
         Oauth2Client::rotateStorageEncryptionKeys($encryptor);
@@ -263,10 +263,10 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
             $client->refresh();
 
             $ciphertext = $client->getAttribute('secret');
-            $this->assertStringStartsWith( $newKeyName . '::', $ciphertext);
+            $this->assertStringStartsWith($newKeyName . '::', $ciphertext);
 
             $ciphertext = $client->getAttribute('old_secret');
-            $this->assertStringStartsWith( $newKeyName . '::', $ciphertext);
+            $this->assertStringStartsWith($newKeyName . '::', $ciphertext);
         }
     }
 
@@ -295,16 +295,16 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
     {
         $secret = 'my-test-secret';
         $oldKeyName = '2021-01-01';
-        $newKeyName = '2022-01-01'; // default key name
+        $newKeyName = '2022-01-01'; // default key name.
         $encryptor = Oauth2Module::getInstance()->getEncryptor();
         $client = $this->getMockModel();
         $client->setSecret($secret, $encryptor, null, $oldKeyName);
 
         $ciphertext = $client->getAttribute('secret');
-        $this->assertStringStartsWith( $oldKeyName . '::', $ciphertext);
+        $this->assertStringStartsWith($oldKeyName . '::', $ciphertext);
 
         $client->rotateStorageEncryptionKey($encryptor);
-        $this->assertStringStartsWith( $newKeyName . '::', $client->getAttribute('secret'));
+        $this->assertStringStartsWith($newKeyName . '::', $client->getAttribute('secret'));
 
         $this->assertEquals($secret, $client->getDecryptedSecret($encryptor));
     }
@@ -312,7 +312,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
     public function testSecret()
     {
         $oldKeyName = '2021-01-01';
-        $newKeyName = '2022-01-01'; // default key name
+        $newKeyName = '2022-01-01'; // default key name.
 
         $secret = 'my-test-secret';
         $secret2 = 'my-test-secret-2';
@@ -324,7 +324,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $client->setSecret($secret, $encryptor);
 
         $ciphertext = $client->getAttribute('secret');
-        $this->assertStringStartsWith( $newKeyName . '::', $ciphertext);
+        $this->assertStringStartsWith($newKeyName . '::', $ciphertext);
         $this->assertFalse(strpos($secret, $client->getAttribute('secret')));
         $this->assertEquals($secret, $client->getDecryptedSecret($encryptor));
         $this->assertTrue($client->validateSecret($secret, $encryptor));
@@ -332,22 +332,22 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
 
         $client->setSecret($secret2, $encryptor, new \DateInterval('P1D'), $oldKeyName);
         $ciphertext = $client->getAttribute('secret');
-        $this->assertStringStartsWith( $oldKeyName . '::', $ciphertext);
+        $this->assertStringStartsWith($oldKeyName . '::', $ciphertext);
         $ciphertext = $client->getAttribute('old_secret');
-        $this->assertStringStartsWith( $oldKeyName . '::', $ciphertext);
+        $this->assertStringStartsWith($oldKeyName . '::', $ciphertext);
         $this->assertEquals($secret2, $client->getDecryptedSecret($encryptor));
-        $this->assertTrue($client->validateSecret($secret2, $encryptor)); // new secret
-        $this->assertTrue($client->validateSecret($secret, $encryptor)); // old secret (which should still be valid)
+        $this->assertTrue($client->validateSecret($secret2, $encryptor)); // new secret.
+        $this->assertTrue($client->validateSecret($secret, $encryptor)); // old secret (which should still be valid).
         $this->assertFalse($client->validateSecret('incorrect', $encryptor));
 
         $client->setSecret($secret3, $encryptor, (new \DateTimeImmutable('yesterday')));
         $ciphertext = $client->getAttribute('secret');
-        $this->assertStringStartsWith( $newKeyName . '::', $ciphertext);
+        $this->assertStringStartsWith($newKeyName . '::', $ciphertext);
         $ciphertext = $client->getAttribute('old_secret');
-        $this->assertStringStartsWith( $newKeyName . '::', $ciphertext);
+        $this->assertStringStartsWith($newKeyName . '::', $ciphertext);
         $this->assertEquals($secret3, $client->getDecryptedSecret($encryptor));
-        $this->assertTrue($client->validateSecret($secret3, $encryptor)); // new secret
-        $this->assertFalse($client->validateSecret($secret2, $encryptor)); // old secret (which has expired)
+        $this->assertTrue($client->validateSecret($secret3, $encryptor)); // new secret.
+        $this->assertFalse($client->validateSecret($secret2, $encryptor)); // old secret (which has expired).
         $this->assertFalse($client->validateSecret('incorrect', $encryptor));
     }
 

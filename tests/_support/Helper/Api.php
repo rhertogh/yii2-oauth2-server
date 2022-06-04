@@ -7,5 +7,4 @@ namespace Yii2Oauth2ServerTests\Helper;
 
 class Api extends \Codeception\Module
 {
-
 }

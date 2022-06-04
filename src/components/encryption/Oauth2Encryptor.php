@@ -133,7 +133,9 @@ class Oauth2Encryptor extends Component implements Oauth2EncryptorInterface
     {
         $parts = explode($this->dataSeparator, $data);
         if (count($parts) !== 2) {
-            throw new InvalidArgumentException('Could not parse encrypted data: invalid number of parts, expected 2 got ' . count($parts));
+            throw new InvalidArgumentException(
+                'Could not parse encrypted data: invalid number of parts, expected 2 got ' . count($parts)
+            );
         }
         return array_combine(['keyName', 'ciphertext'], $parts);
     }

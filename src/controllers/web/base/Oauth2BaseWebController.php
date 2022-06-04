@@ -10,5 +10,4 @@ use yii\web\Controller;
  */
 abstract class Oauth2BaseWebController extends Controller
 {
-
 }

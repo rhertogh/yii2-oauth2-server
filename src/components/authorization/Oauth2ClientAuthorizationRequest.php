@@ -17,7 +17,6 @@ use yii\helpers\StringHelper;
 
 class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequest
 {
-
     /**
      * @var string|null
      */

@@ -24,7 +24,6 @@ class Oauth2OidcUserIdentityTraitTest extends TestCase
         $response = new Oauth2OidcBearerTokenResponse(Oauth2Module::getInstance());
 
         $identity = new class extends TestUserModelOidc {
-
             public $email = 'test@test.test';
 
             public function getEmailAddress()

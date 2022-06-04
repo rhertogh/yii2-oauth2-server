@@ -92,7 +92,6 @@ class Oauth2BaseTokenRepositoryTest extends DatabaseTestCase
     protected function getMockBaseTokenRepository()
     {
         return new class extends Oauth2BaseTokenRepository {
-
             public function getModelClass()
             {
                 return Oauth2ActiveRecordInterface::class;

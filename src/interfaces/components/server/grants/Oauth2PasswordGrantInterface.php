@@ -6,5 +6,4 @@ use League\OAuth2\Server\Grant\GrantTypeInterface;
 
 interface Oauth2PasswordGrantInterface extends GrantTypeInterface
 {
-
 }

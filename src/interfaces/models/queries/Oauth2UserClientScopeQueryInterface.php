@@ -6,5 +6,4 @@ use yii\db\ActiveQueryInterface;
 
 interface Oauth2UserClientScopeQueryInterface extends ActiveQueryInterface
 {
-
 }

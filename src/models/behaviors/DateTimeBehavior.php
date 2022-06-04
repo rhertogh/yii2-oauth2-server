@@ -9,7 +9,6 @@ use yii\db\Schema;
 
 class DateTimeBehavior extends Behavior
 {
-
     /**
      * The DateTime format to convert to before inserting the DateTime object into the database.
      * @var string

@@ -9,7 +9,6 @@ use Yii;
 class TestUserModelPasswordGrant extends TestUserModel implements
     Oauth2PasswordGrantUserInterface # Optional interface, only required when `password` grant type is used
 {
-
     /**
      * @inheritDoc
      */

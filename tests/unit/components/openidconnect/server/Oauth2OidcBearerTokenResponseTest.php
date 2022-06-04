@@ -43,7 +43,6 @@ class Oauth2OidcBearerTokenResponseTest extends DatabaseTestCase
     public function testGetExtraParams()
     {
         $mockUserClass = get_class(new class extends TestUserModelOidc {
-
             public static Oauth2OidcBearerTokenResponseTest $testCase;
             public static \DateTimeImmutable $latestAuthenticatedAt;
 

@@ -151,10 +151,10 @@ class Oauth2EncryptorTest extends TestCase
         $data = 'secret';
 
         $ciphertext = $encryptor->encryp($data);
-        $this->assertStringStartsWith( 'test::', $ciphertext);
+        $this->assertStringStartsWith('test::', $ciphertext);
 
         $ciphertext = $encryptor->rotateKey($ciphertext, 'new');
-        $this->assertStringStartsWith( 'new::', $ciphertext);
+        $this->assertStringStartsWith('new::', $ciphertext);
 
         // Same key shouldn't change the data.
         $this->assertEquals($ciphertext, $encryptor->rotateKey($ciphertext, 'new'));
@@ -164,7 +164,7 @@ class Oauth2EncryptorTest extends TestCase
 
         // Rotate back to default key (no `newKeyName` specified).
         $ciphertext = $encryptor->rotateKey($ciphertext);
-        $this->assertStringStartsWith( 'test::', $ciphertext);
+        $this->assertStringStartsWith('test::', $ciphertext);
         $plaintext = $encryptor->decrypt($ciphertext);
         $this->assertEquals($data, $plaintext);
     }

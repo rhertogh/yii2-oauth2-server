@@ -19,7 +19,6 @@ use yii\web\Response;
  */
 abstract class Oauth2BaseServerAction extends Action
 {
-
     /**
      * @param \Exception $exception
      * @return Response

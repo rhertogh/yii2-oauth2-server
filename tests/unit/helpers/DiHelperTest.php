@@ -12,7 +12,6 @@ use Yii2Oauth2ServerTests\unit\TestCase;
  */
 class DiHelperTest extends TestCase
 {
-
     /**
      * @param $className
      * @param $definition

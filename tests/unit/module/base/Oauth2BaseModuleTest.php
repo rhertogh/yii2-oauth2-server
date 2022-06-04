@@ -130,7 +130,6 @@ class Oauth2BaseModuleTest extends TestCase
     public function testRequestOauthClaimGetters($getterName, $expected)
     {
         $baseModule = new class ('testOauth2BaseModule') extends Oauth2BaseModule {
-
             public function getOidcScopeCollection()
             {
             }

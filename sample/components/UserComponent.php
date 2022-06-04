@@ -9,6 +9,7 @@ use Yii;
 use yii\db\Exception;
 use yii\web\IdentityInterface;
 use yii\web\User;
+
 // phpcs:disable Generic.Files.LineLength.TooLong -- Sample documentation
 class UserComponent extends User implements
     Oauth2OidcUserComponentInterface, # Optional interface, only required when 'Open ID Connect' is used.

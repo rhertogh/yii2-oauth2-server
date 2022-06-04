@@ -23,7 +23,6 @@ use Yii2Oauth2ServerTests\functional\_base\BaseGrantCest;
  */
 class AuthorizationCodeGrantCest extends BaseGrantCest
 {
-
     /**
      * @dataProvider authorizationCodeGrantTestProvider
      */

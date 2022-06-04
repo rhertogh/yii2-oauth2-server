@@ -8,7 +8,6 @@ use yii\db\Schema;
 
 class BooleanBehavior extends Behavior
 {
-
     /**
      * Nummeric database schema types.
      */

@@ -7,5 +7,4 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2Implicit
 
 class Oauth2ImplicitGrant extends ImplicitGrant implements Oauth2ImplicitGrantInterface
 {
-
 }

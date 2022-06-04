@@ -10,5 +10,4 @@ use yii\db\ActiveRecord;
  */
 class UserIdentityLink extends ActiveRecord
 {
-
 }
