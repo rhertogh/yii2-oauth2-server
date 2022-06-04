@@ -359,7 +359,6 @@ class Oauth2ModuleTest extends DatabaseTestCase
      */
     public function defaultInterfaceImplementationsProvider()
     {
-
         $reflectionClass = new \ReflectionClass(Oauth2Module::class);
         $defaultInterfaceImplementations = $reflectionClass->getConstant('DEFAULT_INTERFACE_IMPLEMENTATIONS');
 
@@ -435,7 +434,7 @@ class Oauth2ModuleTest extends DatabaseTestCase
             'container' => [
                 'definitions' => [
                     // phpcs:ignore Generic.Files.LineLength.TooLong -- readability actually better on single line
-                    Oauth2EncryptionKeyFactoryInterface::class => new class () implements Oauth2EncryptionKeyFactoryInterface {
+                    Oauth2EncryptionKeyFactoryInterface::class => new class implements Oauth2EncryptionKeyFactoryInterface {
                         public function createFromAsciiSafeString($keyString, $doNotTrim = null)
                         {
                             throw new EnvironmentIsBrokenException('test message');

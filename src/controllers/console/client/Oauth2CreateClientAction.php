@@ -33,7 +33,6 @@ class Oauth2CreateClientAction extends Action
         $scopes = $this->controller->scopes;
 
         if (!empty($this->controller->sample)) {
-
             $sample = strtolower($this->controller->sample);
 
             if ($sample == 'postman') {

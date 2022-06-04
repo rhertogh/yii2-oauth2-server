@@ -30,7 +30,7 @@ class Oauth2AccessTokenRepositoryTest extends BaseOauth2RepositoryTest
 
     public function testGetNewToken()
     {
-        list (
+        list(
             'accessToken' => $accessToken,
             'client' => $client,
             'scopes' => $scopes,

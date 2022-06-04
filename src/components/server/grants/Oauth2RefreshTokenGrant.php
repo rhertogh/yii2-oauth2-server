@@ -25,7 +25,6 @@ class Oauth2RefreshTokenGrant extends RefreshTokenGrant implements Oauth2Refresh
         ResponseTypeInterface $responseType,
         DateInterval $accessTokenTTL
     ) {
-
         if ($this->module->enableOpenIdConnect) {
             $client = $this->validateClient($request);
             $oldRefreshToken = $this->validateOldRefreshToken($request, $client->getIdentifier());

@@ -613,7 +613,6 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
                 }
 
                 foreach ($scopeIdentifiers as $scopeIdentifier) {
-
                     $scope = $this->getScopeRepository()->findModelByIdentifier($scopeIdentifier);
                     if (empty($scope)) {
                         throw new InvalidArgumentException('No scope with identifier "'
@@ -764,9 +763,10 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
                         } else {
                             throw new InvalidConfigException(
                                 'Unknown grantType '
-                                . (is_scalar($grantTypeDefinition)
-                                    ? '"' . $grantTypeDefinition . '".'
-                                    : 'with data type ' . gettype($grantTypeDefinition)
+                                . (
+                                    is_scalar($grantTypeDefinition)
+                                        ? '"' . $grantTypeDefinition . '".'
+                                        : 'with data type ' . gettype($grantTypeDefinition)
                                 )
                             );
                         }

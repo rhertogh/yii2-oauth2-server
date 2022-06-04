@@ -450,9 +450,10 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
                 [$clientScopeTableName . '.client_id' => $this->getPrimaryKey()],
                 [$clientScopeTableName . '.enabled' => 1],
                 ['OR',
-                    ...(!empty($requestedScopeIdentifiers)
-                        ? [[$scopeTableName . '.identifier' => $requestedScopeIdentifiers]]
-                        : []
+                    ...(
+                        !empty($requestedScopeIdentifiers)
+                            ? [[$scopeTableName . '.identifier' => $requestedScopeIdentifiers]]
+                            : []
                     ),
                     ['NOT', [$clientScopeTableName . '.applied_by_default' => Oauth2Scope::APPLIED_BY_DEFAULT_NO]],
                     ['AND',
@@ -469,9 +470,10 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
             $possibleScopesConditions[] = ['AND',
                 [$clientScopeTableName . '.client_id' => null],
                 ['OR',
-                    ...(!empty($requestedScopeIdentifiers)
-                        ? [[$scopeTableName . '.identifier' => $requestedScopeIdentifiers]]
-                        : []
+                    ...(
+                        !empty($requestedScopeIdentifiers)
+                            ? [[$scopeTableName . '.identifier' => $requestedScopeIdentifiers]]
+                            : []
                     ),
                     ['NOT', [$scopeTableName . '.applied_by_default' => Oauth2Scope::APPLIED_BY_DEFAULT_NO]],
                 ],

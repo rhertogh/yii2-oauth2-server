@@ -55,7 +55,7 @@ class Oauth2EncryptorTest extends TestCase
             'container' => [
                 'definitions' => [
                     // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
-                    Oauth2EncryptionKeyFactoryInterface::class => new class () implements Oauth2EncryptionKeyFactoryInterface {
+                    Oauth2EncryptionKeyFactoryInterface::class => new class implements Oauth2EncryptionKeyFactoryInterface {
                         public function createFromAsciiSafeString($keyString, $doNotTrim = null)
                         {
                             throw new EnvironmentIsBrokenException('test message');

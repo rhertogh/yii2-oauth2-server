@@ -539,7 +539,6 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
      */
     public function testPromptLoginForAuthenticatedUser($prompt, $maxAge, $expectLoginPrompt)
     {
-
         $mockUserComponent = $this->getMockBuilder(TestUserComponent::class)
             ->onlyMethods([
                 'reauthenticationRequired',

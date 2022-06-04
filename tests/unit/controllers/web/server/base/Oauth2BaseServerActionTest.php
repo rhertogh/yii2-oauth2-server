@@ -42,7 +42,7 @@ class Oauth2BaseServerActionTest extends TestCase
     {
         $this->mockWebApplication();
         $controller = new Controller('test', Oauth2Module::getInstance());
-        $baseServerAction = new class ('test', $controller) extends Oauth2BaseServerAction{
+        $baseServerAction = new class ('test', $controller) extends Oauth2BaseServerAction {
             public function processExceptionTest($e)
             {
                 return $this->processException($e);

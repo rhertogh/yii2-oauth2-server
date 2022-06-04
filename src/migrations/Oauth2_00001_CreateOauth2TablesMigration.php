@@ -133,9 +133,10 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                 'created_at' => $this->integer()->notNull(),
                 'updated_at' => $this->integer()->notNull(),
 
-                ...($userTable
-                    ? ['FOREIGN KEY (client_credentials_grant_user_id) REFERENCES ' . $userTable . ' (' . $userPkColumn . ') ON DELETE RESTRICT ON UPDATE CASCADE']
-                    : ['KEY (client_credentials_grant_user_id)']
+                ...(
+                    $userTable
+                        ? ['FOREIGN KEY (client_credentials_grant_user_id) REFERENCES ' . $userTable . ' (' . $userPkColumn . ') ON DELETE RESTRICT ON UPDATE CASCADE']
+                        : ['KEY (client_credentials_grant_user_id)']
                 ),
                 'KEY (token_types)',
                 'KEY (grant_types)',
@@ -185,9 +186,10 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                 'updated_at' => $this->integer()->notNull(),
 
                 'FOREIGN KEY (client_id) REFERENCES ' . $clientTable . ' (id) ON DELETE CASCADE ON UPDATE CASCADE',
-                ...($userTable
-                    ? ['FOREIGN KEY (user_id) REFERENCES ' . $userTable . ' (' . $userPkColumn . ') ON DELETE CASCADE ON UPDATE CASCADE']
-                    : ['KEY (user_id)']
+                ...(
+                    $userTable
+                        ? ['FOREIGN KEY (user_id) REFERENCES ' . $userTable . ' (' . $userPkColumn . ') ON DELETE CASCADE ON UPDATE CASCADE']
+                        : ['KEY (user_id)']
                 ),
                 'KEY (enabled)',
             ],
@@ -218,9 +220,10 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                 'updated_at' => $this->integer()->notNull(),
 
                 'FOREIGN KEY (client_id) REFERENCES ' . $clientTable . ' (id) ON DELETE CASCADE ON UPDATE CASCADE',
-                ...($userTable
-                    ? ['FOREIGN KEY (user_id) REFERENCES ' . $userTable . ' (' . $userPkColumn . ') ON DELETE CASCADE ON UPDATE CASCADE']
-                    : ['KEY (user_id)']
+                ...(
+                    $userTable
+                        ? ['FOREIGN KEY (user_id) REFERENCES ' . $userTable . ' (' . $userPkColumn . ') ON DELETE CASCADE ON UPDATE CASCADE']
+                        : ['KEY (user_id)']
                 ),
                 'KEY (type)',
                 'KEY (mac_algorithm)',
@@ -258,9 +261,10 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                 'updated_at' => $this->integer()->notNull(),
 
                 'PRIMARY KEY (user_id, client_id)',
-                ...($userTable
-                    ? ['FOREIGN KEY (user_id) REFERENCES ' . $userTable . ' (' . $userPkColumn . ') ON DELETE CASCADE ON UPDATE CASCADE']
-                    : ['KEY (user_id)']
+                ...(
+                    $userTable
+                        ? ['FOREIGN KEY (user_id) REFERENCES ' . $userTable . ' (' . $userPkColumn . ') ON DELETE CASCADE ON UPDATE CASCADE']
+                        : ['KEY (user_id)']
                 ),
                 'FOREIGN KEY (client_id) REFERENCES ' . $clientTable . ' (id) ON DELETE CASCADE ON UPDATE CASCADE',
                 'KEY (enabled)',

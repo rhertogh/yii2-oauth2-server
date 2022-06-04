@@ -99,8 +99,7 @@ class CreateOauth2TablesMigrationTest extends BaseMigrationTest
      */
     protected function getMockMigration()
     {
-        return new class extends Oauth2_00001_CreateOauth2TablesMigration
-        {
+        return new class extends Oauth2_00001_CreateOauth2TablesMigration {
             public function getTablesWrapper()
             {
                 return $this->getTables();
