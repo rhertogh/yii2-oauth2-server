@@ -22,7 +22,7 @@ $config = [
             ],
             'migrations' => [
                 'migrationNamespaces' => [
-                    'rhertogh\Yii2Oauth2Server\migrations',
+                    'rhertogh\\Yii2Oauth2Server\\migrations',
                 ],
             ],
             'postMigrationsFixtures' => [
