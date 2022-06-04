@@ -8,3 +8,4 @@ The Yii2-Oauth2-Server Development Guide
 * [Code Style](code-style.md)
 * [Pull request quality assurance](pull-request-qa.md)
 * [Reporting an Issue](report-an-issue.md)
+* [Development FAQ](development-faq.md)
