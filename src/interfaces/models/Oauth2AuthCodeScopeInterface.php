@@ -10,7 +10,7 @@ interface Oauth2AuthCodeScopeInterface extends Oauth2ActiveRecordInterface
 {
     /**
      * @inheritDoc
-     * @return Oauth2AuthCodeScopeQueryInterface|ActiveQuery
+     * @return Oauth2AuthCodeScopeQueryInterface
      */
     public static function find();
 }

@@ -39,7 +39,7 @@ interface Oauth2ScopeInterface extends
 
     /**
      * @inheritDoc
-     * @return Oauth2ScopeQueryInterface|ActiveQuery
+     * @return Oauth2ScopeQueryInterface
      */
     public static function find();
 

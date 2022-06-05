@@ -47,16 +47,14 @@ abstract class Oauth2AccessTokenScope extends \rhertogh\Yii2Oauth2Server\models\
     }
 
     /**
-     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenQueryInterface|\yii\db\ActiveQuery
-     */
+     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenQueryInterface     */
     public function getAccessToken()
     {
         return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2AccessToken::className(), ['id' => 'access_token_id'])->inverseOf('accessTokenScopes');
     }
 
     /**
-     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface|\yii\db\ActiveQuery
-     */
+     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface     */
     public function getScope()
     {
         return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2Scope::className(), ['id' => 'scope_id'])->inverseOf('accessTokenScopes');
@@ -66,7 +64,7 @@ abstract class Oauth2AccessTokenScope extends \rhertogh\Yii2Oauth2Server\models\
 
     /**
      * @inheritdoc
-     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenScopeQueryInterface|\yii\db\ActiveQuery the active query used by this AR class.
+     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenScopeQueryInterface the active query used by this AR class.
      */
     public static function find()
     {

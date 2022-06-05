@@ -56,8 +56,7 @@ abstract class Oauth2RefreshToken extends \rhertogh\Yii2Oauth2Server\models\base
     }
 
     /**
-     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenQueryInterface|\yii\db\ActiveQuery
-     */
+     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenQueryInterface     */
     public function getAccessToken()
     {
         return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2AccessToken::className(), ['id' => 'access_token_id'])->inverseOf('refreshTokens');
@@ -67,7 +66,7 @@ abstract class Oauth2RefreshToken extends \rhertogh\Yii2Oauth2Server\models\base
 
     /**
      * @inheritdoc
-     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2RefreshTokenQueryInterface|\yii\db\ActiveQuery the active query used by this AR class.
+     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2RefreshTokenQueryInterface the active query used by this AR class.
      */
     public static function find()
     {

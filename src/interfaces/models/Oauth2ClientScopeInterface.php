@@ -11,7 +11,7 @@ interface Oauth2ClientScopeInterface extends Oauth2ActiveRecordInterface
 {
     /**
      * @inheritDoc
-     * @return Oauth2ClientScopeQueryInterface|ActiveQuery
+     * @return Oauth2ClientScopeQueryInterface
      */
     public static function find();
 

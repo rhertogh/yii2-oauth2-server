@@ -16,7 +16,7 @@ interface Oauth2RefreshTokenInterface extends
 {
     /**
      * @inheritDoc
-     * @return Oauth2RefreshTokenQueryInterface|ActiveQuery
+     * @return Oauth2RefreshTokenQueryInterface
      * @since 1.0.0
      */
     public static function find();

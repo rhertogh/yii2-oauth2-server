@@ -71,7 +71,7 @@ class Oauth2ScopeRepository extends Oauth2BaseRepository implements Oauth2ScopeR
 
         $scopeIds = array_map(fn($scope) => $scope->getPrimaryKey(), $clientAllowedScopes);
 
-        /** @var Oauth2ScopeInterface $scopeClass */
+        /** @var Oauth2ScopeInterface|string $scopeClass */
         $scopeClass = DiHelper::getValidatedClassName(Oauth2ScopeInterface::class);
 
         $approvedScopes = $scopeClass::find()

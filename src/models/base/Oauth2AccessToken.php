@@ -72,32 +72,28 @@ abstract class Oauth2AccessToken extends \rhertogh\Yii2Oauth2Server\models\base\
     }
 
     /**
-     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenScopeQueryInterface|\yii\db\ActiveQuery
-     */
+     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenScopeQueryInterface     */
     public function getAccessTokenScopes()
     {
         return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2AccessTokenScope::className(), ['access_token_id' => 'id'])->inverseOf('accessToken');
     }
 
     /**
-     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ClientQueryInterface|\yii\db\ActiveQuery
-     */
+     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ClientQueryInterface     */
     public function getClient()
     {
         return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2Client::className(), ['id' => 'client_id'])->inverseOf('accessTokens');
     }
 
     /**
-     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2RefreshTokenQueryInterface|\yii\db\ActiveQuery
-     */
+     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2RefreshTokenQueryInterface     */
     public function getRefreshTokens()
     {
         return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2RefreshToken::className(), ['access_token_id' => 'id'])->inverseOf('accessToken');
     }
 
     /**
-     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface|\yii\db\ActiveQuery
-     */
+     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface     */
     public function getScopes()
     {
         return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2Scope::className(), ['id' => 'scope_id'])->via('accessTokenScopes');
@@ -107,7 +103,7 @@ abstract class Oauth2AccessToken extends \rhertogh\Yii2Oauth2Server\models\base\
 
     /**
      * @inheritdoc
-     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenQueryInterface|\yii\db\ActiveQuery the active query used by this AR class.
+     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenQueryInterface the active query used by this AR class.
      */
     public static function find()
     {

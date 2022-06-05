@@ -25,6 +25,7 @@ trait Oauth2ClientRelationTrait
     public function __set($name, $value)
     {
         if ($name === 'client_id' && $this->isRelationPopulated('clientRelation')) {
+            //@phpstan-ignore-next-line "Cannot unset offset", but checked with `isRelationPopulated`
             unset($this['clientRelation']);
         }
         parent::__set($name, $value);
@@ -36,6 +37,7 @@ trait Oauth2ClientRelationTrait
     public function setAttribute($name, $value)
     {
         if ($name === 'client_id' && $this->isRelationPopulated('clientRelation')) {
+            //@phpstan-ignore-next-line "Cannot unset offset", but checked with `isRelationPopulated`
             unset($this['clientRelation']);
         }
         parent::setAttribute($name, $value);

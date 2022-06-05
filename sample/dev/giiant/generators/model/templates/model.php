@@ -170,7 +170,7 @@ if(!empty($enum)){
     ?>
 
     /**
-     * @return <?= $queryInterfaceClassFullName ?>|\yii\db\ActiveQuery
+     * @return <?= $queryInterfaceClassFullName ?>
      */
     public function get<?= $name ?>()
     {
@@ -195,7 +195,7 @@ if(!empty($enum)){
 
     /**
      * @inheritdoc
-     * @return <?= $queryInterfaceClassFullName ?>|\yii\db\ActiveQuery the active query used by this AR class.
+     * @return <?= $queryInterfaceClassFullName ?> the active query used by this AR class.
      */
     public static function find()
     {

@@ -68,7 +68,7 @@ interface Oauth2ClientInterface extends
 
     /**
      * @inheritDoc
-     * @return Oauth2ClientQueryInterface|ActiveQuery
+     * @return Oauth2ClientQueryInterface
      */
     public static function find();
 

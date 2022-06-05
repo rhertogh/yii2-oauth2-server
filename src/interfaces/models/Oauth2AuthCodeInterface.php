@@ -19,7 +19,7 @@ interface Oauth2AuthCodeInterface extends
 {
     /**
      * @inheritDoc
-     * @return Oauth2AuthCodeQueryInterface|ActiveQuery
+     * @return Oauth2AuthCodeQueryInterface
      */
     public static function find();
 

@@ -20,7 +20,7 @@ interface Oauth2AccessTokenInterface extends
 {
     /**
      * @inheritDoc
-     * @return Oauth2AccessTokenQueryInterface|ActiveQuery
+     * @return Oauth2AccessTokenQueryInterface
      */
     public static function find();
 

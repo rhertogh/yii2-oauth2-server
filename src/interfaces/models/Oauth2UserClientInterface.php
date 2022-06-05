@@ -13,7 +13,7 @@ interface Oauth2UserClientInterface extends
 {
     /**
      * @inheritDoc
-     * @return Oauth2UserClientQueryInterface|ActiveQuery
+     * @return Oauth2UserClientQueryInterface
      */
     public static function find();
 }

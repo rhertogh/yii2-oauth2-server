@@ -47,16 +47,14 @@ abstract class Oauth2AuthCodeScope extends \rhertogh\Yii2Oauth2Server\models\bas
     }
 
     /**
-     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AuthCodeQueryInterface|\yii\db\ActiveQuery
-     */
+     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AuthCodeQueryInterface     */
     public function getAuthCode()
     {
         return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2AuthCode::className(), ['id' => 'auth_code_id'])->inverseOf('authCodeScopes');
     }
 
     /**
-     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface|\yii\db\ActiveQuery
-     */
+     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface     */
     public function getScope()
     {
         return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2Scope::className(), ['id' => 'scope_id'])->inverseOf('authCodeScopes');
@@ -66,7 +64,7 @@ abstract class Oauth2AuthCodeScope extends \rhertogh\Yii2Oauth2Server\models\bas
 
     /**
      * @inheritdoc
-     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AuthCodeScopeQueryInterface|\yii\db\ActiveQuery the active query used by this AR class.
+     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AuthCodeScopeQueryInterface the active query used by this AR class.
      */
     public static function find()
     {

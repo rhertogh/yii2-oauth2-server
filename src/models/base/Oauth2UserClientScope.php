@@ -53,16 +53,14 @@ abstract class Oauth2UserClientScope extends \rhertogh\Yii2Oauth2Server\models\b
     }
 
     /**
-     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface|\yii\db\ActiveQuery
-     */
+     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface     */
     public function getScope()
     {
         return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2Scope::className(), ['id' => 'scope_id'])->inverseOf('userClientScopes');
     }
 
     /**
-     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2UserClientQueryInterface|\yii\db\ActiveQuery
-     */
+     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2UserClientQueryInterface     */
     public function getUserClient()
     {
         return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2UserClient::className(), ['user_id' => 'user_id', 'client_id' => 'client_id'])->inverseOf('userClientScopes');
@@ -72,7 +70,7 @@ abstract class Oauth2UserClientScope extends \rhertogh\Yii2Oauth2Server\models\b
 
     /**
      * @inheritdoc
-     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2UserClientScopeQueryInterface|\yii\db\ActiveQuery the active query used by this AR class.
+     * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2UserClientScopeQueryInterface the active query used by this AR class.
      */
     public static function find()
     {
