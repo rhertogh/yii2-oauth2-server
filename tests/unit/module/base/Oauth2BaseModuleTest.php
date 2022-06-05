@@ -17,7 +17,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2ClientRep
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2RefreshTokenRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2ScopeRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2UserRepositoryInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2OidcUserInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
 use Yii2Oauth2ServerTests\_helpers\TestUserModel;

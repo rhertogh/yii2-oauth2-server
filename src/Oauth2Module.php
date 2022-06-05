@@ -35,10 +35,10 @@ use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ServerControllerI
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2WellKnownControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\filters\auth\Oauth2HttpBearerAuthInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2EncryptedStorageInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2OidcUserInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserInterface;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\InvalidArgumentException;

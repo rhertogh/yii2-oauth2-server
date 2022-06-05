@@ -3,8 +3,8 @@
 namespace Yii2Oauth2ServerTests\_helpers;
 
 use rhertogh\Yii2Oauth2Server\components\openidconnect\claims\Oauth2OidcAddressClaim;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2OidcUserInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2OidcUserSessionStatusInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserSessionStatusInterface;
 use rhertogh\Yii2Oauth2Server\traits\models\Oauth2OidcUserIdentityTrait;
 
 // phpcs:disable Generic.Files.LineLength.TooLong -- Sample documentation

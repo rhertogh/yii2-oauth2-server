@@ -1,6 +1,6 @@
 <?php
 
-namespace rhertogh\Yii2Oauth2Server\interfaces\models;
+namespace rhertogh\Yii2Oauth2Server\interfaces\models\external\user;
 
 interface Oauth2OidcUserSessionStatusInterface
 {

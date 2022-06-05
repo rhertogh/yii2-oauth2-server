@@ -3,7 +3,7 @@
 namespace Yii2Oauth2ServerTests\unit\components\authorization\base;
 
 use rhertogh\Yii2Oauth2Server\components\authorization\base\Oauth2BaseClientAuthorizationRequest;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii2Oauth2ServerTests\_helpers\TestUserModel;
 use Yii2Oauth2ServerTests\unit\TestCase;

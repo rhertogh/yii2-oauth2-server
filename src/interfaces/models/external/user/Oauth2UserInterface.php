@@ -1,6 +1,6 @@
 <?php
 
-namespace rhertogh\Yii2Oauth2Server\interfaces\models;
+namespace rhertogh\Yii2Oauth2Server\interfaces\models\external\user;
 
 use League\OAuth2\Server\Entities\UserEntityInterface;
 use yii\db\TableSchema;

@@ -30,3 +30,15 @@ Upgrade from v1.0.0-alpha2
 * The signature for `\rhertogh\Yii2Oauth2Server\Oauth2Module::createClient()` has changed.
   The `$type` and `$secret` parameters have been moved and `$secret` is now optional.
   If you use this method you'll need to update it accordingly.
+
+* The namespace for the User identity model interfaces has changed  
+  from `rhertogh\Yii2Oauth2Server\interfaces\models`  
+  to `rhertogh\Yii2Oauth2Server\interfaces\models\external\user`  
+  
+  This affects the following interfaces:
+  * `Oauth2PasswordGrantUserInterface`
+  * `Oauth2OidcUserSessionStatusInterface`
+  * `Oauth2UserInterface`
+  * `Oauth2OidcUserInterface`
+  
+  You will have to update their imports (`use` statements) in your User identity model accordingly.

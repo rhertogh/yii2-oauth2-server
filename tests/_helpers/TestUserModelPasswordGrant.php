@@ -3,7 +3,7 @@
 namespace Yii2Oauth2ServerTests\_helpers;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2PasswordGrantUserInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2PasswordGrantUserInterface;
 use Yii;
 
 class TestUserModelPasswordGrant extends TestUserModel implements

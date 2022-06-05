@@ -6,7 +6,7 @@ use GuzzleHttp\Psr7\ServerRequest;
 use League\OAuth2\Server\ResponseTypes\BearerTokenResponse;
 use Psr\Http\Message\ServerRequestInterface;
 use rhertogh\Yii2Oauth2Server\components\server\grants\Oauth2RefreshTokenGrant;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2OidcUserSessionStatusInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserSessionStatusInterface;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii2Oauth2ServerTests\_helpers\TestUserModel;

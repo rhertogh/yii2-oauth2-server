@@ -33,12 +33,14 @@ In order to support OIDC your User Identity Class (a.k.a. the User Model) must i
 namespace app\models;
 //...
 use yii\web\IdentityInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2OidcUserInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserInterface;
 use rhertogh\Yii2Oauth2Server\traits\models\Oauth2OidcUserIdentityTrait;
 use rhertogh\Yii2Oauth2Server\traits\models\Oauth2UserIdentityTrait;
 //...
 
-class User extends ActiveRecord implements IdentityInterface, Oauth2UserInterface
+class User extends ActiveRecord implements 
+    IdentityInterface,
+    Oauth2OidcUserInterface # Replaces the `Oauth2UserInterface`
 {
     use Oauth2UserIdentityTrait; # Helper trait for Oauth2UserInterface 
     use Oauth2OidcUserIdentityTrait; # You can use the trait or implement the Oauth2UserInterface yourself.

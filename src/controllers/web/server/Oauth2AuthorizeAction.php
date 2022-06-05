@@ -2,7 +2,6 @@
 
 namespace rhertogh\Yii2Oauth2Server\controllers\web\server;
 
-use GuzzleHttp\Psr7\Response as Psr7Response;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ServerController;
 use rhertogh\Yii2Oauth2Server\controllers\web\server\base\Oauth2BaseServerAction;
@@ -13,6 +12,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAu
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\request\Oauth2OidcAuthenticationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\user\Oauth2OidcUserComponentInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserAuthenticatedAtInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
@@ -31,7 +31,6 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
     {
         try {
             $request = Yii::$app->request;
-            /** @var yii\web\User $user */
             $user = Yii::$app->user;
             $module = $this->controller->module;
 
@@ -184,8 +183,9 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
             }
 
             // Check if reauthentication is required.
-            if (
-                (
+            $reauthenticationRequired = false;
+            if (!$clientAuthorizationRequest->wasUserAthenticatedDuringRequest()) {
+                if (
                     (// true in case user was authenticated before request and oidc prompt requires login.
                         in_array(
                             Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_LOGIN,
@@ -193,17 +193,34 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
                         )
                         && $clientAuthorizationRequest->wasUserAuthenticatedBeforeRequest()
                     )
-                    ||
-                    (// true in case oidc max_age is set and the user was authenticated before the maximum time allowed.
-                        $clientAuthorizationRequest->getMaxAge() !== null
-                        && (
-                            (time() - $module->getUserIdentity()->getLatestAuthenticatedAt()->getTimestamp())
-                            > $clientAuthorizationRequest->getMaxAge()
+                ) {
+                    $reauthenticationRequired = true;
+                }
+
+                if (
+                    !$reauthenticationRequired // Prevent unnecessary checking.
+                    && $clientAuthorizationRequest->getMaxAge() !== null
+                ) {
+                    $appUserIdentity = $module->getUserIdentity();
+                    if (!($appUserIdentity instanceof Oauth2UserAuthenticatedAtInterface)) {
+                        throw new InvalidConfigException(
+                            'The authorization request max age is set, but ' . get_class($appUserIdentity)
+                            . ' does not implement ' . Oauth2UserAuthenticatedAtInterface::class
+                        );
+                    }
+                    $latestAuthenticatedAt = $appUserIdentity->getLatestAuthenticatedAt();
+                    if (
+                        ($latestAuthenticatedAt === null)
+                        || ( // if $latestAuthenticatedAt is not null, check if it's before the max time allowed.
+                            (time() - $latestAuthenticatedAt->getTimestamp()) > $clientAuthorizationRequest->getMaxAge()
                         )
-                    )
-                )
-                && !$clientAuthorizationRequest->wasUserAthenticatedDuringRequest()
-            ) {
+                    ) {
+                        $reauthenticationRequired = true;
+                    }
+                }
+            }
+
+            if ($reauthenticationRequired) {
                 // Prevent redirect loop.
                 $redirectAttempt = (int)$request->get('redirectAttempt', 0);
                 if ($redirectAttempt > 3) {

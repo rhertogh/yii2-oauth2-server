@@ -5,8 +5,8 @@ namespace rhertogh\Yii2Oauth2Server\components\repositories;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use rhertogh\Yii2Oauth2Server\components\repositories\base\Oauth2BaseRepository;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2UserRepositoryInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2PasswordGrantUserInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2PasswordGrantUserInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;
 use yii\base\InvalidConfigException;
 
 class Oauth2UserRepository extends Oauth2BaseRepository implements Oauth2UserRepositoryInterface

@@ -28,7 +28,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2AccessTok
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ConsentControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\filters\auth\Oauth2HttpBearerAuthInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;

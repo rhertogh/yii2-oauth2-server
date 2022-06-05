@@ -134,11 +134,12 @@ User Identity Class
 -------------------
 In order to support Oauth 2 your User Identity Class (a.k.a. the User Model) must implement
 `rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserInterface`
+
 ```php
 <?php
 namespace app\models;
 //...
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;
 use rhertogh\Yii2Oauth2Server\traits\models\Oauth2UserIdentityTrait;
 //...
 

@@ -75,7 +75,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AuthCodeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AuthCodeScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2OidcUserInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2RefreshTokenInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserClientInterface;

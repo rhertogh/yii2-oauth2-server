@@ -30,10 +30,11 @@ interface Oauth2BaseActiveQueryInterface extends ActiveQueryInterface
      * Note that because a JOIN query will be performed, you are responsible to disambiguate column names.
      *
      * This method differs from [[with()]] in that it will build up and execute a JOIN SQL statement
-     * for the primary table. And when `$eagerLoading` is true, it will call [[with()]] in addition with the specified relations.
+     * for the primary table. And when `$eagerLoading` is true, it will call [[with()]] in addition with the
+     * specified relations.
      *
-     * @param string|array $with the relations to be joined. This can either be a string, representing a relation name or
-     * an array with the following semantics:
+     * @param string|array $with the relations to be joined. This can either be a string, representing a relation name
+     * or an array with the following semantics:
      *
      * - Each array element represents a single relation.
      * - You may specify the relation name as the array key and provide an anonymous functions that

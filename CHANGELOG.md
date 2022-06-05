@@ -9,6 +9,8 @@ Yii2-Oauth2-Server Change Log
 - Bugfix: Accept string array for `$scopes` parameter in `Oauth2Module::createClient` (rhertogh)
 - Enh: Changed signature for `Oauth2Module::createClient` to make `$secret` optional (rhertogh)
 - Enh: Added `Oauth2ClientInterface::setGrantTypes()` (rhertogh)
+- Enh: Support `Oauth2BaseClientAuthorizationRequest` "Max Age" without OIDC (rhertogh)
+
 
 1.0.0-alpha2 (2022-05-27)
 -------------------------
@@ -21,6 +23,7 @@ Yii2-Oauth2-Server Change Log
 - Bugfix: Type-casted the type so the `Oauth2Client::isConfidential()` function works as intended (Roosh Ak)
 - Added Support for PHP 8.1 (rhertogh)
 - Enh: Added `Oauth2Module::createClient()` method to aid in the programmatic creation of clients (rhertogh)
+
 
 1.0.0-alpha (2021-11-11)
 ------------------------

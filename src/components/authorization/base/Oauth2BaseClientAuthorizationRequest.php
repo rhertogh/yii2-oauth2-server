@@ -3,7 +3,7 @@
 namespace rhertogh\Yii2Oauth2Server\components\authorization\base;
 
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\base\InvalidArgumentException;
 use yii\base\InvalidCallException;
