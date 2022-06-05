@@ -13,7 +13,7 @@ interface Oauth2AccessTokenScopeQueryInterface extends Oauth2BaseActiveQueryInte
 {
     /**
      * @inheritDoc
-     * @return Oauth2AccessTokenScopeInterface
+     * @return Oauth2AccessTokenScopeInterface|array|null
      */
     public function one($db = null);
 

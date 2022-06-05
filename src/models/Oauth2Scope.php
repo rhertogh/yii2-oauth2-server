@@ -49,7 +49,7 @@ class Oauth2Scope extends base\Oauth2Scope implements Oauth2ScopeInterface
      */
     public function getRequiredOnAuthorization()
     {
-        return $this->required_on_authorization;
+        return $this->required_on_authorization === null ? null : (bool)$this->required_on_authorization;
     }
 
     /**

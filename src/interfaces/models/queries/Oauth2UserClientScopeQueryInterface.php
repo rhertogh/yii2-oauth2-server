@@ -13,7 +13,7 @@ interface Oauth2UserClientScopeQueryInterface extends Oauth2BaseActiveQueryInter
 {
     /**
      * @inheritDoc
-     * @return Oauth2UserClientScopeInterface
+     * @return Oauth2UserClientScopeInterface|array|null
      */
     public function one($db = null);
 

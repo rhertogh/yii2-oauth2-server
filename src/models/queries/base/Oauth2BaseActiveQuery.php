@@ -9,24 +9,6 @@ class Oauth2BaseActiveQuery extends ActiveQuery implements Oauth2BaseActiveQuery
 {
     /**
      * @inheritdoc
-     * @return static[]|array
-     */
-    public function all($db = null)
-    {
-        return parent::all($db);
-    }
-
-    /**
-     * @inheritdoc
-     * @return static|array|null
-     */
-    public function one($db = null)
-    {
-        return parent::one($db);
-    }
-
-    /**
-     * @inheritdoc
      */
     public function getVia()
     {

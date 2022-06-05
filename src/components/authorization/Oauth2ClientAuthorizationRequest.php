@@ -43,12 +43,12 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
     protected $_client = null;
 
     /**
-     * @var Oauth2ScopeAuthorizationRequestInterface[]
+     * @var Oauth2ScopeAuthorizationRequestInterface[]|null
      */
     protected $_scopeAuthorizationRequests = null;
 
     /**
-     * @var Oauth2ScopeInterface[]
+     * @var Oauth2ScopeInterface[]|null
      */
     protected $_scopesAppliedByDefaultAutomatically = null;
 

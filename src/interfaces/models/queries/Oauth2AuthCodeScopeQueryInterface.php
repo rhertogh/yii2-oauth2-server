@@ -13,7 +13,7 @@ interface Oauth2AuthCodeScopeQueryInterface extends Oauth2BaseActiveQueryInterfa
 {
     /**
      * @inheritDoc
-     * @return Oauth2AuthCodeScopeInterface
+     * @return Oauth2AuthCodeScopeInterface|array|null
      */
     public function one($db = null);
 

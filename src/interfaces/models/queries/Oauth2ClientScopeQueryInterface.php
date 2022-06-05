@@ -16,7 +16,7 @@ interface Oauth2ClientScopeQueryInterface extends
 {
     /**
      * @inheritDoc
-     * @return Oauth2ClientScopeInterface
+     * @return Oauth2ClientScopeInterface|array|null
      */
     public function one($db = null);
 

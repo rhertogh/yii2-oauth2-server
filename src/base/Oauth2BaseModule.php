@@ -298,41 +298,11 @@ abstract class Oauth2BaseModule extends Module
     ];
 
     /**
-     * Cache for the Access Token Repository
-     * @var Oauth2AccessTokenRepositoryInterface|null
+     * Cache for the Repositories
+     * @var Oauth2RepositoryInterface[]
      * @since 1.0.0
      */
-    protected $_accessTokenRepository;
-    /**
-     * Cache for the Auth Code Repository
-     * @var Oauth2AuthCodeRepositoryInterface|null
-     * @since 1.0.0
-     */
-    protected $_authCodeRepository;
-    /**
-     * Cache for the Client Repository
-     * @var Oauth2ClientRepositoryInterface|null
-     * @since 1.0.0
-     */
-    protected $_clientRepository;
-    /**
-     * Cache for the Refresh Token Repository
-     * @var Oauth2RefreshTokenRepositoryInterface|null
-     * @since 1.0.0
-     */
-    protected $_refreshTokenRepository;
-    /**
-     * Cache for the Scope Repository
-     * @var Oauth2ScopeRepositoryInterface|null
-     * @since 1.0.0
-     */
-    protected $_scopeRepository;
-    /**
-     * Cache for the User Repository
-     * @var Oauth2UserRepositoryInterface|null
-     * @since 1.0.0
-     */
-    protected $_userRepository;
+    protected $_repositories;
 
     /**
      * Claims for the current request
@@ -412,7 +382,7 @@ abstract class Oauth2BaseModule extends Module
      */
     public function getAccessTokenRepository(): Oauth2AccessTokenRepositoryInterface
     {
-        return $this->getRepository(Oauth2AccessTokenRepositoryInterface::class, $this->_accessTokenRepository);
+        return $this->getRepository(Oauth2AccessTokenRepositoryInterface::class);
     }
 
     /**
@@ -421,7 +391,7 @@ abstract class Oauth2BaseModule extends Module
      */
     public function getAuthCodeRepository(): Oauth2AuthCodeRepositoryInterface
     {
-        return $this->getRepository(Oauth2AuthCodeRepositoryInterface::class, $this->_authCodeRepository);
+        return $this->getRepository(Oauth2AuthCodeRepositoryInterface::class);
     }
 
     /**
@@ -430,7 +400,7 @@ abstract class Oauth2BaseModule extends Module
      */
     public function getClientRepository(): Oauth2ClientRepositoryInterface
     {
-        return $this->getRepository(Oauth2ClientRepositoryInterface::class, $this->_clientRepository);
+        return $this->getRepository(Oauth2ClientRepositoryInterface::class);
     }
 
     /**
@@ -439,7 +409,7 @@ abstract class Oauth2BaseModule extends Module
      */
     public function getRefreshTokenRepository(): Oauth2RefreshTokenRepositoryInterface
     {
-        return $this->getRepository(Oauth2RefreshTokenRepositoryInterface::class, $this->_refreshTokenRepository);
+        return $this->getRepository(Oauth2RefreshTokenRepositoryInterface::class);
     }
 
     /**
@@ -448,7 +418,7 @@ abstract class Oauth2BaseModule extends Module
      */
     public function getScopeRepository(): Oauth2ScopeRepositoryInterface
     {
-        return $this->getRepository(Oauth2ScopeRepositoryInterface::class, $this->_scopeRepository);
+        return $this->getRepository(Oauth2ScopeRepositoryInterface::class);
     }
 
     /**
@@ -457,25 +427,24 @@ abstract class Oauth2BaseModule extends Module
      */
     public function getUserRepository(): Oauth2UserRepositoryInterface
     {
-        return $this->getRepository(Oauth2UserRepositoryInterface::class, $this->_userRepository);
+        return $this->getRepository(Oauth2UserRepositoryInterface::class);
     }
 
     /**
      * Get a repository by class.
-     * @param Oauth2RepositoryInterface|string $class
-     * @param Oauth2RepositoryInterface|null $repositoryCache
-     * @return Oauth2RepositoryInterface
+     * @template T of Oauth2RepositoryInterface
+     * @param class-string<T> $class
+     * @return T
      * @throws \yii\base\InvalidConfigException
      * @since 1.0.0
      */
-    protected function getRepository($class, &$repositoryCache)
+    protected function getRepository($class)
     {
-        if (empty($repositoryCache)) {
-            /** @var Oauth2RepositoryInterface $repositoryCache */
-            $repositoryCache = Yii::createObject($class);
-            $repositoryCache->setModule($this);
+        if (empty($this->_repositories[$class])) {
+            $this->_repositories[$class] = Yii::createObject($class);
+            $this->_repositories[$class]->setModule($this);
         }
-        return $repositoryCache;
+        return $this->_repositories[$class];
     }
 
     /**

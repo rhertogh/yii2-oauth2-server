@@ -16,7 +16,7 @@ interface Oauth2ScopeQueryInterface extends
 {
     /**
      * @inheritDoc
-     * @return Oauth2ScopeInterface
+     * @return Oauth2ScopeInterface|array|null
      */
     public function one($db = null);
 

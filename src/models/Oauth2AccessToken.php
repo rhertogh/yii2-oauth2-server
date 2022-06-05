@@ -7,6 +7,7 @@ use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\Traits\AccessTokenTrait;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenScopeInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use rhertogh\Yii2Oauth2Server\models\behaviors\DateTimeBehavior;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2ActiveRecordIdTrait;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2ClientRelationTrait;
@@ -20,7 +21,7 @@ use yii\helpers\ArrayHelper;
 /**
  * @property DateTimeImmutable $expiry_date_time
  * @property Oauth2Client $clientRelation
- * @property Oauth2Scope[] $scopesRelation
+ * @property Oauth2ScopeInterface[] $scopesRelation
  */
 class Oauth2AccessToken extends base\Oauth2AccessToken implements Oauth2AccessTokenInterface
 {

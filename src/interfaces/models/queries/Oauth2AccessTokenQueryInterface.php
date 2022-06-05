@@ -13,7 +13,7 @@ interface Oauth2AccessTokenQueryInterface extends Oauth2BaseActiveQueryInterface
 {
     /**
      * @inheritDoc
-     * @return Oauth2AccessTokenInterface
+     * @return Oauth2AccessTokenInterface|array|null
      */
     public function one($db = null);
 

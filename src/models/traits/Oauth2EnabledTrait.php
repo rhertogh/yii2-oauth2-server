@@ -9,7 +9,7 @@ trait Oauth2EnabledTrait
      */
     public function isEnabled()
     {
-        return $this->enabled;
+        return (bool)$this->enabled;
     }
 
     /**
@@ -17,6 +17,6 @@ trait Oauth2EnabledTrait
      */
     public function setEnabled($isEnabled)
     {
-        $this->enabled = $isEnabled;
+        $this->enabled = (int)$isEnabled;
     }
 }

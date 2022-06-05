@@ -13,7 +13,7 @@ interface Oauth2ClientQueryInterface extends Oauth2BaseActiveQueryInterface
 {
     /**
      * @inheritDoc
-     * @return Oauth2ClientInterface
+     * @return Oauth2ClientInterface|array|null
      */
     public function one($db = null);
 

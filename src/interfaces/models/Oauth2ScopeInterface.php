@@ -62,7 +62,7 @@ interface Oauth2ScopeInterface extends
     /**
      * Get ClientScope relation for a specific client.
      * @param int $clientId
-     * @return Oauth2ClientScopeInterface
+     * @return Oauth2ClientScopeInterface|null
      * @since 1.0.0
      */
     public function getClientScope($clientId);

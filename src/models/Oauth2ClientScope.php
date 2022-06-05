@@ -20,6 +20,6 @@ class Oauth2ClientScope extends base\Oauth2ClientScope implements Oauth2ClientSc
      */
     public function getRequiredOnAuthorization()
     {
-        return $this->required_on_authorization;
+        return $this->required_on_authorization === null ? null : (bool)$this->required_on_authorization;
     }
 }

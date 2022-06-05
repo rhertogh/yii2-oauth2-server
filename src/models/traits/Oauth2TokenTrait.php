@@ -9,7 +9,7 @@ trait Oauth2TokenTrait
      */
     public function setRevokedStatus($isRevoked)
     {
-        $this->enabled = !$isRevoked;
+        $this->enabled = (int)!$isRevoked;
     }
 
     /**

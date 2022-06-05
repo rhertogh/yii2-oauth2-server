@@ -378,7 +378,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     public $openIdConnectIssueRefreshTokenWithoutOfflineAccessScope = false;
 
     /**
-     * @var bool The default option for "User Account Selection' when not specified for a client.
+     * @var int The default option for "User Account Selection' when not specified for a client.
      * @since 1.0.0
      */
     public $defaultUserAccountSelection = self::USER_ACCOUNT_SELECTION_DISABLED;
