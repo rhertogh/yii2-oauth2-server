@@ -1,0 +1,27 @@
+includes:
+    - vendor/proget-hq/phpstan-yii2/extension.neon
+
+parameters:
+
+    level: 0
+
+    paths:
+        - src
+#        - tests
+
+    excludePaths:
+        -   sample/runtime
+        -   tests/_runtime
+        -   sample/dev/giiant/generators/model/templates
+        -   src/models/base
+        -   src/exceptions/Oauth2OidcServerException.php # https://github.com/phpstan/phpstan/issues/6007
+        -   src/exceptions/Oauth2UniqueTokenIdentifierConstraintViolationException.php # https://github.com/phpstan/phpstan/issues/6007
+
+    scanFiles:
+        - vendor/yiisoft/yii2/Yii.php
+
+    yii2:
+        config_path: sample/config/site.php
+
+#    autoload_files:
+#        - vendor/yiisoft/yii2/Yii.php

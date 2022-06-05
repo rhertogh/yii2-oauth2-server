@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "77c15d379305ea935511f1558be6782c",
+    "content-hash": "1db90ec3109a374951b852b88a9879be",
     "packages": [
         {
             "name": "bower-asset/inputmask",
@@ -3900,6 +3900,65 @@
             "time": "2021-12-08T12:19:24+00:00"
         },
         {
+            "name": "phpstan/phpstan",
+            "version": "1.7.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "25e069474cf00215b0f64c60a26230908ef3eefa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/25e069474cf00215b0f64c60a26230908ef3eefa",
+                "reference": "25e069474cf00215b0f64c60a26230908ef3eefa",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0"
+            },
+            "conflict": {
+                "phpstan/phpstan-shim": "*"
+            },
+            "bin": [
+                "phpstan",
+                "phpstan.phar"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan - PHP Static Analysis Tool",
+            "support": {
+                "issues": "https://github.com/phpstan/phpstan/issues",
+                "source": "https://github.com/phpstan/phpstan/tree/1.7.10"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/phpstan",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/phpstan",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-06-03T14:12:23+00:00"
+        },
+        {
             "name": "phpunit/php-code-coverage",
             "version": "9.2.15",
             "source": {
@@ -4319,6 +4378,58 @@
                 }
             ],
             "time": "2022-04-01T12:37:26+00:00"
+        },
+        {
+            "name": "proget-hq/phpstan-yii2",
+            "version": "0.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/proget-hq/phpstan-yii2.git",
+                "reference": "b9db74c3ad5637476abf442e60c904d5cc800eea"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/proget-hq/phpstan-yii2/zipball/b9db74c3ad5637476abf442e60c904d5cc800eea",
+                "reference": "b9db74c3ad5637476abf442e60c904d5cc800eea",
+                "shasum": ""
+            },
+            "require": {
+                "nikic/php-parser": "^4.1.0",
+                "php": "^7.2|^8.0",
+                "phpstan/phpstan": "^1.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.1",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^8.0",
+                "yiisoft/yii2": "^2.0.42"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Proget\\PHPStan\\Yii2\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Arkadiusz Kondas",
+                    "email": "arkadiusz.kondas@gmail.com"
+                },
+                {
+                    "name": "Marcin Michalski",
+                    "email": "marcin@michalski.dev"
+                }
+            ],
+            "description": "Yii2 extension for PHPStan",
+            "support": {
+                "issues": "https://github.com/proget-hq/phpstan-yii2/issues",
+                "source": "https://github.com/proget-hq/phpstan-yii2/tree/0.8.0"
+            },
+            "time": "2022-01-10T14:49:26+00:00"
         },
         {
             "name": "psr/cache",

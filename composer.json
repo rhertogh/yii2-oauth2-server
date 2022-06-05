@@ -45,7 +45,8 @@
         "web-token/jwt-signature-algorithm-ecdsa": "~2.2.11",
         "web-token/jwt-signature-algorithm-rsa": "~2.2.11",
         "squizlabs/php_codesniffer": "3.*",
-        "friendsofphp/php-cs-fixer": "^3.8"
+        "friendsofphp/php-cs-fixer": "^3.8",
+        "proget-hq/phpstan-yii2": "*"
     },
     "autoload": {
         "psr-4": {
@@ -76,7 +77,8 @@
         "phpcs": "vendor/bin/phpcs",
         "phpcbf": "vendor/bin/phpcbf",
         "phpcsf-view": "vendor/bin/php-cs-fixer fix --dry-run -v",
-        "phpcsf-fix": "vendor/bin/php-cs-fixer fix"
+        "phpcsf-fix": "vendor/bin/php-cs-fixer fix",
+        "phpstan": "vendor/bin/phpstan"
     },
     "config": {
         "process-timeout": 1800,

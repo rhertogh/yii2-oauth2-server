@@ -39,5 +39,9 @@ tests/_data/*.local.sql
 # PHP_CodeSniffer
 .phpcs.xml
 
+# PHP CS Fixer
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
+
+# PHP Stan
+phpstan.neon
