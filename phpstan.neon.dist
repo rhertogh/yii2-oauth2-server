@@ -3,7 +3,7 @@ includes:
 
 parameters:
 
-    level: 0
+    level: 1
 
     paths:
         - src
@@ -16,6 +16,7 @@ parameters:
         -   src/models/base
         -   src/exceptions/Oauth2OidcServerException.php # https://github.com/phpstan/phpstan/issues/6007
         -   src/exceptions/Oauth2UniqueTokenIdentifierConstraintViolationException.php # https://github.com/phpstan/phpstan/issues/6007
+        -   src/controllers/console/migrations/generate
 
     scanFiles:
         - vendor/yiisoft/yii2/Yii.php

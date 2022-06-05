@@ -47,7 +47,7 @@ class Oauth2OidcUserinfoAction extends Action
         $clientIdentifier = $module->getRequestOauthClientIdentifier();
         $client = $module->getClientRepository()->getClientEntity($clientIdentifier);
 
-        if (empty($client) || !$client->isEnabled()) {
+        if (!$client || !$client->isEnabled()) {
             throw new ForbiddenHttpException('Client "' . $clientIdentifier . '" not found or disabled.');
         }
 

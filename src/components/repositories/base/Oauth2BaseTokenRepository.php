@@ -4,6 +4,7 @@ namespace rhertogh\Yii2Oauth2Server\components\repositories\base;
 
 use rhertogh\Yii2Oauth2Server\exceptions\Oauth2UniqueTokenIdentifierConstraintViolationException;
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
+use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\base\Oauth2ModelRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ActiveRecordInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2IdentifierInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ScopeRelationInterface;
@@ -14,7 +15,7 @@ use yii\base\InvalidConfigException;
 use yii\db\Connection;
 use yii\helpers\ArrayHelper;
 
-abstract class Oauth2BaseTokenRepository extends Oauth2BaseRepository
+abstract class Oauth2BaseTokenRepository extends Oauth2BaseRepository implements Oauth2ModelRepositoryInterface
 {
     /**
      * Create a new token based on the model class.
@@ -118,6 +119,6 @@ abstract class Oauth2BaseTokenRepository extends Oauth2BaseRepository
     {
         /** @var Oauth2TokenInterface  $token */
         $token = $this->findModelByIdentifier($tokenIdentifier);
-        return empty($token) || $token->getRevokedStatus();
+        return !$token || $token->getRevokedStatus();
     }
 }

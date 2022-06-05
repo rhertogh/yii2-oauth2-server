@@ -10,6 +10,7 @@ use yii\widgets\ActiveForm;
  * @var Oauth2ScopeAuthorizationRequestInterface[] $scopeRequests
  * @var ActiveForm $form
  */
+?><?php // Workaround for https://github.com/phpstan/phpstan/issues/6688
 
 foreach ($scopeRequests as $scopeRequest) : ?>
     <hr>

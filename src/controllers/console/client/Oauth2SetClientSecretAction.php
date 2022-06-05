@@ -39,7 +39,7 @@ class Oauth2SetClientSecretAction extends Action
 
         /** @var Oauth2ClientInterface $client */
         $client = $module->getClientRepository()->findModelByIdentifier($identifier);
-        if (empty($client)) {
+        if (!$client) {
             throw new InvalidCallException('No client with identifier "' . $identifier . '" found.');
         }
 

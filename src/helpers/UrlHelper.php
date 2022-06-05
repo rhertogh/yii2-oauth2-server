@@ -35,7 +35,7 @@ class UrlHelper
             (isset($parts['host']) ? "{$parts['host']}" : '') .
             (isset($parts['port']) ? ":{$parts['port']}" : '') .
             (isset($parts['path']) ? "{$parts['path']}" : '') .
-            (isset($queryString) ? "?$queryString" : '') .
+            (!empty($queryString) ? "?$queryString" : '') .
             (isset($parts['fragment']) ? "#{$parts['fragment']}" : '');
     }
 }
