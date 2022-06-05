@@ -10,7 +10,7 @@ class DiHelper
 {
     /**
      * Resolve a class or interface to the configured class name.
-     * @param $class
+     * @param Instance|callable|string|object|array $class
      * @return mixed|string
      * @throws InvalidConfigException
      * @since 1.0.0
@@ -46,7 +46,7 @@ class DiHelper
 
     /**
      * Resolves a class name and, in case of an interface, ensure that the concrete class implements the interface.
-     * @param $class
+     * @param Instance|callable|string|object|array $class
      * @return string
      * @throws InvalidConfigException
      * @see getClassName()

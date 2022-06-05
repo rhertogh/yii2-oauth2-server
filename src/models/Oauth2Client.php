@@ -238,7 +238,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
         $query = static::find()->andWhere(['NOT', array_fill_keys($encryptedAttributes, null)]);
 
         $keyUsage = [];
-        foreach ($query->each() as $client) { /** @var  static $client */
+        foreach ($query->each() as $client) {
             foreach ($encryptedAttributes as $encryptedAttribute) {
                 $data = $client->$encryptedAttribute;
                 if (!empty($data)) {

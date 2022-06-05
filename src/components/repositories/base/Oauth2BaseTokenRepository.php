@@ -35,7 +35,7 @@ abstract class Oauth2BaseTokenRepository extends Oauth2BaseRepository implements
     }
 
     /**
-     * @param Oauth2ActiveRecordInterface|Oauth2IdentifierInterface|Oauth2ScopeRelationInterface $model
+     * @param Oauth2ActiveRecordInterface&Oauth2IdentifierInterface $model
      * @throws InvalidConfigException
      * @throws Oauth2UniqueTokenIdentifierConstraintViolationException
      * @throws \yii\db\Exception
@@ -67,9 +67,9 @@ abstract class Oauth2BaseTokenRepository extends Oauth2BaseRepository implements
             $model->persist();
             if ($model instanceof Oauth2ScopeRelationInterface) {
                 $scopeRelation = $model->getScopesRelation();
-                $scopeViaRelation = $scopeRelation->via;
+                $scopeViaRelation = $scopeRelation->getVia();
                 if (is_array($scopeViaRelation)) {
-                    $scopeViaRelation = $scopeRelation->via[1];
+                    $scopeViaRelation = $scopeViaRelation[1];
                 }
                 $scopeRelationFkColumn = array_key_first($scopeViaRelation->link);
                 $modelPk = $model->getPrimaryKey();

@@ -376,7 +376,7 @@ interface Oauth2ClientAuthorizationRequestInterface extends Configurable
 
     /**
      * Populates the model with user input data.
-     * @param $data
+     * @param array $data
      * @param string|null $formName
      * @return bool
      * @see \yii\base\Model::load()

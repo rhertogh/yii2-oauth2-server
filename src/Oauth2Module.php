@@ -925,7 +925,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
 
     /**
      * Get a previously stored Client Authorization Request from the session.
-     * @param $requestId
+     * @param string $requestId
      * @return Oauth2ClientAuthorizationRequestInterface|null
      * @since 1.0.0
      */
@@ -974,7 +974,8 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
 
     /**
      * Stores whether the user was authenticated during the completion of the Client Authorization Request.
-     * @param Oauth2ClientAuthorizationRequestInterface $clientAuthorizationRequest
+     * @param string $clientAuthorizationRequestId
+     * @param bool $authenticatedDuringRequest
      * @since 1.0.0
      */
     public function setUserAuthenticatedDuringClientAuthRequest(
@@ -1021,7 +1022,6 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
      * Generates a redirect Response when the Client Authorization Request is completed.
      * @param Oauth2ClientAuthorizationRequestInterface $clientAuthorizationRequest
      * @return Response
-     * @throws InvalidConfigException
      * @since 1.0.0
      */
     public function generateClientAuthReqCompledRedirectResponse($clientAuthorizationRequest)
@@ -1118,7 +1118,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
 
     /**
      * Helper function to ensure the required properties are configured for the module.
-     * @param $properties
+     * @param string[] $properties
      * @throws InvalidConfigException
      * @since 1.0.0
      */

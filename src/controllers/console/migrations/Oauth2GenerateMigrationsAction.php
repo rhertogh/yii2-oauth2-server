@@ -164,8 +164,8 @@ class Oauth2GenerateMigrationsAction extends Action
     }
 
     /**
-     * @param $migrationPath
-     * @param $namespace
+     * @param string $migrationPath
+     * @param string $namespace
      * @return string[]|Oauth2BaseMigration[]
      */
     protected function getSourceMigrationClasses($migrationPath, $namespace)
@@ -212,7 +212,7 @@ class Oauth2GenerateMigrationsAction extends Action
     }
 
     /**
-     * @param $migrationsNamespace
+     * @param string $migrationsNamespace
      * @param string $sourceMigrationName
      * @return string
      */

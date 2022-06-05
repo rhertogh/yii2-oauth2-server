@@ -10,7 +10,6 @@ use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2EncryptedStorageInter
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2IdentifierInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ClientQueryInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
-use yii\db\ActiveQuery;
 
 interface Oauth2ClientInterface extends
     Oauth2ActiveRecordIdInterface,
@@ -216,11 +215,10 @@ interface Oauth2ClientInterface extends
      * Warning! Enabling this setting might introduce privacy concerns since the client could poll for the online status
      * of a user.
      *
-     * @var bool If this setting is disabled in case of OpenID Connect Context the Access Token won't include a
+     * @return bool If this setting is disabled in case of OpenID Connect Context the Access Token won't include a
      * Refresh Token when the 'offline_access' scope is not included in the authorization request.
      * In some cases it might be needed to always include a Refresh Token, in that case enable this setting and
      * implement the `Oauth2OidcUserSessionStatusInterface` on the User Identity model.
-     * @return bool
      * @since 1.0.0
      */
     public function getOpenIdConnectAllowOfflineAccessWithoutConsent();

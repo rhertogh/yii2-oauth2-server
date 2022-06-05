@@ -13,7 +13,6 @@ interface Oauth2EncryptorInterface
 
     /**
      * Get the name of the default encryption key.
-     * @param string $defaultKeyName
      * @see setDefaultKeyName()
      * @since 1.0.0
      */
@@ -21,7 +20,7 @@ interface Oauth2EncryptorInterface
 
     /**
      * Set the name of the default encryption key (must be present in the available keys).
-     * @param string $defaultKeyName
+     * @param string $name
      * @see setKeys()
      * @since 1.0.0
      */
@@ -51,7 +50,7 @@ interface Oauth2EncryptorInterface
     /**
      * Parses the raw data into a keyName and ciphertext
      *
-     * @param $data
+     * @param string $data
      * @return false|array{keyName: string, ciphertext: string}
      * @since 1.0.0
      */

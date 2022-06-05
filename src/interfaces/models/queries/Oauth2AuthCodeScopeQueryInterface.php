@@ -2,8 +2,30 @@
 
 namespace rhertogh\Yii2Oauth2Server\interfaces\models\queries;
 
-use yii\db\ActiveQueryInterface;
+// phpcs:disable Generic.Files.LineLength.TooLong
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AuthCodeScopeInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\queries\base\BatchQueryResult\Oauth2AuthCodeScopeBatchQueryResultInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\queries\base\Oauth2BaseActiveQueryInterface;
 
-interface Oauth2AuthCodeScopeQueryInterface extends ActiveQueryInterface
+// phpcs:enable Generic.Files.LineLength.TooLong
+
+interface Oauth2AuthCodeScopeQueryInterface extends Oauth2BaseActiveQueryInterface
 {
+    /**
+     * @inheritDoc
+     * @return Oauth2AuthCodeScopeInterface
+     */
+    public function one($db = null);
+
+    /**
+     * @inheritDoc
+     * @return Oauth2AuthCodeScopeInterface[]
+     */
+    public function all($db = null);
+
+    /**
+     * @inheritDoc
+     * @return Oauth2AuthCodeScopeBatchQueryResultInterface
+     */
+    public function each($batchSize = 100, $db = null);
 }

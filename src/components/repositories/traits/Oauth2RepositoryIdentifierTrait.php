@@ -17,14 +17,14 @@ trait Oauth2RepositoryIdentifierTrait
 
     /**
      * @inheritDoc
-     * @param string $tokenIdentifier
+     * @param string $identifier
      * @return Oauth2IdentifierInterface
      * @throws InvalidConfigException
      */
     public function findModelByIdentifier($identifier)
     {
         $class = $this->getModelClass();
-        /** @var Oauth2IdentifierInterface $className */
+        /** @var Oauth2IdentifierInterface|string $className */
         $className = DiHelper::getValidatedClassName($class);
 
         $result = $className::findByIdentifier($identifier);

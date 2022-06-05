@@ -157,7 +157,7 @@ interface Oauth2OidcScopeInterface extends Configurable
      * @return $this
      * @since 1.0.0
      */
-    public function addClaim(Oauth2OidcClaimInterface $claim);
+    public function addClaim($claim);
 
     /**
      * Remove a claim from the scope.
