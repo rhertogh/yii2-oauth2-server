@@ -19,6 +19,6 @@ class Oauth2EnabledTraitTest extends TestCase
         };
 
         $model->setEnabled(true);
-        $this->assertTrue($model->enabled);
+        $this->assertTrue($model->isEnabled());
     }
 }
