@@ -11,12 +11,12 @@ use Yii2Oauth2ServerTests\unit\TestCase;
 abstract class BaseOauth2AuthCodeGrantFactoryTest extends TestCase
 {
     /**
-     * @return Oauth2GrantTypeFactoryInterface|string
+     * @return class-string<Oauth2GrantTypeFactoryInterface>
      */
     abstract public function getFactoryInterface();
 
     /**
-     * @return GrantTypeInterface|string
+     * @return class-string<GrantTypeInterface>
      */
     abstract public function getGrantTypeClass();
 

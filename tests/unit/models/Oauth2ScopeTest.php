@@ -28,7 +28,7 @@ class Oauth2ScopeTest extends BaseOauth2ActiveRecordTest
     use Oauth2IdentifierTestTrait;
 
     /**
-     * @return Oauth2ScopeInterface|string
+     * @return class-string<Oauth2ScopeInterface>
      */
     protected function getModelInterface()
     {

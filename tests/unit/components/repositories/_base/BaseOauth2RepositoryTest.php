@@ -13,7 +13,7 @@ use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
 abstract class BaseOauth2RepositoryTest extends DatabaseTestCase
 {
     /**
-     * @return Oauth2RepositoryInterface|string
+     * @return class-string<Oauth2RepositoryInterface>
      */
     abstract protected function getModelInterface();
 
@@ -26,7 +26,7 @@ abstract class BaseOauth2RepositoryTest extends DatabaseTestCase
     }
 
     /**
-     * @return Oauth2ClientInterface|string
+     * @return class-string<Oauth2ClientInterface>
      */
     protected static function getClientClass()
     {
@@ -34,7 +34,7 @@ abstract class BaseOauth2RepositoryTest extends DatabaseTestCase
     }
 
     /**
-     * @return Oauth2ScopeInterface|string
+     * @return class-string<Oauth2ScopeInterface>
      */
     protected static function getScopeClass()
     {
@@ -42,7 +42,7 @@ abstract class BaseOauth2RepositoryTest extends DatabaseTestCase
     }
 
     /**
-     * @return Oauth2AccessTokenInterface|string
+     * @return class-string<Oauth2AccessTokenInterface>
      */
     protected static function getAccessTokenClass()
     {

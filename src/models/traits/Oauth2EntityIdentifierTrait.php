@@ -50,7 +50,7 @@ trait Oauth2EntityIdentifierTrait
      */
     public function identifierExists()
     {
-        /** @var Oauth2ActiveRecordInterface|string $modelClass */
+        /** @var class-string<Oauth2ActiveRecordInterface> $modelClass */
         $modelClass = get_class($this);
         return $modelClass::find()->andWhere(['identifier' => $this->getIdentifier()])->exists();
     }

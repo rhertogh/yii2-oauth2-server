@@ -44,7 +44,7 @@ abstract class Oauth2BaseTokenRepository extends Oauth2BaseRepository implements
     {
         $expectedModelClass = $this->getModelClass();
 
-        /** @var Oauth2ActiveRecordInterface|string $modelClass */
+        /** @var class-string<Oauth2ActiveRecordInterface> $modelClass */
         $modelClass = get_class($model);
 
         if (!($model instanceof $expectedModelClass)) {

@@ -16,12 +16,12 @@ use Yii2Oauth2ServerTests\unit\components\repositories\_base\BaseOauth2Repositor
  * @covers \rhertogh\Yii2Oauth2Server\components\repositories\Oauth2AccessTokenRepository
  * @covers \rhertogh\Yii2Oauth2Server\components\repositories\base\Oauth2BaseTokenRepository
  *
- * @method Oauth2AccessTokenInterface|string getModelClass()
+ * @method class-string<Oauth2AccessTokenInterface> getModelClass()
  */
 class Oauth2AccessTokenRepositoryTest extends BaseOauth2RepositoryTest
 {
     /**
-     * @return Oauth2AccessTokenInterface|string
+     * @return class-string<Oauth2AccessTokenInterface>
      */
     protected function getModelInterface()
     {

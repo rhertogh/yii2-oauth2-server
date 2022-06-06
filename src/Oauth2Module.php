@@ -250,7 +250,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     public $defaultStorageEncryptionKey = null;
 
     /**
-     * @var Oauth2UserInterface|string|null The Identity Class of your application,
+     * @var class-string<Oauth2UserInterface>|null The Identity Class of your application,
      * most likely the same as the 'identityClass' of your application's User Component.
      * @since 1.0.0
      */

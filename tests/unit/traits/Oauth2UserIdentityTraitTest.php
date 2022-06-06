@@ -57,7 +57,7 @@ class Oauth2UserIdentityTraitTest extends DatabaseTestCase
             ],
         ]);
 
-        /** @var Oauth2UserIdentityTrait|string $modelClass */
+        /** @var Oauth2UserIdentityTrait|class-string $modelClass */
         $modelClass = get_class(new class {
             use Oauth2UserIdentityTrait;
 

@@ -14,7 +14,7 @@ class Oauth2AuthCodeRepository extends Oauth2BaseTokenRepository implements Oaut
 
     /**
      * @inheritDoc
-     * @return Oauth2AuthCodeInterface|string
+     * @return class-string<Oauth2AuthCodeInterface>
      */
     public function getModelClass()
     {

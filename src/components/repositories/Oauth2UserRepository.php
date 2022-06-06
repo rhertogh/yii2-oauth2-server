@@ -13,7 +13,7 @@ class Oauth2UserRepository extends Oauth2BaseRepository implements Oauth2UserRep
 {
     /**
      * @inheritDoc
-     * @return Oauth2UserInterface|string
+     * @return class-string<Oauth2UserInterface>
      */
     public function getModelClass()
     {

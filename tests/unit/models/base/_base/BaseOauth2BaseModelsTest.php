@@ -57,7 +57,8 @@ abstract class BaseOauth2BaseModelsTest extends TestCase
 
     /**
      * @param string $name
-     * @param ActiveQueryInterface|string $name
+     * @param class-string<ActiveQueryInterface> $queryClass
+     * @param bool $multiple
      *
      * @dataProvider relationsProvider
      */

@@ -11,12 +11,12 @@ use Yii2Oauth2ServerTests\unit\components\repositories\_base\BaseOauth2Repositor
 /**
  * @covers \rhertogh\Yii2Oauth2Server\components\repositories\Oauth2ClientRepository
  *
- * @method Oauth2ClientInterface|string getModelClass()
+ * @method class-string<Oauth2ClientInterface> getModelClass()
  */
 class Oauth2ClientRepositoryTest extends BaseOauth2RepositoryTest
 {
     /**
-     * @return Oauth2ClientInterface|string
+     * @return class-string<Oauth2ClientInterface>
      */
     protected function getModelInterface()
     {

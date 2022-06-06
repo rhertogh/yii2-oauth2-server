@@ -20,7 +20,7 @@ class Oauth2ScopeRepository extends Oauth2BaseRepository implements Oauth2ScopeR
 
     /**
      * @inheritDoc
-     * @return Oauth2ScopeInterface|string
+     * @return class-string<Oauth2ScopeInterface>
      */
     public function getModelClass()
     {
@@ -71,7 +71,7 @@ class Oauth2ScopeRepository extends Oauth2BaseRepository implements Oauth2ScopeR
 
         $scopeIds = array_map(fn($scope) => $scope->getPrimaryKey(), $clientAllowedScopes);
 
-        /** @var Oauth2ScopeInterface|string $scopeClass */
+        /** @var class-string<Oauth2ScopeInterface> $scopeClass */
         $scopeClass = DiHelper::getValidatedClassName(Oauth2ScopeInterface::class);
 
         $approvedScopes = $scopeClass::find()

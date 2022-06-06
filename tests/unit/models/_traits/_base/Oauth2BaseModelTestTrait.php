@@ -8,7 +8,7 @@ use yii\db\ActiveRecord;
 trait Oauth2BaseModelTestTrait
 {
     /**
-     * @return Oauth2ActiveRecordInterface|string
+     * @return class-string<Oauth2ActiveRecordInterface>
      */
     abstract protected function getModelInterface();
 

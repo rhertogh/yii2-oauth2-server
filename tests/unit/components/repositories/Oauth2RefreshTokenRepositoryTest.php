@@ -14,12 +14,12 @@ use Yii2Oauth2ServerTests\unit\components\repositories\_base\BaseOauth2Repositor
  * @covers \rhertogh\Yii2Oauth2Server\components\repositories\Oauth2RefreshTokenRepository
  * @covers \rhertogh\Yii2Oauth2Server\components\repositories\base\Oauth2BaseTokenRepository
  *
- * @method Oauth2RefreshTokenInterface|string getModelClass()
+ * @method class-string<Oauth2RefreshTokenInterface> getModelClass()
  */
 class Oauth2RefreshTokenRepositoryTest extends BaseOauth2RepositoryTest
 {
     /**
-     * @return Oauth2RefreshTokenInterface|string
+     * @return class-string<Oauth2RefreshTokenInterface>
      */
     protected function getModelInterface()
     {

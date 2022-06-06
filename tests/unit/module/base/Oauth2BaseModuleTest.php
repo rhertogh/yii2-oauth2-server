@@ -56,7 +56,7 @@ class Oauth2BaseModuleTest extends TestCase
     }
 
     /**
-     * @param Oauth2GrantTypeFactoryInterface|string $factoryInterface
+     * @param class-string<Oauth2GrantTypeFactoryInterface> $factoryInterface
      * @param string $identifier
      *
      * @dataProvider defaultGrantFactoryIdentifiersProvider
@@ -93,7 +93,7 @@ class Oauth2BaseModuleTest extends TestCase
 
     /**
      * @param string $repositoryName
-     * @param Oauth2RepositoryInterface|string $repositoryInterface
+     * @param class-string<Oauth2RepositoryInterface> $repositoryInterface
      *
      * @dataProvider getRepositoryProvider
      */

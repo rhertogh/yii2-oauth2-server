@@ -21,7 +21,7 @@ use Yii2Oauth2ServerTests\unit\models\_base\BaseOauth2ActiveRecordTest;
 class Oauth2ClientScopeTest extends BaseOauth2ActiveRecordTest
 {
     /**
-     * @return Oauth2ClientScopeInterface|string
+     * @return class-string<Oauth2ClientScopeInterface>
      */
     protected function getModelInterface()
     {

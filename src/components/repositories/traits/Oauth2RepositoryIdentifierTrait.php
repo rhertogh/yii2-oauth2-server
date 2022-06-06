@@ -11,7 +11,7 @@ trait Oauth2RepositoryIdentifierTrait
 {
     /**
      * @inheritDoc
-     * @return Oauth2ActiveRecordInterface|string
+     * @return class-string<Oauth2ActiveRecordInterface>
      */
     abstract public function getModelClass();
 
@@ -24,7 +24,7 @@ trait Oauth2RepositoryIdentifierTrait
     public function findModelByIdentifier($identifier)
     {
         $class = $this->getModelClass();
-        /** @var Oauth2IdentifierInterface|string $className */
+        /** @var class-string<Oauth2IdentifierInterface> $className */
         $className = DiHelper::getValidatedClassName($class);
 
         $result = $className::findByIdentifier($identifier);

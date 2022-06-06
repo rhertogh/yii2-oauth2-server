@@ -14,7 +14,7 @@ class Oauth2ClientRepository extends Oauth2BaseRepository implements Oauth2Clien
 
     /**
      * @inheritDoc
-     * @return Oauth2ClientInterface|string
+     * @return class-string<Oauth2ClientInterface>
      */
     public function getModelClass()
     {

@@ -14,7 +14,7 @@ class Oauth2RefreshTokenRepository extends Oauth2BaseTokenRepository implements 
 
     /**
      * @inheritDoc
-     * @return Oauth2RefreshTokenInterface|string
+     * @return class-string<Oauth2RefreshTokenInterface>
      */
     public function getModelClass()
     {

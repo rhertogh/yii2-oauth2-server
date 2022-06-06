@@ -38,7 +38,7 @@ class Oauth2RefreshTokenTest extends BaseOauth2ActiveRecordTest
     use GetSetRevokedStatusTestTrait;
 
     /**
-     * @return Oauth2RefreshTokenInterface|string
+     * @return class-string<Oauth2RefreshTokenInterface>
      */
     protected function getModelInterface()
     {

@@ -22,7 +22,7 @@ class Oauth2AccessTokenRepository extends Oauth2BaseTokenRepository implements O
 
     /**
      * @inheritDoc
-     * @return Oauth2AccessTokenInterface|string
+     * @return class-string<Oauth2AccessTokenInterface>
      */
     public function getModelClass()
     {

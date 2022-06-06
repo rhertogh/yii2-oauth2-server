@@ -40,7 +40,7 @@ class Oauth2AuthCodeTest extends BaseOauth2ActiveRecordTest
     use GetSetRevokedStatusTestTrait;
 
     /**
-     * @return Oauth2AuthCodeInterface|string
+     * @return class-string<Oauth2AuthCodeInterface>
      */
     protected function getModelInterface()
     {

@@ -20,7 +20,7 @@ interface Oauth2RepositoryInterface
 
     /**
      * Get the class name of the models for this repository.
-     * @return Oauth2ActiveRecordInterface|string
+     * @return class-string<Oauth2ActiveRecordInterface>
      * @since 1.0.0
      */
     public function getModelClass();

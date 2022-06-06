@@ -36,7 +36,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
     use Oauth2IdentifierTestTrait;
 
     /**
-     * @return Oauth2ClientInterface|string
+     * @return class-string<Oauth2ClientInterface>
      */
     protected function getModelInterface()
     {
@@ -272,7 +272,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
 
     public function testRotateStorageEncryptionKeysFailure()
     {
-        /** @var Oauth2Client|string $modelClass */
+        /** @var class-string<Oauth2Client> $modelClass */
         $modelClass = get_class(new class extends Oauth2Client {
             public static function tableName()
             {

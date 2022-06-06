@@ -19,7 +19,7 @@ use Yii2Oauth2ServerTests\unit\components\repositories\_base\BaseOauth2Repositor
 class Oauth2UserRepositoryTest extends BaseOauth2RepositoryTest
 {
     /**
-     * @return Oauth2UserInterface|string
+     * @return class-string<Oauth2UserInterface>
      */
     protected function getModelInterface()
     {
@@ -27,7 +27,7 @@ class Oauth2UserRepositoryTest extends BaseOauth2RepositoryTest
     }
 
     /**
-     * @return Oauth2UserInterface|string
+     * @return class-string<Oauth2UserInterface>
      */
     protected function getModelClass()
     {
