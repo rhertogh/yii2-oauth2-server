@@ -20,7 +20,6 @@
     "require": {
         "php": ">=7.4.0",
         "yiisoft/yii2": "~2.0.43",
-        "guzzlehttp/psr7": "~1.8.4",
         "league/oauth2-server": "~8.3.3",
         "lcobucci/clock": "~2.0.0",
         "symfony/deprecation-contracts": "^2.2"
