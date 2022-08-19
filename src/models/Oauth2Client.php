@@ -92,6 +92,15 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
 
     /**
      * @inheritdoc
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
      * @throws InvalidConfigException
      */
     public function getRedirectUri()
@@ -140,9 +149,28 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritDoc
      */
+    public function setUserAccountSelection($userAccountSelectionConfig)
+    {
+        $this->user_account_selection = $userAccountSelectionConfig;
+        return $this;
+    }
+
+
+    /**
+     * @inheritDoc
+     */
     public function isAuthCodeWithoutPkceAllowed()
     {
         return (bool)$this->allow_auth_code_without_pkce;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setAllowAuthCodeWithoutPkce($allowAuthCodeWithoutPkce)
+    {
+        $this->allow_auth_code_without_pkce = $allowAuthCodeWithoutPkce;
+        return $this;
     }
 
     /**
@@ -156,9 +184,27 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritDoc
      */
+    public function setSkipAuthorizationIfScopeIsAllowed($skipAuthIfScopeIsAllowed)
+    {
+        $this->skip_authorization_if_scope_is_allowed = $skipAuthIfScopeIsAllowed;
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getClientCredentialsGrantUserId()
     {
         return $this->client_credentials_grant_user_id;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setClientCredentialsGrantUserId($userId)
+    {
+        $this->client_credentials_grant_user_id = $userId;
+        return $this;
     }
 
     /**
@@ -172,9 +218,27 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritDoc
      */
+    public function setOpenIdConnectAllowOfflineAccessWithoutConsent($allowOfflineAccessWithoutConsent)
+    {
+        $this->oidc_allow_offline_access_without_consent = $allowOfflineAccessWithoutConsent;
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getOpenIdConnectUserinfoEncryptedResponseAlg()
     {
         return $this->oidc_userinfo_encrypted_response_alg;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setOpenIdConnectUserinfoEncryptedResponseAlg($algorithm)
+    {
+        $this->oidc_userinfo_encrypted_response_alg = $algorithm;
+        return $this;
     }
 
     /**
@@ -191,6 +255,15 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     public function getScopeAccess()
     {
         return (int)$this->scope_access;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setScopeAccess($scopeAccess)
+    {
+        $this->scope_access = $scopeAccess;
+        return $this;
     }
 
     /**

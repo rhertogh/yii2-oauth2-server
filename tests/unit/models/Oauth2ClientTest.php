@@ -135,7 +135,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $this->assertEquals(false, $disabledClient->isEnabled());
     }
 
-    public function testPropertyGetters()
+    public function testPropertyGettersSetters()
     {
         $name = 'my-test-client';
         $userAccountSelection = 1;
@@ -146,18 +146,17 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $openIdConnectAllowOfflineAccessWithoutConsent = 6;
         $openIdConnectUserinfoEncryptedResponseAlg = 'RS256';
 
-        $client = $this->getMockModel([
-            'name' => $name,
-            'user_account_selection' => $userAccountSelection,
-            'allow_auth_code_without_pkce' => $allowAuthCodeWithoutPkce,
-            'skip_authorization_if_scope_is_allowed' => $skipAuthorizationIfScopeIsAllowed,
-            'scope_access' => $getScopeAccess,
-            'client_credentials_grant_user_id' => $clientCredentialsGrantUserId,
-            'oidc_allow_offline_access_without_consent' => $openIdConnectAllowOfflineAccessWithoutConsent,
-            'oidc_userinfo_encrypted_response_alg' => $openIdConnectUserinfoEncryptedResponseAlg,
-        ]);
+        $client = $this->getMockModel()
+            ->setName($name)
+            ->setUserAccountSelection($userAccountSelection)
+            ->setAllowAuthCodeWithoutPkce($allowAuthCodeWithoutPkce)
+            ->setSkipAuthorizationIfScopeIsAllowed($skipAuthorizationIfScopeIsAllowed)
+            ->setScopeAccess($getScopeAccess)
+            ->setClientCredentialsGrantUserId($clientCredentialsGrantUserId)
+            ->setOpenIdConnectAllowOfflineAccessWithoutConsent($openIdConnectAllowOfflineAccessWithoutConsent)
+            ->setOpenIdConnectUserinfoEncryptedResponseAlg($openIdConnectUserinfoEncryptedResponseAlg);
 
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
         $this->assertEquals($name, $client->getName());
         $this->assertEquals($userAccountSelection, $client->getUserAccountSelection());
         $this->assertEquals($allowAuthCodeWithoutPkce, $client->isAuthCodeWithoutPkceAllowed());

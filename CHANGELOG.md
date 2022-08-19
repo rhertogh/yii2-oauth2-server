@@ -3,11 +3,11 @@ Yii2-Oauth2-Server Change Log
 
 1.0.0-alpha4 - Under Development
 --------------------------------
-[no changes yet]
+- Enh: Added setters for common properties of Oauth2Client (rhertogh)
 
 
 1.0.0-alpha3 (2022-08-19)
---------------------------------
+-------------------------
 
 - Enh: Added support for Client Secret Rotation (rhertogh)
 - Enh: Added support for Encryption Key Rotation (rhertogh)

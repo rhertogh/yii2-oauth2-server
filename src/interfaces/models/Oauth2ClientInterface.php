@@ -72,6 +72,14 @@ interface Oauth2ClientInterface extends
     public static function find();
 
     /**
+     * Set the client name
+     * @param string $name
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setName($name);
+
+    /**
      * Sets the one or multiple redirect URIs
      * @param string|string[] $uri
      * @since 1.0.0
@@ -85,6 +93,15 @@ interface Oauth2ClientInterface extends
      * @since 1.0.0
      */
     public function getScopeAccess();
+
+    /**
+     * Set the client's scope access.
+     * @param int $scopeAccess
+     * @see SCOPE_ACCESSES
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setScopeAccess($scopeAccess);
 
     /**
      * Get the Grant Types enabled for the client.
@@ -191,11 +208,28 @@ interface Oauth2ClientInterface extends
     public function getUserAccountSelection();
 
     /**
+     * Set user account selection configuration for this client.
+     * @param int|null $userAccountSelectionConfig
+     * @since 1.0.0
+     * @return $this
+     * @see Oauth2Module::USER_ACCOUNT_SELECTION_ALWAYS
+     */
+    public function setUserAccountSelection($userAccountSelectionConfig);
+
+    /**
      * Are authorization code requests without PKCE allowed.
      * @return bool
      * @since 1.0.0
      */
     public function isAuthCodeWithoutPkceAllowed();
+
+    /**
+     * Set if authorization code requests without PKCE are allowed.
+     * @param bool $allowAuthCodeWithoutPkce
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setAllowAuthCodeWithoutPkce($allowAuthCodeWithoutPkce);
 
     /**
      * Should client authorization by the user be skipped if all scopes are allowed.
@@ -205,11 +239,27 @@ interface Oauth2ClientInterface extends
     public function skipAuthorizationIfScopeIsAllowed();
 
     /**
+     * Set if client authorization by the user should be skipped if all scopes are allowed.
+     * @param bool $skipAuthIfScopeIsAllowed
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setSkipAuthorizationIfScopeIsAllowed($skipAuthIfScopeIsAllowed);
+
+    /**
      * Get the user id for clients that use the 'client credentials' Grant Type.
      * @return int|string|null
      * @since 1.0.0
      */
     public function getClientCredentialsGrantUserId();
+
+    /**
+     * Set the user id for clients that use the 'client credentials' Grant Type.
+     * @param int|string|null $userId
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setClientCredentialsGrantUserId($userId);
 
     /**
      * Warning! Enabling this setting might introduce privacy concerns since the client could poll for the online status
@@ -224,11 +274,36 @@ interface Oauth2ClientInterface extends
     public function getOpenIdConnectAllowOfflineAccessWithoutConsent();
 
     /**
-     * The encryption algorithm to use for the OpenID Connect Userinfo Endpoint. WHen `null`, no encryption is applied.
+     * Warning! Enabling this setting might introduce privacy concerns since the client could poll for the online status
+     * of a user.
+     *
+     * @param bool $allowOfflineAccessWithoutConsent If this setting is disabled in case of OpenID Connect Context the
+     * Access Token won't include a Refresh Token when the 'offline_access' scope is not included in the authorization
+     * request.
+     * In some cases it might be needed to always include a Refresh Token, in that case enable this setting and
+     * implement the `Oauth2OidcUserSessionStatusInterface` on the User Identity model.
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setOpenIdConnectAllowOfflineAccessWithoutConsent($allowOfflineAccessWithoutConsent);
+
+    /**
+     * The encryption algorithm to use for the OpenID Connect Userinfo Endpoint. When `null`, no encryption is applied.
      * @see https://openid.net/specs/openid-connect-registration-1_0.html#ClientMetadata
      * @see https://datatracker.ietf.org/doc/html/rfc7518
      * @return string|null
      * @since 1.0.0
      */
     public function getOpenIdConnectUserinfoEncryptedResponseAlg();
+
+    /**
+     * Set the encryption algorithm to use for the OpenID Connect Userinfo Endpoint.
+     * When `null`, no encryption is applied.
+     * @see https://openid.net/specs/openid-connect-registration-1_0.html#ClientMetadata
+     * @see https://datatracker.ietf.org/doc/html/rfc7518
+     * @param string|null $algorithm
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setOpenIdConnectUserinfoEncryptedResponseAlg($algorithm);
 }

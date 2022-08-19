@@ -12,7 +12,7 @@ services:
     depends_on:
       - MySql
     ports:
-      - '88:80' # http
+      - '${DOCKER_HOST_HTTP_PORT:-88}:80' # http port mapping, it's recommended to use a different port than the default sample app.
     volumes:
       # Re-use local composer cache via host-volume
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
@@ -45,7 +45,7 @@ services:
     networks:
       - test
     ports:
-      - "3307:3306"
+      - "${DOCKER_HOST_MYSQL_PORT:-3307}:3306" # mysql port mapping, it's recommended to use a different port than the default sample app.
 
 networks:
   test:
