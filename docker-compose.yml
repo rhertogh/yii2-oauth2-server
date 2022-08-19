@@ -31,6 +31,8 @@ services:
       - MYSQL_DB_NAME=${MYSQL_DB_NAME:?err}
       - MYSQL_USER_NAME=${MYSQL_USER_NAME:?err}
       - MYSQL_USER_PASSWORD=${MYSQL_USER_PASSWORD:?err}
+    extra_hosts:
+      - host.docker.internal:host-gateway
 
   MySql:
     image: "mysql:5.7"
