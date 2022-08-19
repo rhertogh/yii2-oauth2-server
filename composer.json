@@ -26,6 +26,7 @@
     },
     "require-dev": {
         "ext-json": "*",
+        "ext-xdebug": "*",
         "yiisoft/yii2-coding-standards": "~2.0",
         "codeception/codeception": "~4.1.22",
         "codeception/module-yii2": "~1.1.3",
