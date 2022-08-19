@@ -277,8 +277,25 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $clientAuthorizationRequest->setRequestedScopeIdentifiers([]);
         $this->assertFalse($clientAuthorizationRequest->isAuthorizationNeeded());
 
-        // Do not skipAuthorizationIfScopeIsAllowed.
-        $clientAuthorizationRequest->getClient()->skip_authorization_if_scope_is_allowed = false;
+        // Skip Authorization If Scope Is Allowed (client authorized).
+        $clientAuthorizationRequest->getClient()->skip_authorization_if_scope_is_allowed = true;
+        $this->assertFalse($clientAuthorizationRequest->isAuthorizationNeeded());
+
+        // Use client with `skip_authorization_if_scope_is_allowed` enabled
+        $clientAuthorizationRequest->setClientIdentifier('test-client-type-auth-code-open-id-connect-skip-authorization');
+        // Client not yet authorized by user.
+        $clientAuthorizationRequest->setUserIdentity($user123);
+        $clientAuthorizationRequest->setRequestedScopeIdentifiers([]);
+        $this->assertFalse($clientAuthorizationRequest->isAuthorizationNeeded());
+        // Additional scope for not yet authorized by user.
+        $clientAuthorizationRequest->setRequestedScopeIdentifiers(['offline_access']);
+        $this->assertTrue($clientAuthorizationRequest->isAuthorizationNeeded());
+        // Pre-approved client for user.
+        $clientAuthorizationRequest->setUserIdentity($user124);
+        $clientAuthorizationRequest->setRequestedScopeIdentifiers([]);
+        $this->assertFalse($clientAuthorizationRequest->isAuthorizationNeeded());
+        // Additional scope for pre-approved client for user.
+        $clientAuthorizationRequest->setRequestedScopeIdentifiers(['offline_access']);
         $this->assertTrue($clientAuthorizationRequest->isAuthorizationNeeded());
     }
 

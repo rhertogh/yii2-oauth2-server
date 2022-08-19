@@ -4,6 +4,7 @@ Yii2-Oauth2-Server Change Log
 1.0.0-alpha4 - Under Development
 --------------------------------
 - Enh: Added setters for common properties of Oauth2Client (rhertogh)
+- Bugfix: `Oauth2ClientAuthorizationRequestInterface::isAuthorizationNeeded()` now correctly adheres to `Oauth2Client::skipAuthorizationIfScopeIsAllowed()`
 
 
 1.0.0-alpha3 (2022-08-19)

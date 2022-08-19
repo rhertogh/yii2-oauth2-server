@@ -42,7 +42,7 @@ INSERT INTO `oauth2_client`
         '["http://localhost/redirect_uri/"]',
         1, # Bearer
         5, # AUTH_CODE | REFRESH_TOKEN
-        1,
+        0,
         null,
         1,
         UNIX_TIMESTAMP(),
@@ -57,7 +57,7 @@ INSERT INTO `oauth2_client`
         null,
         1, # Bearer
         2, # CLIENT_CREDENTIALS // refresh token SHOULD NOT be included: https://datatracker.ietf.org/doc/html/rfc6749#section-4.4.3
-        1,
+        0,
         123,
         1,
         UNIX_TIMESTAMP(),
@@ -72,7 +72,7 @@ INSERT INTO `oauth2_client`
         '["http://localhost/redirect_uri/"]',
         1, # Bearer
         1028, # PASSWORD | REFRESH_TOKEN
-        1,
+        0,
         null,
         1,
         UNIX_TIMESTAMP(),
@@ -87,7 +87,7 @@ INSERT INTO `oauth2_client`
         '["http://localhost/redirect_uri/"]',
         1, # Bearer
         2052, # IMPLICIT // The authorization server MUST NOT issue a refresh token: https://datatracker.ietf.org/doc/html/rfc6749#section-4.2.2
-        1,
+        0,
         null,
         1,
         UNIX_TIMESTAMP(),
@@ -102,7 +102,7 @@ INSERT INTO `oauth2_client`
         '["http://localhost/redirect_uri/"]',
         1, # Bearer
         5, # AUTH_CODE | REFRESH_TOKEN
-        1,
+        0,
         null,
         0,
         UNIX_TIMESTAMP(),
@@ -117,7 +117,7 @@ INSERT INTO `oauth2_client`
         '["http://localhost/redirect_uri/"]',
         1, # Bearer
         5, # AUTH_CODE | REFRESH_TOKEN
-        1,
+        0,
         null,
         1,
         UNIX_TIMESTAMP(),
@@ -129,6 +129,22 @@ INSERT INTO `oauth2_client`
         2, # Public
         null,
         'Valid client with Grant Type Auth Code and OpenID connect',
+        '["http://localhost/redirect_uri/"]',
+        1, # Bearer
+        5, # AUTH_CODE | REFRESH_TOKEN
+        0,
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
+    (
+        # Note: for testing the offline access scope is not auto applied
+        1003007,
+        'test-client-type-auth-code-open-id-connect-skip-authorization',
+        2, # Public
+        null,
+        'Valid client with Grant Type Auth Code and OpenID connect skip authorization if scope allowed',
         '["http://localhost/redirect_uri/"]',
         1, # Bearer
         5, # AUTH_CODE | REFRESH_TOKEN
@@ -642,6 +658,61 @@ INSERT INTO `oauth2_client_scope` VALUES
         1,
         UNIX_TIMESTAMP(),
         UNIX_TIMESTAMP()
+    ),
+    # test-client-type-auth-code-open-id-connect-skip-authorization ,
+    (
+        1003007, # 'test-client-type-auth-code-open-id-connect-skip-authorization'
+        @oidcScopeId,
+        2,
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
+    (
+        1003007, # 'test-client-type-auth-code-open-id-connect-skip-authorization'
+        @oidcProfileScopeId,
+        2,
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
+    (
+        1003007, # 'test-client-type-auth-code-open-id-connect-skip-authorization'
+        @oidcEmailScopeId,
+        2,
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
+    (
+        1003007, # 'test-client-type-auth-code-open-id-connect-skip-authorization'
+        @oidcAddressScopeId,
+        2,
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
+    (
+        1003007, # 'test-client-type-auth-code-open-id-connect-skip-authorization'
+        @oidcPhoneScopeId,
+        2,
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
+    (
+        1003007, # 'test-client-type-auth-code-open-id-connect-skip-authorization'
+        @oidcOfflineAccessScopeId,
+        0, # Note: for testing the offline access scope is not auto applied
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
     );
 
 INSERT INTO `oauth2_access_token`
@@ -795,6 +866,13 @@ INSERT INTO oauth2_user_client VALUES
     (
         124, # test.user2
         1003002, # 'test-client-type-password-public-valid'
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
+    (
+        124, # test.user2
+        1003007, # 'test-client-type-auth-code-open-id-connect-skip-authorization'
         1,
         UNIX_TIMESTAMP(),
         UNIX_TIMESTAMP()

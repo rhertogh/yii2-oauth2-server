@@ -249,10 +249,10 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
             return true; // Always require authorization of non-identifiable clients.
         }
 
-        return
-            $this->isClientAuthorizationNeeded()
-            || !$this->getClient()->skipAuthorizationIfScopeIsAllowed()
-            || $this->isScopeAuthorizationNeeded();
+        $isScopeAuthorizationNeeded = $this->isScopeAuthorizationNeeded();
+
+        return ($this->isClientAuthorizationNeeded() && !$this->getClient()->skipAuthorizationIfScopeIsAllowed())
+            || $isScopeAuthorizationNeeded;
     }
 
     /**
