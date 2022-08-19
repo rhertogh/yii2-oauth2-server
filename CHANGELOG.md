@@ -1,7 +1,12 @@
 Yii2-Oauth2-Server Change Log
 =============================
 
-1.0.0-alpha3 - Under Development
+1.0.0-alpha4 - Under Development
+--------------------------------
+[no changes yet]
+
+
+1.0.0-alpha3 (2022-08-19)
 --------------------------------
 
 - Enh: Added support for Client Secret Rotation (rhertogh)
