@@ -33,7 +33,7 @@ class AuthorizationCodeGrantCest extends BaseGrantCest
 
         $jwtConfiguration = Configuration::forSymmetricSigner(
             new Sha256(),
-            InMemory::plainText('')
+            InMemory::empty()
         );
 
         $provider = $this->getProvider([

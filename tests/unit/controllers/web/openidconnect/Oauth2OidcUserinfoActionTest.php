@@ -68,7 +68,7 @@ class Oauth2OidcUserinfoActionTest extends DatabaseTestCase
         } elseif ($userInfoAlg == 'RS256') {
             $jwtConfiguration = Configuration::forSymmetricSigner(
                 new Sha256(),
-                InMemory::plainText('')
+                InMemory::empty()
             );
             $token = $jwtConfiguration->parser()->parse($response->data);
             $responseData = [

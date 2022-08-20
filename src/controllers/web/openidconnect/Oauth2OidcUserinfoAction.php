@@ -22,6 +22,7 @@ class Oauth2OidcUserinfoAction extends Action
     /**
      * @see https://openid.net/specs/openid-connect-core-1_0.html#UserInfo
      * @return Response
+     * @throws InvalidConfigException
      */
     public function run()
     {

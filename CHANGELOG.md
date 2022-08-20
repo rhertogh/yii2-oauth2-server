@@ -5,6 +5,7 @@ Yii2-Oauth2-Server Change Log
 --------------------------------
 - Enh: Added setters for common properties of Oauth2Client (rhertogh)
 - Bugfix: `Oauth2ClientAuthorizationRequestInterface::isAuthorizationNeeded()` now correctly adheres to `Oauth2Client::skipAuthorizationIfScopeIsAllowed()`
+- Bugfix: Fixed compatibility for lcobucci/jwt 4.2.x causing "Lcobucci\JWT\Signer\InvalidKeyProvided: Key cannot be empty"
 
 
 1.0.0-alpha3 (2022-08-19)

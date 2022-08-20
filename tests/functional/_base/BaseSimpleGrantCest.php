@@ -37,7 +37,7 @@ abstract class BaseSimpleGrantCest extends BaseGrantCest
         $provider = $this->getProvider($example['providerOptions']);
         $jwtConfiguration = Configuration::forSymmetricSigner(
             new Sha256(),
-            InMemory::plainText('')
+            InMemory::empty()
         );
 
         $expirationTime = (new \DateTimeImmutable('@' . time())) // ensure no micro seconds.

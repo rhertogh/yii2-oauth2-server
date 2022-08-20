@@ -125,7 +125,7 @@ class Oauth2OidcBearerTokenResponseTest extends DatabaseTestCase
 
         $jwtConfiguration = Configuration::forSymmetricSigner(
             new Sha256(),
-            InMemory::plainText('')
+            InMemory::empty()
         );
         $idToken = $jwtConfiguration->parser()->parse($extraParams['id_token']);
         $claims = $idToken->claims()->all();

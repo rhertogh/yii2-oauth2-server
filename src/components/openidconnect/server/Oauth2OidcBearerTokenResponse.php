@@ -8,8 +8,9 @@ use rhertogh\Yii2Oauth2Server\helpers\OpenIdConnectHelper;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\request\Oauth2OidcAuthenticationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\server\Oauth2OidcBearerTokenResponseInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
 use yii\base\InvalidArgumentException;
@@ -55,12 +56,15 @@ class Oauth2OidcBearerTokenResponse extends BearerTokenResponse implements Oauth
 
         $module = $this->getModule();
 
-        /** @var Oauth2UserInterface $user */
         $user = $module->getUserRepository()->getUserEntityByIdentifier($accessToken->getUserIdentifier());
-
         if ($user === null) {
             throw new InvalidArgumentException(
                 'No user with identifier "' . $accessToken->getUserIdentifier() . '" found.'
+            );
+        }
+        if (!($user instanceof Oauth2OidcUserInterface)) {
+            throw new InvalidConfigException(
+                get_class($user) . ' must implement ' . Oauth2OidcUserInterface::class
             );
         }
 

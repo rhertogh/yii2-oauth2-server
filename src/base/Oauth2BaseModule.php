@@ -564,7 +564,7 @@ abstract class Oauth2BaseModule extends Module
         $jwtConfiguration = Configuration::forAsymmetricSigner(
             new Sha256(),
             InMemory::plainText($privateKey->getKeyContents(), $privateKey->getPassPhrase() ?? ''),
-            InMemory::plainText('')
+            InMemory::empty(),
         );
 
         $builder = $jwtConfiguration->builder()
