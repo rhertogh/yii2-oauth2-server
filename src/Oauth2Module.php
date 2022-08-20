@@ -565,7 +565,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
      * @param string|string[] $redirectURIs
      * @param string $type
      * @param string|null $secret
-     * @param string|string[]|null $scopes
+     * @param string|string[]|array[]|null $scopes
      * @param int|null $userId
      * @return Oauth2ClientInterface
      * @throws InvalidConfigException
@@ -612,7 +612,11 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
                     $scopeIdentifiers = $scopes;
                 }
 
-                foreach ($scopeIdentifiers as $scopeIdentifier) {
+                foreach ($scopeIdentifiers as $scopeIdentifier => $scopeConfig) {
+                    if (is_string($scopeConfig)) {
+                        $scopeIdentifier = $scopeConfig;
+                        $scopeConfig = [];
+                    }
                     $scope = $this->getScopeRepository()->findModelByIdentifier($scopeIdentifier);
                     if (empty($scope)) {
                         throw new InvalidArgumentException('No scope with identifier "'
@@ -620,11 +624,14 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
                     }
 
                     /** @var Oauth2ClientScopeInterface $clientScope */
-                    $clientScope = Yii::createObject([
-                        'class' => Oauth2ClientScopeInterface::class,
-                        'client_id' => $client->getPrimaryKey(),
-                        'scope_id' => $scope->getPrimaryKey(),
-                    ]);
+                    $clientScope = Yii::createObject(ArrayHelper::merge(
+                        $scopeConfig,
+                        [
+                            'class' => Oauth2ClientScopeInterface::class,
+                            'client_id' => $client->getPrimaryKey(),
+                            'scope_id' => $scope->getPrimaryKey(),
+                        ]
+                    ));
                     $clientScope->persist();
                 }
             }
