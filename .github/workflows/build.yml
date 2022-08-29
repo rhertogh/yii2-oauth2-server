@@ -89,7 +89,7 @@ jobs:
 #          cli-args: "--format=php-clover tests/_output/coverage.xml"
 #        continue-on-error: true # if is fork
 
-      - name: Code coverage (phar)
+      - name: Code coverage (phar) # ToDo: PHP 8 compatibility (https://github.com/scrutinizer-ci/ocular/issues/51)
         run: |
           wget https://scrutinizer-ci.com/ocular.phar
           php ocular.phar code-coverage:upload --format=php-clover tests/_output/coverage.xml

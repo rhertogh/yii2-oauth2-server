@@ -3,9 +3,11 @@
 $config = [
     'databases' => [
         'cubrid' => [
+            'connection' => [
             'dsn' => 'cubrid:dbname=demodb;host=cubrid;port=33000',
             'username' => 'dba',
             'password' => '',
+            ],
             'fixture' => __DIR__ . '/cubrid.sql',
         ],
         'mysql' => [
