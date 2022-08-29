@@ -10,7 +10,8 @@ namespace Yii2Oauth2ServerTests\unit;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use Yii2Oauth2ServerTests\_helpers\DatabaseFixtures;
+use Yii2Oauth2ServerTests\_helpers\fixtures\FullDbFixture;
+use Yii2Oauth2ServerTests\Helper\Yii2Module;
 
 abstract class DatabaseTestCase extends TestCase
 {
@@ -24,22 +25,32 @@ abstract class DatabaseTestCase extends TestCase
     protected $driverName = 'mysql';
 
     /**
+     * @throws \yii\db\Exception
+     */
+    public function _fixtures()
+    {
+        return [
+            'db' => FullDbFixture::class,
+        ];
+    }
+
+    /**
      * @param array $config
      * @return array
      */
     protected function getMockBaseAppConfig($config = []): array
     {
-        $dbConfig = DatabaseFixtures::getDbConfig($this->driverName);
+        /** @var Yii2Module $yii2Module */
+        $yii2Module = $this->getModule(Yii2Module::class);
+        /** @var FullDbFixture $dbFixture */
+        $dbFixture = $yii2Module->grabFixture('db');
+
+        //$dbConfig = InitDbFixture::getDbConfig($this->driverName);
         return ArrayHelper::merge(
             parent::getMockBaseAppConfig(),
             [
                 'components' => [
-                    'db' => [
-                        'class' => $dbConfig['class'] ?? 'yii\db\Connection',
-                        'dsn' => $dbConfig['dsn'],
-                        'username' => $dbConfig['username'] ?? null,
-                        'password' => $dbConfig['password'] ?? null,
-                    ],
+                    'db' => $dbFixture->db,
                 ],
             ],
             $config,
@@ -50,12 +61,6 @@ abstract class DatabaseTestCase extends TestCase
     {
         parent::_before();
         static::mockConsoleApplication();
-        DatabaseFixtures::createDbFixtures(
-            $this->driverName,
-            $this->runPreMigrationsFixtures,
-            $this->runMigrations,
-            $this->runPostMigrationsFixtures
-        );
     }
 
     protected function _after()

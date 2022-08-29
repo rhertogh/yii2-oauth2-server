@@ -10,7 +10,7 @@ use yii\di\Container;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use Yii2Oauth2ServerTests\_helpers\ClientTokenProvider;
-use Yii2Oauth2ServerTests\_helpers\DatabaseFixtures;
+use Yii2Oauth2ServerTests\_helpers\fixtures\FullDbFixture;
 use Yii2Oauth2ServerTests\ApiTester;
 
 abstract class BaseGrantCest
@@ -25,7 +25,30 @@ abstract class BaseGrantCest
      */
     public function _before(ApiTester $I)
     {
-        DatabaseFixtures::createDbFixtures($this->driverName);
+        // Nothing to do here at the moment
+    }
+
+    /**
+     * @throws \yii\db\Exception
+     */
+    public function _fixtures()
+    {
+        return [
+            'db' => FullDbFixture::class,
+        ];
+    }
+
+    /**
+     * Clean up after test.
+     * By default, the application created with [[mockApplication]] will be destroyed.
+     */
+    protected function _after()
+    {
+        $logger = Yii::getLogger();
+        $logger->flush();
+
+        Yii::$app = null;
+        Yii::$container = new Container();
     }
 
     /**
@@ -46,19 +69,6 @@ abstract class BaseGrantCest
             ],
             $options,
         ));
-    }
-
-    /**
-     * Clean up after test.
-     * By default the application created with [[mockApplication]] will be destroyed.
-     */
-    protected function _after()
-    {
-        $logger = Yii::getLogger();
-        $logger->flush();
-
-        Yii::$app = null;
-        Yii::$container = new Container();
     }
 
     /**

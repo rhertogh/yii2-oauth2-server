@@ -1,11 +1,12 @@
 <?php
 
-namespace Yii2Oauth2ServerTests\_helpers;
+namespace Yii2Oauth2ServerTests\_helpers\fixtures;
 
 use Yii;
 use yii\base\Module;
 use yii\db\Exception;
 use yii\helpers\ArrayHelper;
+use Yii2Oauth2ServerTests\_helpers\EchoMigrateController;
 
 class DatabaseFixtures
 {

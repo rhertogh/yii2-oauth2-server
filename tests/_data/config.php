@@ -9,13 +9,15 @@ $config = [
             'fixture' => __DIR__ . '/cubrid.sql',
         ],
         'mysql' => [
-            'dsn' =>
-                'mysql:host=' . getenv('MYSQL_HOST')
-                . (getenv('MYSQL_PORT') ? ':' . getenv('MYSQL_PORT') : '')
-                . ';dbname=' . getenv('MYSQL_DB_NAME'),
-            'username' => getenv('MYSQL_USER_NAME'),
-            'password' => getenv('MYSQL_USER_PASSWORD'),
-            'charset' => 'utf8mb4',
+            'connection' => [
+                'dsn' =>
+                    'mysql:host=' . getenv('MYSQL_HOST')
+                    . (getenv('MYSQL_PORT') ? ':' . getenv('MYSQL_PORT') : '')
+                    . ';dbname=' . getenv('MYSQL_DB_NAME'),
+                'username' => getenv('MYSQL_USER_NAME'),
+                'password' => getenv('MYSQL_USER_PASSWORD'),
+                'charset' => 'utf8mb4',
+            ],
             'preMigrationsFixtures' => [
                 __DIR__ . '/mysql_pre.sql',
                 ...(is_file(__DIR__ . '/mysql_pre.local.sql') ? [__DIR__ . '/mysql_pre.local.sql'] : []),
@@ -31,25 +33,33 @@ $config = [
             ],
         ],
         'sqlite' => [
-            'dsn' => 'sqlite::memory:',
+            'connection' => [
+                'dsn' => 'sqlite::memory:',
+            ],
             'fixture' => __DIR__ . '/sqlite.sql',
         ],
         'sqlsrv' => [
-            'dsn' => 'sqlsrv:Server=mssql;Database=yii2test',
-            'username' => 'sa',
-            'password' => 'Microsoft-12345',
+            'connection' => [
+                'dsn' => 'sqlsrv:Server=mssql;Database=yii2test',
+                'username' => 'sa',
+                'password' => 'Microsoft-12345',
+            ],
             'fixture' => __DIR__ . '/mssql.sql',
         ],
         'pgsql' => [
-            'dsn' => 'pgsql:host=postgres;dbname=yiitest;port=5432;',
-            'username' => 'postgres',
-            'password' => 'postgres',
+            'connection' => [
+                'dsn' => 'pgsql:host=postgres;dbname=yiitest;port=5432;',
+                'username' => 'postgres',
+                'password' => 'postgres',
+            ],
             'fixture' => __DIR__ . '/postgres.sql',
         ],
         'oci' => [
-            'dsn' => 'oci:dbname=LOCAL_XE;charset=AL32UTF8;',
-            'username' => '',
-            'password' => '',
+            'connection' => [
+                'dsn' => 'oci:dbname=LOCAL_XE;charset=AL32UTF8;',
+                'username' => '',
+                'password' => '',
+            ],
             'fixture' => __DIR__ . '/oci.sql',
         ],
     ],

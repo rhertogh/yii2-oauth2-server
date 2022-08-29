@@ -7,7 +7,7 @@
 modules:
   enabled:
     - Asserts
-    - Yii2:
+    - Yii2Oauth2ServerTests\Helper\Yii2Module:
         configFile: 'tests/_config/main.php'
 
 coverage:

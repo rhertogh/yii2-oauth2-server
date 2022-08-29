@@ -6,6 +6,7 @@ use rhertogh\Yii2Oauth2Server\migrations\base\Oauth2BaseMigration;
 use Yii;
 use yii\db\Migration;
 use yii\helpers\StringHelper;
+use Yii2Oauth2ServerTests\_helpers\fixtures\PreInitOnlyDbFixture;
 use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
 
 abstract class BaseMigrationTest extends DatabaseTestCase
@@ -13,8 +14,12 @@ abstract class BaseMigrationTest extends DatabaseTestCase
     protected const MIGRATE_UP = 'Up';
     protected const MIGRATE_DOWN = 'Down';
 
-    protected $runMigrations = false;
-    protected $runPostMigrationsFixtures = false;
+    public function _fixtures()
+    {
+        return [
+            'db' => PreInitOnlyDbFixture::class,
+        ];
+    }
 
     abstract public function getMigrationClass();
 

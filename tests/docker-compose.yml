@@ -10,7 +10,7 @@ services:
     networks:
       - test
     depends_on:
-      - MySql
+      - MySql_5_7
     ports:
       - '${DOCKER_HOST_HTTP_PORT:-88}:80' # http port mapping, it's recommended to use a different port than the default sample app.
     volumes:
@@ -36,7 +36,7 @@ services:
     extra_hosts:
       - host.docker.internal:host-gateway
 
-  MySql:
+  MySql_5_7:
     image: "mysql:5.7"
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:?err}

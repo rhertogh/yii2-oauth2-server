@@ -11,6 +11,9 @@ RUN apt-get install -y iputils-ping
 
 COPY docker/Yii2Oauth2Server/apache/vhost.conf /etc/apache2/sites-available/000-default.conf
 
+# Create alias for PHP with Xdebug
+RUN echo 'alias phpx="php -d xdebug.start_with_request=1"' >> ~/.bashrc
+
 # Copy the app directory. NOTE! For development docker-compose will overwrite this directory with a mount
 COPY . ${APP_DIR}
 

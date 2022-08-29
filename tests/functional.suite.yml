@@ -2,15 +2,14 @@ actor: ApiTester
 modules:
   enabled:
     - Yii2Oauth2ServerTests\Oauth2REST:
-        depends: Yii2
+        depends: Yii2Oauth2ServerTests\Helper\Yii2Module
         part: JSON
 
     - Asserts
-    - Yii2:
+    - Yii2Oauth2ServerTests\Helper\Yii2Module:
         configFile: 'tests/_config/site.php'
         responseCleanMethod: recreate
         recreateComponents: []
-    - Yii2Oauth2ServerTests\Helper\Api
 
 coverage:
   include:
