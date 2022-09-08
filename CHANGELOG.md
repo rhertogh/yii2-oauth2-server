@@ -1,12 +1,22 @@
 Yii2-Oauth2-Server Change Log
 =============================
 
-1.0.0-alpha5 - Under Development
+1.0.0-alpha6 - Under Development
 --------------------------------
+
 - [nothing yet]
+
+
+1.0.0-alpha5 (2022-09-08)
+--------------------------------
+
+- Enh: PostgreSQL compatibility (mtangoo, rhertogh)
+- Enh: Optimized tests to reuse database fixtures (rhertogh)
+
 
 1.0.0-alpha4 (2022-08-20)
 -------------------------
+
 - Enh: Added setters for common properties of Oauth2Client (rhertogh)
 - Bugfix: `Oauth2ClientAuthorizationRequestInterface::isAuthorizationNeeded()` now correctly adheres to `Oauth2Client::skipAuthorizationIfScopeIsAllowed()`
 - Bugfix: Fixed compatibility for lcobucci/jwt 4.2.x causing "Lcobucci\JWT\Signer\InvalidKeyProvided: Key cannot be empty"
