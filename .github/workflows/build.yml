@@ -8,7 +8,7 @@ env:
 
 jobs:
   codeception:
-    name: PHP ${{ matrix.php }} on ${{ matrix.os }}
+    name: PHP ${{ matrix.php }} on ${{ matrix.os }} with ${{ matrix.db }}
     runs-on: ${{ matrix.os }}
     services:
       mysql:
@@ -35,6 +35,7 @@ jobs:
       matrix:
         os: [ubuntu-latest]
         php: ['7.4', '8.0', '8.1']
+        db: ['mysql', 'postgres']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -82,6 +83,14 @@ jobs:
           MYSQL_DB_NAME: Yii2Oauth2ServerTest
           MYSQL_USER_NAME: Yii2Oauth2ServerTest
           MYSQL_USER_PASSWORD: password
+
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
+          POSTGRES_USER: Yii2Oauth2ServerTest
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: Yii2Oauth2ServerTest
+
+          YII2_OAUTH2_SERVER_TEST_DB_DRIVER: ${{ matrix.db }}
 
 #      - name: Upload Scrutinizer coverage
 #        uses: sudo-bot/action-scrutinizer@latest

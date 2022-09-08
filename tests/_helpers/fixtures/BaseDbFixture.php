@@ -7,12 +7,13 @@ use yii\db\Connection;
 
 abstract class BaseDbFixture extends \yii\test\InitDbFixture
 {
-    public $driverName = 'mysql';
+    public $driverName = null;
 
     protected static $_created = false;
 
     public function init()
     {
+        $this->driverName = $this->driverName ?: getenv('YII2_OAUTH2_SERVER_TEST_DB_DRIVER') ?: 'mysql';
         $connectionConfig = DatabaseFixtures::getDbConfig($this->driverName)['connection'];
         $this->db = new Connection($connectionConfig);
         Yii::$app->setComponents([

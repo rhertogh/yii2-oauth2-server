@@ -40,6 +40,8 @@ services:
       # Docker Hosts
       - MYSQL_HOST=${MYSQL_HOST:?err}
       - POSTGRES_HOST=${POSTGRES_HOST:?err}
+      # Tests
+      - YII2_OAUTH2_SERVER_TEST_DB_DRIVER=${YII2_OAUTH2_SERVER_TEST_DB_DRIVER}
     extra_hosts:
       - host.docker.internal:host-gateway
 
