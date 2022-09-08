@@ -1,5 +1,5 @@
 /**
- * This is the database schema for testing MySQL support of Yii DAO and Active Record.
+ * This is the database schema for testing MySQL support.
  * The database setup in config.php is required to perform then relevant tests:
  */
 
@@ -18,19 +18,19 @@ SELECT @oidcOfflineAccessScopeId := `id` FROM `oauth2_scope` WHERE `identifier` 
 
 INSERT INTO `oauth2_client`
     (
-        id,
-        identifier,
-        type,
-        secret,
-        name,
-        redirect_uris,
-        token_types,
-        grant_types,
-        skip_authorization_if_scope_is_allowed,
-        client_credentials_grant_user_id,
-        enabled,
-        created_at,
-        updated_at
+        `id`,
+        `identifier`,
+        `type`,
+        `secret`,
+        `name`,
+        `redirect_uris`,
+        `token_types`,
+        `grant_types`,
+        `skip_authorization_if_scope_is_allowed`,
+        `client_credentials_grant_user_id`,
+        `enabled`,
+        `created_at`,
+        `updated_at`
     )
     VALUES
     (

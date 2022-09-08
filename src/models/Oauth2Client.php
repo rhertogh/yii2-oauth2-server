@@ -563,6 +563,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
             ->joinWith('clientScopes', true)
             ->enabled()
             ->andWhere(['OR', ...$possibleScopesConditions])
+            ->orderBy('id')
             ->all();
     }
 }

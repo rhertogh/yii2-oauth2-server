@@ -83,6 +83,7 @@ class Oauth2ScopeRepository extends Oauth2BaseRepository implements Oauth2ScopeR
                 'user_client_scope.client_id' => $client->getPrimaryKey(),
                 'user_client_scope.enabled' => 1,
             ])
+            ->orderBy('id')
             ->indexBy('id')
             ->all();
 

@@ -26,7 +26,7 @@ class InsertOpenIdConnectScopesMigrationTest extends BaseMigrationTest
     }
 
     /**
-     * @param $enableOpenIdConnect
+     * @param bool $enableOpenIdConnect
      * @dataProvider generationIsActiveProvider
      */
     public function testGenerationIsActive($enableOpenIdConnect)

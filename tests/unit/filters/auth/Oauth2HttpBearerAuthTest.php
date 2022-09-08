@@ -8,12 +8,12 @@ use Yii;
 use yii\base\Module;
 use yii\web\UnauthorizedHttpException;
 use Yii2Oauth2ServerTests\_helpers\TestUserModel;
-use Yii2Oauth2ServerTests\unit\TestCase;
+use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
 
 /**
  * @covers \rhertogh\Yii2Oauth2Server\filters\auth\Oauth2HttpBearerAuth
  */
-class Oauth2HttpBearerAuthTest extends TestCase
+class Oauth2HttpBearerAuthTest extends DatabaseTestCase
 {
     public function testAuthenticate()
     {

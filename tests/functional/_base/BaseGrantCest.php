@@ -82,7 +82,7 @@ abstract class BaseGrantCest
             'id' => ['enum' => [123]],
             'username' => ['enum' => ['test.user']],
             'email_address' => ['enum' => ['test.user@test.test']],
-            'enabled' => ['enum' => [1]],
+            'enabled' => ['enum' => [true]],
             'created_at' => ['type' => 'integer', 'minimum' => 1609455600],
             'updated_at' => ['type' => 'integer', 'minimum' => 1609455600],
         ];

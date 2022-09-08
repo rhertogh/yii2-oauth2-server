@@ -2,7 +2,6 @@
 
 namespace rhertogh\Yii2Oauth2Server\models\behaviors;
 
-use DateTimeImmutable;
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
 use yii\db\BaseActiveRecord;
@@ -46,8 +45,8 @@ class DateTimeBehavior extends Behavior
         foreach ($activeRecord->getTableSchema()->columns as $column) {
             $value = $this->owner[$column->name];
             if (
-                $column->type === Schema::TYPE_DATETIME
-                && ($value instanceof \DateTime || $value instanceof DateTimeImmutable)
+                in_array($column->type, [Schema::TYPE_DATE, Schema::TYPE_DATETIME, Schema::TYPE_TIMESTAMP])
+                && ($value instanceof \DateTime || $value instanceof \DateTimeImmutable)
             ) {
                 $this->owner[$column->name] = $value->format($this->dateTimeFormat);
             }
@@ -66,8 +65,11 @@ class DateTimeBehavior extends Behavior
 
         foreach ($activeRecord->getTableSchema()->columns as $column) {
             $value = $this->owner[$column->name];
-            if ($column->type === Schema::TYPE_DATETIME && !empty($value)) {
-                $dateTime = DateTimeImmutable::createFromFormat($this->dateTimeFormat, $value);
+            if (
+                in_array($column->type, [Schema::TYPE_DATETIME, Schema::TYPE_DATETIME, Schema::TYPE_TIMESTAMP])
+                && !empty($value)
+            ) {
+                $dateTime = \DateTimeImmutable::createFromFormat($this->dateTimeFormat, $value);
                 $this->owner[$column->name] = $dateTime;
                 $this->owner->setOldAttribute($column->name, $dateTime);
             }

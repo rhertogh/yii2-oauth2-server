@@ -15,10 +15,6 @@ use Yii2Oauth2ServerTests\Helper\Yii2Module;
 
 abstract class DatabaseTestCase extends TestCase
 {
-    /**
-     * @var string the driver name of this test class. Must be set by a subclass.
-     */
-    protected $driverName = 'mysql';
 
     /**
      * @throws \yii\db\Exception

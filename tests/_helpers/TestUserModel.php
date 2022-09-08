@@ -3,6 +3,8 @@
 namespace Yii2Oauth2ServerTests\_helpers;
 
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;
+use rhertogh\Yii2Oauth2Server\models\behaviors\BooleanBehavior;
+use rhertogh\Yii2Oauth2Server\models\behaviors\TimestampBehavior;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use rhertogh\Yii2Oauth2Server\traits\models\Oauth2UserIdentityTrait;
 use Yii;
@@ -14,6 +16,21 @@ class TestUserModel extends ActiveRecord implements
     Oauth2UserInterface
 {
     use Oauth2UserIdentityTrait; # Helper trait to pass IdentityInterface methods to Oauth2UserInterface
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'timestampBehavior' => [
+                'class' => TimestampBehavior::class,
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+            ],
+            'booleanBehavior' => BooleanBehavior::class,
+        ];
+    }
 
     /**
      * @inheritDoc

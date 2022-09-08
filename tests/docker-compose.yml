@@ -11,6 +11,7 @@ services:
       - test
     depends_on:
       - MySql_5_7
+      - Postgres_14
     ports:
       - '${DOCKER_HOST_HTTP_PORT:-88}:80' # http port mapping, it's recommended to use a different port than the default sample app.
     volumes:
@@ -28,11 +29,17 @@ services:
       - YII2_OAUTH2_SERVER_PRIVATE_KEY_PASSPHRASE=${YII2_OAUTH2_SERVER_PRIVATE_KEY_PASSPHRASE:?err}
       - YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY=${YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY:?err}
       - YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEYS=${YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEYS:?err}
-      # Database
-      - MYSQL_HOST=${MYSQL_HOST:?err}
+      # MySQL
       - MYSQL_DB_NAME=${MYSQL_DB_NAME:?err}
       - MYSQL_USER_NAME=${MYSQL_USER_NAME:?err}
       - MYSQL_USER_PASSWORD=${MYSQL_USER_PASSWORD:?err}
+      # Postgres
+      - POSTGRES_USER=${POSTGRES_USER:?err}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?err}
+      - POSTGRES_DB=${POSTGRES_DB:?err}
+      # Docker Hosts
+      - MYSQL_HOST=${MYSQL_HOST:?err}
+      - POSTGRES_HOST=${POSTGRES_HOST:?err}
     extra_hosts:
       - host.docker.internal:host-gateway
 
@@ -48,6 +55,18 @@ services:
       - test
     ports:
       - "${DOCKER_HOST_MYSQL_PORT:-3307}:3306" # mysql port mapping, it's recommended to use a different port than the default sample app.
+
+  Postgres_14:
+    image: "postgres:14-alpine"
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:?err}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?err}
+      - POSTGRES_DB=${POSTGRES_DB:?err}
+    networks:
+      - test
+    ports:
+      - "${DOCKER_HOST_POSTGRES_PORT:-5433}:5432" # Postgres port mapping, it's recommended to use a different port than the default sample app.
 
 networks:
   test:

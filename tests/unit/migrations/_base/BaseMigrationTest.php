@@ -39,10 +39,7 @@ abstract class BaseMigrationTest extends DatabaseTestCase
         return $wrapperClass;
     }
 
-    /**
-     *
-     */
-    public function testSaveUpDown()
+    public function testSafeUpDown()
     {
         $this->runDependentMigration();
         $migrationClass = $this->getMigrationClassWrapper($this->getMigrationClass());

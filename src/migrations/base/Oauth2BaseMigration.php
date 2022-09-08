@@ -10,6 +10,9 @@ use yii\db\TableSchema;
 
 abstract class Oauth2BaseMigration extends Migration
 {
+    public const RESTRICT = 'RESTRICT';
+    public const CASCADE = 'CASCADE';
+
     /**
      * Determines if the migration should be generated for the current module configuration.
      * @param Oauth2Module $module

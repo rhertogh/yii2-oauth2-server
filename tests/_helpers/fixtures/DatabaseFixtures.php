@@ -4,6 +4,7 @@ namespace Yii2Oauth2ServerTests\_helpers\fixtures;
 
 use Yii;
 use yii\base\Module;
+use yii\console\ExitCode;
 use yii\db\Exception;
 use yii\helpers\ArrayHelper;
 use Yii2Oauth2ServerTests\_helpers\EchoMigrateController;
@@ -18,16 +19,16 @@ class DatabaseFixtures
         $runMigrations = true,
         $runPostMigrationsFixtures = true
     ) {
-        $pdo_database = 'pdo_' . $driverName;
-        if ($driverName === 'oci') {
-            $pdo_database = 'oci8';
-        }
-
-        if (!\extension_loaded('pdo') || !\extension_loaded($pdo_database)) {
-            throw new Exception('pdo and ' . $pdo_database . ' extension are required.');
-        }
-
         $dbConfig = static::getDbConfig($driverName);
+
+        $pdoDriver = 'pdo_' . explode(':', $dbConfig['connection']['dsn'])[0];
+//        if ($driverName === 'oci') {
+//            $pdoDriver = 'oci8';
+//        }
+
+        if (!\extension_loaded('pdo') || !\extension_loaded($pdoDriver)) {
+            throw new Exception('pdo and ' . $pdoDriver . ' extension are required.');
+        }
 
         if ($runPreMigrationsFixtures && !empty($dbConfig['preMigrationsFixtures'])) {
             foreach ($dbConfig['preMigrationsFixtures'] as $preMigrationsFixture) {
@@ -107,9 +108,15 @@ class DatabaseFixtures
             ob_start();
             ob_implicit_flush(false);
 
-            $migrateController->run('up');
+            $result = $migrateController->run('up');
+
+            if ($result !== ExitCode::OK) {
+                ob_end_flush();
+                throw new Exception('Migration(s) failed.');
+            }
 
             ob_end_clean();
+
         } catch (\Exception $e) {
             ob_end_flush();
             throw $e;

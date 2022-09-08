@@ -4,6 +4,7 @@ namespace Yii2Oauth2ServerTests\unit\migrations;
 
 use rhertogh\Yii2Oauth2Server\migrations\Oauth2_00001_CreateOauth2TablesMigration;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
+use yii\db\ColumnSchema;
 use yii\db\TableSchema;
 use Yii2Oauth2ServerTests\_helpers\TestUserModel;
 use Yii2Oauth2ServerTests\unit\migrations\_base\BaseMigrationTest;
@@ -51,6 +52,12 @@ class CreateOauth2TablesMigrationTest extends BaseMigrationTest
                         {
                             return new TableSchema([
                                 'primaryKey' => ['column_a', 'column_b'],
+                                'columns' => [
+                                    'column_a' => new ColumnSchema(['type' => 'integer']),
+                                    'column_b' => new ColumnSchema(['type' => 'integer']),
+                                    'created_at' => new ColumnSchema(['type' => 'integer']),
+                                    'updated_at' => new ColumnSchema(['type' => 'integer']),
+                                ],
                             ]);
                         }
                     }),
@@ -71,6 +78,17 @@ class CreateOauth2TablesMigrationTest extends BaseMigrationTest
                         public static function getTableSchema()
                         {
                             return false;
+                        }
+
+                        public function behaviors()
+                        {
+                            return array_diff_key(
+                                parent::behaviors(),
+                                array_flip([
+                                    'timestampBehavior',
+                                    'booleanBehavior',
+                                ])
+                            );
                         }
                     }),
                 ],

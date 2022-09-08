@@ -11,12 +11,12 @@ use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use rhertogh\Yii2Oauth2Server\traits\models\Oauth2OidcUserIdentityTrait;
 use yii\base\Component;
 use Yii2Oauth2ServerTests\_helpers\TestUserModelOidc;
-use Yii2Oauth2ServerTests\unit\TestCase;
+use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
 
 /**
  * @covers \rhertogh\Yii2Oauth2Server\traits\models\Oauth2OidcUserIdentityTrait
  */
-class Oauth2OidcUserIdentityTraitTest extends TestCase
+class Oauth2OidcUserIdentityTraitTest extends DatabaseTestCase
 {
     public function testGetOpenIdConnectClaimValue()
     {

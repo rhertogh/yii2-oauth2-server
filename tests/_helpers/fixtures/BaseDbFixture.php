@@ -13,7 +13,8 @@ abstract class BaseDbFixture extends \yii\test\InitDbFixture
 
     public function init()
     {
-        $this->db = new Connection(DatabaseFixtures::getDbConfig($this->driverName)['connection']);
+        $connectionConfig = DatabaseFixtures::getDbConfig($this->driverName)['connection'];
+        $this->db = new Connection($connectionConfig);
         Yii::$app->setComponents([
             'db' => $this->db,
         ]);
@@ -25,6 +26,7 @@ abstract class BaseDbFixture extends \yii\test\InitDbFixture
         if (static::$_created !== static::class) {
             $this->createDbFixtures();
             static::$_created = static::class;
+            $this->db->getSchema()->refresh();
         }
     }
 

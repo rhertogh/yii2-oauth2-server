@@ -4,9 +4,9 @@ $config = [
     'databases' => [
         'cubrid' => [
             'connection' => [
-            'dsn' => 'cubrid:dbname=demodb;host=cubrid;port=33000',
-            'username' => 'dba',
-            'password' => '',
+                'dsn' => 'cubrid:dbname=demodb;host=cubrid;port=33000',
+                'username' => 'dba',
+                'password' => '',
             ],
             'fixture' => __DIR__ . '/cubrid.sql',
         ],
@@ -32,6 +32,30 @@ $config = [
             'postMigrationsFixtures' => [
                 __DIR__ . '/mysql_post.sql',
                 ...(is_file(__DIR__ . '/mysql_post.local.sql') ? [__DIR__ . '/mysql_post.local.sql'] : []),
+            ],
+        ],
+        'postgres' => [
+            'connection' => [
+                'dsn' =>
+                    'pgsql:host=' . getenv('POSTGRES_HOST')
+                    . (getenv('POSTGRES_PORT') ? ':' . getenv('POSTGRES_PORT') : '')
+                    . ';dbname=' . getenv('POSTGRES_DB'),
+                'username' => getenv('POSTGRES_USER'),
+                'password' => getenv('POSTGRES_PASSWORD'),
+                'charset' => 'utf8',
+            ],
+            'preMigrationsFixtures' => [
+                __DIR__ . '/postgres_pre.sql',
+                ...(is_file(__DIR__ . '/postgres_pre.local.sql') ? [__DIR__ . '/postgres_pre.local.sql'] : []),
+            ],
+            'migrations' => [
+                'migrationNamespaces' => [
+                    'rhertogh\\Yii2Oauth2Server\\migrations',
+                ],
+            ],
+            'postMigrationsFixtures' => [
+                __DIR__ . '/postgres_post.sql',
+                ...(is_file(__DIR__ . '/postgres_post.local.sql') ? [__DIR__ . '/postgres_post.local.sql'] : []),
             ],
         ],
         'sqlite' => [

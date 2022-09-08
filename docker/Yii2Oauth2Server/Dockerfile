@@ -3,6 +3,8 @@ FROM yiisoftware/yii2-php:7.4-apache
 ARG APP_DIR=/app
 RUN echo "APP_DIR: ${APP_DIR}"
 
+RUN echo "deb http://ftp.de.debian.org/debian buster main" >> /etc/apt/sources.list
+
 RUN apt-get update
 
 #region Not required but often used for debugging
@@ -13,6 +15,11 @@ COPY docker/Yii2Oauth2Server/apache/vhost.conf /etc/apache2/sites-available/000-
 
 # Create alias for PHP with Xdebug
 RUN echo 'alias phpx="php -d xdebug.start_with_request=1"' >> ~/.bashrc
+
+# Enable pdo_postgres
+RUN apt-get install -y libpq-dev
+RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
+RUN docker-php-ext-install pdo pdo_pgsql pgsql
 
 # Copy the app directory. NOTE! For development docker-compose will overwrite this directory with a mount
 COPY . ${APP_DIR}

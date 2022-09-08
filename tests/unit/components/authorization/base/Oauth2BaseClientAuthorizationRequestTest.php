@@ -6,12 +6,12 @@ use rhertogh\Yii2Oauth2Server\components\authorization\base\Oauth2BaseClientAuth
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii2Oauth2ServerTests\_helpers\TestUserModel;
-use Yii2Oauth2ServerTests\unit\TestCase;
+use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
 
 /**
  * @covers \rhertogh\Yii2Oauth2Server\components\authorization\base\Oauth2BaseClientAuthorizationRequest
  */
-class Oauth2BaseClientAuthorizationRequestTest extends TestCase
+class Oauth2BaseClientAuthorizationRequestTest extends DatabaseTestCase
 {
     public function testGetSetModule()
     {
