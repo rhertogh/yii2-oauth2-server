@@ -27,8 +27,11 @@ jobs:
           POSTGRES_USER: Yii2Oauth2ServerTest
           POSTGRES_PASSWORD: password
           POSTGRES_DB: Yii2Oauth2ServerTest
+        ports:
+          - 5432/tcp
         # Set health checks to wait until postgres has started
         options: >-
+          --name=postgres
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
@@ -87,7 +90,7 @@ jobs:
           MYSQL_USER_NAME: Yii2Oauth2ServerTest
           MYSQL_USER_PASSWORD: password
 
-          POSTGRES_HOST: postgres
+          POSTGRES_HOST: localhost
           POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
           POSTGRES_USER: Yii2Oauth2ServerTest
           POSTGRES_PASSWORD: password
