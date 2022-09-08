@@ -22,14 +22,17 @@ jobs:
           - 3306/tcp
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
       postgres:
-        image: postgres:9.6
+        image: postgres:14
         env:
           POSTGRES_USER: Yii2Oauth2ServerTest
           POSTGRES_PASSWORD: password
           POSTGRES_DB: Yii2Oauth2ServerTest
-        ports:
-          - 5432:5432
-        options: --name=postgres --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     strategy:
       fail-fast: false
       matrix:
@@ -84,7 +87,7 @@ jobs:
           MYSQL_USER_NAME: Yii2Oauth2ServerTest
           MYSQL_USER_PASSWORD: password
 
-          POSTGRES_HOST: localhost
+          POSTGRES_HOST: postgres
           POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
           POSTGRES_USER: Yii2Oauth2ServerTest
           POSTGRES_PASSWORD: password
