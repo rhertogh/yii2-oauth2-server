@@ -88,7 +88,7 @@ jobs:
           MYSQL_USER_NAME: Yii2Oauth2ServerTest
           MYSQL_USER_PASSWORD: password
 
-          POSTGRES_HOST: postgres
+          POSTGRES_HOST: localhost
           POSTGRES_PORT: 5432
           POSTGRES_USER: Yii2Oauth2ServerTest
           POSTGRES_PASSWORD: password
