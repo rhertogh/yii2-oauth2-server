@@ -38,7 +38,7 @@ $config = [
             'connection' => [
                 'dsn' =>
                     'pgsql:host=' . getenv('POSTGRES_HOST')
-                    . (getenv('POSTGRES_PORT') ? ':' . getenv('POSTGRES_PORT') : '')
+                    . (getenv('POSTGRES_PORT') ? ';port=' . getenv('POSTGRES_PORT') : '')
                     . ';dbname=' . getenv('POSTGRES_DB'),
                 'username' => getenv('POSTGRES_USER'),
                 'password' => getenv('POSTGRES_PASSWORD'),
