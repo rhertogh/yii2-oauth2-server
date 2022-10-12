@@ -50,6 +50,11 @@ class Oauth2ClientController extends Oauth2BaseConsoleController
     public $scopes = null;
 
     /**
+     * @var string|null
+     */
+    public $endUsersMayAuthorizeClient = null;
+
+    /**
      * @var string|null A PHP date/time string or, when starting with 'P', a PHP date interval string.
      * @see https://www.php.net/manual/en/datetime.formats.php
      * @see https://www.php.net/manual/en/dateinterval.construct.php
@@ -71,6 +76,7 @@ class Oauth2ClientController extends Oauth2BaseConsoleController
                 'grantTypes',
                 'secret',
                 'scopes',
+                'endUsersMayAuthorizeClient',
             ];
         } elseif ($actionID == 'set-secret') {
             $options = [

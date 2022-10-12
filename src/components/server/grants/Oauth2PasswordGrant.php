@@ -3,51 +3,46 @@
 namespace rhertogh\Yii2Oauth2Server\components\server\grants;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
-use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\Grant\PasswordGrant;
-use League\OAuth2\Server\ResponseTypes\ResponseTypeInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use rhertogh\Yii2Oauth2Server\components\server\grants\traits\Oauth2GrantTrait;
+use rhertogh\Yii2Oauth2Server\exceptions\Oauth2ServerException;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2PasswordGrantInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\user\Oauth2PasswordGrantUserComponentInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use Yii;
-use yii\web\User;
+use yii\base\InvalidConfigException;
 
 class Oauth2PasswordGrant extends PasswordGrant implements Oauth2PasswordGrantInterface
 {
-    /**
-     * @var User|null
-     */
-    protected $validatedUser = null;
+    use Oauth2GrantTrait;
 
     /**
      * @inheritDoc
      */
     protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client)
     {
-        $this->validatedUser = parent::validateUser($request, $client);
-        if (Yii::$app->user instanceof Oauth2PasswordGrantUserComponentInterface) {
-            if (!Yii::$app->user->beforeOauth2PasswordGrantLogin($this->validatedUser, $client, $this)) {
-                Yii::info('Login rejected by `beforeOauthPasswordGrantLogin()`.', 'oauth2');
-                $this->validatedUser = null;
-                throw OAuthServerException::invalidCredentials();
-            }
+        if (!($client instanceof Oauth2ClientInterface)) {
+            throw new InvalidConfigException(get_class($client) . ' must implement ' . Oauth2UserInterface::class);
         }
 
-        return $this->validatedUser;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function respondToAccessTokenRequest(
-        ServerRequestInterface $request,
-        ResponseTypeInterface $responseType,
-        \DateInterval $accessTokenTTL
-    ) {
-        $responseType = parent::respondToAccessTokenRequest($request, $responseType, $accessTokenTTL);
-        if (Yii::$app->user instanceof Oauth2PasswordGrantUserComponentInterface) {
-            Yii::$app->user->afterOauth2PasswordGrantLogin($this->validatedUser, $this);
+        $user = parent::validateUser($request, $client);
+        if (!($user instanceof Oauth2UserInterface)) {
+            throw new InvalidConfigException(
+                'Yii::$app->user->identity (currently ' . get_class($user)
+                . ') must implement ' . Oauth2UserInterface::class
+            );
         }
-        return $responseType;
+
+        if ($user->isOauth2ClientAllowed($client, $this->getIdentifier()) !== true) {
+            throw Oauth2ServerException::accessDenied(
+                Yii::t('oauth2', 'User {user_id} is not allowed to use client {client_identifier}.', [
+                    'user_id' => $user->getId(),
+                    'client_identifier' => $client->getIdentifier(),
+                ])
+            );
+        }
+
+        return $user;
     }
 }

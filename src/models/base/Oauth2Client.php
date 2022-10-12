@@ -23,6 +23,7 @@ use Yii;
  * @property integer $token_types
  * @property integer $grant_types
  * @property integer $scope_access
+ * @property integer $end_users_may_authorize_client
  * @property integer $user_account_selection
  * @property boolean $allow_auth_code_without_pkce
  * @property boolean $skip_authorization_if_scope_is_allowed
@@ -59,7 +60,7 @@ abstract class Oauth2Client extends \rhertogh\Yii2Oauth2Server\models\base\Oauth
             [['type', 'token_types', 'grant_types', 'scope_access', 'user_account_selection', 'client_credentials_grant_user_id', 'created_at', 'updated_at'], 'integer'],
             [['secret', 'old_secret', 'contacts'], 'string'],
             [['old_secret_valid_until', 'redirect_uris'], 'safe'],
-            [['allow_auth_code_without_pkce', 'skip_authorization_if_scope_is_allowed', 'oidc_allow_offline_access_without_consent', 'enabled'], 'boolean'],
+            [['end_users_may_authorize_client', 'allow_auth_code_without_pkce', 'skip_authorization_if_scope_is_allowed', 'oidc_allow_offline_access_without_consent', 'enabled'], 'boolean'],
             [['identifier', 'name', 'logo_uri', 'tos_uri', 'oidc_userinfo_encrypted_response_alg'], 'string', 'max' => 255],
             [['identifier'], 'unique']
         ];
@@ -85,6 +86,7 @@ abstract class Oauth2Client extends \rhertogh\Yii2Oauth2Server\models\base\Oauth
             'token_types' => Yii::t('oauth2', 'Token Types'),
             'grant_types' => Yii::t('oauth2', 'Grant Types'),
             'scope_access' => Yii::t('oauth2', 'Scope Access'),
+            'end_users_may_authorize_client' => Yii::t('oauth2', 'End Users May Authorize Client'),
             'user_account_selection' => Yii::t('oauth2', 'User Account Selection'),
             'allow_auth_code_without_pkce' => Yii::t('oauth2', 'Allow Auth Code Without Pkce'),
             'skip_authorization_if_scope_is_allowed' => Yii::t('oauth2', 'Skip Authorization If Scope Is Allowed'),
@@ -96,35 +98,35 @@ abstract class Oauth2Client extends \rhertogh\Yii2Oauth2Server\models\base\Oauth
             'updated_at' => Yii::t('oauth2', 'Updated At'),
         ];
     }
-    
+
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenQueryInterface     */
     public function getAccessTokens()
     {
         return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2AccessToken::className(), ['client_id' => 'id'])->inverseOf('client');
     }
-    
+
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AuthCodeQueryInterface     */
     public function getAuthCodes()
     {
         return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2AuthCode::className(), ['client_id' => 'id'])->inverseOf('client');
     }
-    
+
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ClientScopeQueryInterface     */
     public function getClientScopes()
     {
         return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2ClientScope::className(), ['client_id' => 'id'])->inverseOf('client');
     }
-    
+
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface     */
     public function getScopes()
     {
         return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2Scope::className(), ['id' => 'scope_id'])->via('clientScopes');
     }
-    
+
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2UserClientQueryInterface     */
     public function getUserClients()
@@ -133,7 +135,7 @@ abstract class Oauth2Client extends \rhertogh\Yii2Oauth2Server\models\base\Oauth
     }
 
 
-    
+
     /**
      * @inheritdoc
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ClientQueryInterface the active query used by this AR class.

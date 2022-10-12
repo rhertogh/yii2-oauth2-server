@@ -2,8 +2,6 @@
 
 namespace rhertogh\Yii2Oauth2Server\interfaces\models\external\user;
 
-use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;
-
 interface Oauth2PasswordGrantUserInterface extends Oauth2UserInterface
 {
     /**

@@ -217,6 +217,21 @@ interface Oauth2ClientInterface extends
     public function setUserAccountSelection($userAccountSelectionConfig);
 
     /**
+     * Are end-user allowed to authorize this client.
+     * @return bool
+     * @since 1.0.0
+     */
+    public function endUsersMayAuthorizeClient();
+
+    /**
+     * Set if end-users are allowed to authorize this client.
+     * @param bool $endUsersMayAuthorizeClient
+     * @since 1.0.0
+     * @return $this
+     */
+    public function setEndUsersMayAuthorizeClient($endUsersMayAuthorizeClient);
+
+    /**
      * Are authorization code requests without PKCE allowed.
      * @return bool
      * @since 1.0.0

@@ -7,7 +7,6 @@ use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2ClientController;
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeCollectionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
 use yii\base\Action;
@@ -31,6 +30,7 @@ class Oauth2CreateClientAction extends Action
         $redirectURIs = $this->controller->redirectURIs;
         $secret = $this->controller->secret;
         $scopes = $this->controller->scopes;
+        $endUsersMayAuthorizeClient = $this->controller->endUsersMayAuthorizeClient;
 
         if (!empty($this->controller->sample)) {
             $sample = strtolower($this->controller->sample);
@@ -40,9 +40,16 @@ class Oauth2CreateClientAction extends Action
                 $defaultName = 'Postman Sample Client';
                 $redirectURIs = $redirectURIs ?? ['https://oauth.pstmn.io/v1/callback'];
                 $type = $type ?? Oauth2ClientInterface::TYPE_CONFIDENTIAL;
-                if ($module->enableOpenIdConnect) {
-                    $defaultScopes = implode(' ', Oauth2OidcScopeCollectionInterface::OPENID_CONNECT_DEFAULT_SCOPES);
+
+                $defaultGrantTypes = array_fill_keys(
+                    array_keys($module->getAuthorizationServer()->getEnabledGrantTypes()),
+                    true
+                );
+
+                if ($module->enableOpenIdConnect && empty($scopes)) {
+                    $scopes = implode(' ', Oauth2OidcScopeCollectionInterface::OPENID_CONNECT_DEFAULT_SCOPES);
                 }
+
             } else {
                 throw new InvalidArgumentException('Unknown client sample: "' . $sample . '"');
             }
@@ -100,7 +107,10 @@ class Oauth2CreateClientAction extends Action
 
             $grantTypes = 0;
             foreach ($availableGrantTypes as $availableGrantType) {
-                if ($this->controller->confirm('Enable "' . $availableGrantType . '" grant?')) {
+                if ($this->controller->confirm(
+                    'Enable "' . $availableGrantType . '" grant?',
+                        $defaultGrantTypes[$availableGrantType] ?? false
+                )) {
                     $grantTypes |= Oauth2Module::getGrantTypeId($availableGrantType);
                 }
             }
@@ -133,15 +143,21 @@ class Oauth2CreateClientAction extends Action
             $scopes = null;
         }
 
-        if (empty($scopes)) {
-            $scopes = $this->controller->prompt('Client Scopes?', [
-                'required' => false,
-                'default' => $defaultScopes ?? null,
-                'validator' => [$this, 'validateScope'],
-            ]);
+        if (empty($endUsersMayAuthorizeClient)) {
+            $endUsersMayAuthorizeClient = $this->controller->confirm('May end-users authorize this client?', true);
         }
 
-        $client = $module->createClient($identifier, $name, $grantTypes, $redirectURIs, $type, $secret, $scopes);
+        $client = $module->createClient(
+            $identifier,
+            $name,
+            $grantTypes,
+            $redirectURIs,
+            $type,
+            $secret,
+            $scopes,
+            null,
+            $endUsersMayAuthorizeClient
+        );
 
         $this->controller->stdout('Successfully created new client with identifier "' . $client->getIdentifier() .
             '"' . ($scopes ? (' and scopes "' . $scopes . '"') : '') . '.' . PHP_EOL, Console::FG_GREEN);

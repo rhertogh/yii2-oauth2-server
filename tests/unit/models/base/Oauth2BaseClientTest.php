@@ -54,6 +54,7 @@ class Oauth2BaseClientTest extends BaseOauth2BaseModelsTest
             'token_types' => 'Token Types',
             'grant_types' => 'Grant Types',
             'scope_access' => 'Scope Access',
+            'end_users_may_authorize_client' => 'End Users May Authorize Client',
             'user_account_selection' => 'User Account Selection',
             'allow_auth_code_without_pkce' => 'Allow Auth Code Without Pkce',
             'skip_authorization_if_scope_is_allowed' => 'Skip Authorization If Scope Is Allowed',

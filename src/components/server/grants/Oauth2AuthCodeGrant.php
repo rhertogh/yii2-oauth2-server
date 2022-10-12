@@ -5,16 +5,17 @@ namespace rhertogh\Yii2Oauth2Server\components\server\grants;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 use League\OAuth2\Server\Grant\AuthCodeGrant;
+use rhertogh\Yii2Oauth2Server\components\server\grants\traits\Oauth2GrantTrait;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2AuthCodeGrantInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2RefreshTokenInterface;
-use rhertogh\Yii2Oauth2Server\Oauth2Module;
 
 class Oauth2AuthCodeGrant extends AuthCodeGrant implements Oauth2AuthCodeGrantInterface
 {
-    /** @var Oauth2Module */
-    public $module;
+    use Oauth2GrantTrait {
+        issueRefreshToken as issueRefreshTokenInternal;
+    }
 
     /**
      * @inheritDoc
@@ -38,6 +39,6 @@ class Oauth2AuthCodeGrant extends AuthCodeGrant implements Oauth2AuthCodeGrantIn
             }
         }
 
-        return parent::issueRefreshToken($accessToken);
+        return $this->issueRefreshTokenInternal($accessToken);
     }
 }

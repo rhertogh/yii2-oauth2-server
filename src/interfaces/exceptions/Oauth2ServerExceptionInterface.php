@@ -2,7 +2,7 @@
 
 namespace rhertogh\Yii2Oauth2Server\interfaces\exceptions;
 
-interface Oauth2OidcServerExceptionInterface
+interface Oauth2ServerExceptionInterface
 {
     /**
      * Construct a new exception.

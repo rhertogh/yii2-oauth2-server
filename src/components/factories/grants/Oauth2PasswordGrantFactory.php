@@ -20,10 +20,16 @@ class Oauth2PasswordGrantFactory extends base\Oauth2BaseGrantTypeFactory impleme
     public function getGrantType()
     {
         /** @var Oauth2PasswordGrantInterface $passwordGrant */
-        $passwordGrant = Yii::createObject(Oauth2PasswordGrantInterface::class, [
-            $this->module->getUserRepository(),
-            $this->module->getRefreshTokenRepository(),
-        ]);
+        $passwordGrant = Yii::createObject(
+            [
+                'class' => Oauth2PasswordGrantInterface::class,
+                'module' => $this->module,
+            ],
+            [
+                $this->module->getUserRepository(),
+                $this->module->getRefreshTokenRepository(),
+            ]
+        );
 
         $passwordGrant->setRefreshTokenTTL(new \DateInterval($this->refreshTokenTTL));
 

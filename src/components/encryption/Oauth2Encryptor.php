@@ -148,7 +148,7 @@ class Oauth2Encryptor extends Component implements Oauth2EncryptorInterface
     public function decrypt($data)
     {
         try {
-            list('keyName' => $keyName, 'ciphertext' => $ciphertext) = $this->parseData($data);
+            ['keyName' => $keyName, 'ciphertext' => $ciphertext] = $this->parseData($data);
         } catch (\Throwable $e) {
             throw new \InvalidArgumentException(
                 'Unable to decrypt, $data must be in format "keyName' . $this->dataSeparator . 'ciphertext".'
@@ -174,7 +174,7 @@ class Oauth2Encryptor extends Component implements Oauth2EncryptorInterface
             $newKeyName = $this->getDefaultKeyName();
         }
 
-        list($keyName) = explode($this->dataSeparator, $data, 2);
+        [$keyName] = explode($this->dataSeparator, $data, 2);
 
         if ($keyName === $newKeyName) {
             return $data; // Key hasn't changed.

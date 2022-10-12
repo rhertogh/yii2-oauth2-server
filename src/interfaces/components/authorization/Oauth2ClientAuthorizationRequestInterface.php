@@ -386,6 +386,13 @@ interface Oauth2ClientAuthorizationRequestInterface extends Configurable
     public function load($data, $formName = null);
 
     /**
+     * Check if the user identity is allowed to complete the authorization request.
+     * This can be useful to restrict access to certain client/user combinations
+     * @return bool
+     */
+    public function isAuthorizationAllowed();
+    
+    /**
      * Process the Client Authorization Request. This method persists the authorized client and scopes.
      * @since 1.0.0
      */

@@ -4,18 +4,19 @@ namespace rhertogh\Yii2Oauth2Server\components\server\grants;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Grant\ClientCredentialsGrant;
+use rhertogh\Yii2Oauth2Server\components\server\grants\traits\Oauth2GrantTrait;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ScopeAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2ClientCredentialsGrantInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
-use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
 use yii\web\ServerErrorHttpException;
 
 class Oauth2ClientCredentialsGrant extends ClientCredentialsGrant implements Oauth2ClientCredentialsGrantInterface
 {
-    /** @var Oauth2Module */
-    public $module;
+    use Oauth2GrantTrait {
+        issueAccessToken as issueAccessTokenInternal;
+    }
 
     /**
      * @inheritDoc
@@ -72,6 +73,6 @@ class Oauth2ClientCredentialsGrant extends ClientCredentialsGrant implements Oau
         }
 
 
-        return parent::issueAccessToken($accessTokenTTL, $client, $userIdentifier, $scopes);
+        return $this->issueAccessTokenInternal($accessTokenTTL, $client, $userIdentifier, $scopes);
     }
 }

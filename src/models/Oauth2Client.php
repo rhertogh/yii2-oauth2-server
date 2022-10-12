@@ -146,6 +146,17 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
         return $this->user_account_selection;
     }
 
+    public function endUsersMayAuthorizeClient()
+    {
+        return $this->end_users_may_authorize_client;
+    }
+
+    public function setEndUsersMayAuthorizeClient($endUsersMayAuthorizeClient)
+    {
+        $this->end_users_may_authorize_client = $endUsersMayAuthorizeClient;
+        return $this;
+    }
+
     /**
      * @inheritDoc
      */
@@ -154,7 +165,6 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
         $this->user_account_selection = $userAccountSelectionConfig;
         return $this;
     }
-
 
     /**
      * @inheritDoc
@@ -315,7 +325,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
             foreach ($encryptedAttributes as $encryptedAttribute) {
                 $data = $client->$encryptedAttribute;
                 if (!empty($data)) {
-                    list('keyName' => $keyName) = $encryptor->parseData($data);
+                    ['keyName' => $keyName] = $encryptor->parseData($data);
                     if (array_key_exists($keyName, $keyUsage)) {
                         $keyUsage[$keyName][] = $client->getPrimaryKey();
                     } else {

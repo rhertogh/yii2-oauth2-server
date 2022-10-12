@@ -2,8 +2,8 @@
 
 namespace rhertogh\Yii2Oauth2Server\interfaces\components\server\grants;
 
-use League\OAuth2\Server\Grant\GrantTypeInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\base\Oauth2GrantTypeInterface;
 
-interface Oauth2PasswordGrantInterface extends GrantTypeInterface
+interface Oauth2PasswordGrantInterface extends Oauth2GrantTypeInterface
 {
 }

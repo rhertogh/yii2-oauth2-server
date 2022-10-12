@@ -157,7 +157,10 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                     'grant_types' => $this->integer()->notNull()->defaultValue(Oauth2Module::GRANT_TYPE_AUTH_CODE | Oauth2Module::GRANT_TYPE_REFRESH_TOKEN),
                     'scope_access' => $this->integer()->notNull()->defaultValue(Oauth2Client::SCOPE_ACCESS_STRICT)
                         ->comment('Determines how strict scopes must be defined for this client.'),
-                    'user_account_selection' => $this->integer()->comment('Determines when to show user account selection screen. Using Oauth2Module::$defaultUserAccountSelection when `null`.'),
+                    'end_users_may_authorize_client' => $this->boolean()->notNull()->defaultValue(true)
+                        ->comment('Determines if the user can authorize a client (the client has to be pre-authorized otherwise).'),
+                    'user_account_selection' => $this->integer()
+                        ->comment('Determines when to show user account selection screen. Using Oauth2Module::$defaultUserAccountSelection when `null`.'),
                     'allow_auth_code_without_pkce' => $this->boolean()->notNull()->defaultValue(false)
                         ->comment('Require clients to use PKCE when using the auth_code grant type.'),
                     'skip_authorization_if_scope_is_allowed' => $this->boolean()->notNull()->defaultValue(false)

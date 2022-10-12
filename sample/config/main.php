@@ -4,6 +4,7 @@
 /// (for both security and performance)!
 
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
+use sample\components\AppBootstrap;
 
 // phpcs:disable Generic.Files.LineLength.TooLong -- Sample documentation
 return [
@@ -22,6 +23,7 @@ return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
 
     'bootstrap' => [
+        AppBootstrap::class,
         'oauth2',
         'log',
     ],
@@ -62,7 +64,8 @@ return [
         'db' => [
             'class' => yii\db\Connection::class,
             'dsn' => getenv('MYSQL_HOST') && getenv('MYSQL_DB_NAME')
-                ? 'mysql:host=' . getenv('MYSQL_HOST') . (getenv('MYSQL_PORT') ? ':' . getenv('MYSQL_PORT') : '')
+                ? 'mysql:host=' . getenv('MYSQL_HOST')
+                  . (getenv('MYSQL_PORT') ? ';port=' . getenv('MYSQL_PORT') : '')
                   . ';dbname=' . getenv('MYSQL_DB_NAME')
                 : null,
             'username' => getenv('MYSQL_USER_NAME'),

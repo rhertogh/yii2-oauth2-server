@@ -9,7 +9,6 @@ use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ScopeRelationInterfac
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2TokenInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenQueryInterface;
 use yii\base\InvalidArgumentException;
-use yii\db\ActiveQuery;
 
 interface Oauth2AccessTokenInterface extends
     Oauth2ActiveRecordIdInterface,

@@ -7,7 +7,6 @@ use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ActiveRecordIdInterfa
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2TokenInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenQueryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2RefreshTokenQueryInterface;
-use yii\db\ActiveQuery;
 
 interface Oauth2RefreshTokenInterface extends
     Oauth2ActiveRecordIdInterface,

@@ -3,6 +3,7 @@
 namespace rhertogh\Yii2Oauth2Server\interfaces\models\external\user;
 
 use League\OAuth2\Server\Entities\UserEntityInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use yii\db\TableSchema;
 use yii\web\IdentityInterface;
 
@@ -25,4 +26,15 @@ interface Oauth2UserInterface extends
      * @since 1.0.0
      */
     public static function findIdentity($id);
+
+    /**
+     * May the user use the client.
+     * Note: In case of the "Client Credentials" Grant Type request there is no end-user to authorize the request,
+     *       therefore this method will not be called for a "Client Credentials" request.
+     *       If the "Client Credentials Grant User ID" is specified, that user is always allowed.
+     * @param Oauth2ClientInterface $client
+     * @param string $grantType
+     * @return bool
+     */
+    public function isOauth2ClientAllowed($client, $grantType);
 }

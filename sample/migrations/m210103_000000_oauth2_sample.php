@@ -74,6 +74,20 @@ class m210103_000000_oauth2_sample extends Migration
         $clientCredentialsClientId = $this->db->lastInsertID;
 
         $this->insert('{{oauth2_client}}', [
+            'identifier' => 'sample-client-credentials-client-no-user',
+            'type' => 1, # Confidential
+            'secret' => '2021-01-01::3vUCADtKx59NPQl3/1fJXmppRbiug3iccJc1S9XY6TPvLE02/+ggB8GtIc24J5oMTj38NIPIpNt8ClNDS7ZBI4+ykNxYOuEHQfdkDiUf5WVKtLegx43gLXfq', # "secret"
+            'name' => 'Valid client with Grant Type client credentials (but no user id)',
+            'redirect_uris' => '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
+            'token_types' => 1, # Bearer
+            'grant_types' => 2, # CLIENT_CREDENTIALS
+            'enabled' => 1,
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $clientCredentialsClientNoUserId = $this->db->lastInsertID;
+
+        $this->insert('{{oauth2_client}}', [
             'identifier' => 'sample-password-public-client',
             'type' => 2, # Public
             'name' => 'Valid client with Grant Type password',
@@ -84,6 +98,8 @@ class m210103_000000_oauth2_sample extends Migration
             'created_at' => time(),
             'updated_at' => time(),
         ]);
+        $passwordClientId = $this->db->lastInsertID;
+
         $this->insert('{{oauth2_client}}', [
             'identifier' => 'sample-implicit-client',
             'type' => 1, # Confidential
@@ -129,7 +145,15 @@ class m210103_000000_oauth2_sample extends Migration
             'user.email_address.read',
         ]]);
 
-        foreach ([$authCodeClientId, $clientCredentialsClientId] as $clientId) {
+        foreach (
+            [
+                $authCodeClientId,
+                $clientCredentialsClientId,
+                $clientCredentialsClientNoUserId,
+                $passwordClientId,
+            ]
+            as $clientId
+        ) {
             foreach ($scopes as $scope) {
                 $this->insert(
                     '{{oauth2_client_scope}}',

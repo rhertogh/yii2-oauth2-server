@@ -5,6 +5,7 @@ namespace rhertogh\Yii2Oauth2Server\components\repositories;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use rhertogh\Yii2Oauth2Server\components\repositories\base\Oauth2BaseRepository;
 use rhertogh\Yii2Oauth2Server\components\repositories\traits\Oauth2RepositoryIdentifierTrait;
+use rhertogh\Yii2Oauth2Server\exceptions\Oauth2ServerException;
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2ScopeRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
@@ -54,38 +55,53 @@ class Oauth2ScopeRepository extends Oauth2BaseRepository implements Oauth2ScopeR
             $client = $clientEntity;
         }
 
-        $requestedScopeIdentifiers = array_map(fn(Oauth2ScopeInterface $scope) => $scope->getIdentifier(), $scopes);
-
-        $clientAllowedScopes = $client->getAllowedScopes($requestedScopeIdentifiers);
-
+        // Only allow scopes without user if grant type is 'client_credentials'.
         if (empty($userIdentifier)) {
-            // Only allow scopes without user if grant type is 'client_credentials'.
-            if ($grantType !== Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS) {
+            if ($grantType === Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS) {
+                $userIdentifier = $client->getClientCredentialsGrantUserId();
+            } else {
                 throw new InvalidArgumentException(
                     '$userIdentifier is required when $grantType is not "client_credentials".'
                 );
             }
-
-            return $clientAllowedScopes;
         }
+
+        $requestedScopeIdentifiers = array_map(fn(Oauth2ScopeInterface $scope) => $scope->getIdentifier(), $scopes);
+
+        // Validate requested scopes if they haven't been checked before (based on the grant type)
+        if (!in_array($grantType, [
+            Oauth2Module::GRANT_TYPE_IDENTIFIER_AUTH_CODE,
+            Oauth2Module::GRANT_TYPE_IDENTIFIER_IMPLICIT,
+            Oauth2Module::GRANT_TYPE_IDENTIFIER_REFRESH_TOKEN,
+        ])) {
+            if (!$client->validateAuthRequestScopes($requestedScopeIdentifiers, $unauthorizedScopes)) {
+                throw Oauth2ServerException::scopeNotAllowedForClient(array_shift($unauthorizedScopes));
+            }
+        }
+
+        $clientAllowedScopes = $client->getAllowedScopes($requestedScopeIdentifiers);
 
         $scopeIds = array_map(fn($scope) => $scope->getPrimaryKey(), $clientAllowedScopes);
 
         /** @var class-string<Oauth2ScopeInterface> $scopeClass */
         $scopeClass = DiHelper::getValidatedClassName(Oauth2ScopeInterface::class);
 
-        $approvedScopes = $scopeClass::find()
-            ->alias('scope')
-            ->innerJoinWith('userClientScopes user_client_scope', false)
-            ->andWhere([
-                'scope.id' => $scopeIds,
-                'user_client_scope.user_id' => $userIdentifier,
-                'user_client_scope.client_id' => $client->getPrimaryKey(),
-                'user_client_scope.enabled' => 1,
-            ])
-            ->orderBy('id')
-            ->indexBy('id')
-            ->all();
+        if ($userIdentifier) {
+            $approvedScopes = $scopeClass::find()
+                ->alias('scope')
+                ->innerJoinWith('userClientScopes user_client_scope', false)
+                ->andWhere([
+                    'scope.id' => $scopeIds,
+                    'user_client_scope.user_id' => $userIdentifier,
+                    'user_client_scope.client_id' => $client->getPrimaryKey(),
+                    'user_client_scope.enabled' => 1,
+                ])
+                ->orderBy('id')
+                ->indexBy('id')
+                ->all();
+        } else {
+            $approvedScopes = [];
+        }
 
         foreach ($clientAllowedScopes as $clientAllowedScope) {
             $clientScope = $clientAllowedScope->getClientScope($client->getPrimaryKey());

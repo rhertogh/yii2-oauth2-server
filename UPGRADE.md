@@ -14,6 +14,47 @@ Please see the [Change Log](CHANGELOG.md) for more information on version histor
   from version A to version C and there is version B between A and C, you need to follow the instructions
   for both A and B.
 
+Upgrade from v1.0.0-alpha5
+--------------------------
+
+* > Note: Database changes will not be incremental till the first stable release.
+
+  v1.0.0-alpha6 introduces a new columns for the `oauth2_client` table.    
+  In order to apply these changes you can run the following statements:  
+  MySQL:  
+  ```MySQL
+  ALTER TABLE `oauth2_client` ADD COLUMN `end_users_may_authorize_client` TINYINT(1) NOT NULL DEFAULT 1 AFTER `scope_access`;
+  ```
+  PostgeSQL:  
+  ```MySQL
+  ALTER TABLE `oauth2_client` ADD COLUMN `end_users_may_authorize_client` BOOLEAN NOT NULL DEFAULT true AFTER `scope_access`;
+  ```
+
+* The interface `\rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface` defines a new method
+  `isOauth2ClientAllowed()`. This method determines if a user can use the client and/or grant.  
+  If all of your users may access any Oauth2 client and all grant types you can add the following function to your
+  user identity class (e.g. `app\models\User`):
+  ```php
+  public function isOauth2ClientAllowed($client, $grantType)
+  {
+      return true; // Allow all users to use all clients with any grant type.
+  }
+  ```
+
+* The `rhertogh\Yii2Oauth2Server\interfaces\components\user\Oauth2PasswordGrantUserComponentInterface` has been removed
+  in favor of events and the `Oauth2UserInterface::isOauth2ClientAllowed()`.  
+  In case your code relied on the `beforeOauth2PasswordGrantLogin()` method, you can now use the 
+  `isOauth2ClientAllowed()` method (which is more flexible and is called for all grant types).
+  As a replacement for `afterOauth2PasswordGrantLogin($identity, $grant)` you can register an event handler for the
+  `Oauth2Module::EVENT_AFTER_ACCESS_TOKEN_ISSUANCE` event.
+  
+* The `\rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface`
+  defines a new method `isAuthorizationAllowed()`.  
+  The default implementation calls the new `Oauth2ClientInterface::endUsersMayAuthorizeClient()` (see below).
+
+* The `\rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface` defines a new method 
+  `endUsersMayAuthorizeClient()` to determine if an end-user is allowed to authorize an Oauth2 client.    
+  The default implementation uses the `oauth2_client.end_users_may_authorize_client` database field.
 
 Upgrade from v1.0.0-alpha2
 --------------------------

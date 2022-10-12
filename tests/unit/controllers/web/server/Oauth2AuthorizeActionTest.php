@@ -403,6 +403,31 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(HttpCode::FOUND, $response->statusCode);
+        $this->assertEquals('http://localhost/redirect_uri/?error=scope_not_allowed_for_client', $response->headers->get('location'));
+    }
+
+    public function testRunNonExistingScope()
+    {
+        $this->mockWebApplication();
+        $module = Oauth2Module::getInstance();
+
+        $controller = new Controller('test', $module);
+        $accessTokenAction = new Oauth2AuthorizeAction('test', $controller);
+
+        Yii::$app->request->setQueryParams([
+            'response_type' => 'code',
+            'client_id' => 'test-client-type-password-public-valid',
+            'state' => '12345',
+            'scope' => 'does-not-exist',
+            'redirect_uri' => 'http://localhost/redirect_uri/',
+            'code_challenge' => 'X9lWKyT6K_fuuWtp8Ij5HG9urPGas7v0Z2RGwisf49c',
+            'code_challenge_method' => 'S256',
+        ]);
+
+        $response = $accessTokenAction->run();
+
+        $this->assertInstanceOf(Response::class, $response);
+        $this->assertEquals(HttpCode::FOUND, $response->statusCode);
         $this->assertEquals('http://localhost/redirect_uri/?error=invalid_scope', $response->headers->get('location'));
     }
 

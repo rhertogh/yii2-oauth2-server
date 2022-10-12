@@ -58,7 +58,7 @@ class User extends ActiveRecord implements
      */
     public function getAuthKey()
     {
-        // TODO: Implement getAuthKey() method.
+        // TODO: Implement getAuthKey() method (native to Yii2 \yii\web\IdentityInterface).
     }
 
     /**
@@ -66,12 +66,20 @@ class User extends ActiveRecord implements
      */
     public function validateAuthKey($authKey)
     {
-        // TODO: Implement getAuthKey() method.
+        // TODO: Implement getAuthKey() method (native to Yii2 \yii\web\IdentityInterface).
     }
     # endregion IdentityInterface
 
     # region Oauth2UserInterface
-    # Methods are implemented via Oauth2UserIdentityTrait
+    /**
+     * @inheritDoc
+     */
+    public function isOauth2ClientAllowed($client, $grantType)
+    {
+        // If you want, you can restrict access to certain clients and/or grant types.
+        // For now, allow all users to use all clients with any grant type.
+        return true;
+    }
     # endregion Oauth2UserInterface
 
     # region Oauth2OidcUserInterface

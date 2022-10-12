@@ -59,6 +59,14 @@ class TestUserModel extends ActiveRecord implements
     /**
      * @inheritDoc
      */
+    public function isOauth2ClientAllowed($client, $grantType)
+    {
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getAuthKey()
     {
         // TODO: Implement getAuthKey() method.

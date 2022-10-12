@@ -2,10 +2,10 @@
 
 namespace rhertogh\Yii2Oauth2Server\controllers\web\server;
 
-use League\OAuth2\Server\Exception\OAuthServerException;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ServerController;
 use rhertogh\Yii2Oauth2Server\controllers\web\server\base\Oauth2BaseServerAction;
 use rhertogh\Yii2Oauth2Server\exceptions\Oauth2OidcServerException;
+use rhertogh\Yii2Oauth2Server\exceptions\Oauth2ServerException;
 use rhertogh\Yii2Oauth2Server\helpers\Psr7Helper;
 use rhertogh\Yii2Oauth2Server\helpers\UrlHelper;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
@@ -69,7 +69,7 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
             $client = $authRequest->getClient();
 
             if (!$client->validateAuthRequestScopes($requestedScopeIdentifiers, $unauthorizedScopes)) {
-                throw OAuthServerException::invalidScope(
+                throw Oauth2ServerException::scopeNotAllowedForClient(
                     array_shift($unauthorizedScopes),
                     $authRequest->getRedirectUri()
                 );
@@ -282,12 +282,30 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
             }
 
             if (
+                $clientAuthorizationRequest->getUserIdentity()->isOauth2ClientAllowed(
+                    $client,
+                    $clientAuthorizationRequest->getGrantType()
+                ) !== true
+            ) {
+                throw Oauth2ServerException::accessDenied(
+                    Yii::t('oauth2', 'User {user_id} is not allowed to use client {client_identifier}.', [
+                        'user_id' => $user->getId(),
+                        'client_identifier' => $client->getIdentifier(),
+                    ])
+                );
+            }
+
+            if (
                 $clientAuthorizationRequest->isAuthorizationNeeded()
                 || in_array(
                     Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_CONSENT,
                     $clientAuthorizationRequest->getPrompts()
                 )
             ) {
+                if (!$clientAuthorizationRequest->isAuthorizationAllowed()) {
+                    throw Oauth2ServerException::authorizationNotAllowed();
+                }
+
                 if (
                     in_array(
                         Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_NONE,
@@ -297,6 +315,7 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
                     // User consent is disallowed by OpenID Connect.
                     throw Oauth2OidcServerException::consentRequired($authRequest->getRedirectUri());
                 }
+
                 if ($clientAuthorizationRequest->isCompleted()) {
                     $authorizationApproved = $clientAuthorizationRequest->isApproved();
                     // Cleanup session data.
@@ -316,14 +335,9 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
             $psr7Response = $server->completeAuthorizationRequest($authRequest, $psr7Response);
 
             return Psr7Helper::psr7ToYiiResponse($psr7Response);
-
-//        } catch (OAuthServerException $e) {
-//            return $this->processOAuthServerException($e);
         } catch (\Exception $e) {
             Yii::error((string)$e, __METHOD__);
             return $this->processException($e);
-//            $message = Yii::t('oauth2', 'Unable to respond to authorization request.');
-//            throw Oauth2ServerHttpException::createFromException($message, $e);
         }
     }
 

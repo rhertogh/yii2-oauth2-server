@@ -3,7 +3,6 @@
 namespace rhertogh\Yii2Oauth2Server\interfaces\models\external\user;
 
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcClaimInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 
 interface Oauth2OidcUserInterface extends Oauth2UserInterface, Oauth2UserAuthenticatedAtInterface

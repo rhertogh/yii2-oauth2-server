@@ -3,17 +3,26 @@ Yii2-Oauth2-Server Change Log
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).  
 
+Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer version.  
 
-Unreleased
-----------
+[1.0.0-alpha6] - Unreleased
+---------------------------
 
 ### Added
+- `Oauth2UserInterface::isOauth2ClientAllowed()` to support access restriction to user/client/grant combinations.  
+- Sample app now includes client for 'Client Credentials' grant without a user.
+
 ### Changed
 ### Deprecated
 ### Removed
+- Removed `Oauth2PasswordGrantUserComponentInterface` in favor of events and `Oauth2UserInterface::isOauth2ClientAllowed()`.
+
 ### Fixed
+- Mysql port configuration now uses separated port parameter
+
+### Improved
 ### Security
 
 

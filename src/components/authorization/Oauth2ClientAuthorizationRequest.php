@@ -398,6 +398,20 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
     }
 
     /**
+     * @inheritdoc
+     */
+    public function isAuthorizationAllowed()
+    {
+        return
+            ($this->getClient() !== null)
+            && ($this->getGrantType() !== null)
+            && (
+                $this->getClient()->endUsersMayAuthorizeClient()
+                && $this->getUserIdentity() !== null
+            );
+    }
+
+    /**
      * @inheritDoc
      */
     public function processAuthorization()

@@ -3,11 +3,11 @@
 namespace rhertogh\Yii2Oauth2Server\exceptions;
 
 use League\OAuth2\Server\Exception\UniqueTokenIdentifierConstraintViolationException;
-use rhertogh\Yii2Oauth2Server\interfaces\exceptions\Oauth2OidcServerExceptionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\exceptions\Oauth2ServerExceptionInterface;
 
 // phpcs:ignore Generic.Files.LineLength.TooLong
 class Oauth2UniqueTokenIdentifierConstraintViolationException extends UniqueTokenIdentifierConstraintViolationException implements
-    Oauth2OidcServerExceptionInterface
+    Oauth2ServerExceptionInterface
 {
     /**
      * @inheritDoc

@@ -11,13 +11,13 @@ namespace rhertogh\Yii2Oauth2Server;
 use Defuse\Crypto\Exception\BadFormatException;
 use Defuse\Crypto\Exception\EnvironmentIsBrokenException;
 use League\OAuth2\Server\CryptKey;
-use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\Grant\GrantTypeInterface;
 use rhertogh\Yii2Oauth2Server\base\Oauth2BaseModule;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2ClientController;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2DebugController;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2EncryptionController;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2MigrationsController;
+use rhertogh\Yii2Oauth2Server\exceptions\Oauth2ServerException;
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\helpers\Psr7Helper;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
@@ -579,7 +579,8 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
         $type,
         $secret = null,
         $scopes = null,
-        $userId = null
+        $userId = null,
+        $endUsersMayAuthorizeClient = false
     ) {
         if (!($this->serverRole & static::SERVER_ROLE_AUTHORIZATION_SERVER)) {
             throw new InvalidCallException('Oauth2 server role does not include authorization server.');
@@ -593,7 +594,8 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
             'name' => $name,
             'redirectUri' => $redirectURIs,
             'grantTypes' => $grantTypes,
-            'client_credentials_grant_user_id' => $userId
+            'endUsersMayAuthorizeClient' => $endUsersMayAuthorizeClient,
+            'clientCredentialsGrantUserId' => $userId
         ]);
 
         $transaction = $client::getDb()->beginTransaction();
@@ -1059,7 +1061,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
      * Validates a bearer token authenticated request. Note: this method does not return a result but will throw
      * an exception when the authentication fails.
      * @throws InvalidConfigException
-     * @throws OAuthServerException
+     * @throws Oauth2ServerException
      * @since 1.0.0
      */
     public function validateAuthenticatedRequest()
@@ -1079,7 +1081,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
      * @param string $type
      * @return Oauth2UserInterface|null
      * @throws InvalidConfigException
-     * @throws OAuthServerException
+     * @throws Oauth2ServerException
      * @see validateAuthenticatedRequest()
      * @since 1.0.0
      */
@@ -1133,7 +1135,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     {
         foreach ($properties as $property) {
             if (empty($this->$property)) {
-                throw new InvalidConfigException('$' . $property . ' must be set.');
+                throw new InvalidConfigException( __CLASS__ . '::$' . $property . ' must be set.');
             }
         }
     }

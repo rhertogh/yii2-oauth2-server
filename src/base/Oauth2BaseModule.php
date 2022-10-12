@@ -69,13 +69,13 @@ use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ConsentController
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2OidcControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ServerControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2WellKnownControllerInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AuthCodeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AuthCodeScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2RefreshTokenInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserClientInterface;
@@ -201,6 +201,18 @@ abstract class Oauth2BaseModule extends Module
         Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD => self::GRANT_TYPE_PASSWORD, // Legacy Grant.
         Oauth2Module::GRANT_TYPE_IDENTIFIER_IMPLICIT => self::GRANT_TYPE_IMPLICIT, // Legacy Grant.
     ];
+
+    /**
+     * Events
+     */
+    public const EVENT_BEFORE_CLIENT_AUTHORIZATION = 'Oauth2Server.Client.Authorization.Before';
+    public const EVENT_BEFORE_AFTER_AUTHORIZATION = 'Oauth2Server.Client.Authorization.After';
+    public const EVENT_BEFORE_AUTH_CODE_ISSUANCE = 'Oauth2Server.Grant.AuthCode.Issuance.Before';
+    public const EVENT_AFTER_AUTH_CODE_ISSUANCE = 'Oauth2Server.Grant.AuthCode.Issuance.After';
+    public const EVENT_BEFORE_ACCESS_TOKEN_ISSUANCE = 'Oauth2Server.Grant.AccessToken.Issuance.Before';
+    public const EVENT_AFTER_ACCESS_TOKEN_ISSUANCE = 'Oauth2Server.Grant.AccessToken.Issuance.After';
+    public const EVENT_BEFORE_REFRESH_TOKEN_ISSUANCE = 'Oauth2Server.Grant.RefreshToken.Issuance.Before';
+    public const EVENT_AFTER_REFRESH_TOKEN_ISSUANCE = 'Oauth2Server.Grant.RefreshToken.Issuance.After';
 
     /**
      * Never show  User Account Selection for OpenID Connect.

@@ -8,7 +8,6 @@ use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2IdentifierInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ScopeRelationInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2TokenInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AuthCodeQueryInterface;
-use yii\db\ActiveQuery;
 
 interface Oauth2AuthCodeInterface extends
     Oauth2ActiveRecordIdInterface,

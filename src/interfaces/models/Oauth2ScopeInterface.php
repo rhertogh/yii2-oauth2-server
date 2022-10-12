@@ -5,7 +5,6 @@ namespace rhertogh\Yii2Oauth2Server\interfaces\models;
 use League\OAuth2\Server\Entities\ScopeEntityInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ActiveRecordIdInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface;
-use yii\db\ActiveQuery;
 
 interface Oauth2ScopeInterface extends
     Oauth2ActiveRecordIdInterface,
@@ -17,7 +16,7 @@ interface Oauth2ScopeInterface extends
      */
     public const APPLIED_BY_DEFAULT_NO = 0;
     /**
-     * Applied by Default "Yes": Apply the scope automatically (without the client requesting it via the
+     * Applied by Default "Confirm": Apply the scope automatically (without the client requesting it via the
      * authorization request's scope parameter), the user still has to approve the scope.
      * @since 1.0.0
      */
