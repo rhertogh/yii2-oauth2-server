@@ -1,53 +1,77 @@
 Yii2-Oauth2-Server Change Log
 =============================
+All notable changes to this project will be documented in this file.
 
-1.0.0-alpha6 - Under Development
---------------------------------
-
-- [nothing yet]
-
-
-1.0.0-alpha5 (2022-09-08)
---------------------------------
-
-- Enh: PostgreSQL compatibility (mtangoo, rhertogh)
-- Enh: Optimized tests to reuse database fixtures (rhertogh)
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-1.0.0-alpha4 (2022-08-20)
--------------------------
+Unreleased
+----------
 
-- Enh: Added setters for common properties of Oauth2Client (rhertogh)
-- Bugfix: `Oauth2ClientAuthorizationRequestInterface::isAuthorizationNeeded()` now correctly adheres to `Oauth2Client::skipAuthorizationIfScopeIsAllowed()`
-- Bugfix: Fixed compatibility for lcobucci/jwt 4.2.x causing "Lcobucci\JWT\Signer\InvalidKeyProvided: Key cannot be empty"
-- Enh: Allow configuration of Oauth2ClientScopes in `Oauth2Module::createClient()` 
-
-
-1.0.0-alpha3 (2022-08-19)
--------------------------
-
-- Enh: Added support for Client Secret Rotation (rhertogh)
-- Enh: Added support for Encryption Key Rotation (rhertogh)
-- Bugfix: Accept string array for `$scopes` parameter in `Oauth2Module::createClient` (rhertogh)
-- Enh: Changed signature for `Oauth2Module::createClient` to make `$secret` optional (rhertogh)
-- Enh: Added `Oauth2ClientInterface::setGrantTypes()` (rhertogh)
-- Enh: Support `Oauth2BaseClientAuthorizationRequest` "Max Age" without OIDC (rhertogh)
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
 
 
-1.0.0-alpha2 (2022-05-27)
--------------------------
+[1.0.0-alpha5] - 2022-09-08
+---------------------------
 
-- Enh: Added support for custom scope authorization message (rhertogh)
-- Enh: Several code style fixes (rhertogh)
-- Bugfix: Using correct access token TTL (rhertogh)
-- Enh: Allow more easily customization of scopes by merging claims of previously defined scopes (rhertogh)
-- Added Documentation for OIDC claims (rhertogh)
-- Bugfix: Type-casted the type so the `Oauth2Client::isConfidential()` function works as intended (Roosh Ak)
-- Added Support for PHP 8.1 (rhertogh)
-- Enh: Added `Oauth2Module::createClient()` method to aid in the programmatic creation of clients (rhertogh)
+### Added
+- PostgreSQL compatibility (mtangoo, rhertogh)
+
+### Improved
+- Optimized tests to reuse database fixtures (rhertogh)
+
+[1.0.0-alpha4] - 2022-08-20
+---------------------------
+
+### Added
+- Added setters for common properties of Oauth2Client (rhertogh)
+- Allow configuration of Oauth2ClientScopes in `Oauth2Module::createClient()`
+
+### Fixed
+- `Oauth2ClientAuthorizationRequestInterface::isAuthorizationNeeded()` now correctly adheres to `Oauth2Client::skipAuthorizationIfScopeIsAllowed()`
+- Compatibility for lcobucci/jwt 4.2.x causing "Lcobucci\JWT\Signer\InvalidKeyProvided: Key cannot be empty"
 
 
-1.0.0-alpha (2021-11-11)
-------------------------
+[1.0.0-alpha3] - 2022-08-19
+---------------------------
 
+### Added
+- Support for Client Secret Rotation (rhertogh)
+- Support for Encryption Key Rotation (rhertogh)
+- Added `Oauth2ClientInterface::setGrantTypes()` (rhertogh)
+- Support `Oauth2BaseClientAuthorizationRequest` "Max Age" without OIDC (rhertogh)
+
+### Fixed
+- Accept string array for `$scopes` parameter in `Oauth2Module::createClient` (rhertogh)
+
+### Changed
+- Changed signature for `Oauth2Module::createClient` to make `$secret` optional (rhertogh)
+
+[1.0.0-alpha2] - 2022-05-27
+---------------------------
+
+### Added
+- Support for custom scope authorization message (rhertogh)
+- Allow more easily customization of scopes by merging claims of previously defined scopes (rhertogh)
+- Added `Oauth2Module::createClient()` method to aid in the programmatic creation of clients (rhertogh)
+- Added documentation for OIDC claims (rhertogh)
+- Support for PHP 8.1 (rhertogh)
+
+### Fixed
+- Using correct access token TTL (rhertogh)
+- Type-casted the type so the `Oauth2Client::isConfidential()` function works as intended (Roosh Ak)
+
+### Improved
+- Several code style fixes (rhertogh)
+
+[1.0.0-alpha] - 2021-11-11
+--------------------------
+
+### Added
 - Initial release (rhertogh)
