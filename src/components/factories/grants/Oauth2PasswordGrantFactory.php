@@ -9,7 +9,7 @@ use Yii;
 class Oauth2PasswordGrantFactory extends base\Oauth2BaseGrantTypeFactory implements Oauth2PasswordGrantFactoryInterface
 {
     /**
-     * Time To Live for the authorization code, default value: 1 month.
+     * Time To Live for the refresh token, default value: 1 month.
      * @var string
      */
     public $refreshTokenTTL = 'P1M';

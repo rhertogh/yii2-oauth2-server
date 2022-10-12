@@ -10,7 +10,7 @@ class Oauth2RefreshTokenGrantFactory extends base\Oauth2BaseGrantTypeFactory imp
     Oauth2RefreshTokenGrantFactoryInterface
 {
     /**
-     * @var string Time To Live for the authorization code, default value: 1 month.
+     * @var string Time To Live for the refresh token, default value: 1 month.
      */
     public $refreshTokenTTL = 'P1M';
 

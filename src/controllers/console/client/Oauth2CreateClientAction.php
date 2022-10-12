@@ -118,7 +118,7 @@ class Oauth2CreateClientAction extends Action
 
         if (empty($redirectURIs)) {
             $redirectURIs = $this->controller->prompt('Client Redirect URIs (comma separated)?', [
-                'required' => true,
+                'required' => true, // ToDo: determine if required based on grant type
             ]);
             $redirectURIs = array_map('trim', explode(',', $redirectURIs));
         }

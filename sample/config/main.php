@@ -44,6 +44,7 @@ return [
                 Oauth2Module::GRANT_TYPE_IMPLICIT,
                 Oauth2Module::GRANT_TYPE_PASSWORD,
                 Oauth2Module::GRANT_TYPE_REFRESH_TOKEN,
+                Oauth2Module::GRANT_TYPE_PERSONAL_ACCESS_TOKEN,
             ],
             'migrationsNamespace' => 'sample\\migrations\\oauth2',  // The namespace with which migrations will be created (and by which they will be located).
             'enableOpenIdConnect' => true, // Only required if OpenID Connect support is required.

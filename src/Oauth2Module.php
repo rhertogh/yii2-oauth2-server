@@ -10,6 +10,8 @@ namespace rhertogh\Yii2Oauth2Server;
 
 use Defuse\Crypto\Exception\BadFormatException;
 use Defuse\Crypto\Exception\EnvironmentIsBrokenException;
+use GuzzleHttp\Psr7\ServerRequest;
+use GuzzleHttp\Psr7\Response as Psr7Response;
 use League\OAuth2\Server\CryptKey;
 use League\OAuth2\Server\Grant\GrantTypeInterface;
 use rhertogh\Yii2Oauth2Server\base\Oauth2BaseModule;
@@ -17,6 +19,7 @@ use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2ClientController;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2DebugController;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2EncryptionController;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2MigrationsController;
+use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2PersonalAccessTokenController;
 use rhertogh\Yii2Oauth2Server\exceptions\Oauth2ServerException;
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\helpers\Psr7Helper;
@@ -39,6 +42,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserInte
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\InvalidArgumentException;
@@ -46,6 +50,7 @@ use yii\base\InvalidCallException;
 use yii\base\InvalidConfigException;
 use yii\console\Application as ConsoleApplication;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 use yii\helpers\StringHelper;
 use yii\i18n\PhpMessageSource;
 use yii\web\Application as WebApplication;
@@ -183,6 +188,10 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
                 'controller' => Oauth2DebugController::class,
                 'serverRole' => self::SERVER_ROLE_AUTHORIZATION_SERVER | self::SERVER_ROLE_RESOURCE_SERVER,
             ],
+            'pat' => [
+                'controller' => Oauth2PersonalAccessTokenController::class,
+                'serverRole' => self::SERVER_ROLE_AUTHORIZATION_SERVER,
+            ]
         ]
     ];
 
@@ -1106,6 +1115,48 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
         }
 
         return $this->identityClass::findIdentity($userId);
+    }
+
+    /**
+     * @param $clientIdentifier
+     * @param $userIdentifier
+     * @param Oauth2ScopeInterface[]|string[]|string|null $scope
+     * @param $clientSecret
+     * @return mixed|null
+     */
+    public function generatePersonalAccessToken($clientIdentifier, $userIdentifier, $scope = null, $clientSecret = null)
+    {
+        if (is_array($scope)) {
+            $scopeIdentifiers = [];
+            foreach ($scope as $scopeItem) {
+                if (is_string($scopeItem)) {
+                    $scopeIdentifiers[] = $scopeItem;
+                } elseif ($scopeItem instanceof Oauth2ScopeInterface) {
+                    $scopeIdentifiers[] = $scopeItem->getIdentifier();
+                }
+            }
+            $scope = implode(' ', $scopeIdentifiers);
+        }
+
+        $request = (new ServerRequest('POST', ''))->withParsedBody([
+            'grant_type' => static::GRANT_TYPE_IDENTIFIER_PERSONAL_ACCESS_TOKEN,
+            'client_id' => $clientIdentifier,
+            'client_secret' => $clientSecret,
+            'user_id' => $userIdentifier,
+            'scope' => $scope,
+        ]);
+
+        $response = Json::decode(
+            $this->getAuthorizationServer()
+                ->respondToAccessTokenRequest(
+                    $request,
+                    new Psr7Response()
+                )
+                ->getBody()
+                ->__toString()
+        );
+
+        return $response;
     }
 
     /**

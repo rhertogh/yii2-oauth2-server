@@ -14,6 +14,7 @@ use rhertogh\Yii2Oauth2Server\components\factories\grants\Oauth2AuthCodeGrantFac
 use rhertogh\Yii2Oauth2Server\components\factories\grants\Oauth2ClientCredentialsGrantFactory;
 use rhertogh\Yii2Oauth2Server\components\factories\grants\Oauth2ImplicitGrantFactory;
 use rhertogh\Yii2Oauth2Server\components\factories\grants\Oauth2PasswordGrantFactory;
+use rhertogh\Yii2Oauth2Server\components\factories\grants\Oauth2PersonalAccessTokenGrantFactory;
 use rhertogh\Yii2Oauth2Server\components\factories\grants\Oauth2RefreshTokenGrantFactory;
 use rhertogh\Yii2Oauth2Server\components\openidconnect\claims\Oauth2OidcClaim;
 use rhertogh\Yii2Oauth2Server\components\openidconnect\scopes\Oauth2OidcScope;
@@ -29,6 +30,7 @@ use rhertogh\Yii2Oauth2Server\components\server\grants\Oauth2AuthCodeGrant;
 use rhertogh\Yii2Oauth2Server\components\server\grants\Oauth2ClientCredentialsGrant;
 use rhertogh\Yii2Oauth2Server\components\server\grants\Oauth2ImplicitGrant;
 use rhertogh\Yii2Oauth2Server\components\server\grants\Oauth2PasswordGrant;
+use rhertogh\Yii2Oauth2Server\components\server\grants\Oauth2PersonalAccessTokenGrant;
 use rhertogh\Yii2Oauth2Server\components\server\grants\Oauth2RefreshTokenGrant;
 use rhertogh\Yii2Oauth2Server\components\server\Oauth2AuthorizationServer;
 use rhertogh\Yii2Oauth2Server\components\server\Oauth2ResourceServer;
@@ -45,6 +47,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\factories\grants\Oauth2AuthC
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\grants\Oauth2ClientCredentialsGrantFactoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\grants\Oauth2ImplicitGrantFactoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\grants\Oauth2PasswordGrantFactoryInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\factories\grants\Oauth2PersonalAccessTokenGrantFactoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\grants\Oauth2RefreshTokenGrantFactoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcClaimInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeCollectionInterface;
@@ -61,6 +64,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2AuthCode
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2ClientCredentialsGrantInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2ImplicitGrantInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2PasswordGrantInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2PersonalAccessTokenGrantInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2RefreshTokenGrantInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\Oauth2AuthorizationServerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\Oauth2ResourceServerInterface;
@@ -150,6 +154,12 @@ abstract class Oauth2BaseModule extends Module
     public const GRANT_TYPE_IDENTIFIER_PASSWORD = 'password';
 
     /**
+     * "personal_access_token" Grant Type. Note: This is a custom grant type and not part of the Oauth2 specification.
+     * @since 1.0.0
+     */
+    public const GRANT_TYPE_IDENTIFIER_PERSONAL_ACCESS_TOKEN = 'personal_access_token';
+
+    /**
      * Supported grant type identifiers
      * @since 1.0.0
      */
@@ -159,6 +169,7 @@ abstract class Oauth2BaseModule extends Module
         self::GRANT_TYPE_IDENTIFIER_REFRESH_TOKEN,
         self::GRANT_TYPE_IDENTIFIER_IMPLICIT,
         self::GRANT_TYPE_IDENTIFIER_PASSWORD,
+        self::GRANT_TYPE_IDENTIFIER_PERSONAL_ACCESS_TOKEN,
     ];
     # endregion Supported grant types
 
@@ -188,6 +199,12 @@ abstract class Oauth2BaseModule extends Module
      * @since 1.0.0
      */
     public const GRANT_TYPE_IMPLICIT = 2048; // Legacy Grant.
+    /**
+     * Numeric id for "personal_access_token" Grant Type.
+     * Note: This is a custom grant type and not part of the Oauth2 specification.
+     * @since 1.0.0
+     */
+    public const GRANT_TYPE_PERSONAL_ACCESS_TOKEN = 4096;
     # endregion Numeric IDs for Supported grant types
 
     /**
@@ -200,6 +217,7 @@ abstract class Oauth2BaseModule extends Module
         Oauth2Module::GRANT_TYPE_IDENTIFIER_REFRESH_TOKEN => self::GRANT_TYPE_REFRESH_TOKEN,
         Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD => self::GRANT_TYPE_PASSWORD, // Legacy Grant.
         Oauth2Module::GRANT_TYPE_IDENTIFIER_IMPLICIT => self::GRANT_TYPE_IMPLICIT, // Legacy Grant.
+        Oauth2Module::GRANT_TYPE_IDENTIFIER_PERSONAL_ACCESS_TOKEN => self::GRANT_TYPE_PERSONAL_ACCESS_TOKEN, // Custom Grant.
     ];
 
     /**
@@ -240,6 +258,7 @@ abstract class Oauth2BaseModule extends Module
         self::GRANT_TYPE_REFRESH_TOKEN => Oauth2RefreshTokenGrantFactoryInterface::class,
         self::GRANT_TYPE_IMPLICIT => Oauth2ImplicitGrantFactoryInterface::class, // Legacy Grant.
         self::GRANT_TYPE_PASSWORD => Oauth2PasswordGrantFactoryInterface::class, // Legacy Grant.
+        self::GRANT_TYPE_PERSONAL_ACCESS_TOKEN => Oauth2PersonalAccessTokenGrantFactoryInterface::class, // Custom Grant.
     ];
 
     /**
@@ -282,6 +301,7 @@ abstract class Oauth2BaseModule extends Module
         Oauth2RefreshTokenGrantFactoryInterface::class => Oauth2RefreshTokenGrantFactory::class,
         Oauth2ImplicitGrantFactoryInterface::class => Oauth2ImplicitGrantFactory::class,
         Oauth2PasswordGrantFactoryInterface::class => Oauth2PasswordGrantFactory::class,
+        Oauth2PersonalAccessTokenGrantFactoryInterface::class => Oauth2PersonalAccessTokenGrantFactory::class,
         Oauth2EncryptionKeyFactoryInterface::class => Oauth2EncryptionKeyFactory::class,
         # Controllers
         Oauth2ServerControllerInterface::class => Oauth2ServerController::class,
@@ -298,6 +318,7 @@ abstract class Oauth2BaseModule extends Module
         Oauth2ImplicitGrantInterface::class => Oauth2ImplicitGrant::class,
         Oauth2PasswordGrantInterface::class => Oauth2PasswordGrant::class,
         Oauth2RefreshTokenGrantInterface::class => Oauth2RefreshTokenGrant::class,
+        Oauth2PersonalAccessTokenGrantInterface::class => Oauth2PersonalAccessTokenGrant::class,
         # Components (OpenID Connect)
         Oauth2OidcScopeCollectionInterface::class => Oauth2OidcScopeCollection::class,
         Oauth2OidcScopeInterface::class => Oauth2OidcScope::class,
