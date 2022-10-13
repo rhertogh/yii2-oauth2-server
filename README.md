@@ -69,8 +69,8 @@ DO NOT use the issue tracker or discuss it in the public forum as it will cause 
 Versioning & Change Log
 -----------------------
 The Yii2-Oauth2-Server follows [Semantic Versioning 2.0](https://semver.org/spec/v2.0.0.html)  
-Please see the [Change Log](CHANGELOG.md) for more information on version history.
-
+Please see the [Change Log](CHANGELOG.md) for more information on version history 
+and the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer version.
 
 Directory Structure
 -------------------
