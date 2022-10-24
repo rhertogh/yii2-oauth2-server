@@ -88,7 +88,7 @@ class User extends ActiveRecord implements
      */
     public function getLatestAuthenticatedAt()
     {
-        return new \DateTimeImmutable('@' . ($this->latest_authenticated_at ?? $this->created_at));
+        return new \DateTimeImmutable('@' . ($this->latest_authenticated_at ?: $this->created_at));
     }
 
     # Other methods are implemented via Oauth2OidcUserIdentityTrait

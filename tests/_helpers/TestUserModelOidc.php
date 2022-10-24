@@ -24,7 +24,7 @@ class TestUserModelOidc extends TestUserModel implements
      */
     public function getLatestAuthenticatedAt()
     {
-        return (new \DateTimeImmutable())->setTimestamp($this->latest_authenticated_at);
+        return (new \DateTimeImmutable())->setTimestamp($this->latest_authenticated_at ?: $this->created_at);
     }
 
     /**
