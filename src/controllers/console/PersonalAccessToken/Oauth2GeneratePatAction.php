@@ -2,15 +2,10 @@
 
 namespace rhertogh\Yii2Oauth2Server\controllers\console\PersonalAccessToken;
 
-use League\OAuth2\Server\Grant\GrantTypeInterface;
-use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2DebugController;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2PersonalAccessTokenController;
-use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\base\Action;
 use yii\console\ExitCode;
-use yii\console\widgets\Table;
 
 /**
  * @property Oauth2PersonalAccessTokenController $controller
@@ -53,6 +48,10 @@ class Oauth2GeneratePatAction extends Action
                 'required' => true,
                 'default' => $defaultClientSecret ?? null,
             ]);
+        }
+
+        if ($clientSecret === 'true') {
+            $clientSecret = true;
         }
 
         if (empty($userId)) {

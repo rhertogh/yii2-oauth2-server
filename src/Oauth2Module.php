@@ -10,8 +10,8 @@ namespace rhertogh\Yii2Oauth2Server;
 
 use Defuse\Crypto\Exception\BadFormatException;
 use Defuse\Crypto\Exception\EnvironmentIsBrokenException;
-use GuzzleHttp\Psr7\ServerRequest;
 use GuzzleHttp\Psr7\Response as Psr7Response;
+use GuzzleHttp\Psr7\ServerRequest as Psr7ServerRequest;
 use League\OAuth2\Server\CryptKey;
 use League\OAuth2\Server\Grant\GrantTypeInterface;
 use rhertogh\Yii2Oauth2Server\base\Oauth2BaseModule;
@@ -1121,7 +1121,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
      * @param $clientIdentifier
      * @param $userIdentifier
      * @param Oauth2ScopeInterface[]|string[]|string|null $scope
-     * @param $clientSecret
+     * @param string|true|null $clientSecret
      * @return mixed|null
      */
     public function generatePersonalAccessToken($clientIdentifier, $userIdentifier, $scope = null, $clientSecret = null)
@@ -1138,7 +1138,15 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
             $scope = implode(' ', $scopeIdentifiers);
         }
 
-        $request = (new ServerRequest('POST', ''))->withParsedBody([
+        if ($clientSecret === true) {
+            /** @var Oauth2ClientInterface $client */
+            $client = $this->getClientRepository()->findModelByIdentifier($clientIdentifier);
+            if ($client && $client->isConfidential()) {
+                $clientSecret = $client->getDecryptedSecret($this->getEncryptor());
+            }
+        }
+
+        $request = (new Psr7ServerRequest('POST', ''))->withParsedBody([
             'grant_type' => static::GRANT_TYPE_IDENTIFIER_PERSONAL_ACCESS_TOKEN,
             'client_id' => $clientIdentifier,
             'client_secret' => $clientSecret,
