@@ -27,18 +27,15 @@ class Oauth2PersonalAccessTokenGrant extends AbstractGrant implements Oauth2Pers
 
     /**
      * @param Oauth2AccessTokenRepositoryInterface     $accessTokenRepository
-     * @param DateInterval                    $authCodeTTL
      *
      * @throws \Exception
      */
     public function __construct(
         Oauth2UserRepositoryInterface        $userRepository,
-        Oauth2AccessTokenRepositoryInterface $accessTokenRepository,
-        DateInterval                         $authCodeTTL
+        Oauth2AccessTokenRepositoryInterface $accessTokenRepository
     ) {
         $this->setUserRepository($userRepository);
         $this->setAccessTokenRepository($accessTokenRepository);
-        $this->authCodeTTL = $authCodeTTL;
     }
 
     public function getIdentifier()

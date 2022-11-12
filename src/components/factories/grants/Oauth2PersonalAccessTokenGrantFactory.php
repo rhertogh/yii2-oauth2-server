@@ -29,7 +29,6 @@ class Oauth2PersonalAccessTokenGrantFactory extends base\Oauth2BaseGrantTypeFact
             [
                 $this->module->getUserRepository(),
                 $this->module->getAccessTokenRepository(),
-                new \DateInterval($this->accessTokenTTL)
             ]
         );
 
