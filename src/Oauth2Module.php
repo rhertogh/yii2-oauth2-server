@@ -15,6 +15,7 @@ use GuzzleHttp\Psr7\ServerRequest as Psr7ServerRequest;
 use League\OAuth2\Server\CryptKey;
 use League\OAuth2\Server\Grant\GrantTypeInterface;
 use rhertogh\Yii2Oauth2Server\base\Oauth2BaseModule;
+use rhertogh\Yii2Oauth2Server\components\server\tokens\Oauth2AccessTokenData;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2ClientController;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2DebugController;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2EncryptionController;
@@ -568,13 +569,16 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     }
 
     /**
-     * @param string $identifier
-     * @param string $name
-     * @param int $grantTypes
-     * @param string|string[] $redirectURIs
-     * @param string $type
-     * @param string|null $secret
-     * @param string|string[]|array[]|null $scopes
+     * @param string $identifier The client identifier
+     * @param string $name The (user-friendly) name of the client
+     * @param int $grantTypes The grant types enabled for this client.
+     *        Use bitwise `OR` to combine multiple types,
+     *        e.g. `Oauth2Module::GRANT_TYPE_AUTH_CODE | Oauth2Module::GRANT_TYPE_REFRESH_TOKEN`
+     * @param string|string[] $redirectURIs One or multiple redirect URIs for the client
+     * @param int $type The client type (e.g. Confidential or Public)
+     *        See `\rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface::TYPES` for possible values
+     * @param string|null $secret The client secret in case the client `type` is `confidential`.
+     * @param string|string[]|array[]|Oauth2ScopeInterface[]|null $scopes
      * @param int|null $userId
      * @return Oauth2ClientInterface
      * @throws InvalidConfigException
@@ -618,31 +622,61 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
 
             if (!empty($scopes)) {
                 if (is_string($scopes)) {
-                    $scopeIdentifiers = explode(' ', $scopes);
-                } else {
-                    $scopeIdentifiers = $scopes;
+                    $scopes = explode(' ', $scopes);
+                } elseif (!is_array($scopes)) {
+                    throw new InvalidArgumentException('$scopes must be a string or an array.');
                 }
 
-                foreach ($scopeIdentifiers as $scopeIdentifier => $scopeConfig) {
-                    if (is_string($scopeConfig)) {
-                        $scopeIdentifier = $scopeConfig;
-                        $scopeConfig = [];
+                foreach ($scopes as $key => $value) {
+
+                    $scopeIdentifier = null;
+                    $clientScopeConfig = [
+                        'class' => Oauth2ClientScopeInterface::class,
+                        'client_id' => $client->getPrimaryKey(),
+                    ];
+
+                    if (is_string($value)) {
+                        $scopeIdentifier = $value;
+                    } elseif ($value instanceof Oauth2ScopeInterface) {
+                        $scopePk = $value->getPrimaryKey();
+                        if ($scopePk) {
+                            $clientScopeConfig = ArrayHelper::merge(
+                                $clientScopeConfig,
+                                ['scope_id' => $scopePk]
+                            );
+                        } else {
+                            $scopeIdentifier = $value->getIdentifier();
+                        }
+                    } elseif(is_array($value)) {
+                        $clientScopeConfig = ArrayHelper::merge(
+                            $clientScopeConfig,
+                            $value,
+                        );
+                        if (empty($clientScopeConfig['scope_id'])) {
+                            $scopeIdentifier = $key;
+                        }
+                    } else {
+                        throw new InvalidArgumentException(
+                            'If $scopes is an array, it\'s values must be a string, array or an instance of '
+                            . Oauth2ScopeInterface::class. '.'
+                        );
                     }
-                    $scope = $this->getScopeRepository()->findModelByIdentifier($scopeIdentifier);
-                    if (empty($scope)) {
-                        throw new InvalidArgumentException('No scope with identifier "'
-                            . $scopeIdentifier . '" found.');
+
+                    if (isset($scopeIdentifier)) {
+                        $scope = $this->getScopeRepository()->findModelByIdentifier($scopeIdentifier);
+                        if (empty($scope)) {
+                            throw new InvalidArgumentException('No scope with identifier "'
+                                . $scopeIdentifier . '" found.');
+                        }
+                        $clientScopeConfig['scope_id'] = $scope->getPrimaryKey();
+                    } else {
+                        if (empty($clientScopeConfig['scope_id'])) {
+                            throw new InvalidArgumentException('Element ' . $key . ' in $scope should specify either the scope id or its identifier.');
+                        }
                     }
 
                     /** @var Oauth2ClientScopeInterface $clientScope */
-                    $clientScope = Yii::createObject(ArrayHelper::merge(
-                        $scopeConfig,
-                        [
-                            'class' => Oauth2ClientScopeInterface::class,
-                            'client_id' => $client->getPrimaryKey(),
-                            'scope_id' => $scope->getPrimaryKey(),
-                        ]
-                    ));
+                    $clientScope = Yii::createObject($clientScopeConfig);
                     $clientScope->persist();
                 }
             }
@@ -1122,7 +1156,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
      * @param $userIdentifier
      * @param Oauth2ScopeInterface[]|string[]|string|null $scope
      * @param string|true|null $clientSecret
-     * @return mixed|null
+     * @return Oauth2AccessTokenData
      */
     public function generatePersonalAccessToken($clientIdentifier, $userIdentifier, $scope = null, $clientSecret = null)
     {
@@ -1154,7 +1188,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
             'scope' => $scope,
         ]);
 
-        $response = Json::decode(
+        return new Oauth2AccessTokenData(Json::decode(
             $this->getAuthorizationServer()
                 ->respondToAccessTokenRequest(
                     $request,
@@ -1162,9 +1196,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
                 )
                 ->getBody()
                 ->__toString()
-        );
-
-        return $response;
+        ));
     }
 
     /**

@@ -126,9 +126,17 @@ class Oauth2ModuleTest extends DatabaseTestCase
         );
     }
 
-    public function testCreateClient()
+    /**
+     * @param $scopes
+     * @dataProvider createClientProvider
+     */
+    public function testCreateClientOK($scopes)
     {
         $this->mockConsoleApplication();
+
+        if (is_callable($scopes)) {
+            $scopes = call_user_func($scopes);
+        }
 
         $client = Oauth2Module::getInstance()->createClient(
             'test',
@@ -137,7 +145,7 @@ class Oauth2ModuleTest extends DatabaseTestCase
             'https://localhost/test',
             Oauth2ClientInterface::TYPE_CONFIDENTIAL,
             'very_secret',
-            'openid email',
+            $scopes,
         );
 
         $this->assertInstanceOf(Oauth2ClientInterface::class, $client);
@@ -148,6 +156,42 @@ class Oauth2ModuleTest extends DatabaseTestCase
                 $client->getAllowedScopes(['openid', 'email', 'address'])
             )
         );
+    }
+
+    /**
+     * @see testCreateClient()
+     * @return array[]
+     */
+    public function createClientProvider()
+    {
+        return [
+            'Scopes as string' => [
+                'openid email'
+            ],
+
+            'Scopes as array of strings' => [
+                ['openid', 'email']
+            ],
+
+            'Scopes as array of Oauth2Scopes' => [
+                function() {
+                    return [
+                        new Oauth2Scope(['id' => 1]), // Test based on primary key (identifier: 'openid')
+                        new Oauth2Scope(['identifier' => 'email']),
+                    ];
+                },
+            ],
+
+            'Scopes as array of arrays' => [ // Key is scope identifier, value is the config for the `client_scope` junction table)
+                [
+                    'openid' => [
+                        'applied_by_default' => 1,
+                        'required_on_authorization' => 1,
+                    ],
+                    'email' => [],
+                ],
+            ],
+        ];
     }
 
     public function testCreateClientNonExistingScope()
@@ -163,6 +207,54 @@ class Oauth2ModuleTest extends DatabaseTestCase
             Oauth2ClientInterface::TYPE_CONFIDENTIAL,
             'very_secret',
             'does-not-exists',
+        );
+    }
+
+    public function testCreateClientInvalidScopesType()
+    {
+        $this->mockConsoleApplication();
+
+        $this->expectExceptionMessage('$scopes must be a string or an array.');
+        Oauth2Module::getInstance()->createClient(
+            'test',
+            'test',
+            Oauth2Module::GRANT_TYPE_AUTH_CODE,
+            'https://localhost/test',
+            Oauth2ClientInterface::TYPE_CONFIDENTIAL,
+            'very_secret',
+            new \stdClass(),
+        );
+    }
+
+    public function testCreateClientInvalidScopesArrayValueType()
+    {
+        $this->mockConsoleApplication();
+
+        $this->expectExceptionMessage('If $scopes is an array, it\'s values must be a string, array or an instance of ' . Oauth2ScopeInterface::class . '.');
+        Oauth2Module::getInstance()->createClient(
+            'test',
+            'test',
+            Oauth2Module::GRANT_TYPE_AUTH_CODE,
+            'https://localhost/test',
+            Oauth2ClientInterface::TYPE_CONFIDENTIAL,
+            'very_secret',
+            [new \stdClass()],
+        );
+    }
+
+    public function testCreateClientInvalidScopesMissingUniqueIdentifier()
+    {
+        $this->mockConsoleApplication();
+
+        $this->expectExceptionMessage('Element 0 in $scope should specify either the scope id or its identifier.');
+        Oauth2Module::getInstance()->createClient(
+            'test',
+            'test',
+            Oauth2Module::GRANT_TYPE_AUTH_CODE,
+            'https://localhost/test',
+            Oauth2ClientInterface::TYPE_CONFIDENTIAL,
+            'very_secret',
+            [new Oauth2Scope()],
         );
     }
 
