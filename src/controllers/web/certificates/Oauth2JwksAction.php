@@ -6,6 +6,7 @@ use Jose\Component\Core\JWK;
 use Jose\Component\Core\JWKSet;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2CertificatesController;
 use yii\base\Action;
+use yii\base\InvalidConfigException;
 use yii\helpers\StringHelper;
 
 /**
@@ -22,6 +23,10 @@ class Oauth2JwksAction extends Action
      */
     public function run()
     {
+        if (!extension_loaded('openssl')) {
+            throw new InvalidConfigException('JWKS functionality requires the openssl extension to be loaded in PHP.');
+        }
+
         $module = $this->controller->module;
 
         $publicKey = $module->getPublicKey();
