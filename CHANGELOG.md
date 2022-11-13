@@ -7,7 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer version.  
 
-[1.0.0-alpha6] - Unreleased
+[1.0.0-alpha7] - Unreleased
+---------------------------
+
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Improved
+### Security
+
+
+[1.0.0-alpha6] - 2022-11-13
 ---------------------------
 
 ### Added
@@ -16,9 +28,10 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - Support for "personal access tokens" (see `Oauth2Module::generatePersonalAccessToken()`). (rhertogh)
 - `Oauth2UserPatTrait` for easy generating "personal access tokens" from the user model. (bada02)
 - `Oauth2ScopeInterface::APPLIED_BY_DEFAULT_IF_REQUESTED` to support allowing scopes for clients without user approval. (rhertogh)
- 
+- Check for openssl php extension when using JWKS. (rhertogh)
+
 ### Changed
-### Deprecated
+- `Oauth2ClientAuthorizationRequestInterface::getScopesAppliedByDefaultAutomatically()` is renamed to `getScopesAppliedByDefaultWithoutConfirm()`. (rhertogh)
 ### Removed
 - Removed `Oauth2PasswordGrantUserComponentInterface` in favor of events and `Oauth2UserInterface::isOauth2ClientAllowed()`. (rhertogh)
 
@@ -26,8 +39,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - Mysql port configuration now uses separated port parameter. (rhertogh)
 
 ### Improved
-### Security
-
+- Test coverage
 
 [1.0.0-alpha5] - 2022-09-08
 ---------------------------
