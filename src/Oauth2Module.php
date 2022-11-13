@@ -1152,10 +1152,19 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     }
 
     /**
-     * @param $clientIdentifier
-     * @param $userIdentifier
-     * @param Oauth2ScopeInterface[]|string[]|string|null $scope
-     * @param string|true|null $clientSecret
+     * Generate a "Personal Access Token" (PAT) which can be used as an alternative to using passwords
+     * for authentication (e.g. when using an API or command line).
+     *
+     * Note: Personal Access Tokens are intended to access resources on behalf users themselves.
+     *       To grant access to resources on behalf of an organization, or for long-lived integrations,
+     *       you most likely want to define an Oauth2 Client with the "Client Credentials" grant
+     *       (https://oauth.net/2/grant-types/client-credentials).
+     *
+     * @param string $clientIdentifier The Oauth2 client identifier for which the PAT should be generated.
+     * @param int|string $userIdentifier The identifier (primary key) of the user for which the PAT should be generated.
+     * @param Oauth2ScopeInterface[]|string[]|string|null $scope The Access Token scope.
+     * @param string|true|null $clientSecret If the client is a "confidential" client the secret is required.
+     *        If the boolean value `true` is passed, the client secret is automatically injected.
      * @return Oauth2AccessTokenData
      */
     public function generatePersonalAccessToken($clientIdentifier, $userIdentifier, $scope = null, $clientSecret = null)
@@ -1167,6 +1176,9 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
                     $scopeIdentifiers[] = $scopeItem;
                 } elseif ($scopeItem instanceof Oauth2ScopeInterface) {
                     $scopeIdentifiers[] = $scopeItem->getIdentifier();
+                } else {
+                    throw new InvalidArgumentException('If $scope is an array its elements must be either'
+                        . ' a string or an instance of ' . Oauth2ScopeInterface::class);
                 }
             }
             $scope = implode(' ', $scopeIdentifiers);
