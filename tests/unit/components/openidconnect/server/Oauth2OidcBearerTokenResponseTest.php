@@ -132,7 +132,7 @@ class Oauth2OidcBearerTokenResponseTest extends DatabaseTestCase
         $this->assertEquals(['test-client'], $claims['aud']);
         $this->assertEquals('http://localhost', $claims['iss']);
         $this->assertGreaterThanOrEqual($issueTime, $claims['iat']);
-        $this->assertLessThanOrEqual($issueTime->modify('+1 second'), $claims['iat']);
+        $this->assertLessThanOrEqual($issueTime->modify('+2 second'), $claims['iat']);
         $this->assertEquals($accessToken->getExpiryDateTime(), $claims['exp']);
         $this->assertEquals('123', $claims['sub']);
         $this->assertEquals($mockUserClass::$latestAuthenticatedAt->getTimestamp(), $claims['auth_time']);

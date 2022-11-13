@@ -121,7 +121,7 @@ class AuthorizationCodeGrantCest extends BaseGrantCest
         $token = $jwtConfiguration->parser()->parse($accessToken->getToken());
         $exp = $token->claims()->get('exp');
         $I->assertGreaterThanOrEqual($expirationTime, $exp);
-        $I->assertLessThanOrEqual($expirationTime->modify('+1 second'), $exp);
+        $I->assertLessThanOrEqual($expirationTime->modify('+2 second'), $exp);
         # endregion
 
         # region refresh access token

@@ -1137,9 +1137,9 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $this->assertEquals($userIdentifier, $claims->get('sub'));
 
         $this->assertGreaterThanOrEqual($issueTime, $claims->get('iat'));
-        $this->assertLessThanOrEqual($issueTime->modify('+1 second'), $claims->get('iat'));
+        $this->assertLessThanOrEqual($issueTime->modify('+2 second'), $claims->get('iat'));
 
         $this->assertGreaterThanOrEqual($expiryDateTime, $claims->get('exp'));
-        $this->assertLessThanOrEqual($expiryDateTime->modify('+1 second'), $claims->get('exp'));
+        $this->assertLessThanOrEqual($expiryDateTime->modify('+2 second'), $claims->get('exp'));
     }
 }
