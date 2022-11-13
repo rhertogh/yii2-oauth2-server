@@ -243,7 +243,7 @@ class Oauth2ModuleTest extends DatabaseTestCase
     {
         $this->mockConsoleApplication();
 
-        $this->expectExceptionMessage('If $scopes is an array, it\'s values must be a string, array or an instance of ' . Oauth2ScopeInterface::class . '.');
+        $this->expectExceptionMessage('If $scopes is an array, its values must be a string, array or an instance of ' . Oauth2ScopeInterface::class . '.');
         Oauth2Module::getInstance()->createClient(
             'test',
             'test',

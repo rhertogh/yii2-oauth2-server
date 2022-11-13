@@ -125,7 +125,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
         if (is_array($uri)) {
             foreach ($uri as $value) {
                 if (!is_string($value)) {
-                    throw new InvalidArgumentException('When $uri is an array, it\'s values must be strings.');
+                    throw new InvalidArgumentException('When $uri is an array, its values must be strings.');
                 }
             }
             $uri = Json::encode($uri);

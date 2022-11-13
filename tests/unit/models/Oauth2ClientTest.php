@@ -225,7 +225,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
             new \stdClass(),
         ];
 
-        $this->expectExceptionMessage('When $uri is an array, it\'s values must be strings.');
+        $this->expectExceptionMessage('When $uri is an array, its values must be strings.');
         $client->setRedirectUri($redirectUris);
     }
 

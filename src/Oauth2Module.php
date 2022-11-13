@@ -657,7 +657,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
                         }
                     } else {
                         throw new InvalidArgumentException(
-                            'If $scopes is an array, it\'s values must be a string, array or an instance of '
+                            'If $scopes is an array, its values must be a string, array or an instance of '
                             . Oauth2ScopeInterface::class. '.'
                         );
                     }
@@ -1000,7 +1000,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
         if ($clientAuthorizationRequest->getRequestId() !== $requestId) {
             Yii::warning(
                 'Found a ClientAuthorizationRequestSession with key "' . $key
-                    . '", but it\'s request id does not match "' . $requestId . '".'
+                    . '", but its request id does not match "' . $requestId . '".'
             );
             return null;
         }

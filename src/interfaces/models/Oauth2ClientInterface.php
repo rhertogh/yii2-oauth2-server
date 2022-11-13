@@ -173,7 +173,7 @@ interface Oauth2ClientInterface extends
 
     /**
      * Validate a secret against the stored one.
-     * If an "old" secret is set (and it's "valid until" date is valid) the secret will also be validated against it
+     * If an "old" secret is set (and its "valid until" date is valid) the secret will also be validated against it
      * in case the regular stored secret fails.
      * @param string $secret
      * @param Oauth2EncryptorInterface $encryptor

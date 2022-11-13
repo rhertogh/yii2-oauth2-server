@@ -152,7 +152,7 @@ class User extends ActiveRecord implements IdentityInterface, Oauth2UserInterfac
 
 Migrations
 ----------
-Since this package closely connects to your User Model, and it's corresponding table, the creation date/time of the 
+Since this package closely connects to your User Model, and its corresponding table, the creation date/time of the 
 migration matters. In order to solve this running the migrations for the Yii2-Oauth2-Server is a 2-step process:
 1. Generation of the migrations:  
    * Make sure the `migrationsNamespace` of the Oauth2Module is set (e.g. `'app\\migrations\\oauth2'`).  
