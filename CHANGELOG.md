@@ -11,16 +11,18 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ---------------------------
 
 ### Added
-- `Oauth2UserInterface::isOauth2ClientAllowed()` to support access restriction to user/client/grant combinations.  
-- Sample app now includes client for 'Client Credentials' grant without a user.
+- `Oauth2UserInterface::isOauth2ClientAllowed()` to support access restriction to user/client/grant combinations. (rhertogh)
+- Sample app now includes client for 'Client Credentials' grant without a user. (rhertogh)
+- Support for "personal access tokens" (see `Oauth2Module::generatePersonalAccessToken()`). (rhertogh)
+- `Oauth2UserPatTrait` for easy generating "personal access tokens" from the user model. (bada02)
 
 ### Changed
 ### Deprecated
 ### Removed
-- Removed `Oauth2PasswordGrantUserComponentInterface` in favor of events and `Oauth2UserInterface::isOauth2ClientAllowed()`.
+- Removed `Oauth2PasswordGrantUserComponentInterface` in favor of events and `Oauth2UserInterface::isOauth2ClientAllowed()`. (rhertogh)
 
 ### Fixed
-- Mysql port configuration now uses separated port parameter
+- Mysql port configuration now uses separated port parameter. (rhertogh)
 
 ### Improved
 ### Security
@@ -30,57 +32,57 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ---------------------------
 
 ### Added
-- PostgreSQL compatibility (mtangoo, rhertogh)
+- PostgreSQL compatibility. (mtangoo, rhertogh)
 
 ### Improved
-- Optimized tests to reuse database fixtures (rhertogh)
+- Optimized tests to reuse database fixtures. (rhertogh)
 
 [1.0.0-alpha4] - 2022-08-20
 ---------------------------
 
 ### Added
-- Added setters for common properties of Oauth2Client (rhertogh)
-- Allow configuration of Oauth2ClientScopes in `Oauth2Module::createClient()`
+- Added setters for common properties of Oauth2Client. (rhertogh)
+- Allow configuration of Oauth2ClientScopes in `Oauth2Module::createClient()`. (rhertogh)
 
 ### Fixed
-- `Oauth2ClientAuthorizationRequestInterface::isAuthorizationNeeded()` now correctly adheres to `Oauth2Client::skipAuthorizationIfScopeIsAllowed()`
-- Compatibility for lcobucci/jwt 4.2.x causing "Lcobucci\JWT\Signer\InvalidKeyProvided: Key cannot be empty"
+- `Oauth2ClientAuthorizationRequestInterface::isAuthorizationNeeded()` now correctly adheres to `Oauth2Client::skipAuthorizationIfScopeIsAllowed()`. (rhertogh)
+- Compatibility for lcobucci/jwt 4.2.x causing "Lcobucci\JWT\Signer\InvalidKeyProvided: Key cannot be empty". (rhertogh)
 
 
 [1.0.0-alpha3] - 2022-08-19
 ---------------------------
 
 ### Added
-- Support for Client Secret Rotation (rhertogh)
-- Support for Encryption Key Rotation (rhertogh)
-- Added `Oauth2ClientInterface::setGrantTypes()` (rhertogh)
-- Support `Oauth2BaseClientAuthorizationRequest` "Max Age" without OIDC (rhertogh)
+- Support for Client Secret Rotation. (rhertogh)
+- Support for Encryption Key Rotation. (rhertogh)
+- Added `Oauth2ClientInterface::setGrantTypes()`. (rhertogh)
+- Support `Oauth2BaseClientAuthorizationRequest` "Max Age" without OIDC. (rhertogh)
 
 ### Fixed
-- Accept string array for `$scopes` parameter in `Oauth2Module::createClient` (rhertogh)
+- Accept string array for `$scopes` parameter in `Oauth2Module::createClient`. (rhertogh)
 
 ### Changed
-- Changed signature for `Oauth2Module::createClient` to make `$secret` optional (rhertogh)
+- Changed signature for `Oauth2Module::createClient` to make `$secret` optional. (rhertogh)
 
 [1.0.0-alpha2] - 2022-05-27
 ---------------------------
 
 ### Added
-- Support for custom scope authorization message (rhertogh)
-- Allow more easily customization of scopes by merging claims of previously defined scopes (rhertogh)
-- Added `Oauth2Module::createClient()` method to aid in the programmatic creation of clients (rhertogh)
-- Added documentation for OIDC claims (rhertogh)
-- Support for PHP 8.1 (rhertogh)
+- Support for custom scope authorization message. (rhertogh)
+- Allow more easily customization of scopes by merging claims of previously defined scopes. (rhertogh)
+- Added `Oauth2Module::createClient()` method to aid in the programmatic creation of clients. (rhertogh)
+- Added documentation for OIDC claims. (rhertogh)
+- Support for PHP 8.1. (rhertogh)
 
 ### Fixed
 - Using correct access token TTL (rhertogh)
-- Type-casted the type so the `Oauth2Client::isConfidential()` function works as intended (Roosh Ak)
+- Type-casted the type so the `Oauth2Client::isConfidential()` function works as intended. (Roosh Ak)
 
 ### Improved
-- Several code style fixes (rhertogh)
+- Several code style fixes. (rhertogh)
 
 [1.0.0-alpha] - 2021-11-11
 --------------------------
 
 ### Added
-- Initial release (rhertogh)
+- Initial release. (rhertogh)

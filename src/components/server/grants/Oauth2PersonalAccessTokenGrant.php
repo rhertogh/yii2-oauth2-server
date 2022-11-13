@@ -15,6 +15,7 @@ use rhertogh\Yii2Oauth2Server\exceptions\Oauth2ServerException;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2AccessTokenRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2UserRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2PersonalAccessTokenGrantInterface;
+use rhertogh\Yii2Oauth2Server\Oauth2Module;
 
 class Oauth2PersonalAccessTokenGrant extends AbstractGrant implements Oauth2PersonalAccessTokenGrantInterface
 {
@@ -40,7 +41,7 @@ class Oauth2PersonalAccessTokenGrant extends AbstractGrant implements Oauth2Pers
 
     public function getIdentifier()
     {
-        return 'personal_access_token';
+        return Oauth2Module::GRANT_TYPE_IDENTIFIER_PERSONAL_ACCESS_TOKEN;
     }
 
     public function respondToAccessTokenRequest(ServerRequestInterface $request, ResponseTypeInterface $responseType, DateInterval $accessTokenTTL)

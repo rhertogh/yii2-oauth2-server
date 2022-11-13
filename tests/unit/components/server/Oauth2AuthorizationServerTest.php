@@ -21,6 +21,7 @@ class Oauth2AuthorizationServerTest extends TestCase
                 'implicit',
                 'password',
                 'refresh_token',
+                'personal_access_token',
             ],
             array_keys($authorizationServer->getEnabledGrantTypes())
         );

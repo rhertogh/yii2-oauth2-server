@@ -152,6 +152,21 @@ INSERT INTO "oauth2_client"
         true,
         EXTRACT(EPOCH FROM NOW()),
         EXTRACT(EPOCH FROM NOW())
+    ),
+    (
+        1003008,
+        'test-client-type-personal-access-token',
+        1, -- Confidential
+        '2021-01-01::3vUCADtKx59NPQl3/1fJXmppRbiug3iccJc1S9XY6TPvLE02/+ggB8GtIc24J5oMTj38NIPIpNt8ClNDS7ZBI4+ykNxYOuEHQfdkDiUf5WVKtLegx43gLXfq', -- "secret"
+        'Valid client with Grant Type Personal Access Token',
+        null,
+        1, -- Bearer
+        4096, -- PERSONAL_ACCESS_TOKEN
+        true,
+        null,
+        true,
+        EXTRACT(EPOCH FROM NOW()),
+        EXTRACT(EPOCH FROM NOW())
     );
 
 INSERT INTO "oauth2_scope" VALUES

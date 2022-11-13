@@ -153,6 +153,21 @@ INSERT INTO `oauth2_client`
         1,
         UNIX_TIMESTAMP(),
         UNIX_TIMESTAMP()
+    ),
+    (
+        1003008,
+        'test-client-type-personal-access-token',
+        1, # Confidential
+        '2021-01-01::3vUCADtKx59NPQl3/1fJXmppRbiug3iccJc1S9XY6TPvLE02/+ggB8GtIc24J5oMTj38NIPIpNt8ClNDS7ZBI4+ykNxYOuEHQfdkDiUf5WVKtLegx43gLXfq', # "secret"
+        'Valid client with Grant Type Personal Access Token',
+        null,
+        1, # Bearer
+        4096, # PERSONAL_ACCESS_TOKEN
+        1,
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
     );
 
 INSERT INTO `oauth2_scope` VALUES

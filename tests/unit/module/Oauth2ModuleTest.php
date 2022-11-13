@@ -1094,4 +1094,39 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $this->expectExceptionMessage('App Request Authorization header does not match the processed Oauth header.');
         $module->getRequestOauthUserId();
     }
+
+    public function testGeneratePersonalAccessToken()
+    {
+        $this->mockWebApplication();
+        $module = Oauth2Module::getInstance();
+
+        $clientIdentifier = 'test-client-type-personal-access-token';
+        $userIdentifier = 123;
+
+        $issueTime = new \DateTimeImmutable('@' . time()); // ensure no micro seconds.
+        $expiryDateTime = $issueTime->add(new \DateInterval('P1Y'));
+        $accessTokenData = $module->generatePersonalAccessToken(
+            $clientIdentifier,
+            $userIdentifier,
+            null,
+            true,
+        );
+
+        $this->assertNotNull($accessTokenData->getAccessToken());
+
+        $jwtConfiguration = $this->getBearerTokenValidatorHelper()->getJwtConfiguration();
+
+        $jwt = $jwtConfiguration->parser()->parse($accessTokenData->getAccessToken());
+
+        $claims = $jwt->claims();
+
+        $this->assertEquals([$clientIdentifier], $claims->get('aud'));
+        $this->assertEquals($userIdentifier, $claims->get('sub'));
+
+        $this->assertGreaterThanOrEqual($issueTime, $claims->get('iat'));
+        $this->assertLessThanOrEqual($issueTime->modify('+1 second'), $claims->get('iat'));
+
+        $this->assertGreaterThanOrEqual($expiryDateTime, $claims->get('exp'));
+        $this->assertLessThanOrEqual($expiryDateTime->modify('+1 second'), $claims->get('exp'));
+    }
 }
