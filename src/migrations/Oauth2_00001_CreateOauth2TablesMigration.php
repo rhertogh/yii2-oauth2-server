@@ -227,7 +227,7 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                     'identifier' => $this->string()->notNull()->unique(),
                     'description' => $this->text(),
                     'authorization_message' => $this->text(),
-                    'applied_by_default' => $this->integer()->notNull()->defaultValue(Oauth2Scope::APPLIED_BY_DEFAULT_NO),
+                    'applied_by_default' => $this->integer()->notNull()->defaultValue(Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO),
                     'required_on_authorization' => $this->boolean()->notNull()->defaultValue(true),
                     'enabled' => $this->boolean()->notNull()->defaultValue(true),
                     'created_at' => $this->integer()->notNull(),

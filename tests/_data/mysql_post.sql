@@ -379,6 +379,28 @@ INSERT INTO `oauth2_scope` VALUES
         1,
         UNIX_TIMESTAMP(),
         UNIX_TIMESTAMP()
+    ),
+    (
+        1005019,
+        'applied-by-default-if-requested',
+        'applied if requested by client without user confirmation',
+        null,
+        3,
+        0,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
+    (
+        1005020,
+        'applied-by-default-if-requested-for-client',
+        'applied if requested by client without user confirmation (not applied itself, but applied in oauth2_client_scope)',
+        null,
+        0,
+        0,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
     );
 ;
 
@@ -518,6 +540,24 @@ INSERT INTO `oauth2_client_scope` VALUES
         UNIX_TIMESTAMP(),
         UNIX_TIMESTAMP()
     ),
+    (
+        1003000, # 'test-client-type-auth-code-valid'
+        1005019, # 'applied-by-default-if-requested'
+        null,
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
+    (
+        1003000, # 'test-client-type-auth-code-valid'
+        1005020, # 'applied-by-default-if-requested-for-client'
+        3,
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
     # test-client-type-client-credentials-valid
     (
         1003001, # 'test-client-type-client-credentials-valid'
@@ -614,6 +654,24 @@ INSERT INTO `oauth2_client_scope` VALUES
         1003002, # 'test-client-type-password-public-valid'
         1005018, # 'not-required-has-been-rejected-before'
         null,
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
+    (
+        1003002, # 'test-client-type-password-public-valid'
+        1005019, # 'applied-by-default-if-requested'
+        null,
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
+    (
+        1003002, # 'test-client-type-password-public-valid'
+        1005020, # 'applied-by-default-if-requested-for-client'
+        3,
         null,
         1,
         UNIX_TIMESTAMP(),
@@ -724,6 +782,60 @@ INSERT INTO `oauth2_client_scope` VALUES
         1003007, # 'test-client-type-auth-code-open-id-connect-skip-authorization'
         @oidcOfflineAccessScopeId,
         0, # Note: for testing the offline access scope is not auto applied
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
+    (
+        1003008, # 'test-client-type-personal-access-token'
+        1005000, # 'user.id.read'
+        3, # APPLIED_BY_DEFAULT_IF_REQUESTED
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
+    (
+        1003008, # 'test-client-type-personal-access-token'
+        1005001, # 'user.username.read'
+        3, # APPLIED_BY_DEFAULT_IF_REQUESTED
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
+    (
+        1003008, # 'test-client-type-personal-access-token'
+        1005002, # 'user.email_address.read'
+        3, # APPLIED_BY_DEFAULT_IF_REQUESTED
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
+    (
+        1003008, # 'test-client-type-personal-access-token'
+        1005003, # 'user.enabled.read'
+        3, # APPLIED_BY_DEFAULT_IF_REQUESTED
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
+    (
+        1003008, # 'test-client-type-personal-access-token'
+        1005004, # 'user.created_at.read'
+        3, # APPLIED_BY_DEFAULT_IF_REQUESTED
+        null,
+        1,
+        UNIX_TIMESTAMP(),
+        UNIX_TIMESTAMP()
+    ),
+    (
+        1003008, # 'test-client-type-personal-access-token'
+        1005005, # 'user.updated_at.read'
+        3, # APPLIED_BY_DEFAULT_IF_REQUESTED
         null,
         1,
         UNIX_TIMESTAMP(),

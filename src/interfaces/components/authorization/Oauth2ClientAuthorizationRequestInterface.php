@@ -322,18 +322,21 @@ interface Oauth2ClientAuthorizationRequestInterface extends Configurable
     public function getApprovalPendingScopes();
 
     /**
-     * Returns Scope Authorization Requests for all scopes have been authorized before by the user for this client.
+     * Returns Scope Authorization Requests for all scopes that have been authorized before by the user for this client.
      * @return Oauth2ScopeAuthorizationRequestInterface[]
      * @since 1.0.0
      */
     public function getPreviouslyApprovedScopes();
 
     /**
-     * Returns Scope Authorization Requests for all scopes have are  for this client.
+     * Returns all Scopes that are applied by default without user authorization for this request.
+     * This can be defined by the Scope or the ClientScope (where the latter has precedence).
      * @return Oauth2ScopeInterface[]
      * @since 1.0.0
+     * @see Oauth2ScopeInterface::getAppliedByDefault()
+     * @see Oauth2ClientScopeInterface::getAppliedByDefault()
      */
-    public function getScopesAppliedByDefaultAutomatically();
+    public function getScopesAppliedByDefaultWithoutConfirm();
 
     /**
      * Returns if client/scope authorization is needed by the user.
@@ -391,7 +394,7 @@ interface Oauth2ClientAuthorizationRequestInterface extends Configurable
      * @return bool
      */
     public function isAuthorizationAllowed();
-    
+
     /**
      * Process the Client Authorization Request. This method persists the authorized client and scopes.
      * @since 1.0.0

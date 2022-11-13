@@ -81,17 +81,17 @@ class Oauth2ScopeRepository extends Oauth2BaseRepository implements Oauth2ScopeR
 
         $clientAllowedScopes = $client->getAllowedScopes($requestedScopeIdentifiers);
 
-        $scopeIds = array_map(fn($scope) => $scope->getPrimaryKey(), $clientAllowedScopes);
-
         /** @var class-string<Oauth2ScopeInterface> $scopeClass */
         $scopeClass = DiHelper::getValidatedClassName(Oauth2ScopeInterface::class);
 
         if ($userIdentifier) {
+            $clientAllowedScopeIds = array_map(fn($scope) => $scope->getPrimaryKey(), $clientAllowedScopes);
+
             $approvedScopes = $scopeClass::find()
                 ->alias('scope')
                 ->innerJoinWith('userClientScopes user_client_scope', false)
                 ->andWhere([
-                    'scope.id' => $scopeIds,
+                    'scope.id' => $clientAllowedScopeIds,
                     'user_client_scope.user_id' => $userIdentifier,
                     'user_client_scope.client_id' => $client->getPrimaryKey(),
                     'user_client_scope.enabled' => 1,
@@ -109,8 +109,14 @@ class Oauth2ScopeRepository extends Oauth2BaseRepository implements Oauth2ScopeR
                 ?? $clientAllowedScope->getAppliedByDefault();
             $scopeId = $clientAllowedScope->getPrimaryKey();
             if (
-                $appliedByDefault === Oauth2Scope::APPLIED_BY_DEFAULT_AUTOMATICALLY
-                && !array_key_exists($scopeId, $approvedScopes)
+                !array_key_exists($scopeId, $approvedScopes)
+                && (
+                    $appliedByDefault === Oauth2ScopeInterface::APPLIED_BY_DEFAULT_AUTOMATICALLY
+                    || (
+                        $appliedByDefault === Oauth2ScopeInterface::APPLIED_BY_DEFAULT_IF_REQUESTED
+                        && in_array($clientAllowedScope->getIdentifier(), $requestedScopeIdentifiers)
+                    )
+                )
             ) {
                 $approvedScopes[$scopeId] = $clientAllowedScope;
             }

@@ -11,22 +11,33 @@ interface Oauth2ScopeInterface extends
     ScopeEntityInterface
 {
     /**
-     * Applied by Default "No": Do not apply the scope automatically.
+     * Applied by Default "No": Do not apply the scope automatically. If the client requests the scope the user
+     * will be prompted for approval.
      * @since 1.0.0
      */
     public const APPLIED_BY_DEFAULT_NO = 0;
+
     /**
      * Applied by Default "Confirm": Apply the scope automatically (without the client requesting it via the
      * authorization request's scope parameter), the user still has to approve the scope.
      * @since 1.0.0
      */
     public const APPLIED_BY_DEFAULT_CONFIRM = 1;
+
     /**
      * Applied by Default "Automatically": Apply the scope automatically (without the client requesting it via the
      * authorization request's scope parameter), the user will *not* be prompted to approve the scope.
      * @since 1.0.0
      */
     public const APPLIED_BY_DEFAULT_AUTOMATICALLY = 2;
+
+    /**
+     * Applied if requested: Apply the scope if the client requests it via the authorization request's scope parameter,
+     * the user will *not* be prompted to approve the scope.
+     * @since 1.0.0
+     */
+    public const APPLIED_BY_DEFAULT_IF_REQUESTED = 3;
+
     /**
      * @since 1.0.0
      */
@@ -34,6 +45,7 @@ interface Oauth2ScopeInterface extends
         self::APPLIED_BY_DEFAULT_NO,
         self::APPLIED_BY_DEFAULT_CONFIRM,
         self::APPLIED_BY_DEFAULT_AUTOMATICALLY,
+        self::APPLIED_BY_DEFAULT_IF_REQUESTED,
     ];
 
     /**

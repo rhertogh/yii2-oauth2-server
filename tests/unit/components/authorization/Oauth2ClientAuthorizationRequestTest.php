@@ -120,16 +120,16 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
 
         // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         $scopeAuthorizationRequests = [new Oauth2ScopeAuthorizationRequest()];
-        $scopesAppliedByDefaultAutomatically = [new Oauth2Scope()];
+        $scopesAppliedByDefaultWithoutConfirm = [new Oauth2Scope()];
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests', $scopeAuthorizationRequests);
-        $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultAutomatically', $scopesAppliedByDefaultAutomatically);
+        $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultWithoutConfirm', $scopesAppliedByDefaultWithoutConfirm);
         $this->assertNotNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests'));
-        $this->assertNotNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultAutomatically'));
+        $this->assertNotNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultWithoutConfirm'));
 
         $clientAuthorizationRequest->setClientIdentifier($clientIdentifier1);
         $this->assertNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_client'));
         $this->assertNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests'));
-        $this->assertNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultAutomatically'));
+        $this->assertNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultWithoutConfirm'));
         $this->assertEquals($clientId1, $clientAuthorizationRequest->getClient()->getPrimaryKey());
         $this->assertNotNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_client'));
 
@@ -163,15 +163,15 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
 
         // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         $scopeAuthorizationRequests = [new Oauth2ScopeAuthorizationRequest()];
-        $scopesAppliedByDefaultAutomatically = [new Oauth2Scope()];
+        $scopesAppliedByDefaultWithoutConfirm = [new Oauth2Scope()];
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests', $scopeAuthorizationRequests);
-        $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultAutomatically', $scopesAppliedByDefaultAutomatically);
+        $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultWithoutConfirm', $scopesAppliedByDefaultWithoutConfirm);
         $this->assertNotNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests'));
-        $this->assertNotNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultAutomatically'));
+        $this->assertNotNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultWithoutConfirm'));
 
         $clientAuthorizationRequest->setUserIdentity($user);
         $this->assertNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests'));
-        $this->assertNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultAutomatically'));
+        $this->assertNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultWithoutConfirm'));
         $this->assertEquals($user, $clientAuthorizationRequest->getUserIdentity());
         // phpcs:enable Generic.Files.LineLength.TooLong
     }
@@ -209,16 +209,16 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
 
         // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         $scopeAuthorizationRequests = [new Oauth2ScopeAuthorizationRequest()];
-        $scopesAppliedByDefaultAutomatically = [new Oauth2Scope()];
+        $scopesAppliedByDefaultWithoutConfirm = [new Oauth2Scope()];
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests', $scopeAuthorizationRequests);
-        $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultAutomatically', $scopesAppliedByDefaultAutomatically);
+        $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultWithoutConfirm', $scopesAppliedByDefaultWithoutConfirm);
         $this->assertNotNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests'));
-        $this->assertNotNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultAutomatically'));
+        $this->assertNotNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultWithoutConfirm'));
 
         $clientAuthorizationRequest->setRequestedScopeIdentifiers($requestedScopeIdentifiers);
         $this->assertEquals($requestedScopeIdentifiers, $clientAuthorizationRequest->getRequestedScopeIdentifiers());
         $this->assertNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests'));
-        $this->assertNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultAutomatically'));
+        $this->assertNull($this->getInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultWithoutConfirm'));
         // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
@@ -316,6 +316,8 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         ];
 
         $requestedScopes[] = 'applied-automatically-by-default-for-client';
+        $requestedScopes[] = 'applied-by-default-if-requested';
+        $requestedScopes[] = 'applied-by-default-if-requested-for-client';
 
         $user123 = TestUserModel::findOne(123);
         $user124 = TestUserModel::findOne(124);
@@ -356,24 +358,70 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $this->assertTrue($approvalPendingScopes['not-required-has-been-rejected-before']->getHasBeenRejectedBefore());
     }
 
-    public function testGetScopesAppliedByDefaultAutomatically()
+    /**
+     * @dataProvider getScopesAppliedByDefaultWithoutConfirmProvider
+     */
+    public function testGetScopesAppliedByDefaultWithoutConfirm($requestedScopes, $expectedScopes)
     {
         $this->mockWebApplication();
 
-        $clientAuthorizationRequest = $this->getMockClientAuthorizationRequest();
-        $clientAuthorizationRequest->setModule(Oauth2Module::getInstance());
-        $clientAuthorizationRequest->setClient(Oauth2Client::findByIdentifier('test-client-type-auth-code-valid'));
-        $clientAuthorizationRequest->setUserIdentity(TestUserModel::findIdentity(123));
+        $clientAuthorizationRequest = $this->getMockClientAuthorizationRequest()
+            ->setModule(Oauth2Module::getInstance())
+            ->setClient(Oauth2Client::findByIdentifier('test-client-type-auth-code-valid'))
+            ->setUserIdentity(TestUserModel::findIdentity(123))
+            ->setRequestedScopeIdentifiers($requestedScopes);
 
-        $scopes = array_keys($clientAuthorizationRequest->getScopesAppliedByDefaultAutomatically());
+        $scopes = array_keys($clientAuthorizationRequest->getScopesAppliedByDefaultWithoutConfirm());
         sort($scopes);
-        $this->assertEquals(
-            [
-                'applied-automatically-by-default',
-                'applied-automatically-by-default-for-client',
+        $this->assertEquals($expectedScopes, $scopes);
+    }
+
+    public function getScopesAppliedByDefaultWithoutConfirmProvider()
+    {
+        return [
+            'no scopes requested' => [
+                [],
+                [
+                    'applied-automatically-by-default',
+                    'applied-automatically-by-default-for-client',
+                ],
             ],
-            $scopes,
-        );
+
+            'applied-by-default-if-requested on scope' => [
+                [
+                    'applied-by-default-if-requested',
+                ],
+                [
+                    'applied-automatically-by-default',
+                    'applied-automatically-by-default-for-client',
+                    'applied-by-default-if-requested',
+                ],
+            ],
+
+            'applied-by-default-if-requested on client_scope' => [
+                [
+                    'applied-by-default-if-requested-for-client',
+                ],
+                [
+                    'applied-automatically-by-default',
+                    'applied-automatically-by-default-for-client',
+                    'applied-by-default-if-requested-for-client',
+                ],
+            ],
+
+            'applied-by-default-if-requested on both client and client_scope' => [
+                [
+                    'applied-by-default-if-requested',
+                    'applied-by-default-if-requested-for-client',
+                ],
+                [
+                    'applied-automatically-by-default',
+                    'applied-automatically-by-default-for-client',
+                    'applied-by-default-if-requested',
+                    'applied-by-default-if-requested-for-client',
+                ],
+            ],
+        ];
     }
 
     public function testProcessAuthorizationApprove()

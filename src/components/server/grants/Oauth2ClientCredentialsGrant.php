@@ -67,7 +67,7 @@ class Oauth2ClientCredentialsGrant extends ClientCredentialsGrant implements Oau
                     fn(Oauth2ScopeAuthorizationRequestInterface $request) => $request->getScope(),
                     array_intersect_key($previouslyApprovedScopes, array_flip($scopeIdentifiers))
                 );
-                $scopes = array_merge($scopes, $clientAuthorizationRequest->getScopesAppliedByDefaultAutomatically());
+                $scopes = array_merge($scopes, $clientAuthorizationRequest->getScopesAppliedByDefaultWithoutConfirm());
                 $scopes = array_values($scopes);
             }
         }

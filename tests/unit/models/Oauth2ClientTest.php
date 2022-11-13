@@ -493,6 +493,8 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
                     'applied-automatically-by-default',
                     'applied-automatically-by-default-for-client',
                     'applied-by-default-by-client-not-required-for-client',
+                    'applied-by-default-if-requested',
+                    'applied-by-default-if-requested-for-client',
                 ],
             ],
             [
@@ -508,6 +510,8 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
                     'applied-automatically-by-default-not-assigned',
                     'applied-automatically-by-default-not-assigned-not-required',
                     'applied-by-default-by-client-not-required-for-client',
+                    'applied-by-default-if-requested',
+                    'applied-by-default-if-requested-for-client',
                 ],
             ],
             [
@@ -530,6 +534,8 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
                     'applied-automatically-by-default',
                     'applied-automatically-by-default-for-client',
                     'applied-by-default-by-client-not-required-for-client',
+                    'applied-by-default-if-requested',
+                    'applied-by-default-if-requested-for-client',
                 ],
             ],
             [
@@ -555,6 +561,8 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
                     'applied-automatically-by-default-not-assigned',
                     'applied-automatically-by-default-not-assigned-not-required',
                     'applied-by-default-by-client-not-required-for-client',
+                    'applied-by-default-if-requested',
+                    'applied-by-default-if-requested-for-client',
                 ],
             ],
         ];

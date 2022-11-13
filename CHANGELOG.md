@@ -15,7 +15,8 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - Sample app now includes client for 'Client Credentials' grant without a user. (rhertogh)
 - Support for "personal access tokens" (see `Oauth2Module::generatePersonalAccessToken()`). (rhertogh)
 - `Oauth2UserPatTrait` for easy generating "personal access tokens" from the user model. (bada02)
-
+- `Oauth2ScopeInterface::APPLIED_BY_DEFAULT_IF_REQUESTED` to support allowing scopes for clients without user approval. (rhertogh)
+ 
 ### Changed
 ### Deprecated
 ### Removed

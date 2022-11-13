@@ -50,7 +50,7 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
     /**
      * @var Oauth2ScopeInterface[]|null
      */
-    protected $_scopesAppliedByDefaultAutomatically = null;
+    protected $_scopesAppliedByDefaultWithoutConfirm = null;
 
     /**
      * @inheritDoc
@@ -141,7 +141,7 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
         }
 
         $this->_scopeAuthorizationRequests = null;
-        $this->_scopesAppliedByDefaultAutomatically = null;
+        $this->_scopesAppliedByDefaultWithoutConfirm = null;
 
         return parent::setClientIdentifier($clientIdentifier);
     }
@@ -179,7 +179,7 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
     {
         if ($this->getUserIdentifier() !== $userIdentity->getIdentifier()) {
             $this->_scopeAuthorizationRequests = null;
-            $this->_scopesAppliedByDefaultAutomatically = null;
+            $this->_scopesAppliedByDefaultWithoutConfirm = null;
         }
 
         return parent::setUserIdentity($userIdentity);
@@ -225,7 +225,7 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
     public function setRequestedScopeIdentifiers($requestedScopeIdentifiers)
     {
         $this->_scopeAuthorizationRequests = null;
-        $this->_scopesAppliedByDefaultAutomatically = null;
+        $this->_scopesAppliedByDefaultWithoutConfirm = null;
         return parent::setRequestedScopeIdentifiers($requestedScopeIdentifiers);
     }
 
@@ -309,10 +309,11 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
     protected function determineScopeAuthorization()
     {
         $scopeAuthorizationRequests = [];
-        $scopesAppliedByDefaultAutomatically = [];
+        $scopesAppliedByDefaultWithoutConfirm = [];
 
         $client = $this->getClient();
-        $scopes = $client->getAllowedScopes($this->getRequestedScopeIdentifiers());
+        $requestedScopeIdentifiers = $this->getRequestedScopeIdentifiers();
+        $allowedScopes = $client->getAllowedScopes($requestedScopeIdentifiers);
 
         /** @var Oauth2UserClientScopeInterface $userClientScopeClass */
         $userClientScopeClass = DiHelper::getValidatedClassName(Oauth2UserClientScopeInterface::class);
@@ -322,21 +323,27 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
             ->andWhere([
                 'user_id' => $this->getUserIdentity()->getIdentifier(),
                 'client_id' => $client->getPrimaryKey(),
-                'scope_id' => array_map(fn($scope) => $scope->getPrimaryKey(), $scopes)
+                'scope_id' => array_map(fn($scope) => $scope->getPrimaryKey(), $allowedScopes)
             ])
             ->indexBy('scope_id')
             ->all();
 
-        foreach ($scopes as $scope) {
+        foreach ($allowedScopes as $scope) {
             $clientScope = $scope->getClientScope($client->getPrimaryKey());
             $appliedByDefault = ($clientScope ? $clientScope->getAppliedByDefault() : null)
                 ?? $scope->getAppliedByDefault();
 
             $scopeIdentifier = $scope->getIdentifier();
-            if ($appliedByDefault === Oauth2Scope::APPLIED_BY_DEFAULT_AUTOMATICALLY) {
+            if (
+                ($appliedByDefault === Oauth2ScopeInterface::APPLIED_BY_DEFAULT_AUTOMATICALLY)
+                || (
+                    $appliedByDefault === Oauth2ScopeInterface::APPLIED_BY_DEFAULT_IF_REQUESTED
+                    && in_array($scopeIdentifier, $requestedScopeIdentifiers)
+                )
+            ) {
                 unset($scopeAuthorizationRequests[$scopeIdentifier]);
-                $scopesAppliedByDefaultAutomatically[$scopeIdentifier] = $scope;
-            } else {
+                $scopesAppliedByDefaultWithoutConfirm[$scopeIdentifier] = $scope;
+            } elseif ($appliedByDefault !== Oauth2ScopeInterface::APPLIED_BY_DEFAULT_IF_REQUESTED) {
                 $isRequired = ($clientScope ? $clientScope->getRequiredOnAuthorization() : null)
                     ?? $scope->getRequiredOnAuthorization();
                 $userClientScope = $userClientScopes[$scope->getPrimaryKey()] ?? null;
@@ -354,7 +361,7 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
         }
 
         $this->_scopeAuthorizationRequests = $scopeAuthorizationRequests;
-        $this->_scopesAppliedByDefaultAutomatically = $scopesAppliedByDefaultAutomatically;
+        $this->_scopesAppliedByDefaultWithoutConfirm = $scopesAppliedByDefaultWithoutConfirm;
     }
 
     /**
@@ -388,13 +395,13 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
     /**
      * @inheritDoc
      */
-    public function getScopesAppliedByDefaultAutomatically()
+    public function getScopesAppliedByDefaultWithoutConfirm()
     {
-        if ($this->_scopesAppliedByDefaultAutomatically === null) {
+        if ($this->_scopesAppliedByDefaultWithoutConfirm === null) {
             $this->determineScopeAuthorization();
         }
 
-        return $this->_scopesAppliedByDefaultAutomatically;
+        return $this->_scopesAppliedByDefaultWithoutConfirm;
     }
 
     /**

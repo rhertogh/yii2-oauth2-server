@@ -538,10 +538,10 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
                             ? [[$scopeTableName . '.identifier' => $requestedScopeIdentifiers]]
                             : []
                     ),
-                    ['NOT', [$clientScopeTableName . '.applied_by_default' => Oauth2Scope::APPLIED_BY_DEFAULT_NO]],
+                    ['NOT', [$clientScopeTableName . '.applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO]],
                     ['AND',
                         [$clientScopeTableName . '.applied_by_default' => null],
-                        ['NOT', [$scopeTableName . '.applied_by_default' => Oauth2Scope::APPLIED_BY_DEFAULT_NO]],
+                        ['NOT', [$scopeTableName . '.applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO]],
                     ],
                 ],
             ],
@@ -558,7 +558,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
                             ? [[$scopeTableName . '.identifier' => $requestedScopeIdentifiers]]
                             : []
                     ),
-                    ['NOT', [$scopeTableName . '.applied_by_default' => Oauth2Scope::APPLIED_BY_DEFAULT_NO]],
+                    ['NOT', [$scopeTableName . '.applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO]],
                 ],
             ];
         } elseif (

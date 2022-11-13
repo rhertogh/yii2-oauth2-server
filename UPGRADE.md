@@ -55,6 +55,10 @@ Upgrade from v1.0.0-alpha5
 * The `\rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface` defines a new method 
   `endUsersMayAuthorizeClient()` to determine if an end-user is allowed to authorize an Oauth2 client.    
   The default implementation uses the `oauth2_client.end_users_may_authorize_client` database field.
+  
+* The method `\rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface::getScopesAppliedByDefaultAutomatically()`  
+  has been renamed to: `\rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface::getScopesAppliedByDefaultWithoutConfirm()`  
+  This most likely only affect you if you use your own implementation of the `Oauth2ClientAuthorizationRequestInterface`
 
 Upgrade from v1.0.0-alpha2
 --------------------------
