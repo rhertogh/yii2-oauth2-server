@@ -5,6 +5,7 @@ namespace Yii2Oauth2ServerTests\unit\module;
 use Codeception\Util\HttpCode;
 use Defuse\Crypto\Exception\EnvironmentIsBrokenException;
 use League\OAuth2\Server\CryptKey;
+use League\OAuth2\Server\Entities\ScopeEntityInterface;
 use League\OAuth2\Server\Grant\AuthCodeGrant;
 use League\OAuth2\Server\Grant\ClientCredentialsGrant;
 use League\OAuth2\Server\Grant\ImplicitGrant;
@@ -1108,20 +1109,28 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $module->getRequestOauthUserId();
     }
 
-    public function testGeneratePersonalAccessToken()
+    /**
+     * @param Oauth2ScopeInterface[]|string[]|string|callable|null $scopes
+     *
+     * @dataProvider generatePersonalAccessTokenProvider
+     */
+    public function testGeneratePersonalAccessToken($scopes)
     {
         $this->mockWebApplication();
         $module = Oauth2Module::getInstance();
 
         $clientIdentifier = 'test-client-type-personal-access-token';
         $userIdentifier = 123;
+        if (is_callable($scopes)) {
+            $scopes = call_user_func($scopes);
+        }
 
         $issueTime = new \DateTimeImmutable('@' . time()); // ensure no micro seconds.
         $expiryDateTime = $issueTime->add(new \DateInterval('P1Y'));
         $accessTokenData = $module->generatePersonalAccessToken(
             $clientIdentifier,
             $userIdentifier,
-            null,
+            $scopes,
             true,
         );
 
@@ -1141,5 +1150,40 @@ class Oauth2ModuleTest extends DatabaseTestCase
 
         $this->assertGreaterThanOrEqual($expiryDateTime, $claims->get('exp'));
         $this->assertLessThanOrEqual($expiryDateTime->modify('+2 second'), $claims->get('exp'));
+
+        if (is_string($scopes)) {
+            $expectedScopes = explode(' ', $scopes);
+        } else {
+            $expectedScopes = array_map(
+                fn($scope) => $scope instanceof Oauth2ScopeInterface ? $scope->getIdentifier() : $scope,
+                $scopes
+            );
+        }
+        sort($expectedScopes);
+        $actualScopes = $claims->get('scopes');
+        sort($actualScopes);
+        $this->assertEquals($expectedScopes, $actualScopes);
+    }
+
+    public function generatePersonalAccessTokenProvider()
+    {
+        return [
+            'Scopes as string' => [
+                'user.id.read user.username.read'
+            ],
+
+            'Scopes as array of strings' => [
+                ['user.id.read', 'user.username.read']
+            ],
+
+            'Scopes as array of Oauth2Scopes' => [
+                function() {
+                    return [
+                        new Oauth2Scope(['identifier' => 'user.id.read']),
+                        new Oauth2Scope(['identifier' => 'user.username.read']),
+                    ];
+                },
+            ],
+        ];
     }
 }
