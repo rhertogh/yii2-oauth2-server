@@ -1189,6 +1189,8 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
             $client = $this->getClientRepository()->findModelByIdentifier($clientIdentifier);
             if ($client && $client->isConfidential()) {
                 $clientSecret = $client->getDecryptedSecret($this->getEncryptor());
+            } else {
+                $clientSecret = null;
             }
         }
 
