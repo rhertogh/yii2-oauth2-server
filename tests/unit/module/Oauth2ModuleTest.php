@@ -144,7 +144,7 @@ class Oauth2ModuleTest extends DatabaseTestCase
      * @param $scopes
      * @dataProvider createClientProvider
      */
-    public function testCreateClientOK($scopes)
+    public function testCreateClientOK($scopes, $endUsersMayAuthorizeClient, $skipAuthorizationIfScopeIsAllowed)
     {
         $this->mockConsoleApplication();
 
@@ -160,16 +160,37 @@ class Oauth2ModuleTest extends DatabaseTestCase
             Oauth2ClientInterface::TYPE_CONFIDENTIAL,
             'very_secret',
             $scopes,
+            null,
+            $endUsersMayAuthorizeClient,
+            $skipAuthorizationIfScopeIsAllowed,
         );
 
         $this->assertInstanceOf(Oauth2ClientInterface::class, $client);
         $this->assertEquals(
-            ['openid', 'email'],
+            $scopes !== null ? ['openid', 'email'] : [],
             array_map(
                 fn($scope) => $scope->getIdentifier(),
                 $client->getAllowedScopes(['openid', 'email', 'address'])
             )
         );
+
+        if ($endUsersMayAuthorizeClient === null) {
+            $this->assertEquals(
+                Oauth2Client::getTableSchema()->getColumn('end_users_may_authorize_client')->defaultValue,
+                $client->endUsersMayAuthorizeClient()
+            );
+        } else {
+            $this->assertEquals((bool)$endUsersMayAuthorizeClient, $client->endUsersMayAuthorizeClient());
+        }
+
+        if ($skipAuthorizationIfScopeIsAllowed === null) {
+            $this->assertEquals(
+                Oauth2Client::getTableSchema()->getColumn('skip_authorization_if_scope_is_allowed')->defaultValue,
+                $client->skipAuthorizationIfScopeIsAllowed()
+            );
+        } else {
+            $this->assertEquals((bool)$skipAuthorizationIfScopeIsAllowed, $client->skipAuthorizationIfScopeIsAllowed());
+        }
     }
 
     /**
@@ -180,11 +201,15 @@ class Oauth2ModuleTest extends DatabaseTestCase
     {
         return [
             'Scopes as string' => [
-                'openid email'
+                'openid email',
+                null,
+                null,
             ],
 
             'Scopes as array of strings' => [
-                ['openid', 'email']
+                ['openid', 'email'],
+                null,
+                null,
             ],
 
             'Scopes as array of Oauth2Scopes' => [
@@ -194,6 +219,8 @@ class Oauth2ModuleTest extends DatabaseTestCase
                         new Oauth2Scope(['identifier' => 'email']),
                     ];
                 },
+                null,
+                null,
             ],
 
             'Scopes as array of arrays' => [ // Key is scope identifier, value is the config for the `client_scope` junction table)
@@ -204,6 +231,20 @@ class Oauth2ModuleTest extends DatabaseTestCase
                     ],
                     'email' => [],
                 ],
+                null,
+                null,
+            ],
+
+            'end users may authorize client' => [
+                null,
+                true,
+                false,
+            ],
+
+            'skip authorization if scope is allowed' => [
+                null,
+                false,
+                true,
             ],
         ];
     }

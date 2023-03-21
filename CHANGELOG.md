@@ -19,6 +19,25 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Security
 
 
+[1.0.0-alpha8] - Unreleased
+---------------------------
+
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Improved
+### Security
+
+
+[1.0.0-alpha7] - 2023-03-21
+---------------------------
+
+### Added
+- Support for `skipAuthorizationIfScopeIsAllowed` in `Oauth2Module::createClient()`
+
+
 [1.0.0-alpha6] - 2022-11-13
 ---------------------------
 
@@ -41,6 +60,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Improved
 - Test coverage
 
+
 [1.0.0-alpha5] - 2022-09-08
 ---------------------------
 
@@ -49,6 +69,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 
 ### Improved
 - Optimized tests to reuse database fixtures. (rhertogh)
+
 
 [1.0.0-alpha4] - 2022-08-20
 ---------------------------
@@ -77,6 +98,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Changed
 - Changed signature for `Oauth2Module::createClient` to make `$secret` optional. (rhertogh)
 
+
 [1.0.0-alpha2] - 2022-05-27
 ---------------------------
 
@@ -93,6 +115,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 
 ### Improved
 - Several code style fixes. (rhertogh)
+
 
 [1.0.0-alpha] - 2021-11-11
 --------------------------

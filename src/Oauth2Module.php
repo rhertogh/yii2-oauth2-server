@@ -593,7 +593,8 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
         $secret = null,
         $scopes = null,
         $userId = null,
-        $endUsersMayAuthorizeClient = false
+        $endUsersMayAuthorizeClient = null,
+        $skipAuthorizationIfScopeIsAllowed = null
     ) {
         if (!($this->serverRole & static::SERVER_ROLE_AUTHORIZATION_SERVER)) {
             throw new InvalidCallException('Oauth2 server role does not include authorization server.');
@@ -608,6 +609,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
             'redirectUri' => $redirectURIs,
             'grantTypes' => $grantTypes,
             'endUsersMayAuthorizeClient' => $endUsersMayAuthorizeClient,
+            'skip_authorization_if_scope_is_allowed' => $skipAuthorizationIfScopeIsAllowed,
             'clientCredentialsGrantUserId' => $userId
         ]);
 
