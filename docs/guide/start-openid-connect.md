@@ -173,3 +173,56 @@ OpenID Connect Claims
 ---------------------
 By default, the Yii2-Oauth2-Server comes pre-configured with the standard OIDC scopes and claims.  
 For customization of the scopes/claims please see [OpenID Connect Claims](start-openid-connect-claims.md)
+
+
+OpenID Connect and Oauth2 Refresh Tokens
+----------------------------------------
+In order for a client to obtain an Oauth2 Refresh Token OpenID Connect the client should include the 'offline_access' scope.  
+Please see https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess for more details.
+
+This behavior can be overridden by setting the `openIdConnectIssueRefreshTokenWithoutOfflineAccessScope` to `true`.
+
+> Warning: Enabling this setting might introduce privacy concerns since the client could poll for the online status of a user.
+
+ ```php
+return [
+    // ...
+    'modules' => [
+        'oauth2' => [
+            'class' => rhertogh\Yii2Oauth2Server\Oauth2Module::class,
+            // ...
+            'enableOpenIdConnect' => true,
+            'openIdConnectIssueRefreshTokenWithoutOfflineAccessScope' => true, // Warning: Enabling this setting might introduce privacy concerns.
+            'grantTypes'                                              => [
+                Oauth2Module::GRANT_TYPE_AUTH_CODE,
+                Oauth2Module::GRANT_TYPE_REFRESH_TOKEN,
+            ],
+        ],
+        // ...
+    ],
+    // ...
+];
+```
+
+And implement the `Oauth2OidcUserSessionStatusInterface` on your User Identity Class (a.k.a. the User Model).
+```php
+<?php
+namespace app\models;
+//...
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserInterface;
+//...
+
+class User extends ActiveRecord implements 
+    // ...
+    Oauth2UserInterface
+{
+    // ...
+    
+    public function hasActiveSession(): bool
+    {
+        // Implement your own logic here based on the user session, or always return `true` in case refresh tokens
+        // should be usable even if the OIDC scope 'offline_access' is not requested.
+        return true;
+    }
+}
+```
