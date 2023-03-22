@@ -17,6 +17,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Fixed
 ### Improved
 ### Security
+- Upgraded `league/oauth2-server` to v8.4.1 which [includes a fix to prevent PKCE Downgrade Attack](https://github.com/thephpleague/oauth2-server/pull/1326).
 
 
 [1.0.0-alpha8] - 2023-03-22
