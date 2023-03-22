@@ -65,6 +65,7 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
             '_userAuthenticatedBeforeRequest' => $this->_userAuthenticatedBeforeRequest,
             '_authenticatedDuringRequest' => $this->_authenticatedDuringRequest,
             '_authorizeUrl' => $this->_authorizeUrl,
+            '_redirectUri' => $this->_redirectUri,
             '_requestedScopeIdentifiers' => $this->_requestedScopeIdentifiers,
             '_grantType' => $this->_grantType,
             '_prompts' => $this->_prompts,

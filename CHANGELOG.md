@@ -19,7 +19,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Security
 
 
-[1.0.0-alpha8] - Unreleased
+[1.0.0-alpha9] - Unreleased
 ---------------------------
 
 ### Added
@@ -30,6 +30,14 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Improved
 ### Security
 
+
+[1.0.0-alpha8] - Unreleased
+---------------------------
+
+### Fixed
+- Include `redirectUri` in `Oauth2ClientAuthorizationRequest::__serialize()`.
+  Fixes `Oauth2ClientAuthorizationRequest::isClientIdentifiable()`, which in turn caused client authorization to always be
+  required in case the authorization request needed to be stored between requests (e.g. when the user was not logged in).
 
 [1.0.0-alpha7] - 2023-03-21
 ---------------------------
