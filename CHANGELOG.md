@@ -31,7 +31,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Security
 
 
-[1.0.0-alpha8] - Unreleased
+[1.0.0-alpha8] - 2023-03-22
 ---------------------------
 
 ### Fixed
