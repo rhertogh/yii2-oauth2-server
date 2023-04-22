@@ -12,6 +12,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 
 ### Added
 ### Changed
+- Upgraded `league/oauth2-client` to v2.7.0 to support PKCE natively. (rhertogh)
 ### Deprecated
 ### Removed
 ### Fixed

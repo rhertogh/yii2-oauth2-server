@@ -34,7 +34,7 @@
         "yiisoft/yii2-bootstrap4": "~2.0.10",
         "schmunk42/yii2-giiant": "dev-master#7d27dd40604af842905768d6be43bcc96c02cee2",
         "vlucas/phpdotenv": "~5.3",
-        "league/oauth2-client": "~2.6.0",
+        "league/oauth2-client": "~2.7.0",
         "yiisoft/yii2-authclient": "dev-master",
         "web-token/jwt-checker": "~2.2.11",
         "web-token/jwt-key-mgmt": "~2.2.11",
