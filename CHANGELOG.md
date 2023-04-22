@@ -15,6 +15,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - Upgraded `league/oauth2-client` to v2.7.0 to support PKCE natively. (rhertogh)
 ### Deprecated
 ### Removed
+- Removed custom implementation for oauth2-client PKCE since it's now supported by the library. (rhertogh)
 ### Fixed
 ### Improved
 - Cancel running GitHub jobs in progress when PR is updated (rhertogh)
