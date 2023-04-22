@@ -16,6 +16,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Removed
 ### Fixed
 ### Improved
+- Cancel running GitHub jobs in progress when PR is updated (rhertogh)
 ### Security
 
 
@@ -23,7 +24,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ---------------------------
 
 ### Security
-- Upgraded `league/oauth2-server` to v8.4.1 which [includes a fix to prevent PKCE Downgrade Attack](https://github.com/thephpleague/oauth2-server/pull/1326).
+- Upgraded `league/oauth2-server` to v8.4.1 which [includes a fix to prevent PKCE Downgrade Attack](https://github.com/thephpleague/oauth2-server/pull/1326). (rhertogh)
 
 
 [1.0.0-alpha8] - 2023-03-22
@@ -32,14 +33,14 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Fixed
 - Include `redirectUri` in `Oauth2ClientAuthorizationRequest::__serialize()`.
   Fixes `Oauth2ClientAuthorizationRequest::isClientIdentifiable()`, which in turn caused client authorization to always be
-  required in case the authorization request needed to be stored between requests (e.g. when the user was not logged in).
+  required in case the authorization request needed to be stored between requests (e.g. when the user was not logged in). (rhertogh)
 
 
 [1.0.0-alpha7] - 2023-03-21
 ---------------------------
 
 ### Added
-- Support for `skipAuthorizationIfScopeIsAllowed` in `Oauth2Module::createClient()`
+- Support for `skipAuthorizationIfScopeIsAllowed` in `Oauth2Module::createClient()` (rhertogh)
 
 
 [1.0.0-alpha6] - 2022-11-13

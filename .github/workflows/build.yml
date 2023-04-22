@@ -6,6 +6,10 @@ env:
   DEFAULT_COMPOSER_FLAGS: "--prefer-dist --no-interaction --no-progress --optimize-autoloader --ansi"
   XDEBUG_MODE: coverage, develop
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   codeception:
     name: PHP ${{ matrix.php }} on ${{ matrix.os }} with ${{ matrix.db }}
