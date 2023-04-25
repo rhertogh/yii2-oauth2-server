@@ -20,6 +20,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Improved
 - Cancel running GitHub jobs in progress when PR is updated (rhertogh)
 ### Security
+- Upgraded `guzzlehttp/psr7` to v2.5.0 for https://github.com/advisories/GHSA-wxmh-65f7-jcvw (rhertogh)
 
 
 [1.0.0-alpha9] - 2023-03-22
