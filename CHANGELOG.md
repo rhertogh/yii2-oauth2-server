@@ -7,16 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer version.  
 
-[1.0.0-alpha10] - Unreleased
+[1.0.0-alpha11] - Unreleased
 ---------------------------
 
 ### Added
 ### Changed
-- Upgraded `league/oauth2-client` to v2.7.0 to support PKCE natively. (rhertogh)
 ### Deprecated
 ### Removed
-- Removed custom implementation for oauth2-client PKCE since it's now supported by the library. (rhertogh)
 ### Fixed
+### Improved
+### Security
+
+
+[1.0.0-alpha10] - 2023-04-25
+---------------------------
+
+### Changed
+- Upgraded `league/oauth2-client` to v2.7.0 to support PKCE natively. (rhertogh)
+### Removed
+- Removed custom implementation for oauth2-client PKCE since it's now supported by the library. (rhertogh)
 ### Improved
 - Cancel running GitHub jobs in progress when PR is updated (rhertogh)
 ### Security
