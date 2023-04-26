@@ -54,14 +54,14 @@ abstract class Oauth2AccessTokenScope extends \rhertogh\Yii2Oauth2Server\models\
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenQueryInterface     */
     public function getAccessToken()
     {
-        return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2AccessToken::className(), ['id' => 'access_token_id'])->inverseOf('accessTokenScopes');
+        return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2AccessToken::class, ['id' => 'access_token_id'])->inverseOf('accessTokenScopes');
     }
     
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface     */
     public function getScope()
     {
-        return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2Scope::className(), ['id' => 'scope_id'])->inverseOf('accessTokenScopes');
+        return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2Scope::class, ['id' => 'scope_id'])->inverseOf('accessTokenScopes');
     }
 
 

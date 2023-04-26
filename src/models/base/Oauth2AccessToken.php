@@ -80,28 +80,28 @@ abstract class Oauth2AccessToken extends \rhertogh\Yii2Oauth2Server\models\base\
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenScopeQueryInterface     */
     public function getAccessTokenScopes()
     {
-        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2AccessTokenScope::className(), ['access_token_id' => 'id'])->inverseOf('accessToken');
+        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2AccessTokenScope::class, ['access_token_id' => 'id'])->inverseOf('accessToken');
     }
     
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ClientQueryInterface     */
     public function getClient()
     {
-        return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2Client::className(), ['id' => 'client_id'])->inverseOf('accessTokens');
+        return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2Client::class, ['id' => 'client_id'])->inverseOf('accessTokens');
     }
     
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2RefreshTokenQueryInterface     */
     public function getRefreshTokens()
     {
-        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2RefreshToken::className(), ['access_token_id' => 'id'])->inverseOf('accessToken');
+        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2RefreshToken::class, ['access_token_id' => 'id'])->inverseOf('accessToken');
     }
     
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface     */
     public function getScopes()
     {
-        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2Scope::className(), ['id' => 'scope_id'])->via('accessTokenScopes');
+        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2Scope::class, ['id' => 'scope_id'])->via('accessTokenScopes');
     }
 
 

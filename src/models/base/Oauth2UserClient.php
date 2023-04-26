@@ -60,21 +60,21 @@ abstract class Oauth2UserClient extends \rhertogh\Yii2Oauth2Server\models\base\O
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ClientQueryInterface     */
     public function getClient()
     {
-        return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2Client::className(), ['id' => 'client_id'])->inverseOf('userClients');
+        return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2Client::class, ['id' => 'client_id'])->inverseOf('userClients');
     }
     
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface     */
     public function getScopes()
     {
-        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2Scope::className(), ['id' => 'scope_id'])->via('userClientScopes');
+        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2Scope::class, ['id' => 'scope_id'])->via('userClientScopes');
     }
     
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2UserClientScopeQueryInterface     */
     public function getUserClientScopes()
     {
-        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2UserClientScope::className(), ['user_id' => 'user_id', 'client_id' => 'client_id'])->inverseOf('user');
+        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2UserClientScope::class, ['user_id' => 'user_id', 'client_id' => 'client_id'])->inverseOf('user');
     }
 
 

@@ -98,44 +98,44 @@ abstract class Oauth2Client extends \rhertogh\Yii2Oauth2Server\models\base\Oauth
             'updated_at' => Yii::t('oauth2', 'Updated At'),
         ];
     }
-
+    
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenQueryInterface     */
     public function getAccessTokens()
     {
-        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2AccessToken::className(), ['client_id' => 'id'])->inverseOf('client');
+        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2AccessToken::class, ['client_id' => 'id'])->inverseOf('client');
     }
-
+    
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AuthCodeQueryInterface     */
     public function getAuthCodes()
     {
-        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2AuthCode::className(), ['client_id' => 'id'])->inverseOf('client');
+        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2AuthCode::class, ['client_id' => 'id'])->inverseOf('client');
     }
-
+    
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ClientScopeQueryInterface     */
     public function getClientScopes()
     {
-        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2ClientScope::className(), ['client_id' => 'id'])->inverseOf('client');
+        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2ClientScope::class, ['client_id' => 'id'])->inverseOf('client');
     }
-
+    
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface     */
     public function getScopes()
     {
-        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2Scope::className(), ['id' => 'scope_id'])->via('clientScopes');
+        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2Scope::class, ['id' => 'scope_id'])->via('clientScopes');
     }
-
+    
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2UserClientQueryInterface     */
     public function getUserClients()
     {
-        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2UserClient::className(), ['client_id' => 'id'])->inverseOf('client');
+        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2UserClient::class, ['client_id' => 'id'])->inverseOf('client');
     }
 
 
-
+    
     /**
      * @inheritdoc
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ClientQueryInterface the active query used by this AR class.

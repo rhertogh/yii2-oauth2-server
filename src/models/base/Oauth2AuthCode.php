@@ -70,21 +70,21 @@ abstract class Oauth2AuthCode extends \rhertogh\Yii2Oauth2Server\models\base\Oau
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AuthCodeScopeQueryInterface     */
     public function getAuthCodeScopes()
     {
-        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2AuthCodeScope::className(), ['auth_code_id' => 'id'])->inverseOf('authCode');
+        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2AuthCodeScope::class, ['auth_code_id' => 'id'])->inverseOf('authCode');
     }
     
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ClientQueryInterface     */
     public function getClient()
     {
-        return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2Client::className(), ['id' => 'client_id'])->inverseOf('authCodes');
+        return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2Client::class, ['id' => 'client_id'])->inverseOf('authCodes');
     }
     
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface     */
     public function getScopes()
     {
-        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2Scope::className(), ['id' => 'scope_id'])->via('authCodeScopes');
+        return $this->hasMany(\rhertogh\Yii2Oauth2Server\models\Oauth2Scope::class, ['id' => 'scope_id'])->via('authCodeScopes');
     }
 
 

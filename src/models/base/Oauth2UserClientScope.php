@@ -61,14 +61,14 @@ abstract class Oauth2UserClientScope extends \rhertogh\Yii2Oauth2Server\models\b
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface     */
     public function getScope()
     {
-        return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2Scope::className(), ['id' => 'scope_id'])->inverseOf('userClientScopes');
+        return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2Scope::class, ['id' => 'scope_id'])->inverseOf('userClientScopes');
     }
     
     /**
      * @return \rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2UserClientQueryInterface     */
     public function getUserClient()
     {
-        return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2UserClient::className(), ['user_id' => 'user_id', 'client_id' => 'client_id'])->inverseOf('userClientScopes');
+        return $this->hasOne(\rhertogh\Yii2Oauth2Server\models\Oauth2UserClient::class, ['user_id' => 'user_id', 'client_id' => 'client_id'])->inverseOf('userClientScopes');
     }
 
 
