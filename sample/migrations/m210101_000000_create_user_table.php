@@ -16,7 +16,7 @@ class m210101_000000_create_user_table extends Migration
             'password_hash' => $this->string()->notNull(),
             'email_address' => $this->string()->notNull(),
             'latest_authenticated_at' => $this->integer(),
-            'enabled' => $this->boolean()->notNull()->defaultValue(1),
+            'enabled' => $this->boolean()->notNull()->defaultValue(true),
             'created_at' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
         ]);

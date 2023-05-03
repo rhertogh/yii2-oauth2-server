@@ -15,6 +15,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Deprecated
 ### Removed
 ### Fixed
+- Using `true` (instead of `1`) as defautl value for DB column `user.enabled` (rhertogh)
 ### Improved
 - Generated base models with new `::class` constant (rhertogh)
 ### Security
