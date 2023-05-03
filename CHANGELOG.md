@@ -16,6 +16,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Removed
 ### Fixed
 ### Improved
+- Test coverage
 ### Security
 
 

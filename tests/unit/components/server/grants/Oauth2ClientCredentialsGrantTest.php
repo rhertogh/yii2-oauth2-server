@@ -11,6 +11,7 @@ use Yii2Oauth2ServerTests\unit\components\server\grants\_base\BaseOauth2GrantTes
 
 /**
  * @covers \rhertogh\Yii2Oauth2Server\components\server\grants\Oauth2ClientCredentialsGrant
+ * @covers \rhertogh\Yii2Oauth2Server\components\server\grants\traits\Oauth2GrantTrait
  */
 class Oauth2ClientCredentialsGrantTest extends BaseOauth2GrantTest
 {

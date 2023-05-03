@@ -7,6 +7,7 @@ use Yii2Oauth2ServerTests\unit\components\server\grants\_base\BaseOauth2GrantTes
 
 /**
  * @covers \rhertogh\Yii2Oauth2Server\components\server\grants\Oauth2PersonalAccessTokenGrant
+ * @covers \rhertogh\Yii2Oauth2Server\components\server\grants\traits\Oauth2GrantTrait
  */
 class Oauth2PersonalAccessTokenGrantTest extends BaseOauth2GrantTest
 {
