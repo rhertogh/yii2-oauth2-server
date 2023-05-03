@@ -11,6 +11,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ---------------------------
 
 ### Added
+- An Oauth2Client can now be configured to accept a variable query part in the redirect uri (`allow_variable_redirect_uri_query`) (rhertogh)
 ### Changed
 ### Deprecated
 ### Removed

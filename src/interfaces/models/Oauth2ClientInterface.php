@@ -87,6 +87,26 @@ interface Oauth2ClientInterface extends
     public function setRedirectUri($uri);
 
     /**
+     * Validate the client against the full redirect uri, or allow for a variable "query" part.
+     * @return bool
+     * @see setAllowVariableRedirectUriQuery
+     * @since 1.0.0
+     */
+    public function isVariableRedirectUriQueryAllowed();
+
+    /**
+     * By default, the client is validated against the full redirect uri including the "query" part.
+     * If the "query" part of the return uri is variable it may be marked as such.
+     *
+     * Warning: Using a variable return uri query should be avoided, since it might introduce an attack vector.
+     *          You probably should store and use the "state" on the client side.
+     * @param bool $allowVariableRedirectUriQuery
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setAllowVariableRedirectUriQuery($allowVariableRedirectUriQuery);
+
+    /**
      * Get the client's scope access.
      * @return int
      * @see SCOPE_ACCESSES

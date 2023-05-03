@@ -24,18 +24,30 @@ class UrlHelper
             $queryParams = $params;
         }
 
-        $queryString = http_build_query($queryParams);
+        $parts['query'] = http_build_query($queryParams);
 
+        return static::buildUrl($parts);
+    }
+
+    public static function buildUrl(array $components) {
         return
-            (isset($parts['scheme']) ? "{$parts['scheme']}:" : '') .
-            ((isset($parts['user']) || isset($parts['host'])) ? '//' : '') .
-            (isset($parts['user']) ? "{$parts['user']}" : '') .
-            (isset($parts['pass']) ? ":{$parts['pass']}" : '') .
-            (isset($parts['user']) ? '@' : '') .
-            (isset($parts['host']) ? "{$parts['host']}" : '') .
-            (isset($parts['port']) ? ":{$parts['port']}" : '') .
-            (isset($parts['path']) ? "{$parts['path']}" : '') .
-            (!empty($queryString) ? "?$queryString" : '') .
-            (isset($parts['fragment']) ? "#{$parts['fragment']}" : '');
+            (isset($components['scheme']) ? "{$components['scheme']}:" : '') .
+            ((isset($components['user']) || isset($components['host'])) ? '//' : '') .
+            (isset($components['user']) ? "{$components['user']}" : '') .
+            (isset($components['pass']) ? ":{$components['pass']}" : '') .
+            (isset($components['user']) ? '@' : '') .
+            (isset($components['host']) ? "{$components['host']}" : '') .
+            (isset($components['port']) ? ":{$components['port']}" : '') .
+            (isset($components['path']) ? "{$components['path']}" : '') .
+            (isset($components['query']) ? "?{$components['query']}" : '') .
+            (isset($components['fragment']) ? "#{$components['fragment']}" : '');
+    }
+
+    public static function stripQueryAndFragment($url)
+    {
+        $components = parse_url($url);
+        unset($components['query']);
+        unset($components['fragment']);
+        return UrlHelper::buildUrl($components);
     }
 }

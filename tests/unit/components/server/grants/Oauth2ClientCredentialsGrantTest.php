@@ -7,13 +7,18 @@ use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenInterface;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
-use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
+use Yii2Oauth2ServerTests\unit\components\server\grants\_base\BaseOauth2GrantTest;
 
 /**
  * @covers \rhertogh\Yii2Oauth2Server\components\server\grants\Oauth2ClientCredentialsGrant
  */
-class Oauth2ClientCredentialsGrantTest extends DatabaseTestCase
+class Oauth2ClientCredentialsGrantTest extends BaseOauth2GrantTest
 {
+    protected function getMockGrant($module)
+    {
+        return (new Oauth2ClientCredentialsGrantFactory(['module' => $module]))->getGrantType();
+    }
+
     /**
      * @dataProvider issueAccessTokenProvider
      */
@@ -34,7 +39,7 @@ class Oauth2ClientCredentialsGrantTest extends DatabaseTestCase
         ]);
 
         $module = Oauth2Module::getInstance();
-        $clientCredentialsGrant = (new Oauth2ClientCredentialsGrantFactory(['module' => $module]))->getGrantType();
+        $clientCredentialsGrant = $this->getMockGrant($module);
         $clientCredentialsGrant->setAccessTokenRepository($module->getAccessTokenRepository());
         $clientCredentialsGrant->setPrivateKey($module->getPrivateKey());
 

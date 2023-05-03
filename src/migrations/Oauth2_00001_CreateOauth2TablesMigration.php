@@ -153,6 +153,8 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                     'contacts' => $this->text()
                         ->comment('JSON encoded array of strings with contact details for the client.'),
                     'redirect_uris' => $this->json(),
+                    'allow_variable_redirect_uri_query' => $this->boolean()->notNull()->defaultValue(false)
+                        ->comment('By default, the client is validated against the full redirect uri including the "query" part. If the "query" part of the return uri is variable it may be marked as such.'),
                     'token_types' => $this->integer()->notNull()->defaultValue(Oauth2AccessToken::TYPE_BEARER),
                     'grant_types' => $this->integer()->notNull()->defaultValue(Oauth2Module::GRANT_TYPE_AUTH_CODE | Oauth2Module::GRANT_TYPE_REFRESH_TOKEN),
                     'scope_access' => $this->integer()->notNull()->defaultValue(Oauth2Client::SCOPE_ACCESS_STRICT)

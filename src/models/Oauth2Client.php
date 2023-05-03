@@ -138,6 +138,16 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
         $this->redirect_uris = $uri;
     }
 
+    public function isVariableRedirectUriQueryAllowed()
+    {
+        return $this->allow_variable_redirect_uri_query;
+    }
+    public function setAllowVariableRedirectUriQuery($allowVariableRedirectUriQuery)
+    {
+        $this->allow_variable_redirect_uri_query = $allowVariableRedirectUriQuery;
+        return $this;
+    }
+
     /**
      * @inheritDoc
      */

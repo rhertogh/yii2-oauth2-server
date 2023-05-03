@@ -7,13 +7,18 @@ use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2RefreshTokenInterface;
 use rhertogh\Yii2Oauth2Server\models\Oauth2AccessToken;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
-use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
+use Yii2Oauth2ServerTests\unit\components\server\grants\_base\BaseOauth2GrantTest;
 
 /**
  * @covers \rhertogh\Yii2Oauth2Server\components\server\grants\Oauth2AuthCodeGrant
  */
-class Oauth2AuthCodeGrantTest extends DatabaseTestCase
+class Oauth2AuthCodeGrantTest extends BaseOauth2GrantTest
 {
+    protected function getMockGrant($module)
+    {
+        return (new Oauth2AuthCodeGrantFactory(['module' => $module]))->getGrantType();
+    }
+
     /**
      * @dataProvider issueRefreshTokenProvider
      */
@@ -25,8 +30,7 @@ class Oauth2AuthCodeGrantTest extends DatabaseTestCase
             ],
         ]);
 
-        $module = Oauth2Module::getInstance();
-        $authCodeGrant = (new Oauth2AuthCodeGrantFactory(['module' => $module]))->getGrantType();
+        $authCodeGrant = $this->getMockGrant(Oauth2Module::getInstance());
         $accessToken = new Oauth2AccessToken();
         foreach ($scopes as $scope) {
             $accessToken->addScope(new Oauth2Scope(['identifier' => $scope]));

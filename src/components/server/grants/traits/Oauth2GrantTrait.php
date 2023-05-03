@@ -4,11 +4,15 @@ namespace rhertogh\Yii2Oauth2Server\components\server\grants\traits;
 
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use rhertogh\Yii2Oauth2Server\events\Oauth2AccessTokenIssuanceEvent;
 use rhertogh\Yii2Oauth2Server\events\Oauth2AuthCodeIssuanceEvent;
 use rhertogh\Yii2Oauth2Server\events\Oauth2RefreshTokenIssuanceEvent;
+use rhertogh\Yii2Oauth2Server\helpers\UrlHelper;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
+use yii\base\InvalidConfigException;
 
 trait Oauth2GrantTrait
 {
@@ -80,5 +84,21 @@ trait Oauth2GrantTrait
         $this->module->trigger(Oauth2Module::EVENT_AFTER_REFRESH_TOKEN_ISSUANCE, $event);
 
         return $event->refreshToken;
+    }
+
+    protected function validateRedirectUri(
+        string $redirectUri,
+        ClientEntityInterface $client,
+        ServerRequestInterface $request
+    ) {
+        if (!($client instanceof Oauth2ClientInterface)) {
+            throw new InvalidConfigException(get_class($client) . ' must implement ' . Oauth2ClientInterface::class);
+        }
+
+        if ($client->isVariableRedirectUriQueryAllowed()) {
+            $redirectUri = UrlHelper::stripQueryAndFragment($redirectUri);
+        }
+
+        parent::validateRedirectUri($redirectUri, $client, $request);
     }
 }

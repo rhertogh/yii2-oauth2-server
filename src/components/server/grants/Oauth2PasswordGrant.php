@@ -23,7 +23,7 @@ class Oauth2PasswordGrant extends PasswordGrant implements Oauth2PasswordGrantIn
     protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client)
     {
         if (!($client instanceof Oauth2ClientInterface)) {
-            throw new InvalidConfigException(get_class($client) . ' must implement ' . Oauth2UserInterface::class);
+            throw new InvalidConfigException(get_class($client) . ' must implement ' . Oauth2ClientInterface::class);
         }
 
         $user = parent::validateUser($request, $client);

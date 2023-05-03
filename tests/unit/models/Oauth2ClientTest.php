@@ -229,6 +229,26 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $client->setRedirectUri($redirectUris);
     }
 
+    public function testIsVariableRedirectUriQueryAllowed()
+    {
+        $client = $this->getMockModel();
+        // Should be `false` by default
+        $this->assertFalse($client->isVariableRedirectUriQueryAllowed());
+
+        $client = $this->getMockModel(['allow_variable_redirect_uri_query' => true]);
+        $this->assertTrue($client->isVariableRedirectUriQueryAllowed());
+    }
+
+    public function testSetAllowVariableRedirectUriQuery()
+    {
+        $client = $this->getMockModel();
+        // Should be `false` by default
+        $this->assertFalse($client->isVariableRedirectUriQueryAllowed());
+
+        $client->setAllowVariableRedirectUriQuery(true);
+        $this->assertTrue($client->isVariableRedirectUriQueryAllowed());
+    }
+
     public function testIsConfidential()
     {
         $confidentialClient = $this->getMockModel(['type' => Oauth2ClientInterface::TYPE_CONFIDENTIAL]);

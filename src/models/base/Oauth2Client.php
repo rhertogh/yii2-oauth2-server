@@ -20,6 +20,7 @@ use Yii;
  * @property string $tos_uri
  * @property string $contacts
  * @property array $redirect_uris
+ * @property boolean $allow_variable_redirect_uri_query
  * @property integer $token_types
  * @property integer $grant_types
  * @property integer $scope_access
@@ -60,7 +61,7 @@ abstract class Oauth2Client extends \rhertogh\Yii2Oauth2Server\models\base\Oauth
             [['type', 'token_types', 'grant_types', 'scope_access', 'user_account_selection', 'client_credentials_grant_user_id', 'created_at', 'updated_at'], 'integer'],
             [['secret', 'old_secret', 'contacts'], 'string'],
             [['old_secret_valid_until', 'redirect_uris'], 'safe'],
-            [['end_users_may_authorize_client', 'allow_auth_code_without_pkce', 'skip_authorization_if_scope_is_allowed', 'oidc_allow_offline_access_without_consent', 'enabled'], 'boolean'],
+            [['allow_variable_redirect_uri_query', 'end_users_may_authorize_client', 'allow_auth_code_without_pkce', 'skip_authorization_if_scope_is_allowed', 'oidc_allow_offline_access_without_consent', 'enabled'], 'boolean'],
             [['identifier', 'name', 'logo_uri', 'tos_uri', 'oidc_userinfo_encrypted_response_alg'], 'string', 'max' => 255],
             [['identifier'], 'unique']
         ];
@@ -83,6 +84,7 @@ abstract class Oauth2Client extends \rhertogh\Yii2Oauth2Server\models\base\Oauth
             'tos_uri' => Yii::t('oauth2', 'Tos Uri'),
             'contacts' => Yii::t('oauth2', 'Contacts'),
             'redirect_uris' => Yii::t('oauth2', 'Redirect Uris'),
+            'allow_variable_redirect_uri_query' => Yii::t('oauth2', 'Allow Variable Redirect Uri Query'),
             'token_types' => Yii::t('oauth2', 'Token Types'),
             'grant_types' => Yii::t('oauth2', 'Grant Types'),
             'scope_access' => Yii::t('oauth2', 'Scope Access'),

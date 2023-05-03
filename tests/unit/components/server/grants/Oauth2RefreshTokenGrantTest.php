@@ -11,35 +11,16 @@ use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii2Oauth2ServerTests\_helpers\TestUserModel;
 use Yii2Oauth2ServerTests\_helpers\TestUserModelOidc;
-use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
+use Yii2Oauth2ServerTests\unit\components\server\grants\_base\BaseOauth2GrantTest;
 
 /**
  * @covers \rhertogh\Yii2Oauth2Server\components\server\grants\Oauth2RefreshTokenGrant
  */
-class Oauth2RefreshTokenGrantTest extends DatabaseTestCase
+class Oauth2RefreshTokenGrantTest extends BaseOauth2GrantTest
 {
-    /**
-     * @dataProvider respondToAccessTokenRequestProvider
-     */
-    public function testRespondToAccessTokenRequest(
-        $moduleConfig,
-        $scopes,
-        $userId,
-        $userHasActiveSession,
-        $expectTokenResponse,
-        $expectExceptionMessage
-    ) {
-        $this->mockWebApplication([
-            'modules' => [
-                'oauth2' => $moduleConfig,
-            ],
-        ]);
-
-        $module = Oauth2Module::getInstance();
-
-        TestUserModelOidc::$hasActiveSession = $userHasActiveSession;
-
-        $refreshTokenGrant = new class ($module->getRefreshTokenRepository()) extends Oauth2RefreshTokenGrant {
+    protected function getMockGrant($module)
+    {
+        return new class ($module->getRefreshTokenRepository()) extends Oauth2RefreshTokenGrant {
             public static $scopes;
             public static $userId;
 
@@ -62,6 +43,30 @@ class Oauth2RefreshTokenGrantTest extends DatabaseTestCase
                 ];
             }
         };
+    }
+
+    /**
+     * @dataProvider respondToAccessTokenRequestProvider
+     */
+    public function testRespondToAccessTokenRequest(
+        $moduleConfig,
+        $scopes,
+        $userId,
+        $userHasActiveSession,
+        $expectTokenResponse,
+        $expectExceptionMessage
+    ) {
+        $this->mockWebApplication([
+            'modules' => [
+                'oauth2' => $moduleConfig,
+            ],
+        ]);
+
+        $module = Oauth2Module::getInstance();
+
+        TestUserModelOidc::$hasActiveSession = $userHasActiveSession;
+
+        $refreshTokenGrant = $this->getMockGrant($module);
 
         $refreshTokenGrant::$scopes = $scopes;
         $refreshTokenGrant::$userId = $userId;

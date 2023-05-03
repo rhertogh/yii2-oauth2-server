@@ -51,6 +51,7 @@ class Oauth2BaseClientTest extends BaseOauth2BaseModelsTest
             'tos_uri' => 'Tos Uri',
             'contacts' => 'Contacts',
             'redirect_uris' => 'Redirect Uris',
+            'allow_variable_redirect_uri_query' => 'Allow Variable Redirect Uri Query',
             'token_types' => 'Token Types',
             'grant_types' => 'Grant Types',
             'scope_access' => 'Scope Access',
