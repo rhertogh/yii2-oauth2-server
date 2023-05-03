@@ -14,6 +14,22 @@ Please see the [Change Log](CHANGELOG.md) for more information on version histor
   from version A to version C and there is version B between A and C, you need to follow the instructions
   for both A and B.
 
+Upgrade from v1.0.0-alpha10
+--------------------------
+
+* > Note: Database changes will not be incremental till the first stable release.
+
+  v1.0.0-alpha11 introduces a new columns for the `oauth2_client` table.    
+  In order to apply these changes you can run the following statements:  
+  MySQL:
+  ```MySQL
+  ALTER TABLE `oauth2_client` ADD COLUMN `allow_variable_redirect_uri_query` TINYINT(1) NOT NULL DEFAULT 1 AFTER `redirect_uris`;
+  ```
+  PostgeSQL:
+  ```SQL
+  ALTER TABLE `oauth2_client` ADD COLUMN `allow_variable_redirect_uri_query` BOOLEAN NOT NULL DEFAULT true AFTER `redirect_uris`;
+  ```
+
 Upgrade from v1.0.0-alpha5
 --------------------------
 
@@ -26,7 +42,7 @@ Upgrade from v1.0.0-alpha5
   ALTER TABLE `oauth2_client` ADD COLUMN `end_users_may_authorize_client` TINYINT(1) NOT NULL DEFAULT 1 AFTER `scope_access`;
   ```
   PostgeSQL:  
-  ```MySQL
+  ```SQL
   ALTER TABLE `oauth2_client` ADD COLUMN `end_users_may_authorize_client` BOOLEAN NOT NULL DEFAULT true AFTER `scope_access`;
   ```
 
