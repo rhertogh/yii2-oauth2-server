@@ -23,7 +23,7 @@ use Yii;
  * @property integer $token_types
  * @property integer $grant_types
  * @property integer $scope_access
- * @property integer $end_users_may_authorize_client
+ * @property boolean $end_users_may_authorize_client
  * @property integer $user_account_selection
  * @property boolean $allow_auth_code_without_pkce
  * @property boolean $skip_authorization_if_scope_is_allowed
