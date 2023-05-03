@@ -7,19 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer version.  
 
-[1.0.0-alpha11] - Unreleased
+[1.0.0-alpha12] - Unreleased
 ---------------------------
 
 ### Added
-- An Oauth2Client can now be configured to accept a variable query part in the redirect uri (`allow_variable_redirect_uri_query`) (rhertogh)
 ### Changed
 ### Deprecated
 ### Removed
 ### Fixed
+### Improved
+### Security
+
+
+[1.0.0-alpha11] - 2023-05-03
+---------------------------
+
+### Added
+- An Oauth2Client can now be configured to accept a variable query part in the redirect uri (`allow_variable_redirect_uri_query`) (rhertogh)
+### Fixed
 - Using `true` (instead of `1`) as defautl value for DB column `user.enabled` (rhertogh)
 ### Improved
 - Generated base models with new `::class` constant (rhertogh)
-### Security
 
 
 [1.0.0-alpha10] - 2023-04-25
