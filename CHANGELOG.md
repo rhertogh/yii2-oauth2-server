@@ -11,12 +11,18 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ---------------------------
 
 ### Added
+
 ### Changed
+
 ### Deprecated
+
 ### Removed
+
 ### Fixed
+
 ### Improved
-- Test coverage
+- Test coverage. (rhertogh)
+
 ### Security
 
 
@@ -24,11 +30,13 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ---------------------------
 
 ### Added
-- An Oauth2Client can now be configured to accept a variable query part in the redirect uri (`allow_variable_redirect_uri_query`) (rhertogh)
+- An Oauth2Client can now be configured to accept a variable query part in the redirect uri (`allow_variable_redirect_uri_query`). (rhertogh)
+
 ### Fixed
-- Using `true` (instead of `1`) as defautl value for DB column `user.enabled` (rhertogh)
+- Using `true` (instead of `1`) as defautl value for DB column `user.enabled`. (rhertogh)
+
 ### Improved
-- Generated base models with new `::class` constant (rhertogh)
+- Generated base models with new `::class` constant. (rhertogh)
 
 
 [1.0.0-alpha10] - 2023-04-25
@@ -36,12 +44,15 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 
 ### Changed
 - Upgraded `league/oauth2-client` to v2.7.0 to support PKCE natively. (rhertogh)
+
 ### Removed
 - Removed custom implementation for oauth2-client PKCE since it's now supported by the library. (rhertogh)
+
 ### Improved
-- Cancel running GitHub jobs in progress when PR is updated (rhertogh)
+- Cancel running GitHub jobs in progress when PR is updated. (rhertogh)
+
 ### Security
-- Upgraded `guzzlehttp/psr7` to v2.5.0 for https://github.com/advisories/GHSA-wxmh-65f7-jcvw (rhertogh)
+- Upgraded `guzzlehttp/psr7` to v2.5.0 for https://github.com/advisories/GHSA-wxmh-65f7-jcvw. (rhertogh)
 
 
 [1.0.0-alpha9] - 2023-03-22
@@ -64,7 +75,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ---------------------------
 
 ### Added
-- Support for `skipAuthorizationIfScopeIsAllowed` in `Oauth2Module::createClient()` (rhertogh)
+- Support for `skipAuthorizationIfScopeIsAllowed` in `Oauth2Module::createClient()`. (rhertogh)
 
 
 [1.0.0-alpha6] - 2022-11-13
@@ -87,7 +98,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - Mysql port configuration now uses separated port parameter. (rhertogh)
 
 ### Improved
-- Test coverage
+- Test coverage. (rhertogh)
 
 
 [1.0.0-alpha5] - 2022-09-08
@@ -139,7 +150,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - Support for PHP 8.1. (rhertogh)
 
 ### Fixed
-- Using correct access token TTL (rhertogh)
+- Using correct access token TTL. (rhertogh)
 - Type-casted the type so the `Oauth2Client::isConfidential()` function works as intended. (Roosh Ak)
 
 ### Improved
