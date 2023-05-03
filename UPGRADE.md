@@ -23,11 +23,11 @@ Upgrade from v1.0.0-alpha10
   In order to apply these changes you can run the following statements:  
   MySQL:
   ```MySQL
-  ALTER TABLE `oauth2_client` ADD COLUMN `allow_variable_redirect_uri_query` TINYINT(1) NOT NULL DEFAULT 1 AFTER `redirect_uris`;
+  ALTER TABLE `oauth2_client` ADD COLUMN `allow_variable_redirect_uri_query` TINYINT(1) NOT NULL DEFAULT 0 AFTER `redirect_uris`;
   ```
   PostgeSQL:
   ```SQL
-  ALTER TABLE `oauth2_client` ADD COLUMN `allow_variable_redirect_uri_query` BOOLEAN NOT NULL DEFAULT true AFTER `redirect_uris`;
+  ALTER TABLE `oauth2_client` ADD COLUMN `allow_variable_redirect_uri_query` BOOLEAN NOT NULL DEFAULT false AFTER `redirect_uris`;
   ```
 
 Upgrade from v1.0.0-alpha5
