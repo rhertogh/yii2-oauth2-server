@@ -7,11 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer version.  
 
-[1.0.0-alpha12] - Unreleased
+[1.0.0-alpha13] - Unreleased
 ---------------------------
 
 ### Added
-- Support for environment variables in Oauth2Client `redirect_uris`.
 
 ### Changed
 
@@ -22,9 +21,18 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Fixed
 
 ### Improved
-- Test coverage. (rhertogh)
 
 ### Security
+
+
+[1.0.0-alpha12] - 2023-05-26
+---------------------------
+
+### Added
+- Support for environment variables in Oauth2Client `redirect_uris`. (rhertogh)
+
+### Improved
+- Test coverage. (rhertogh)
 
 
 [1.0.0-alpha11] - 2023-05-03
