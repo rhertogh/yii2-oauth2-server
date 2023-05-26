@@ -105,16 +105,36 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
      */
     public function getRedirectUri()
     {
-        $uri = $this->redirect_uris;
-        if (is_string($uri)) {
+        $uris = $this->redirect_uris;
+        if (is_string($uris)) {
             try {
-                $uri = Json::decode($uri);
+                $uris = Json::decode($uris);
             } catch (InvalidArgumentException $e) {
                 throw new InvalidConfigException('Invalid json in redirect_uris for client ' . $this->id, 0, $e);
             }
         }
 
-        return is_array($uri) ? array_values($uri) : $uri;
+        if (is_string($uris)) {
+            $uris = [$uris];
+        } elseif (is_array($uris)) {
+            $uris = array_values($uris);
+        } else {
+            throw new InvalidConfigException('`redirect_uris` must be a JSON encoded string or array of strings.');
+        }
+
+        foreach ($uris as $key => $uri) {
+            preg_match_all('/\${(?<name>[a-zA-Z0-9_]+)}/', $uri, $matches, PREG_SET_ORDER);
+            foreach ($matches as $match) {
+                $envVar = getenv($match['name']);
+                if (strlen($envVar)) {
+                    $uris[$key] = str_replace($match[0], $envVar, $uris[$key]);
+                } else {
+                    unset($uris[$key]);
+                    break;
+                }
+            }
+        }
+        return array_values($uris); // Re-index array in case elements were removed.
     }
 
     /**

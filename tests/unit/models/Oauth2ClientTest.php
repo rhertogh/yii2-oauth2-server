@@ -170,13 +170,27 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
 
     public function testGetRedirectUri()
     {
+        $envTestHost = 'test-host.com';
+        $envTestPath = 'test/path';
+        putenv('TEST_GET_REDIRECT_URI_HOST_NAME=' . $envTestHost);
+        putenv('TEST_GET_REDIRECT_PATH=' . $envTestPath);
+
         $redirectUris = [
             'https://localhost/redirect_uri_1',
             'https://localhost/redirect_uri_2',
+            'https://${DOES_NOT_EXIST}/test',
+            'https://app.${TEST_GET_REDIRECT_URI_HOST_NAME}/${TEST_GET_REDIRECT_PATH}',
         ];
         $client = $this->getMockModel(['redirect_uris' => Json::encode($redirectUris)]);
 
-        $this->assertEquals($redirectUris, $client->getRedirectUri());
+        $expected = [
+            'https://localhost/redirect_uri_1',
+            'https://localhost/redirect_uri_2',
+            // expect 'https://${DOES_NOT_EXIST}/test' to be removed,
+            "https://app.$envTestHost/$envTestPath",
+        ];
+
+        $this->assertEquals($expected, $client->getRedirectUri());
     }
 
     public function testGetRedirectUriInvalidJson()
