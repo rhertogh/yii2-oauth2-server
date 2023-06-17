@@ -25,9 +25,7 @@ class Oauth2AccessTokenAction extends Oauth2BaseServerAction
             $psr7Request = Psr7Helper::yiiToPsr7Request(Yii::$app->request);
             $psr7Response = Psr7Helper::yiiToPsr7Response(Yii::$app->response);
             $psr7Response = $server->respondToAccessTokenRequest($psr7Request, $psr7Response);
-            return Psr7Helper::psr7ToYiiResponse($psr7Response, [
-                'format' => Response::FORMAT_JSON,
-            ]);
+            return Psr7Helper::psr7ToYiiResponse($psr7Response);
         } catch (\Exception $e) {
             Yii::error((string)$e, __METHOD__);
             return $this->processException($e);

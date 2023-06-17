@@ -23,6 +23,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - #14 Migrations now handle `tinyint`, `smallint` and `bigint` data types for `user` table primary key correctly (mtangoo, rhertogh) 
 
 ### Improved
+- The `\rhertogh\Yii2Oauth2Server\helpers\Psr7Helper::psr7ToYiiResponse()` function now sets the response format as "raw" by default accepts an additional `defaultConfig` parameter. (rhertogh)
 
 ### Security
 
