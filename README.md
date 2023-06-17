@@ -18,7 +18,7 @@
 [![build Status](https://github.com/rhertogh/yii2-oauth2-server/actions/workflows/build.yml/badge.svg)](https://github.com/rhertogh/yii2-oauth2-server/actions/workflows/build.yml)
 [![Code Coverage](https://scrutinizer-ci.com/g/rhertogh/yii2-oauth2-server/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/rhertogh/yii2-oauth2-server/?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/rhertogh/yii2-oauth2-server/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/rhertogh/yii2-oauth2-server/?branch=master)
-[![GitHub](https://img.shields.io/github/license/rhertogh/yii2-oauth2-server)](https://github.com/rhertogh/yii2-oauth2-server/blob/master/LICENSE.md)
+[![GitHub](https://img.shields.io/github/license/rhertogh/yii2-oauth2-server?color=brightgreen)](https://github.com/rhertogh/yii2-oauth2-server/blob/master/LICENSE.md)
 
 The Yii2-Oauth2-Server is an extension for [Yii framework 2.0](http://www.yiiframework.com) applications and provides 
 an [Oauth2](https://oauth.net/2/) server based on the [League OAuth2 server](https://github.com/thephpleague/oauth2-server).
