@@ -7,6 +7,7 @@ use GuzzleHttp\Psr7\ServerRequest;
 use GuzzleHttp\Psr7\Utils as Psr7Utils;
 use Psr\Http\Message\ServerRequestInterface;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\Request;
 use yii\web\Response;
 
@@ -58,14 +59,17 @@ class Psr7Helper
      * @return Response
      * @since 1.0.0
      */
-    public static function psr7ToYiiResponse($psr7Response)
+    public static function psr7ToYiiResponse($psr7Response, $defaultConfig = [])
     {
         /** @var Response $response */
-        $response = Yii::createObject([
-            'class' => Response::class,
-            'statusCode' => $psr7Response->getStatusCode(),
-            'content' => (string)$psr7Response->getBody(),
-        ]);
+        $response = Yii::createObject(ArrayHelper::merge(
+            [
+                'class' => Response::class,
+                'statusCode' => $psr7Response->getStatusCode(),
+                'content' => (string)$psr7Response->getBody(),
+            ],
+            $defaultConfig,
+        ));
 
         $response->headers->fromArray(array_change_key_case($psr7Response->getHeaders(), CASE_LOWER));
 

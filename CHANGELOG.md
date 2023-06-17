@@ -19,6 +19,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Removed
 
 ### Fixed
+- #13 Oauth authorization and access token responses set correct `Content-Type: application/json; charset=UTF-8` headers (raimon-segura, rhertogh)
 - #14 Migrations now handle `tinyint`, `smallint` and `bigint` data types for `user` table primary key correctly (mtangoo, rhertogh) 
 
 ### Improved
