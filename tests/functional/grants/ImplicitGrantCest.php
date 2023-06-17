@@ -1,6 +1,6 @@
 <?php
 
-namespace Yii2Oauth2ServerTests\functional;
+namespace Yii2Oauth2ServerTests\functional\grants;
 
 use Codeception\Util\HttpCode;
 use League\OAuth2\Client\Token\AccessToken;

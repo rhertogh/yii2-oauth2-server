@@ -1,6 +1,6 @@
 <?php
 
-namespace Yii2Oauth2ServerTests\functional;
+namespace Yii2Oauth2ServerTests\functional\grants;
 
 use Yii2Oauth2ServerTests\_helpers\ClientTokenProvider;
 use Yii2Oauth2ServerTests\ApiTester;
@@ -10,7 +10,7 @@ use Yii2Oauth2ServerTests\functional\_base\BaseGrantCest;
  * ToDo: specify file coverage when it's possible to specify files:
  * https://github.com/sebastianbergmann/phpunit/issues/3794
  */
-class ClientAuthorizationCest extends BaseGrantCest
+class ClientAuthorizationGrantCest extends BaseGrantCest
 {
     public function newClientWithScopeAuthorizationTest(ApiTester $I)
     {

@@ -25,5 +25,6 @@ class UnauthorizedApiRequestCest extends BaseGrantCest
         $authenticatedRequest = $provider->getAuthenticatedRequest('GET', 'http://localhost/test/api/me', $token);
         $I->sendPsr7Request($authenticatedRequest);
         $I->seeResponseCodeIs(HttpCode::UNAUTHORIZED);
+        $I->seeHttpHeader('Content-Type', 'application/json; charset=UTF-8');
     }
 }
