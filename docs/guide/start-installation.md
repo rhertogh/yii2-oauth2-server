@@ -295,7 +295,7 @@ used in `redirect_uris` in the format of `${MY_ENV_VAR}`, e.g.:
 ### Sample client
 In order to quickly get started you can create a sample client for [Postman](https://www.postman.com/)
 with the following command:  
-`./yii oauth2/client/create --sample=postman --secret=your-client-secret --interactive=0`
+`./yii oauth2/client/create -v --interactive=0 --sample=postman --secret=your-client-secret`
 > Note: Replace "your-client-secret" with a secret of your choosing of at least 10 characters.
 
 Check the [Client Configuration](appendix-client-configuration.md) on how to configure Postman.
