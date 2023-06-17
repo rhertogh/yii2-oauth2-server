@@ -131,7 +131,8 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
 
         if ($userPkSchema) {
             /** @var ColumnSchemaBuilder $userPkSchemaColumnBuilder */
-            $userPkSchemaColumnBuilder = $this->{$userPkSchema->type}();
+            $type = str_replace('bigint', 'bigInteger', $userPkSchema->type);
+            $userPkSchemaColumnBuilder = $this->{$type}();
         } else {
             $userPkSchemaColumnBuilder = $this->string();
         }
