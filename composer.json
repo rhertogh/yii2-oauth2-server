@@ -77,7 +77,8 @@
         "phpcbf": "vendor/bin/phpcbf",
         "phpcsf-view": "vendor/bin/php-cs-fixer fix --dry-run -v",
         "phpcsf-fix": "vendor/bin/php-cs-fixer fix",
-        "phpstan": "vendor/bin/phpstan"
+        "phpstan": "vendor/bin/phpstan --memory-limit=1G",
+        "apidoc": "apidoc api src .output/docs/api --page-title \"Yii2 Oauth2 Server API Documentation\" --interactive=0"
     },
     "config": {
         "process-timeout": 1800,

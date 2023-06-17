@@ -1,3 +1,6 @@
+# build directory
+.output
+
 # phpstorm project files
 .idea
 
