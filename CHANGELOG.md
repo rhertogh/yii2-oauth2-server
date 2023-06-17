@@ -19,8 +19,8 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Removed
 
 ### Fixed
-- #13 Oauth authorization and access token responses set correct `Content-Type: application/json; charset=UTF-8` headers (raimon-segura, rhertogh)
-- #14 Migrations now handle `tinyint`, `smallint` and `bigint` data types for `user` table primary key correctly (mtangoo, rhertogh) 
+- Oauth authorization and access token responses set correct `Content-Type: application/json; charset=UTF-8` headers (raimon-segura, rhertogh) (https://github.com/rhertogh/yii2-oauth2-server/issues/13)
+- Migrations now handle `tinyint`, `smallint` and `bigint` data types for `user` table primary key correctly (mtangoo, rhertogh) (https://github.com/rhertogh/yii2-oauth2-server/pull/14)
 
 ### Improved
 - The `\rhertogh\Yii2Oauth2Server\helpers\Psr7Helper::psr7ToYiiResponse()` function now sets the response format as "raw" by default accepts an additional `defaultConfig` parameter. (rhertogh)
@@ -88,16 +88,19 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 
 ### Added
 - Support for `skipAuthorizationIfScopeIsAllowed` in `Oauth2Module::createClient()`. (rhertogh)
+### Fixed
+- Fixed `$clientSecret` passing as true when `$client->isConfidential()` is `false`. (ms48) (https://github.com/rhertogh/yii2-oauth2-server/pull/8)
+- Removed `lcobucci/clock` and `symfony/deprecation-contracts` as dependency from `composer.json` to solve version constraint issues (mtangoo, rhertogh) (https://github.com/rhertogh/yii2-oauth2-server/issues/11)
 
 
 [1.0.0-alpha6] - 2022-11-13
 ---------------------------
 
 ### Added
-- `Oauth2UserInterface::isOauth2ClientAllowed()` to support access restriction to user/client/grant combinations. (rhertogh)
+- `Oauth2UserInterface::isOauth2ClientAllowed()` to support access restriction to user/client/grant combinations. (rhertogh) (https://github.com/rhertogh/yii2-oauth2-server/issues/5)
 - Sample app now includes client for 'Client Credentials' grant without a user. (rhertogh)
 - Support for "personal access tokens" (see `Oauth2Module::generatePersonalAccessToken()`). (rhertogh)
-- `Oauth2UserPatTrait` for easy generating "personal access tokens" from the user model. (bada02)
+- `Oauth2UserPatTrait` for easy generating "personal access tokens" from the user model. (bada02) (https://github.com/rhertogh/yii2-oauth2-server/pull/7)
 - `Oauth2ScopeInterface::APPLIED_BY_DEFAULT_IF_REQUESTED` to support allowing scopes for clients without user approval. (rhertogh)
 - Check for openssl php extension when using JWKS. (rhertogh)
 
@@ -117,7 +120,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ---------------------------
 
 ### Added
-- PostgreSQL compatibility. (mtangoo, rhertogh)
+- PostgreSQL compatibility. (mtangoo, rhertogh) (https://github.com/rhertogh/yii2-oauth2-server/issues/3)
 
 ### Improved
 - Optimized tests to reuse database fixtures. (rhertogh)
@@ -163,7 +166,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 
 ### Fixed
 - Using correct access token TTL. (rhertogh)
-- Type-casted the type so the `Oauth2Client::isConfidential()` function works as intended. (Roosh Ak)
+- Type-casted the type so the `Oauth2Client::isConfidential()` function works as intended. (Roosh Ak) (https://github.com/rhertogh/yii2-oauth2-server/pull/1)
 
 ### Improved
 - Several code style fixes. (rhertogh)
