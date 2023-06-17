@@ -19,6 +19,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Removed
 
 ### Fixed
+- #14 Migrations now handle `tinyint`, `smallint` and `bigint` data types for `user` table primary key correctly (mtangoo, rhertogh) 
 
 ### Improved
 

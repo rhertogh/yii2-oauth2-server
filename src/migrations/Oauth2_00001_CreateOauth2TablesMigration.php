@@ -15,10 +15,8 @@ use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserClientScopeInterface;
 use rhertogh\Yii2Oauth2Server\migrations\base\Oauth2BaseMigration;
 use rhertogh\Yii2Oauth2Server\models\Oauth2AccessToken;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
-use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\base\InvalidConfigException;
-use yii\db\ColumnSchemaBuilder;
 use yii\db\Schema;
 
 /**
@@ -130,9 +128,7 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
         }
 
         if ($userPkSchema) {
-            /** @var ColumnSchemaBuilder $userPkSchemaColumnBuilder */
-            $type = str_replace('bigint', 'bigInteger', $userPkSchema->type);
-            $userPkSchemaColumnBuilder = $this->{$type}();
+            $userPkSchemaColumnBuilder = $this->getColumnSchemaBuilder($userPkSchema);
         } else {
             $userPkSchemaColumnBuilder = $this->string();
         }
