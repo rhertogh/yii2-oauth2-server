@@ -315,6 +315,16 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
     public $clientAuthorizationView = 'authorize-client';
 
     /**
+     * @var string|null The URL path to the OpenID Connect Provider Configuration Information Action.
+     * If set to `null` the endpoint will be disabled.
+     * Note: This path is defined in the
+     *       [OpenID Connect Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#rfc.section.4)
+     *       specification and should normally not be changed.
+     * @since 1.0.0
+     */
+    public $openIdConnectProviderConfigurationInformationPath = '.well-known/openid-configuration';
+
+    /**
      * @var string The URL path to the OpenID Connect Userinfo Action (will be prefixed with $urlRulesPrefix).
      * Note: This setting will only be used if $enableOpenIdConnect and $openIdConnectUserinfoEndpoint are `true`.
      * @since 1.0.0
@@ -535,11 +545,15 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
                 ]),
             ]);
 
-            if ($this->enableOpenIdConnect && $this->enableOpenIdConnectDiscovery) {
+            if (
+                $this->enableOpenIdConnect
+                && $this->enableOpenIdConnectDiscovery
+                && $this->openIdConnectProviderConfigurationInformationPath
+            ) {
                 $urlManager->addRules([
                     Yii::createObject([
                         'class' => UrlRule::class,
-                        'pattern' => '.well-known/openid-configuration',
+                        'pattern' => $this->openIdConnectProviderConfigurationInformationPath,
                         'route' => $this->id
                             . '/' . Oauth2WellKnownControllerInterface::CONTROLLER_NAME
                             . '/' . Oauth2WellKnownControllerInterface::ACTION_NAME_OPENID_CONFIGURATION,

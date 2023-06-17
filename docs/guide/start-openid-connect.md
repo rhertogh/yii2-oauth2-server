@@ -226,3 +226,25 @@ class User extends ActiveRecord implements
     }
 }
 ```
+
+OpenID Connect Discovery
+------------------------
+The Yii2Oauth2Server support the [OpenID Provider Configuration Information](https://openid.net/specs/openid-connect-discovery-1_0.html#rfc.section.4) 
+endpoint which provides the [OpenID Provider Metadata](https://openid.net/specs/openid-connect-discovery-1_0.html#rfc.section.3).
+By default, this is located at `/.well-known/openid-configuration`.  
+
+In case you want to disable this you can set `enableOpenIdConnectDiscovery` to `false`:
+ ```php
+return [
+    // ...
+    'modules' => [
+        'oauth2' => [
+            'class' => rhertogh\Yii2Oauth2Server\Oauth2Module::class,
+            // ...
+            'enableOpenIdConnectDiscovery' => false,
+        ],
+        // ...
+    ],
+    // ...
+];
+```

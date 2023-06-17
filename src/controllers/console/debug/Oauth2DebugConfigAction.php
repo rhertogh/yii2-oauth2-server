@@ -93,6 +93,7 @@ class Oauth2DebugConfigAction extends Action
 
             'enableOpenIdConnect' => $module->enableOpenIdConnect ? 'true' : 'false',
             'enableOpenIdConnectDiscovery' => $module->enableOpenIdConnectDiscovery ? 'true' : 'false',
+            'openIdConnectProviderConfigurationInformationPath' => $module->openIdConnectProviderConfigurationInformationPath,
             'openIdConnectDiscoveryIncludeSupportedGrantTypes' =>
                 $module->openIdConnectDiscoveryIncludeSupportedGrantTypes ? 'true' : 'false',
             'openIdConnectUserinfoEndpoint' => $module->openIdConnectUserinfoEndpoint ? 'true' : 'false',
@@ -128,6 +129,14 @@ class Oauth2DebugConfigAction extends Action
             $clientAuthorizationSettings = 'urlRulesPrefix, clientAuthorizationPath';
 
             if ($module->enableOpenIdConnect) {
+                if ($module->enableOpenIdConnectDiscovery) {
+                    $oidcProviderConfigInfoValue = $module->openIdConnectProviderConfigurationInformationPath;
+                    $oidcProviderConfigInfoSettings = 'openIdConnectProviderConfigurationInformationPath';
+                } else {
+                    $oidcProviderConfigInfoValue = '[OpenId Connect Discovery is disabled]';
+                    $oidcProviderConfigInfoSettings = 'enableOpenIdConnectDiscovery';
+                }
+
                 if (!empty($module->openIdConnectUserinfoEndpoint)) {
                     if ($module->openIdConnectUserinfoEndpoint === true) {
                         $oidcUserinfoValue = $module->urlRulesPrefix . '/' . $module->openIdConnectUserinfoPath;
@@ -138,27 +147,33 @@ class Oauth2DebugConfigAction extends Action
                     }
                 } else {
                     $oidcUserinfoValue = '[Userinfo Endpoint is disabled]';
-                    $oidcUserinfoSettings = '-';
+                    $oidcUserinfoSettings = 'openIdConnectUserinfoEndpoint';
                 }
             } else {
+                $oidcProviderConfigInfoValue = '[OpenID Connect is disabled]';
+                $oidcProviderConfigInfoSettings = 'enableOpenIdConnect';
+
                 $oidcUserinfoValue = '[OpenID Connect is disabled]';
-                $oidcUserinfoSettings = '-';
+                $oidcUserinfoSettings = 'enableOpenIdConnect';
             }
         } else {
             $authorizeClientValue = '[Only available for "authorization_server" role]';
-            $authorizeClientSettings = '-';
+            $authorizeClientSettings = 'serverRole';
 
             $accessTokenValue = '[Only available for "authorization_server" role]';
-            $accessTokenSettings = '-';
+            $accessTokenSettings = 'serverRole';
 
             $jwksValue = '[Only available for "authorization_server" role]';
-            $jwksSettings = '-';
+            $jwksSettings = 'serverRole';
 
             $clientAuthorizationValue = '[Only available for "authorization_server" role]';
-            $clientAuthorizationSettings = '-';
+            $clientAuthorizationSettings = 'serverRole';
+
+            $oidcProviderConfigInfoValue = '[Only available for "authorization_server" role]';
+            $oidcProviderConfigInfoSettings = 'serverRole';
 
             $oidcUserinfoValue = '[Only available for "authorization_server" role]';
-            $oidcUserinfoSettings = '-';
+            $oidcUserinfoSettings = 'serverRole';
         }
 
         return [
@@ -166,6 +181,7 @@ class Oauth2DebugConfigAction extends Action
             'accessToken' => ['Access Token', $accessTokenValue, $accessTokenSettings],
             'jwks' => ['JSON Web Key Sets', $jwksValue, $jwksSettings],
             'clientAuthorization' => ['Client Authorization', $clientAuthorizationValue, $clientAuthorizationSettings],
+            'oidcProviderConfigInfo' => ['OpenID Connect Provider Configuration Information', $oidcProviderConfigInfoValue, $oidcProviderConfigInfoSettings],
             'oidcUserinfo' => ['OpenId Connect Userinfo', $oidcUserinfoValue, $oidcUserinfoSettings],
         ];
     }

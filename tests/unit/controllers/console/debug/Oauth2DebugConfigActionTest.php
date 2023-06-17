@@ -103,6 +103,8 @@ class Oauth2DebugConfigActionTest extends TestCase
             'clientAuthorization' =>
                 ['Client Authorization', 'oauth2/authorize-client', 'urlRulesPrefix, clientAuthorizationPath'],
             'jwks' => ['JSON Web Key Sets', 'oauth2/certs', 'urlRulesPrefix, jwksPath'],
+            'oidcProviderConfigInfo' =>
+                ['OpenID Connect Provider Configuration Information', '.well-known/openid-configuration', 'openIdConnectProviderConfigurationInformationPath'],
             'oidcUserinfo' =>
                 ['OpenId Connect Userinfo', 'oauth2/oidc/userinfo', 'urlRulesPrefix, openIdConnectUserinfoPath'],
         ];
@@ -125,41 +127,52 @@ class Oauth2DebugConfigActionTest extends TestCase
     public function getEndpointsProvider()
     {
         return [
-            [ // Default module test config.
+            'default' => [ // Default module test config.
                 [],
                 [], // Expect default test endpoints.
             ],
-            [ // Server role doesn't include "authorization_server".
+            'server role' => [ // Server role doesn't include "authorization_server".
                 [
                     'serverRole' => Oauth2Module::SERVER_ROLE_RESOURCE_SERVER,
                 ],
                 [
-                    'authorizeClient' => ['Authorize Client', '[Only available for "authorization_server" role]', '-'],
-                    'accessToken' => ['Access Token', '[Only available for "authorization_server" role]', '-'],
-                    'jwks' => ['JSON Web Key Sets', '[Only available for "authorization_server" role]', '-'],
+                    'authorizeClient' => ['Authorize Client', '[Only available for "authorization_server" role]', 'serverRole'],
+                    'accessToken' => ['Access Token', '[Only available for "authorization_server" role]', 'serverRole'],
+                    'jwks' => ['JSON Web Key Sets', '[Only available for "authorization_server" role]', 'serverRole'],
                     'clientAuthorization' =>
-                        ['Client Authorization', '[Only available for "authorization_server" role]', '-'],
+                        ['Client Authorization', '[Only available for "authorization_server" role]', 'serverRole'],
+                    'oidcProviderConfigInfo' =>
+                        ['OpenID Connect Provider Configuration Information', '[Only available for "authorization_server" role]', 'serverRole'],
                     'oidcUserinfo' =>
-                        ['OpenId Connect Userinfo', '[Only available for "authorization_server" role]', '-'],
+                        ['OpenId Connect Userinfo', '[Only available for "authorization_server" role]', 'serverRole'],
                 ],
             ],
-            [ // OpenID Connect disabled.
+            'OpenID Connect disabled' => [
                 [
                     'enableOpenIdConnect' => false,
                 ],
                 [
-                    'oidcUserinfo' => ['OpenId Connect Userinfo', '[OpenID Connect is disabled]', '-'],
+                    'oidcProviderConfigInfo' => ['OpenID Connect Provider Configuration Information', '[OpenID Connect is disabled]', 'enableOpenIdConnect'],
+                    'oidcUserinfo' => ['OpenId Connect Userinfo', '[OpenID Connect is disabled]', 'enableOpenIdConnect'],
                 ],
             ],
-            [ // OpenID Connect Userinfo disabled.
+            'OpenID Connect Discovery disabled' => [
+                [
+                    'enableOpenIdConnectDiscovery' => false,
+                ],
+                [
+                    'oidcProviderConfigInfo' => ['OpenID Connect Provider Configuration Information', '[OpenId Connect Discovery is disabled]', 'enableOpenIdConnectDiscovery'],
+                ],
+            ],
+            'OpenID Connect Userinfo disabled' => [
                 [
                     'openIdConnectUserinfoEndpoint' => false,
                 ],
                 [
-                    'oidcUserinfo' => ['OpenId Connect Userinfo', '[Userinfo Endpoint is disabled]', '-'],
+                    'oidcUserinfo' => ['OpenId Connect Userinfo', '[Userinfo Endpoint is disabled]', 'openIdConnectUserinfoEndpoint'],
                 ],
             ],
-            [ // OpenID Connect custom Userinfo endpoint.
+            'OpenID Connect custom Userinfo endpoint' => [
                 [
                     'openIdConnectUserinfoEndpoint' => 'https://custom_openIdConnectUserinfoEndpoint',
                 ],

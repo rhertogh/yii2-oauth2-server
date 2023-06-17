@@ -11,6 +11,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ---------------------------
 
 ### Added
+- Added `Oauth2Module::$openIdConnectProviderConfigurationInformationPath` to configure OIDC config info endpoint. (rhertogh) 
 
 ### Changed
 
