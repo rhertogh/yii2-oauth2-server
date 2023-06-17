@@ -26,6 +26,7 @@
         "ext-json": "*",
         "ext-xdebug": "*",
         "yiisoft/yii2-coding-standards": "~2.0",
+        "yiisoft/yii2-apidoc": "~3.0.6",
         "codeception/codeception": "~4.1.22",
         "codeception/module-yii2": "~1.1.3",
         "codeception/module-asserts": "~1.3.1",
