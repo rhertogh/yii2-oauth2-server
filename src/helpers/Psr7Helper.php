@@ -67,6 +67,7 @@ class Psr7Helper
                 'class' => Response::class,
                 'statusCode' => $psr7Response->getStatusCode(),
                 'content' => (string)$psr7Response->getBody(),
+                'format' => Response::FORMAT_RAW,
             ],
             $defaultConfig,
         ));
