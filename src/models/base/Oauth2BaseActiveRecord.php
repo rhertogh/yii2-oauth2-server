@@ -51,4 +51,16 @@ abstract class Oauth2BaseActiveRecord extends ActiveRecord implements Oauth2Acti
         parent::init();
         $this->loadDefaultValues();
     }
+
+    public function getDirtyAttributes($names = null)
+    {
+        /** @var BooleanBehavior $booleanBehavior */
+        $booleanBehavior = $this->getBehavior('booleanBehavior');
+
+        $booleanBehavior && $booleanBehavior->boolToInt();
+        $dirtyAttributes = parent::getDirtyAttributes();
+        $booleanBehavior && $booleanBehavior->intToBool();
+
+        return $dirtyAttributes;
+    }
 }
