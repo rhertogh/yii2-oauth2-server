@@ -5,11 +5,9 @@ namespace rhertogh\Yii2Oauth2Server\interfaces\components\repositories;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\base\Oauth2ModelRepositoryInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\base\Oauth2RepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2TokenInterface;
 
 interface Oauth2AccessTokenRepositoryInterface extends
-    Oauth2RepositoryInterface,
     Oauth2ModelRepositoryInterface,
     AccessTokenRepositoryInterface
 {

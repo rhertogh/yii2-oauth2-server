@@ -76,9 +76,9 @@ class Oauth2RefreshTokenTest extends BaseOauth2ActiveRecordTest
 
     /**
      * @return int[][]
-     * @see Oauth2IdTestTrait::testFindById()
+     * @see Oauth2IdTestTrait::testFindByPk()
      */
-    public function findByIdTestProvider()
+    public function findByPkTestProvider()
     {
         return [[1004000]];
     }

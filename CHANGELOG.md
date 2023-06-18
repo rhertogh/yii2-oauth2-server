@@ -14,10 +14,13 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - Added `Oauth2Module::$openIdConnectProviderConfigurationInformationPath` to configure OIDC config info endpoint. (rhertogh) 
 
 ### Changed
+- The `Oauth2ModelRepositoryInterface` now extends `Oauth2RepositoryInterface` and introduced `findModelByPk($pk)`.  (rhertogh) 
+- The `Oauth2RepositoryIdentifierTrait` is renamed to `Oauth2ModelRepositoryTrait` and introduced `findModelByPk($pk)`.  (rhertogh)
 
 ### Deprecated
 
 ### Removed
+- The `Oauth2ActiveRecordIdInterface` and `Oauth2ActiveRecordIdTrait` have been removed, their functionality has been replaced by the `Oauth2ActiveRecordInterface` and `Oauth2ActiveRecordTrait` respectively. (rhertogh)
 
 ### Fixed
 - Oauth authorization and access token responses set correct `Content-Type: application/json; charset=UTF-8` headers (raimon-segura, rhertogh) (https://github.com/rhertogh/yii2-oauth2-server/issues/13)

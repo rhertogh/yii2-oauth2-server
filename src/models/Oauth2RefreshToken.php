@@ -7,7 +7,6 @@ use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2RefreshTokenInterface;
 use rhertogh\Yii2Oauth2Server\models\behaviors\DateTimeBehavior;
-use rhertogh\Yii2Oauth2Server\models\traits\Oauth2ActiveRecordIdTrait;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2EntityIdentifierTrait;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2ExpiryDateTimeTrait;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2TokenTrait;
@@ -20,7 +19,6 @@ use yii\helpers\ArrayHelper;
  */
 class Oauth2RefreshToken extends base\Oauth2RefreshToken implements Oauth2RefreshTokenInterface
 {
-    use Oauth2ActiveRecordIdTrait;
     use Oauth2EntityIdentifierTrait;
     use Oauth2ExpiryDateTimeTrait;
     use Oauth2TokenTrait;

@@ -9,8 +9,10 @@ use yii\base\InvalidConfigException;
  * Represents a repository for a model in the Oauth2 module.
  * Note: The Oauth2UserRepositoryInterface does not include this interface
  */
-interface Oauth2ModelRepositoryInterface
+interface Oauth2ModelRepositoryInterface extends Oauth2RepositoryInterface
 {
+    public function findModelByPk($pk);
+    
     /**
      * Find a user model by its identifier.
      * @param string $identifier

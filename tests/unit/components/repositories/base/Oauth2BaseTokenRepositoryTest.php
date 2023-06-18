@@ -102,6 +102,11 @@ class Oauth2BaseTokenRepositoryTest extends DatabaseTestCase
                 $this->persistToken($model);
             }
 
+            public function findModelByPk($pk)
+            {
+                // Not used at the moment.
+            }
+
             public function findModelByIdentifier($identifier)
             {
                 // Not used at the moment.

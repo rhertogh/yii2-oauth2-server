@@ -7,7 +7,6 @@ use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use rhertogh\Yii2Oauth2Server\models\behaviors\DateTimeBehavior;
-use rhertogh\Yii2Oauth2Server\models\traits\Oauth2ActiveRecordIdTrait;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2EnabledTrait;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2EntityIdentifierTrait;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
@@ -21,7 +20,6 @@ use yii\helpers\Json;
 
 class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
 {
-    use Oauth2ActiveRecordIdTrait;
     use Oauth2EntityIdentifierTrait;
     use Oauth2EnabledTrait;
 

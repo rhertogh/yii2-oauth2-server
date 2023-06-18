@@ -14,6 +14,16 @@ Please see the [Change Log](CHANGELOG.md) for more information on version histor
   from version A to version C and there is version B between A and C, you need to follow the instructions
   for both A and B.
 
+Upgrade from v1.0.0-alpha12
+--------------------------
+
+* The Model interfaces and traits have been refactored to use a more generic findByPk() instead of findById().
+  If you don't use these interfaces and traits directly this won't affect you.
+  - The `Oauth2ModelRepositoryInterface` now extends `Oauth2RepositoryInterface` and introduces `findModelByPk($pk)`.
+  - The `Oauth2RepositoryIdentifierTrait` is renamed to `Oauth2ModelRepositoryTrait` and introduces `findModelByPk($pk)`
+  - The `Oauth2ActiveRecordIdInterface` and `Oauth2ActiveRecordIdTrait` have been removed,
+    their functionality is replaced by the `Oauth2ActiveRecordInterface` and `Oauth2ActiveRecordTrait` respectively.
+
 Upgrade from v1.0.0-alpha10
 --------------------------
 

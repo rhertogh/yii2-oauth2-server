@@ -4,7 +4,6 @@ namespace rhertogh\Yii2Oauth2Server\controllers\web\server\base;
 
 use League\OAuth2\Server\Exception\OAuthServerException;
 use rhertogh\Yii2Oauth2Server\controllers\web\base\Oauth2BaseWebController;
-use rhertogh\Yii2Oauth2Server\exceptions\Oauth2ServerHttpException;
 use rhertogh\Yii2Oauth2Server\helpers\UrlHelper;
 use Yii;
 use yii\base\Action;

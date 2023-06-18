@@ -2,14 +2,14 @@
 
 namespace Yii2Oauth2ServerTests\unit\components\repositories\traits;
 
-use rhertogh\Yii2Oauth2Server\components\repositories\traits\Oauth2RepositoryIdentifierTrait;
+use rhertogh\Yii2Oauth2Server\components\repositories\traits\Oauth2ModelRepositoryTrait;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ActiveRecordInterface;
 use rhertogh\Yii2Oauth2Server\models\base\Oauth2BaseActiveRecord;
 use Yii;
 use Yii2Oauth2ServerTests\unit\TestCase;
 
 /**
- * @covers \rhertogh\Yii2Oauth2Server\components\repositories\traits\Oauth2RepositoryIdentifierTrait
+ * @covers \rhertogh\Yii2Oauth2Server\components\repositories\traits\Oauth2ModelRepositoryTrait
  *
  */
 class Oauth2RepositoryIdentifierTest extends TestCase
@@ -17,7 +17,7 @@ class Oauth2RepositoryIdentifierTest extends TestCase
     public function testFindModelByIdentifierWithInvalidDependencyInjection()
     {
         $model = new class {
-            use Oauth2RepositoryIdentifierTrait;
+            use Oauth2ModelRepositoryTrait;
 
             public function getModelClass()
             {
@@ -34,7 +34,7 @@ class Oauth2RepositoryIdentifierTest extends TestCase
     public function testFindModelByIdentifierWithInvalidModel()
     {
         $model = new class extends Oauth2BaseActiveRecord implements Oauth2ActiveRecordInterface {
-            use Oauth2RepositoryIdentifierTrait;
+            use Oauth2ModelRepositoryTrait;
 
             public function getModelClass()
             {

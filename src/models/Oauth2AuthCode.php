@@ -6,7 +6,6 @@ use DateTimeImmutable;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AuthCodeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AuthCodeScopeInterface;
 use rhertogh\Yii2Oauth2Server\models\behaviors\DateTimeBehavior;
-use rhertogh\Yii2Oauth2Server\models\traits\Oauth2ActiveRecordIdTrait;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2ClientRelationTrait;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2EntityIdentifierTrait;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2ExpiryDateTimeTrait;
@@ -21,7 +20,6 @@ use yii\helpers\ArrayHelper;
  */
 class Oauth2AuthCode extends base\Oauth2AuthCode implements Oauth2AuthCodeInterface
 {
-    use Oauth2ActiveRecordIdTrait;
     use Oauth2EntityIdentifierTrait;
     use Oauth2UserIdentifierTrait;
     use Oauth2TokenTrait;

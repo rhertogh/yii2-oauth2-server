@@ -4,20 +4,19 @@ namespace rhertogh\Yii2Oauth2Server\components\repositories;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use rhertogh\Yii2Oauth2Server\components\repositories\base\Oauth2BaseRepository;
-use rhertogh\Yii2Oauth2Server\components\repositories\traits\Oauth2RepositoryIdentifierTrait;
+use rhertogh\Yii2Oauth2Server\components\repositories\traits\Oauth2ModelRepositoryTrait;
 use rhertogh\Yii2Oauth2Server\exceptions\Oauth2ServerException;
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2ScopeRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
-use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
 
 class Oauth2ScopeRepository extends Oauth2BaseRepository implements Oauth2ScopeRepositoryInterface
 {
-    use Oauth2RepositoryIdentifierTrait;
+    use Oauth2ModelRepositoryTrait;
 
     /**
      * @inheritDoc

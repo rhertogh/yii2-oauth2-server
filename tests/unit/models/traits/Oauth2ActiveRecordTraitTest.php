@@ -3,6 +3,7 @@
 namespace Yii2Oauth2ServerTests\unit\models\traits;
 
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2ActiveRecordTrait;
+use yii\base\InvalidArgumentException;
 use Yii2Oauth2ServerTests\unit\TestCase;
 
 /**
@@ -10,6 +11,18 @@ use Yii2Oauth2ServerTests\unit\TestCase;
  */
 class Oauth2ActiveRecordTraitTest extends TestCase
 {
+    public function testFindByPkEmptyPk()
+    {
+        /** @var Oauth2ActiveRecordTrait|class-string $modelClass */
+        $modelClass = get_class(new class {
+            use Oauth2ActiveRecordTrait;
+        });
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('$pk can not be empty.');
+        $modelClass::findByPk([]);
+    }
+
     public function testFindOrCreate()
     {
         /** @var Oauth2ActiveRecordTrait|class-string $modelClass */

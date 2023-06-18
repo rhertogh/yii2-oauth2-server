@@ -4,13 +4,13 @@ namespace rhertogh\Yii2Oauth2Server\components\repositories;
 
 use League\OAuth2\Server\Entities\AuthCodeEntityInterface;
 use rhertogh\Yii2Oauth2Server\components\repositories\base\Oauth2BaseTokenRepository;
-use rhertogh\Yii2Oauth2Server\components\repositories\traits\Oauth2RepositoryIdentifierTrait;
+use rhertogh\Yii2Oauth2Server\components\repositories\traits\Oauth2ModelRepositoryTrait;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2AuthCodeRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AuthCodeInterface;
 
 class Oauth2AuthCodeRepository extends Oauth2BaseTokenRepository implements Oauth2AuthCodeRepositoryInterface
 {
-    use Oauth2RepositoryIdentifierTrait;
+    use Oauth2ModelRepositoryTrait;
 
     /**
      * @inheritDoc

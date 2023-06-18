@@ -3,13 +3,13 @@
 namespace rhertogh\Yii2Oauth2Server\interfaces\models;
 
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ActiveRecordIdInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ActiveRecordInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2TokenInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2AccessTokenQueryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2RefreshTokenQueryInterface;
 
 interface Oauth2RefreshTokenInterface extends
-    Oauth2ActiveRecordIdInterface,
+    Oauth2ActiveRecordInterface,
     Oauth2TokenInterface,
     RefreshTokenEntityInterface
 {

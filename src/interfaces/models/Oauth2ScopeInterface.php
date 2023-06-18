@@ -3,11 +3,11 @@
 namespace rhertogh\Yii2Oauth2Server\interfaces\models;
 
 use League\OAuth2\Server\Entities\ScopeEntityInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ActiveRecordIdInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ActiveRecordInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\queries\Oauth2ScopeQueryInterface;
 
 interface Oauth2ScopeInterface extends
-    Oauth2ActiveRecordIdInterface,
+    Oauth2ActiveRecordInterface,
     ScopeEntityInterface
 {
     /**
