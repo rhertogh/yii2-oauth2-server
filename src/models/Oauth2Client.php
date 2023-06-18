@@ -99,11 +99,36 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
 
     /**
      * @inheritdoc
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setType($type)
+    {
+        if (!in_array($type, Oauth2ClientInterface::TYPES)) {
+            throw new InvalidArgumentException('Unknown type "' . $type . '".');
+        }
+
+        $this->type = $type;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
      * @throws InvalidConfigException
      */
     public function getRedirectUri()
     {
         $uris = $this->redirect_uris;
+        if (empty($uris)) {
+            return [];
+        }
+
         if (is_string($uris)) {
             try {
                 $uris = Json::decode($uris);
@@ -121,6 +146,9 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
         }
 
         foreach ($uris as $key => $uri) {
+            if (!is_string($uri)) {
+                throw new InvalidConfigException('`redirect_uris` must be a JSON encoded string or array of strings.');
+            }
             preg_match_all('/\${(?<name>[a-zA-Z0-9_]+)}/', $uri, $matches, PREG_SET_ORDER);
             foreach ($matches as $match) {
                 $envVar = getenv($match['name']);
@@ -300,6 +328,10 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
      */
     public function setScopeAccess($scopeAccess)
     {
+        if (!in_array($scopeAccess, Oauth2ClientInterface::SCOPE_ACCESSES)) {
+            throw new InvalidArgumentException('Unknown scope access "' . $scopeAccess . '".');
+        }
+
         $this->scope_access = $scopeAccess;
         return $this;
     }
@@ -477,6 +509,57 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
                     && Yii::$app->security->compareString($encryptor->decrypt($this->old_secret), $secret)
                 )
             );
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getLogoUri()
+    {
+        return $this->logo_uri;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setLogoUri($logoUri)
+    {
+        $this->logo_uri = $logoUri;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getTermsOfServiceUri()
+    {
+        return $this->tos_uri;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setTermsOfServiceUri($tosUri)
+    {
+        $this->tos_uri = $tosUri;
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getContacts()
+    {
+        return $this->contacts;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setContacts($contacts)
+    {
+        $this->contacts = $contacts;
+        return $this;
     }
 
     /**

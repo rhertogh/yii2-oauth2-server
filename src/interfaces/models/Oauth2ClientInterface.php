@@ -24,17 +24,20 @@ interface Oauth2ClientInterface extends
      * Client Type "Confidential": Identifies the client via a shared secret.
      * Note: This should only be trusted in case the client can store the secret securely, e.g. another server.
      * @since 1.0.0
+     * @see https://oauth.net/2/client-types/
      */
     public const TYPE_CONFIDENTIAL = 1;
     /**
      * Client Type "Public": In case the client can not store a secret securely it should be declared public,
      * e.g. web- or mobile applications.
      * @since 1.0.0
+     * @see https://oauth.net/2/client-types/
      */
     public const TYPE_PUBLIC = 2;
     /**
      * Client Types
      * @since 1.0.0
+     * @see https://oauth.net/2/client-types/
      */
     public const TYPES = [
         self::TYPE_CONFIDENTIAL,
@@ -80,6 +83,68 @@ interface Oauth2ClientInterface extends
      * @since 1.0.0
      */
     public function setName($name);
+
+    /**
+     * Get the client type
+     * @return int
+     * @since 1.0.0
+     * @see self::TYPES
+     */
+    public function getType();
+
+    /**
+     * Set the client type
+     * @param int $type
+     * @return $this
+     * @since 1.0.0
+     * @see self::TYPES
+     */
+    public function setType($type);
+
+    /**
+     * Get the client logo URI
+     * @return string $logoUri
+     * @since 1.0.0
+     */
+    public function getLogoUri();
+
+    /**
+     * Set the client logo URI
+     * @param string $logoUri
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setLogoUri($logoUri);
+
+    /**
+     * Get the client Terms of Service URI
+     * @return string $tosUri
+     * @since 1.0.0
+     */
+    public function getTermsOfServiceUri();
+
+    /**
+     * Set the client Terms of Service URI
+     * @param string $tosUri
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setTermsOfServiceUri($tosUri);
+
+    /**
+     * Get the client contacts information
+     * @return string $contacts
+     * @since 1.0.0
+     */
+    public function getContacts();
+
+    /**
+     * Set the client contacts information
+     * @param string $contacts
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setContacts($contacts);
 
     /**
      * Sets the one or multiple redirect URIs
