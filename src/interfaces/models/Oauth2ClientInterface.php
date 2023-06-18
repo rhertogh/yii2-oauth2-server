@@ -70,6 +70,12 @@ interface Oauth2ClientInterface extends
         self::SCOPE_ACCESS_PERMISSIVE,
     ];
 
+    public const SCOPE_ACCESSES_LABELS = [
+        self::SCOPE_ACCESS_STRICT => 'strict',
+        self::SCOPE_ACCESS_STRICT_QUIET => 'strict_quiet',
+        self::SCOPE_ACCESS_PERMISSIVE => 'permissive',
+    ];
+
     /**
      * @inheritDoc
      * @return Oauth2ClientQueryInterface

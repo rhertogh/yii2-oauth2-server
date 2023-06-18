@@ -50,4 +50,16 @@ class Oauth2ClientRepository extends Oauth2BaseRepository implements Oauth2Clien
 
         return false;
     }
+
+    public function getAllClients($filter = [])
+    {
+        $class = $this->getModelClass();
+        /** @var class-string<Oauth2ClientInterface> $className */
+        $className = DiHelper::getValidatedClassName($class);
+
+        return $className::find()
+            ->andFilterWhere($filter)
+            ->all();
+    }
+
 }

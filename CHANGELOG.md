@@ -14,6 +14,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - Added `Oauth2Module::$openIdConnectProviderConfigurationInformationPath` to configure OIDC config info endpoint. (rhertogh) 
 - Additional getters and setters for Client properties. (rhertogh)
 - Added `Oauth2ClientInterface::syncClientScopes()` to add/remove/update the client-scope relation. (rhertogh)
+- Added CLI controllers for listing/viewing/updating/deleting clients. (rhertogh)
 
 ### Changed
 - The `Oauth2ModelRepositoryInterface` now extends `Oauth2RepositoryInterface` and introduced `findModelByPk($pk)`.  (rhertogh) 

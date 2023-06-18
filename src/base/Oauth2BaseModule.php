@@ -249,6 +249,16 @@ abstract class Oauth2BaseModule extends Module
     public const USER_ACCOUNT_SELECTION_ALWAYS = 2;
 
     /**
+     * Human-readable name for user account selection options.
+     * @since 1.0.0
+     */
+    public const USER_ACCOUNT_SELECTION_NAMES = [
+        self::USER_ACCOUNT_SELECTION_DISABLED => 'disabled',
+        self::USER_ACCOUNT_SELECTION_UPON_CLIENT_REQUEST => 'upon_client_request',
+        self::USER_ACCOUNT_SELECTION_ALWAYS => 'always',
+    ];
+
+    /**
      * Default factory interface per grant type
      * @since 1.0.0
      */
@@ -403,6 +413,22 @@ abstract class Oauth2BaseModule extends Module
     public static function getGrantTypeIdentifier($grantTypeId)
     {
         return array_flip(static::GRANT_TYPE_MAPPING)[$grantTypeId] ?? null;
+    }
+
+    /**
+     * Convert Grant Type IDs to an array of their identifiers
+     * @param int $grantTypeIDs
+     * @return array
+     */
+    public static function getGrantTypeIdentifiers($grantTypeIDs)
+    {
+        $identifiers = [];
+        foreach (static::GRANT_TYPE_MAPPING as $identifier => $id) {
+            if ($grantTypeIDs & $id) {
+                $identifiers[] = $identifier;
+            }
+        }
+        return $identifiers;
     }
 
     /////////////////////////
