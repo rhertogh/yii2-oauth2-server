@@ -287,6 +287,13 @@ interface Oauth2ClientInterface extends
     public function getAllowedScopes($requestedScopeIdentifiers = []);
 
     /**
+     * Get the ClientScopes for this client.
+     * @return Oauth2ClientScopeQueryInterface
+     * @since 1.0.0
+     */
+    public function getClientScopes();
+
+    /**
      * Get user account selection configuration for this client.
      * @return int|null
      * @since 1.0.0
@@ -408,4 +415,17 @@ interface Oauth2ClientInterface extends
      * @since 1.0.0
      */
     public function setOpenIdConnectUserinfoEncryptedResponseAlg($algorithm);
+
+    /**
+     * @param string|string[]|array[]|Oauth2ClientScopeInterface[]|Oauth2ScopeInterface[]|null $scopes
+     * @param ScopeRepositoryInterface $scopeRepository
+     * @return array{
+     *     unaffected: Oauth2ClientScopeInterface[],
+     *     new: Oauth2ClientScopeInterface[],
+     *     updated: Oauth2ClientScopeInterface[],
+     *     deleted: Oauth2ClientScopeInterface[],
+     * }
+     * @since 1.0.0
+     */
+    public function syncClientScopes($scopes, $scopeRepository);
 }

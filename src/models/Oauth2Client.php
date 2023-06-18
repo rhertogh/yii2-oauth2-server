@@ -687,4 +687,159 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
             ->orderBy('id')
             ->all();
     }
+
+    /**
+     * @inheritdoc
+     * @return array{
+     *     'unaffected': Oauth2ClientScopeInterface[],
+     *     'new': Oauth2ClientScopeInterface[],
+     *     'updated': Oauth2ClientScopeInterface[],
+     *     'deleted': Oauth2ClientScopeInterface[],
+     * }
+     */
+    public function syncClientScopes($scopes, $scopeRepository)
+    {
+        if (is_string($scopes)) {
+            $scopes = explode(' ', $scopes);
+        } elseif ($scopes === null) {
+            $scopes = [];
+        } elseif (!is_array($scopes)) {
+            throw new InvalidArgumentException('$scopes must be a string, an array or null.');
+        }
+
+        /** @var class-string<Oauth2ClientScopeInterface> $clientScopeClass */
+        $clientScopeClass = DiHelper::getValidatedClassName(Oauth2ClientScopeInterface::class);
+
+        /** @var Oauth2ClientScopeInterface[] $origClientScopes */
+        $origClientScopes = $clientScopeClass::findAll([
+            'client_id' => $this->getPrimaryKey(),
+        ]);
+
+        $origClientScopes = array_combine(
+            array_map(
+                function(Oauth2ClientScopeInterface $clientScope) {
+                    return implode('-', $clientScope->getPrimaryKey(true));
+                },
+                $origClientScopes
+            ),
+            $origClientScopes
+        );
+
+        /** @var Oauth2ClientScopeInterface[] $clientScopes */
+        $clientScopes = [];
+
+        foreach ($scopes as $key => $value) {
+            if ($value instanceof Oauth2ClientScopeInterface) {
+                $clientScope = $value;
+                $clientScope->client_id = $this->getPrimaryKey(); // Ensure PK is set
+                $pkIndex = implode('-', $clientScope->getPrimaryKey(true));
+                if (array_key_exists($pkIndex, $origClientScopes)) {
+                    // overwrite orig (might still be considered "unchanged" when new ClientScope is not "dirty").
+                    $origClientScopes[$pkIndex] = $clientScope;
+                }
+            } else {
+
+                $scopeIdentifier = null;
+                $clientScopeConfig = [
+                    'client_id' => $this->getPrimaryKey(),
+                ];
+
+                if (is_string($value)) {
+                    $scopeIdentifier = $value;
+                } elseif ($value instanceof Oauth2ScopeInterface) {
+                    $scopePk = $value->getPrimaryKey();
+                    if ($scopePk) {
+                        $clientScopeConfig = ArrayHelper::merge(
+                            $clientScopeConfig,
+                            ['scope_id' => $scopePk]
+                        );
+                    } else {
+                        // new model, using identifier
+                        $scopeIdentifier = $value->getIdentifier();
+                    }
+                } elseif (is_array($value)) {
+                    $clientScopeConfig = ArrayHelper::merge(
+                        $clientScopeConfig,
+                        $value,
+                    );
+                    if (empty($clientScopeConfig['scope_id'])) {
+                        $scopeIdentifier = $key;
+                    }
+                } else {
+                    throw new InvalidArgumentException(
+                        'If $scopes is an array, its values must be a string, array or an instance of '
+                        . Oauth2ClientScopeInterface::class . ' or ' . Oauth2ScopeInterface::class . '.'
+                    );
+                }
+
+                if (isset($scopeIdentifier)) {
+                    $scope = $scopeRepository->findModelByIdentifier($scopeIdentifier);
+                    if (empty($scope)) {
+                        throw new InvalidArgumentException('No scope with identifier "'
+                            . $scopeIdentifier . '" found.');
+                    }
+                    $clientScopeConfig['scope_id'] = $scope->getPrimaryKey();
+                } else {
+                    if (empty($clientScopeConfig['scope_id'])) {
+                        throw new InvalidArgumentException('Element ' . $key . ' in $scope should specify either the scope id or its identifier.');
+                    }
+                }
+
+                $pkIndex = $clientScopeConfig['client_id'] . '-' . $clientScopeConfig['scope_id'];
+                if (array_key_exists($pkIndex, $origClientScopes)) {
+                    $clientScope = $origClientScopes[$pkIndex];
+                    $clientScope->setAttributes($clientScopeConfig, false);
+                } else {
+                    /** @var Oauth2ClientScopeInterface $clientScope */
+                    $clientScope = Yii::createObject(ArrayHelper::merge(
+                        ['class' => $clientScopeClass],
+                        $clientScopeConfig
+                    ));
+                }
+            }
+
+            $pkIndex = implode('-', $clientScope->getPrimaryKey(true));
+            $clientScopes[$pkIndex] = $clientScope;
+        }
+
+        $transaction = static::getDb()->beginTransaction();
+        try {
+            //Delete records no longer present in the provided data
+            /** @var self[]|array[] $deleteClientScopes */
+            $deleteClientScopes = array_diff_key($origClientScopes, $clientScopes);
+            foreach ($deleteClientScopes as $deleteClientScope) {
+                $deleteClientScope->delete();
+            }
+
+            //Create records not present in the provided data
+            $createClientScopes = array_diff_key($clientScopes, $origClientScopes);
+            foreach ($createClientScopes as $createClientScope) {
+                $createClientScope->persist();
+            }
+
+            //Update existing records if needed
+            $unaffectedClientScopes = [];
+            $updatedClientScopes = [];
+            foreach (array_intersect_key($origClientScopes, $clientScopes) as $key => $existingClientScope) {
+                if ($existingClientScope->getDirtyAttributes()) {
+                    $existingClientScope->persist();
+                    $updatedClientScopes[$key] = $existingClientScope;
+                } else {
+                    $unaffectedClientScopes[$key] = $existingClientScope;
+                }
+            }
+
+            $transaction->commit();
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+
+        return [
+            'unaffected' => $unaffectedClientScopes,
+            'new' => $createClientScopes,
+            'updated' => $updatedClientScopes,
+            'deleted' => $deleteClientScopes,
+        ];
+    }
 }

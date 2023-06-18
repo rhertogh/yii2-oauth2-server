@@ -42,6 +42,26 @@ interface Oauth2ActiveRecordInterface extends ActiveRecordInterface
     public static function findOrCreate($condition);
 
     /**
+     * Sets the attribute values in a massive way.
+     * @param array $values attribute values (name => value) to be assigned to the model.
+     * @param bool $safeOnly whether the assignments should only be done to the safe attributes.
+     * A safe attribute is one that is associated with a validation rule in the current [[scenario]].
+     * @see attributes()
+     */
+    public function setAttributes($values, $safeOnly = true);
+
+    /**
+     * Returns the attribute values that have been modified since they are loaded or saved most recently.
+     *
+     * The comparison of new and old values is made for identical values using `===`.
+     *
+     * @param string[]|null $names the names of the attributes whose values may be returned if they are
+     * changed recently. If null, [[attributes()]] will be used.
+     * @return array the changed attribute values (name-value pairs)
+     */
+    public function getDirtyAttributes($names = null);
+
+    /**
      * Saves the current record, similar to [[save()]] but throws an exception on validation failure.
      * @param bool $runValidation whether to perform validation (calling [[validate()]])
      * before saving the record. Defaults to `true`. If the validation fails, the record

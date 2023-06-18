@@ -634,68 +634,9 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
                 $client->setSecret($secret, $this->getEncryptor());
             }
 
-            $client->persist();
-
-            if (!empty($scopes)) {
-                if (is_string($scopes)) {
-                    $scopes = explode(' ', $scopes);
-                } elseif (!is_array($scopes)) {
-                    throw new InvalidArgumentException('$scopes must be a string or an array.');
-                }
-
-                foreach ($scopes as $key => $value) {
-
-                    $scopeIdentifier = null;
-                    $clientScopeConfig = [
-                        'class' => Oauth2ClientScopeInterface::class,
-                        'client_id' => $client->getPrimaryKey(),
-                    ];
-
-                    if (is_string($value)) {
-                        $scopeIdentifier = $value;
-                    } elseif ($value instanceof Oauth2ScopeInterface) {
-                        $scopePk = $value->getPrimaryKey();
-                        if ($scopePk) {
-                            $clientScopeConfig = ArrayHelper::merge(
-                                $clientScopeConfig,
-                                ['scope_id' => $scopePk]
-                            );
-                        } else {
-                            $scopeIdentifier = $value->getIdentifier();
-                        }
-                    } elseif(is_array($value)) {
-                        $clientScopeConfig = ArrayHelper::merge(
-                            $clientScopeConfig,
-                            $value,
-                        );
-                        if (empty($clientScopeConfig['scope_id'])) {
-                            $scopeIdentifier = $key;
-                        }
-                    } else {
-                        throw new InvalidArgumentException(
-                            'If $scopes is an array, its values must be a string, array or an instance of '
-                            . Oauth2ScopeInterface::class. '.'
-                        );
-                    }
-
-                    if (isset($scopeIdentifier)) {
-                        $scope = $this->getScopeRepository()->findModelByIdentifier($scopeIdentifier);
-                        if (empty($scope)) {
-                            throw new InvalidArgumentException('No scope with identifier "'
-                                . $scopeIdentifier . '" found.');
-                        }
-                        $clientScopeConfig['scope_id'] = $scope->getPrimaryKey();
-                    } else {
-                        if (empty($clientScopeConfig['scope_id'])) {
-                            throw new InvalidArgumentException('Element ' . $key . ' in $scope should specify either the scope id or its identifier.');
-                        }
-                    }
-
-                    /** @var Oauth2ClientScopeInterface $clientScope */
-                    $clientScope = Yii::createObject($clientScopeConfig);
-                    $clientScope->persist();
-                }
-            }
+            $client
+                ->persist()
+                ->syncClientScopes($scopes, $this->getScopeRepository());
 
             $transaction->commit();
         } catch (\Exception $e) {

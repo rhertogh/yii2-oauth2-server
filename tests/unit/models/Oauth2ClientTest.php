@@ -2,13 +2,20 @@
 
 namespace Yii2Oauth2ServerTests\unit\models;
 
+use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use rhertogh\Yii2Oauth2Server\models\Oauth2AccessToken;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
+use rhertogh\Yii2Oauth2Server\models\Oauth2ClientScope;
+use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\base\InvalidArgumentException;
+use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
 use yii\db\Expression;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use Yii2Oauth2ServerTests\unit\models\_base\BaseOauth2ActiveRecordTest;
 use Yii2Oauth2ServerTests\unit\models\_traits\Oauth2IdentifierTestTrait;
@@ -138,26 +145,37 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
     public function testPropertyGettersSetters()
     {
         $name = 'my-test-client';
+        $type = Oauth2ClientInterface::TYPE_PUBLIC;
         $userAccountSelection = 1;
         $allowAuthCodeWithoutPkce = 2;
         $skipAuthorizationIfScopeIsAllowed = 3;
-        $getScopeAccess = 4;
+        $getScopeAccess = Oauth2ClientInterface::SCOPE_ACCESS_PERMISSIVE;
         $clientCredentialsGrantUserId = 5;
         $openIdConnectAllowOfflineAccessWithoutConsent = 6;
         $openIdConnectUserinfoEncryptedResponseAlg = 'RS256';
+        $logoUri = 'https://test.com/logo';
+        $termsOfServiceUri = 'https://test.com/tos';
+        $contacts = 'admin@test.com';
+        $endUsersMayAuthorizeClient = false;
 
         $client = $this->getMockModel()
             ->setName($name)
+            ->setType($type)
             ->setUserAccountSelection($userAccountSelection)
             ->setAllowAuthCodeWithoutPkce($allowAuthCodeWithoutPkce)
             ->setSkipAuthorizationIfScopeIsAllowed($skipAuthorizationIfScopeIsAllowed)
             ->setScopeAccess($getScopeAccess)
             ->setClientCredentialsGrantUserId($clientCredentialsGrantUserId)
             ->setOpenIdConnectAllowOfflineAccessWithoutConsent($openIdConnectAllowOfflineAccessWithoutConsent)
-            ->setOpenIdConnectUserinfoEncryptedResponseAlg($openIdConnectUserinfoEncryptedResponseAlg);
+            ->setOpenIdConnectUserinfoEncryptedResponseAlg($openIdConnectUserinfoEncryptedResponseAlg)
+            ->setLogoUri($logoUri)
+            ->setTermsOfServiceUri($termsOfServiceUri)
+            ->setContacts($contacts)
+            ->setEndUsersMayAuthorizeClient($endUsersMayAuthorizeClient);
 
         // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
         $this->assertEquals($name, $client->getName());
+        $this->assertEquals($type, $client->getType());
         $this->assertEquals($userAccountSelection, $client->getUserAccountSelection());
         $this->assertEquals($allowAuthCodeWithoutPkce, $client->isAuthCodeWithoutPkceAllowed());
         $this->assertEquals($skipAuthorizationIfScopeIsAllowed, $client->skipAuthorizationIfScopeIsAllowed());
@@ -165,7 +183,31 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $this->assertEquals($clientCredentialsGrantUserId, $client->getClientCredentialsGrantUserId());
         $this->assertEquals($openIdConnectAllowOfflineAccessWithoutConsent, $client->getOpenIdConnectAllowOfflineAccessWithoutConsent());
         $this->assertEquals($openIdConnectUserinfoEncryptedResponseAlg, $client->getOpenIdConnectUserinfoEncryptedResponseAlg());
+        $this->assertEquals($logoUri, $client->getLogoUri());
+        $this->assertEquals($termsOfServiceUri, $client->getTermsOfServiceUri());
+        $this->assertEquals($contacts, $client->getContacts());
+        $this->assertEquals($endUsersMayAuthorizeClient, $client->endUsersMayAuthorizeClient());
         // phpcs:enable Generic.Files.LineLength.TooLong
+    }
+
+    public function testSetInvalidType()
+    {
+        $client = $this->getMockModel();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown type "999".');
+
+        $client->setType(999);
+    }
+
+    public function testSetInvalidScopeAccess()
+    {
+        $client = $this->getMockModel();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Unknown scope access "999".');
+
+        $client->setScopeAccess(999);
     }
 
     public function testGetRedirectUri()
@@ -191,6 +233,40 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         ];
 
         $this->assertEquals($expected, $client->getRedirectUri());
+    }
+
+    public function testRedirectUriNotSet()
+    {
+        $client = $this->getMockModel();
+
+        $this->assertEquals([], $client->getRedirectUri());
+    }
+
+    public function testRedirectUriJsonEncodedString()
+    {
+        $client = $this->getMockModel(['redirect_uris' => Json::encode('https://test.com')]);
+
+        $this->assertEquals(['https://test.com'], $client->getRedirectUri());
+    }
+
+    public function testRedirectUriInvalidType()
+    {
+        $client = $this->getMockModel(['redirect_uris' => Json::encode(true)]);
+
+        $this->expectException(InvalidConfigException::class);
+        $this->expectExceptionMessage('`redirect_uris` must be a JSON encoded string or array of strings.');
+
+        $client->getRedirectUri();
+    }
+
+    public function testRedirectUriInvalidArrayElementType()
+    {
+        $client = $this->getMockModel(['redirect_uris' => Json::encode([true])]);
+
+        $this->expectException(InvalidConfigException::class);
+        $this->expectExceptionMessage('`redirect_uris` must be a JSON encoded string or array of strings.');
+
+        $client->getRedirectUri();
     }
 
     public function testGetRedirectUriInvalidJson()
@@ -611,5 +687,220 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
 
         $this->expectExceptionMessage('Unknown scope_access: "999999999".');
         $client->validateAuthRequestScopes(['user.username.read']);
+    }
+
+    /**
+     * @dataProvider syncClientScopesProvider
+     * @param int $clientId
+     * @param string|string[]|array[]|Oauth2ClientScopeInterface[]|Oauth2ScopeInterface[]|null $newScopes
+     * @param array $expected
+     */
+    public function testSyncClientScopes($clientId, $newScopes, $expected)
+    {
+        $client = Oauth2Client::findByPk($clientId);
+
+        if (is_callable($newScopes)) {
+            $newScopes = call_user_func($newScopes);
+        }
+
+        $syncResult = $client->syncClientScopes($newScopes, Oauth2Module::getInstance()->getScopeRepository());
+
+        $unaffected = ArrayHelper::getColumn($syncResult['unaffected'], 'scope.identifier', false);
+        $this->assertEquals($expected['unaffected'], $unaffected);
+
+        $new = ArrayHelper::getColumn($syncResult['new'], 'scope.identifier', false);
+        $this->assertEquals($expected['new'], $new);
+
+        $updated = ArrayHelper::getColumn($syncResult['updated'], 'scope.identifier', false);
+        $this->assertEquals($expected['updated'], $updated);
+
+        $deleted = ArrayHelper::getColumn($syncResult['deleted'], 'scope.identifier', false);
+        $this->assertEquals($expected['deleted'], $deleted);
+
+    }
+
+    public function syncClientScopesProvider()
+    {
+
+        return [
+            'as string' => [
+                'clientId' => 1003006,
+                'scopes' => 'user.id.read openid profile email phone user.username.read',
+                'expected' => [
+                    'unaffected' => ['openid', 'profile', 'email', 'phone'],
+                    'new' => ['user.id.read', 'user.username.read'],
+                    'updated' => [],
+                    'deleted' => ['address', 'offline_access'],
+                ],
+            ],
+            'as string[]' => [
+                'clientId' => 1003006,
+                'scopes' => ['user.id.read', 'openid', 'profile', 'email', 'phone', 'user.username.read'],
+                'expected' => [
+                    'unaffected' => ['openid', 'profile', 'email', 'phone'],
+                    'new' => ['user.id.read', 'user.username.read'],
+                    'updated' => [],
+                    'deleted' => ['address', 'offline_access'],
+                ],
+            ],
+            'as array[]' => [
+                'clientId' => 1003006,
+                'scopes' => [
+                    'user.id.read' => [], // new, identifier as key
+                    'openid' => [], // unaffected, identifier as key
+                    'profile' => [ // updated, identifier as key
+                        'applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_AUTOMATICALLY,
+                    ],
+                    [ // unaffected, scope id as column
+                        'scope_id' => 3, // identifier: 'email',
+                    ],
+                    [ // updated, scope id as column
+                        'scope_id' => 5, // identifier: 'phone',
+                        'applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_AUTOMATICALLY,
+                    ],
+                    [ // new, scope id as column
+                        'scope_id' => 1005001, // identifier: 'user.username.read'
+                    ],
+                ],
+                'expected' => [
+                    'unaffected' => ['openid', 'email'],
+                    'new' => ['user.id.read', 'user.username.read'],
+                    'updated' => ['profile', 'phone'],
+                    'deleted' => ['address', 'offline_access'],
+                ],
+            ],
+            'as Oauth2ClientScope[]' => [
+                'clientId' => 1003006,
+                'scopes' => function() {
+                    $currentClientScopes = Oauth2ClientScope::find()
+                        ->andWhere([
+                            'client_id' => 1003006,
+                        ])
+                        ->indexBy('scope_id')
+                        ->all();
+
+                    unset(
+                        $currentClientScopes[2], // 'profile'
+                        $currentClientScopes[3], // 'email'
+                    );
+
+                    // 'offline_access'
+                    $currentClientScopes[6]->required_on_authorization = true;
+
+                    return ArrayHelper::merge(
+                        [new Oauth2ClientScope([
+                            'scope_id' => 1005003, // 'user.enabled.read'
+                        ])],
+                        $currentClientScopes,
+                        [new Oauth2ClientScope([
+                            'scope_id' => 1005002, // 'user.email_address.read'
+                            'applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_AUTOMATICALLY,
+                        ])],
+                    );
+                },
+                'expected' => [
+                    'unaffected' => ['openid', 'address', 'phone'],
+                    'new' => ['user.enabled.read', 'user.email_address.read'],
+                    'updated' => ['offline_access'],
+                    'deleted' => ['profile', 'email'],
+                ],
+            ],
+            'as Oauth2Scope[]' => [
+                'clientId' => 1003006,
+                'scopes' => function() {
+                    return Oauth2Scope::findAll([
+                        'identifier' => ['openid', 'profile', 'address', 'offline_access', 'user.email_address.read'],
+                    ]);
+                },
+                'expected' => [
+                    'unaffected' => ['openid', 'profile', 'address', 'offline_access'],
+                    'new' => ['user.email_address.read'],
+                    'updated' => [],
+                    'deleted' => ['email', 'phone'],
+                ],
+            ],
+            'as null' => [
+                'clientId' => 1003006,
+                'scopes' => null,
+                'expected' => [
+                    'unaffected' => [],
+                    'new' => [],
+                    'updated' => [],
+                    'deleted' => [
+                        'openid',
+                        'profile',
+                        'email',
+                        'address',
+                        'phone',
+                        'offline_access',
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    public function testSyncClientScopesInvalidScopes()
+    {
+        $client = $this->getMockModel();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('$scopes must be a string, an array or null.');
+
+        $client->syncClientScopes(new \stdClass(), Oauth2Module::getInstance()->getScopeRepository());
+    }
+
+    public function testSyncClientScopesInvalidScopesElement()
+    {
+        $client = $this->getMockModel();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('If $scopes is an array, its values must be a string, array or an instance of '
+            . Oauth2ClientScopeInterface::class . ' or ' . Oauth2ScopeInterface::class . '.');
+
+        $client->syncClientScopes([new \stdClass()], Oauth2Module::getInstance()->getScopeRepository());
+    }
+
+    public function testSyncClientScopesUnknownScope()
+    {
+        $client = $this->getMockModel();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('No scope with identifier "does_not_exist" found.');
+
+        $client->syncClientScopes('does_not_exist', Oauth2Module::getInstance()->getScopeRepository());
+    }
+
+    public function testSyncClientScopesEmptyOauth2Scope()
+    {
+        $client = $this->getMockModel();
+
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Element 0 in $scope should specify either the scope id or its identifier.');
+
+        $client->syncClientScopes([new Oauth2Scope()], Oauth2Module::getInstance()->getScopeRepository());
+    }
+
+    public function testSyncClientScopesRollbackOnError()
+    {
+        $client = $this->getMockModel();
+
+        $origClientScopes = $client->getClientScopes()->all();
+
+        $mockClientScope = new class extends Oauth2ClientScope {
+            public static $tableName = 'oauth2_client_scope';
+            public function persist($runValidation = true, $attributeNames = null)
+            {
+                throw new \Exception('testSyncClientScopesRollbackOnError');
+            }
+        };
+
+        $this->expectExceptionMessage('testSyncClientScopesRollbackOnError');
+
+        try {
+            $client->syncClientScopes([$mockClientScope], Oauth2Module::getInstance()->getScopeRepository());
+        } finally {
+            $origClientScopes = $client->getClientScopes()->all();
+            $this->assertEquals($origClientScopes, $client->getClientScopes()->all());
+        }
     }
 }

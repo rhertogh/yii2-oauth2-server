@@ -23,6 +23,7 @@ Upgrade from v1.0.0-alpha12
   - The `Oauth2RepositoryIdentifierTrait` is renamed to `Oauth2ModelRepositoryTrait` and introduces `findModelByPk($pk)`
   - The `Oauth2ActiveRecordIdInterface` and `Oauth2ActiveRecordIdTrait` have been removed,
     their functionality is replaced by the `Oauth2ActiveRecordInterface` and `Oauth2ActiveRecordTrait` respectively.
+  - The `Oauth2ClientInterface` has additional getters and setters and a `syncClientScopes()` function. 
 
 Upgrade from v1.0.0-alpha10
 --------------------------
