@@ -24,6 +24,13 @@ interface Oauth2ActiveRecordInterface extends ActiveRecordInterface
      */
     public static function tableName();
 
+
+    /**
+     * @param int|string|int[]|string[] $pk
+     * @return static
+     */
+    public static function findByPk($pk);
+
     /**
      * Find a model by $condition, if no records is found a new model will be instantiated with the $condition set
      * as attributes.
