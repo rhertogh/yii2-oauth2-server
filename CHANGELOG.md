@@ -7,8 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer version.  
 
-[1.0.0-alpha13] - Unreleased
----------------------------
+[1.0.0-alpha14] - Unreleased
+----------------------------
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Improved
+
+### Security
+
+
+[1.0.0-alpha13] - 2023-06-19
+----------------------------
 
 ### Added
 - Added `Oauth2Module::$openIdConnectProviderConfigurationInformationPath` to configure OIDC config info endpoint. (rhertogh) 
@@ -20,8 +38,6 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - The `Oauth2ModelRepositoryInterface` now extends `Oauth2RepositoryInterface` and introduced `findModelByPk($pk)`.  (rhertogh) 
 - The `Oauth2RepositoryIdentifierTrait` is renamed to `Oauth2ModelRepositoryTrait` and introduced `findModelByPk($pk)`.  (rhertogh)
 
-### Deprecated
-
 ### Removed
 - The `Oauth2ActiveRecordIdInterface` and `Oauth2ActiveRecordIdTrait` have been removed, their functionality has been replaced by the `Oauth2ActiveRecordInterface` and `Oauth2ActiveRecordTrait` respectively. (rhertogh)
 
@@ -32,11 +48,9 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Improved
 - The `\rhertogh\Yii2Oauth2Server\helpers\Psr7Helper::psr7ToYiiResponse()` function now sets the response format as "raw" by default accepts an additional `defaultConfig` parameter. (rhertogh)
 
-### Security
-
 
 [1.0.0-alpha12] - 2023-05-26
----------------------------
+----------------------------
 
 ### Added
 - Support for environment variables in Oauth2Client `redirect_uris`. (rhertogh)
@@ -46,7 +60,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 
 
 [1.0.0-alpha11] - 2023-05-03
----------------------------
+----------------------------
 
 ### Added
 - An Oauth2Client can now be configured to accept a variable query part in the redirect uri (`allow_variable_redirect_uri_query`). (rhertogh)
@@ -59,7 +73,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 
 
 [1.0.0-alpha10] - 2023-04-25
----------------------------
+----------------------------
 
 ### Changed
 - Upgraded `league/oauth2-client` to v2.7.0 to support PKCE natively. (rhertogh)
