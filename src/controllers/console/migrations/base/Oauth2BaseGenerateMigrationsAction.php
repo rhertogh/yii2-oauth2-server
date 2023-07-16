@@ -7,6 +7,7 @@ use rhertogh\Yii2Oauth2Server\migrations\base\Oauth2BaseMigration;
 use Yii;
 use yii\base\Action;
 use yii\base\InvalidConfigException;
+use yii\console\controllers\BaseMigrateController;
 use yii\console\ExitCode;
 use yii\helpers\Console;
 use yii\helpers\FileHelper;
@@ -85,10 +86,7 @@ abstract class Oauth2BaseGenerateMigrationsAction extends Action
             }
         }
 
-        $applyInfo = "Add the '" . addslashes($migrationsNamespace) . "' namespace to `\$migrationNamespaces` of the"
-            . ' migration controller'
-            . ' (https://www.yiiframework.com/doc/guide/2.0/en/db-migrations#namespaced-migrations)'
-            . ' and run the `migrate/up` to apply them.' . PHP_EOL;
+        $applyInfo = $this->generateApplyInfo($migrationsNamespace);
 
         if (empty($generateMigrations)) {
             $this->controller->stdout(
@@ -186,5 +184,44 @@ abstract class Oauth2BaseGenerateMigrationsAction extends Action
         return $migrationsNamespace
             . '\\' . 'M' . gmdate('ymdHis')
             . $this->controller->module->migrationsPrefix . '_' . $sourceMigrationName;
+    }
+
+    /**
+     * @param string $migrationsNamespace
+     * @return string
+     */
+    protected function generateApplyInfo($migrationsNamespace)
+    {
+        $migrateControllerId = 'migrate';
+        $oauth2MigrationNameSpaceFound = false;
+        foreach (Yii::$app->controllerMap as $controllerId => $controllerConfig) {
+            if (
+                !is_array($controllerConfig)
+                || empty($controllerConfig['class'])
+                || !is_a($controllerConfig['class'], BaseMigrateController::class, true)
+            ) {
+                continue;
+            }
+            $migrateControllerId = $controllerId;
+            if (
+                !empty($controllerConfig['migrationNamespaces'])
+                && in_array($migrationsNamespace, $controllerConfig['migrationNamespaces'])
+            ) {
+                $oauth2MigrationNameSpaceFound = true;
+                break;
+            }
+        }
+
+        if (!$oauth2MigrationNameSpaceFound) {
+            $applyInfo = 'Add the "' . addslashes($migrationsNamespace) . '" namespace to `$migrationNamespaces` of the'
+                . ' migration controller'
+                . ' (https://www.yiiframework.com/doc/guide/2.0/en/db-migrations#namespaced-migrations)'
+                . ' and run ';
+        } else {
+            $applyInfo = 'Run ';
+        }
+        $applyInfo .= 'the`yii ' . $migrateControllerId . '/up` command to apply them.' . PHP_EOL;
+
+        return $applyInfo;
     }
 }

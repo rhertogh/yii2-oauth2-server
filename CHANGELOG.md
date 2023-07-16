@@ -26,6 +26,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Improved
 - Refactored and added tests for defaultAccessTokenTTL. (rhertogh)
 - Made PHP CodeSniffer and PHP CS fixer happier. (rhertogh)
+- Only advice user to add Oauth2 migration namespace to `migrationNamespaces` if not yet done. (rhertogh) 
 
 ### Security
 
