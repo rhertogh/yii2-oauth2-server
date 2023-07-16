@@ -7,13 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer version.  
 
-[1.0.0-alpha14] - Unreleased
+[1.0.0-alpha15] - Unreleased
 ----------------------------
 
 ### Added
-- Support for default values in `Oauth2GeneratePatAction`. (rhertogh)
-- The `Oauth2ClientInterface` now defines `get`- and `set`-`MinimumSecretLength`.  (rhertogh)
-- Support for importing data from other projects. (rhertogh)
 
 ### Changed
 
@@ -22,14 +19,27 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Removed
 
 ### Fixed
+
+### Improved
+
+### Security
+
+
+[1.0.0-alpha14] - 2023-07-17
+----------------------------
+
+### Added
+- Support for default values in `Oauth2GeneratePatAction`. (rhertogh)
+- The `Oauth2ClientInterface` now defines `get`- and `set`-`MinimumSecretLength`.  (rhertogh)
+- Support for importing data from other projects. (rhertogh)
+
+### Fixed
 - The `Oauth2UserInterface` now defines the necessary `getId()` function. (rhertogh)
 
 ### Improved
 - Refactored and added tests for defaultAccessTokenTTL. (rhertogh)
 - Made PHP CodeSniffer and PHP CS fixer happier. (rhertogh)
 - Only advice user to add Oauth2 migration namespace to `migrationNamespaces` if not yet done. (rhertogh) 
-
-### Security
 
 
 [1.0.0-alpha13] - 2023-06-19
