@@ -26,10 +26,10 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     protected const ENCRYPTED_ATTRIBUTES = ['secret', 'old_secret'];
 
     /**
-     * Minimum lenght for client secret.
+     * Minimum length for new client secrets.
      * @var int
      */
-    public $minimumSecretLenth = 10;
+    protected $minimumSecretLength = 10;
 
     /////////////////////////////
     /// ActiveRecord Settings ///
@@ -462,11 +462,31 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     public function validateNewSecret($secret, &$error)
     {
         $error = null;
-        if (mb_strlen($secret) < $this->minimumSecretLenth) {
-            $error = 'Secret should be at least ' . $this->minimumSecretLenth . ' characters.';
+        if (mb_strlen($secret) < $this->getMinimumSecretLength()) {
+            $error = 'Secret should be at least ' . $this->getMinimumSecretLength() . ' characters.';
         }
 
         return $error === null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getMinimumSecretLength()
+    {
+        return $this->minimumSecretLength;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setMinimumSecretLength($minimumSecretLength)
+    {
+        if (!(int)$minimumSecretLength) {
+            throw new InvalidArgumentException('$minimumSecretLength can not be empty.');
+        }
+        $this->minimumSecretLength = (int)$minimumSecretLength;
+        return $this;
     }
 
     /**

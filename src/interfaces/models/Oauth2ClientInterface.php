@@ -238,8 +238,25 @@ interface Oauth2ClientInterface extends
      * @param string|null $error Will contain the error message in case the secret is invalid.
      * @return bool
      * @since 1.0.0
+     * @see getMinimumSecretLength
      */
     public function validateNewSecret($secret, &$error);
+
+    /**
+     * Get the minimum length for new client secrets.
+     * @return integer
+     * @since 1.0.0
+     */
+    public function getMinimumSecretLength();
+
+    /**
+     * Set the minimum length for new client secrets.
+     *
+     * @param int $minimumSecretLength
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setMinimumSecretLength($minimumSecretLength);
 
     /**
      * Get the decrypted secret.
