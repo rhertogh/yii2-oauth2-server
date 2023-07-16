@@ -155,6 +155,7 @@ interface Oauth2ClientInterface extends
     /**
      * Sets the one or multiple redirect URIs
      * @param string|string[] $uri
+     * @return $this
      * @since 1.0.0
      */
     public function setRedirectUri($uri);
@@ -207,6 +208,7 @@ interface Oauth2ClientInterface extends
      * Set the Grant Types enabled for the client.
      *
      * @param int $grantTypes
+     * @return $this
      * @since 1.0.0
      */
     public function setGrantTypes($grantTypes);
@@ -228,6 +230,7 @@ interface Oauth2ClientInterface extends
      * @param \DateTimeImmutable|\DateInterval|null $oldSecretValidUntil
      * @param string|null $keyName The name of the key to use for the encryption
      * (must be present in the available keys).
+     * @return $this
      * @since 1.0.0
      */
     public function setSecret($secret, $encryptor, $oldSecretValidUntil = null, $keyName = null);

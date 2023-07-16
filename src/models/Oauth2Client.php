@@ -182,6 +182,8 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
         }
 
         $this->redirect_uris = $uri;
+
+        return $this;
     }
 
     public function isVariableRedirectUriQueryAllowed()
@@ -454,6 +456,8 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
 
             $this->setAttribute('secret', null);
         }
+
+        return $this;
     }
 
     /**
@@ -606,6 +610,8 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
         }
 
         $this->grant_types = $grantTypes;
+
+        return $this;
     }
 
     /**
