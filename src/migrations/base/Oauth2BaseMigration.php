@@ -17,6 +17,11 @@ abstract class Oauth2BaseMigration extends Migration
     public const CASCADE = 'CASCADE';
 
     /**
+     * @var array
+     */
+    protected $config = [];
+
+    /**
      * Determines if the migration should be generated for the current module configuration.
      * @param Oauth2Module $module
      * @return bool
