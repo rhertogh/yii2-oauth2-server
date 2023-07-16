@@ -8,7 +8,7 @@
     </a>
     &nbsp;&nbsp;&nbsp;
     <a href="https://openid.net/" target="_blank">
-        <img src="https://openid.net/images/logo/openid-icon-250x250.png" height="90px" alt="OpenID Connect">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/OpenID_logo_2.svg/640px-OpenID_logo_2.svg.png" height="90px" alt="OpenID Connect">
     </a>
     <h1 align="center">Oauth2 + OpenID Connect Extension for Yii 2</h1>
     <br>
