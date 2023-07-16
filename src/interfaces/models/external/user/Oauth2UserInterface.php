@@ -28,6 +28,13 @@ interface Oauth2UserInterface extends
     public static function findIdentity($id);
 
     /**
+     * Returns an ID that can uniquely identify a user identity.
+     * @return string|int an ID that uniquely identifies a user identity.
+     * @since 1.0.0
+     */
+    public function getId();
+
+    /**
      * May the user use the client.
      * Note: In case of the "Client Credentials" Grant Type request there is no end-user to authorize the request,
      *       therefore this method will not be called for a "Client Credentials" request.

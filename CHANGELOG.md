@@ -20,6 +20,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Removed
 
 ### Fixed
+- The `Oauth2UserInterface` now defines the necessary `getId()` function. (rhertogh)
 
 ### Improved
 - Refactored and added tests for defaultAccessTokenTTL. (rhertogh)

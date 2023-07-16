@@ -775,10 +775,13 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
                 }
 
                 if (isset($scopeIdentifier)) {
-                    $scope = $scopeRepository->findModelByIdentifier($scopeIdentifier);
+                    $scope = $scopeRepository->getScopeEntityByIdentifier($scopeIdentifier);
                     if (empty($scope)) {
                         throw new InvalidArgumentException('No scope with identifier "'
                             . $scopeIdentifier . '" found.');
+                    }
+                    if (!($scope instanceof Oauth2ScopeInterface)) {
+                        throw new InvalidConfigException(get_class($scope) . ' must implement ' . Oauth2ScopeInterface::class);
                     }
                     $clientScopeConfig['scope_id'] = $scope->getPrimaryKey();
                 } else {
