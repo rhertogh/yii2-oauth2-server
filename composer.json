@@ -73,8 +73,8 @@
         }
     },
     "scripts": {
-        "phpcs": "vendor/bin/phpcs",
-        "phpcbf": "vendor/bin/phpcbf",
+        "phpcs": "vendor/bin/phpcs -d memory_limit=1G",
+        "phpcbf": "vendor/bin/phpcbf -d memory_limit=1G",
         "phpcsf-view": "vendor/bin/php-cs-fixer fix --dry-run -v",
         "phpcsf-fix": "vendor/bin/php-cs-fixer fix",
         "phpstan": "vendor/bin/phpstan --memory-limit=1G",
