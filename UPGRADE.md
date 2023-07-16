@@ -14,6 +14,14 @@ Please see the [Change Log](CHANGELOG.md) for more information on version histor
   from version A to version C and there is version B between A and C, you need to follow the instructions
   for both A and B.
 
+Upgrade from v1.0.0-alpha13
+--------------------------
+
+* The `Oauth2UserInterface` now defines the `getId()` function and
+  the `Oauth2ClientInterface` now defines `getMinimumSecretLength` and `setMinimumSecretLength` functions.  
+  If you don't define a custom implementation for these interfaces this won't affect you,
+  otherwise you might have implement these functions.
+
 Upgrade from v1.0.0-alpha12
 --------------------------
 
