@@ -29,7 +29,8 @@ class UrlHelper
         return static::buildUrl($parts);
     }
 
-    public static function buildUrl(array $components) {
+    public static function buildUrl(array $components)
+    {
         return
             (isset($components['scheme']) ? "{$components['scheme']}:" : '') .
             ((isset($components['user']) || isset($components['host'])) ? '//' : '') .

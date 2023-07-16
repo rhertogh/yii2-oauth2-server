@@ -32,7 +32,7 @@ class Oauth2PersonalAccessTokenGrant extends AbstractGrant implements Oauth2Pers
      * @throws \Exception
      */
     public function __construct(
-        Oauth2UserRepositoryInterface        $userRepository,
+        Oauth2UserRepositoryInterface $userRepository,
         Oauth2AccessTokenRepositoryInterface $accessTokenRepository
     ) {
         $this->setUserRepository($userRepository);
@@ -44,8 +44,11 @@ class Oauth2PersonalAccessTokenGrant extends AbstractGrant implements Oauth2Pers
         return Oauth2Module::GRANT_TYPE_IDENTIFIER_PERSONAL_ACCESS_TOKEN;
     }
 
-    public function respondToAccessTokenRequest(ServerRequestInterface $request, ResponseTypeInterface $responseType, DateInterval $accessTokenTTL)
-    {
+    public function respondToAccessTokenRequest(
+        ServerRequestInterface $request,
+        ResponseTypeInterface $responseType,
+        DateInterval $accessTokenTTL
+    ) {
         $client = $this->validateClient($request);
         $user = $this->validateUser($request);
         $scopes = $this->validateScopes($this->getRequestParameter('scope', $request));
@@ -94,7 +97,7 @@ class Oauth2PersonalAccessTokenGrant extends AbstractGrant implements Oauth2Pers
      * @param ServerRequestInterface $request
      *
      * @return UserEntityInterface
-     *@throws OAuthServerException
+     * @throws OAuthServerException
      *
      */
     protected function validateUser(ServerRequestInterface $request)
@@ -113,6 +116,4 @@ class Oauth2PersonalAccessTokenGrant extends AbstractGrant implements Oauth2Pers
 
         return $user;
     }
-
-
 }

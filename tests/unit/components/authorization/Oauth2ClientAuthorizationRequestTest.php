@@ -281,8 +281,10 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $clientAuthorizationRequest->getClient()->skip_authorization_if_scope_is_allowed = true;
         $this->assertFalse($clientAuthorizationRequest->isAuthorizationNeeded());
 
-        // Use client with `skip_authorization_if_scope_is_allowed` enabled
-        $clientAuthorizationRequest->setClientIdentifier('test-client-type-auth-code-open-id-connect-skip-authorization');
+        // Use client with `skip_authorization_if_scope_is_allowed` enabled.
+        $clientAuthorizationRequest->setClientIdentifier(
+            'test-client-type-auth-code-open-id-connect-skip-authorization'
+        );
         // Client not yet authorized by user.
         $clientAuthorizationRequest->setUserIdentity($user123);
         $clientAuthorizationRequest->setRequestedScopeIdentifiers([]);

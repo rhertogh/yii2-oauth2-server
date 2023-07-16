@@ -115,14 +115,16 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
      */
     public function finalizeScopesProvider()
     {
-        // ToDo: define correct test cases after discussing scope with upstream library
+        // ToDo: define correct test cases after discussing scope with upstream library.
         return [
             // Not assigned Scope
-            'strict_auth_code_not_assigned' => [ // Note: The scope for the Auth Code Grant is checked during authorization
+            // Note: The scope for the Auth Code Grant is checked during authorization.
+            'strict_auth_code_not_assigned' => [
                 1003000,
                 123,
                 [
-                    'defined-but-not-assigned', // since the scope is checked during authorization we simply don't return it
+                    // since the scope is checked during authorization we simply don't return it.
+                    'defined-but-not-assigned',
                 ],
                 Oauth2Client::SCOPE_ACCESS_STRICT,
                 Oauth2Module::GRANT_TYPE_IDENTIFIER_AUTH_CODE,
@@ -132,11 +134,13 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
                 ],
                 static::TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NONE,
             ],
-            'strict_implicit_not_assigned' => [ // Note: The scope for the Implicit Grant is checked during authorization
+            // Note: The scope for the Implicit Grant is checked during authorization.
+            'strict_implicit_not_assigned' => [
                 1003000,
                 123,
                 [
-                    'defined-but-not-assigned', // since the scope is checked during authorization we simply don't return it
+                    // since the scope is checked during authorization we simply don't return it.
+                    'defined-but-not-assigned',
                 ],
                 Oauth2Client::SCOPE_ACCESS_STRICT,
                 Oauth2Module::GRANT_TYPE_IDENTIFIER_IMPLICIT,
@@ -170,11 +174,13 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
             ],
 
             // Disabled Scope
-            'strict_auth_code_disabled' => [ // Note: The scope for the Auth Code Grant is checked during authorization
+            // Note: The scope for the Auth Code Grant is checked during authorization.
+            'strict_auth_code_disabled' => [
                 1003000,
                 123,
                 [
-                    'disabled-scope', // since the scope is checked during authorization we simply don't return it
+                    // since the scope is checked during authorization we simply don't return it.
+                    'disabled-scope',
                 ],
                 Oauth2Client::SCOPE_ACCESS_STRICT,
                 Oauth2Module::GRANT_TYPE_IDENTIFIER_AUTH_CODE,
@@ -184,11 +190,13 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
                 ],
                 static::TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NONE,
             ],
-            'strict_implicit_disabled' => [ // Note: The scope for the Implicit Grant is checked during authorization
+            // Note: The scope for the Implicit Grant is checked during authorization.
+            'strict_implicit_disabled' => [
                 1003000,
                 123,
                 [
-                    'disabled-scope', // since the scope is checked during authorization we simply don't return it
+                    // since the scope is checked during authorization we simply don't return it.
+                    'disabled-scope',
                 ],
                 Oauth2Client::SCOPE_ACCESS_STRICT,
                 Oauth2Module::GRANT_TYPE_IDENTIFIER_IMPLICIT,
@@ -249,7 +257,7 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
                 static::TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NONE,
             ],
 
-           'strict_client_credentials_disabled_for_client' => [
+            'strict_client_credentials_disabled_for_client' => [
                 1003000,
                 123,
                 [

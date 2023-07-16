@@ -116,7 +116,6 @@ class DatabaseFixtures
             }
 
             ob_end_clean();
-
         } catch (\Exception $e) {
             ob_end_flush();
             throw $e;

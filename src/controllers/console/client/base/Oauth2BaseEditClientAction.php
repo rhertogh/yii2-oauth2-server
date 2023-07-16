@@ -14,7 +14,6 @@ use yii\helpers\ArrayHelper;
  */
 class Oauth2BaseEditClientAction extends Oauth2BaseClientAction
 {
-
     /**
      * @param Oauth2ClientInterface $client
      * @param string $defaultScopes
@@ -100,7 +99,7 @@ class Oauth2BaseEditClientAction extends Oauth2BaseClientAction
             $type = $controller->select(
                 'Client Type?',
                 $clientTypeOptionsWithDetails,
-            $client->isConfidential()
+                $client->isConfidential()
                     ? Oauth2ClientInterface::TYPE_CONFIDENTIAL
                     : Oauth2ClientInterface::TYPE_PUBLIC
             );
@@ -120,10 +119,12 @@ class Oauth2BaseEditClientAction extends Oauth2BaseClientAction
             }
             $grantTypes = 0;
             foreach ($availableGrantTypes as $availableGrantType) {
-                if ($controller->confirm(
-                    ' - ' . $availableGrantType,
+                if (
+                    $controller->confirm(
+                        ' - ' . $availableGrantType,
                         (bool)($client->getGrantTypes() & Oauth2Module::getGrantTypeId($availableGrantType))
-                )) {
+                    )
+                ) {
                     $grantTypes |= Oauth2Module::getGrantTypeId($availableGrantType);
                 }
             }
@@ -240,7 +241,8 @@ class Oauth2BaseEditClientAction extends Oauth2BaseClientAction
         return $error === null;
     }
 
-    public function clientIdentifierValidator($input, &$error) {
+    public function clientIdentifierValidator($input, &$error)
+    {
         /** @var string|Oauth2ClientInterface $clientClass */
         $clientClass = DiHelper::getValidatedClassName(Oauth2ClientInterface::class);
         if ($clientClass::findByIdentifier($input)) {

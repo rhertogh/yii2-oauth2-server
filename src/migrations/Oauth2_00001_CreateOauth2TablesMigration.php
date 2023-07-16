@@ -60,7 +60,8 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                         $rawTableName . '_' . $index['name'] . '_index',
                         $table,
                         $index['columns'],
-                        $index['unique']);
+                        $index['unique']
+                    );
                 }
             }
             if (!empty($definition['foreignKeys'])) {

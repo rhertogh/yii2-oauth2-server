@@ -25,7 +25,7 @@ abstract class BaseGrantCest
      */
     public function _before(ApiTester $I)
     {
-        // Nothing to do here at the moment
+        // Nothing to do here at the moment.
     }
 
     /**

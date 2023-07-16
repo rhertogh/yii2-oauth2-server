@@ -80,7 +80,7 @@ use yii\web\UrlRule;
  * @property \DateInterval|string|null $defaultAccessTokenTTL
  * @since 1.0.0
  */
-class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface,  DefaultAccessTokenTtlInterface
+class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, DefaultAccessTokenTtlInterface
 {
     use DefaultAccessTokenTtlTrait;
 
@@ -1189,7 +1189,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface,  Defa
     {
         foreach ($properties as $property) {
             if (empty($this->$property)) {
-                throw new InvalidConfigException( __CLASS__ . '::$' . $property . ' must be set.');
+                throw new InvalidConfigException(__CLASS__ . '::$' . $property . ' must be set.');
             }
         }
     }

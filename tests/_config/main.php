@@ -31,13 +31,13 @@ return [
             'storageEncryptionKeys' => getenv('YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEYS'),
             'defaultStorageEncryptionKey' => '2022-01-01',
             'grantTypes' => [
-                // Default grant types
+                // Default grant types.
                 Oauth2Module::GRANT_TYPE_AUTH_CODE,
                 Oauth2Module::GRANT_TYPE_CLIENT_CREDENTIALS,
                 Oauth2Module::GRANT_TYPE_IMPLICIT,
                 Oauth2Module::GRANT_TYPE_PASSWORD,
                 Oauth2Module::GRANT_TYPE_REFRESH_TOKEN,
-                // Custom grant types
+                // Custom grant types.
                 Oauth2Module::GRANT_TYPE_PERSONAL_ACCESS_TOKEN,
             ],
             'enableOpenIdConnect' => true,

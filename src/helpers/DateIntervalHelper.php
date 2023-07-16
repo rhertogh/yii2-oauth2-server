@@ -8,7 +8,8 @@ class DateIntervalHelper
      * @param \DateInterval|null $interval
      * @return string|null
      */
-    public static function toString($interval) {
+    public static function toString($interval)
+    {
 
         if ($interval === null) {
             return null;

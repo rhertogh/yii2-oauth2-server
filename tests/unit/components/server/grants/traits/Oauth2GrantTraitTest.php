@@ -18,15 +18,27 @@ class Oauth2GrantTraitTest extends TestCase
 {
     public function testValidateRedirectUriWithInvalidClient()
     {
-        $mock = new class() {
+        $mock = new class () {
             use Oauth2GrantTrait;
         };
 
-        $client = new class() implements ClientEntityInterface {
-            public function getIdentifier() { return ''; }
-            public function getName() { return ''; }
-            public function getRedirectUri() { return ''; }
-            public function isConfidential() { return ''; }
+        $client = new class () implements ClientEntityInterface {
+            public function getIdentifier()
+            {
+                return '';
+            }
+            public function getName()
+            {
+                return '';
+            }
+            public function getRedirectUri()
+            {
+                return '';
+            }
+            public function isConfidential()
+            {
+                return '';
+            }
         };
 
         $this->expectException(InvalidConfigException::class);

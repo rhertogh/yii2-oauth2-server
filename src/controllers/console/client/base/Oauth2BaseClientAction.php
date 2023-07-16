@@ -16,11 +16,11 @@ class Oauth2BaseClientAction extends Action
             /** @var Oauth2Client $client */
             $client = $module->getClientRepository()->findModelByPk($id);
         } catch (\Exception $e) {
-            // Silently ignore
+            // Silently ignore.
         }
 
         if (empty($client)) {
-            // try to find by `identifier`
+            // try to find by `identifier`.
             $client = $module->getClientRepository()->findModelByIdentifier($id);
         }
 

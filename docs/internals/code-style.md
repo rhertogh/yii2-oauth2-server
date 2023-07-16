@@ -11,7 +11,7 @@ PHP CodeSniffer
 To validate the source code you can use "PHP CodeSniffer", run:   
 `composer phpcs`  
 Often the found violations can be fixed automatically, to do so run:  
-`composer phpcbf`    
+`composer phpcbf`  
 > Warning: always validate code changes that were done automatically
 
 For more information, please see https://github.com/squizlabs/PHP_CodeSniffer

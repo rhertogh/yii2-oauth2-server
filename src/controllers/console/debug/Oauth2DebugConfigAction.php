@@ -96,7 +96,8 @@ class Oauth2DebugConfigAction extends Action
 
             'enableOpenIdConnect' => $module->enableOpenIdConnect ? 'true' : 'false',
             'enableOpenIdConnectDiscovery' => $module->enableOpenIdConnectDiscovery ? 'true' : 'false',
-            'openIdConnectProviderConfigurationInformationPath' => $module->openIdConnectProviderConfigurationInformationPath,
+            'openIdConnectProviderConfigurationInformationPath' =>
+                $module->openIdConnectProviderConfigurationInformationPath,
             'openIdConnectDiscoveryIncludeSupportedGrantTypes' =>
                 $module->openIdConnectDiscoveryIncludeSupportedGrantTypes ? 'true' : 'false',
             'openIdConnectUserinfoEndpoint' => $module->openIdConnectUserinfoEndpoint ? 'true' : 'false',
@@ -184,7 +185,11 @@ class Oauth2DebugConfigAction extends Action
             'accessToken' => ['Access Token', $accessTokenValue, $accessTokenSettings],
             'jwks' => ['JSON Web Key Sets', $jwksValue, $jwksSettings],
             'clientAuthorization' => ['Client Authorization', $clientAuthorizationValue, $clientAuthorizationSettings],
-            'oidcProviderConfigInfo' => ['OpenID Connect Provider Configuration Information', $oidcProviderConfigInfoValue, $oidcProviderConfigInfoSettings],
+            'oidcProviderConfigInfo' => [
+                'OpenID Connect Provider Configuration Information',
+                $oidcProviderConfigInfoValue,
+                $oidcProviderConfigInfoSettings,
+            ],
             'oidcUserinfo' => ['OpenId Connect Userinfo', $oidcUserinfoValue, $oidcUserinfoSettings],
         ];
     }

@@ -26,7 +26,7 @@ class InfoController extends Controller
         echo '<br>';
         echo 'Xdebug debugger active: ' . ((@xdebug_is_debugger_active() ?? false) ? 'yes' : 'no');
         echo '<br>';
-        echo 'realpath_cache_size: '.Yii::$app->formatter->asShortSize(realpath_cache_size());
+        echo 'realpath_cache_size: ' . Yii::$app->formatter->asShortSize(realpath_cache_size());
         echo '<br>';
         phpinfo();
         $output = ob_get_clean();

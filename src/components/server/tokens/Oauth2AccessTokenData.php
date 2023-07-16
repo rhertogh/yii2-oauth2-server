@@ -7,10 +7,17 @@ use yii\base\InvalidArgumentException;
 
 class Oauth2AccessTokenData implements \IteratorAggregate, \ArrayAccess, \Countable, \JsonSerializable
 {
-    protected $data;
-    protected $createdAt;
-
     use ArrayAccessTrait;
+
+    /**
+     * @var array
+     */
+    protected $data;
+
+    /**
+     * @var int
+     */
+    protected $createdAt;
 
     public function __construct(array $data)
     {
@@ -62,6 +69,4 @@ class Oauth2AccessTokenData implements \IteratorAggregate, \ArrayAccess, \Counta
     {
         return $this->data;
     }
-
-
 }

@@ -649,10 +649,14 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
                             ? [[$scopeTableName . '.identifier' => $requestedScopeIdentifiers]]
                             : []
                     ),
-                    ['NOT', [$clientScopeTableName . '.applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO]],
+                    ['NOT', [
+                        $clientScopeTableName . '.applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO
+                    ]],
                     ['AND',
                         [$clientScopeTableName . '.applied_by_default' => null],
-                        ['NOT', [$scopeTableName . '.applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO]],
+                        ['NOT', [
+                            $scopeTableName . '.applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO
+                        ]],
                     ],
                 ],
             ],
@@ -717,9 +721,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
 
         $origClientScopes = array_combine(
             array_map(
-                function(Oauth2ClientScopeInterface $clientScope) {
-                    return implode('-', $clientScope->getPrimaryKey(true));
-                },
+                fn(Oauth2ClientScopeInterface $clientScope) => implode('-', $clientScope->getPrimaryKey(true)),
                 $origClientScopes
             ),
             $origClientScopes
@@ -731,10 +733,10 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
         foreach ($scopes as $key => $value) {
             if ($value instanceof Oauth2ClientScopeInterface) {
                 $clientScope = $value;
-                $clientScope->client_id = $this->getPrimaryKey(); // Ensure PK is set
+                $clientScope->client_id = $this->getPrimaryKey(); // Ensure PK is set.
                 $pkIndex = implode('-', $clientScope->getPrimaryKey(true));
                 if (array_key_exists($pkIndex, $origClientScopes)) {
-                    // overwrite orig (might still be considered "unchanged" when new ClientScope is not "dirty").
+                    // Overwrite orig (might still be considered "unchanged" when new ClientScope is not "dirty").
                     $origClientScopes[$pkIndex] = $clientScope;
                 }
             } else {
@@ -754,7 +756,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
                             ['scope_id' => $scopePk]
                         );
                     } else {
-                        // new model, using identifier
+                        // New model, using identifier.
                         $scopeIdentifier = $value->getIdentifier();
                     }
                 } elseif (is_array($value)) {
@@ -781,7 +783,8 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
                     $clientScopeConfig['scope_id'] = $scope->getPrimaryKey();
                 } else {
                     if (empty($clientScopeConfig['scope_id'])) {
-                        throw new InvalidArgumentException('Element ' . $key . ' in $scope should specify either the scope id or its identifier.');
+                        throw new InvalidArgumentException('Element ' . $key
+                            . ' in $scope should specify either the scope id or its identifier.');
                     }
                 }
 
@@ -804,20 +807,20 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
 
         $transaction = static::getDb()->beginTransaction();
         try {
-            //Delete records no longer present in the provided data
+            // Delete records no longer present in the provided data.
             /** @var self[]|array[] $deleteClientScopes */
             $deleteClientScopes = array_diff_key($origClientScopes, $clientScopes);
             foreach ($deleteClientScopes as $deleteClientScope) {
                 $deleteClientScope->delete();
             }
 
-            //Create records not present in the provided data
+            // Create records not present in the provided data.
             $createClientScopes = array_diff_key($clientScopes, $origClientScopes);
             foreach ($createClientScopes as $createClientScope) {
                 $createClientScope->persist();
             }
 
-            //Update existing records if needed
+            // Update existing records if needed.
             $unaffectedClientScopes = [];
             $updatedClientScopes = [];
             foreach (array_intersect_key($origClientScopes, $clientScopes) as $key => $existingClientScope) {

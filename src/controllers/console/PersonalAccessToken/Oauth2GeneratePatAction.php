@@ -29,7 +29,8 @@ class Oauth2GeneratePatAction extends Action
                     $client = $this->getClient($input);
                     if ($client) {
                         if (!$client->validateGrantType(Oauth2Module::GRANT_TYPE_IDENTIFIER_PERSONAL_ACCESS_TOKEN)) {
-                            $error = 'The "Personal Access Token" grant type is not enabled for client "' . $input . '".';
+                            $error = 'The "Personal Access Token" grant type is not enabled for client "'
+                                . $input . '".';
                             return false;
                         }
                     } else {

@@ -11,6 +11,9 @@ use yii\helpers\ArrayHelper;
  */
 class Oauth2BaseConsoleController extends Controller
 {
+    /**
+     * @var bool
+     */
     public $verbose = false;
 
     public function options($actionID)

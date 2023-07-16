@@ -23,5 +23,4 @@ class AppBootstrap implements BootstrapInterface
             }
         );
     }
-
 }

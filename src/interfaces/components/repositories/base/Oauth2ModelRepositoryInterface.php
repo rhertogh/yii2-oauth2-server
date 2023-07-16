@@ -12,7 +12,7 @@ use yii\base\InvalidConfigException;
 interface Oauth2ModelRepositoryInterface extends Oauth2RepositoryInterface
 {
     public function findModelByPk($pk);
-    
+
     /**
      * Find a user model by its identifier.
      * @param string $identifier

@@ -67,12 +67,14 @@ class Oauth2ScopeRepository extends Oauth2BaseRepository implements Oauth2ScopeR
 
         $requestedScopeIdentifiers = array_map(fn(Oauth2ScopeInterface $scope) => $scope->getIdentifier(), $scopes);
 
-        // Validate requested scopes if they haven't been checked before (based on the grant type)
-        if (!in_array($grantType, [
+        // Validate requested scopes if they haven't been checked before (based on the grant type).
+        if (
+            !in_array($grantType, [
             Oauth2Module::GRANT_TYPE_IDENTIFIER_AUTH_CODE,
             Oauth2Module::GRANT_TYPE_IDENTIFIER_IMPLICIT,
             Oauth2Module::GRANT_TYPE_IDENTIFIER_REFRESH_TOKEN,
-        ])) {
+            ])
+        ) {
             if (!$client->validateAuthRequestScopes($requestedScopeIdentifiers, $unauthorizedScopes)) {
                 throw Oauth2ServerException::scopeNotAllowedForClient(array_shift($unauthorizedScopes));
             }

@@ -26,7 +26,7 @@ class Oauth2CreateClientAction extends Oauth2BaseEditClientAction
         /** @var class-string<Oauth2ClientInterface> $clientClass */
         $clientClass = DiHelper::getValidatedClassName(Oauth2ClientInterface::class);
         /** @var Oauth2ClientInterface $client */
-        $client = new $clientClass;
+        $client = new $clientClass();
 
         if (!empty($controller->sample)) {
             $sample = strtolower($controller->sample);
@@ -51,7 +51,6 @@ class Oauth2CreateClientAction extends Oauth2BaseEditClientAction
                 if ($module->enableOpenIdConnect) {
                     $defaultScopes = implode(' ', Oauth2OidcScopeCollectionInterface::OPENID_CONNECT_DEFAULT_SCOPES);
                 }
-
             } else {
                 throw new InvalidArgumentException('Unknown client sample: "' . $sample . '"');
             }

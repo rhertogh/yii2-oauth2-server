@@ -20,7 +20,8 @@ class Oauth2ListClientsAction extends Action
         $clients = $module->getClientRepository()->getAllClients();
 
         if (!$clients) {
-            $this->controller->stdout('No clients defined. Run `yii ' . $this->controller->uniqueId . '/create` to define one.' . PHP_EOL);
+            $this->controller->stdout('No clients defined. Run `yii '
+                . $this->controller->uniqueId . '/create` to define one.' . PHP_EOL);
             return ExitCode::OK;
         }
 

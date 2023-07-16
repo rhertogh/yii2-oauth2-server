@@ -104,7 +104,6 @@ class Oauth2BaseMigrationTest extends DatabaseTestCase
     protected function getMockMigration()
     {
         return new class extends Oauth2BaseMigration {
-
             public static function generationIsActive($module)
             {
                 return false;

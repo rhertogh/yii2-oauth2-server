@@ -87,11 +87,15 @@ class Oauth2ModuleTest extends DatabaseTestCase
 
     public function testInstantiatingWithUnknownAppType()
     {
-        $class = get_class(new class(['id' => 'test', 'basePath' => '']) extends Application {
-            public function handleRequest($request) {}
+        $class = get_class(new class (['id' => 'test', 'basePath' => '']) extends Application {
+            public function handleRequest($request)
+            {
+            }
         });
 
-        $this->expectExceptionMessage('Unable to detect application type, configure it manually by setting `$appType`.');
+        $this->expectExceptionMessage(
+            'Unable to detect application type, configure it manually by setting `$appType`.'
+        );
         $this->mockConsoleApplication([], $class);
     }
 
@@ -109,8 +113,14 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $grantTypesTTL = $server->getGrantTypesAccessTokenTTLs();
         foreach (Oauth2Module::GRANT_TYPE_IDENTIFIERS as $grantType) {
             $actual = DateIntervalHelper::toString($grantTypesTTL[$grantType]);
-            $expected = $grantType === Oauth2Module::GRANT_TYPE_IDENTIFIER_PERSONAL_ACCESS_TOKEN ? 'P1Y' : 'P1Y2M3DT4H5M6S';
-            $this->assertEquals($expected, $actual, "Failed asserting that '$actual' is equal to the expected '$expected' value for {$grantType}");
+            $expected = $grantType === Oauth2Module::GRANT_TYPE_IDENTIFIER_PERSONAL_ACCESS_TOKEN
+                ? 'P1Y'
+                : 'P1Y2M3DT4H5M6S';
+            $this->assertEquals(
+                $expected,
+                $actual,
+                "Failed asserting that '$actual' is equal to the expected '$expected' value for {$grantType}"
+            );
         }
     }
 
@@ -1144,7 +1154,7 @@ class Oauth2ModuleTest extends DatabaseTestCase
             ],
 
             'Scopes as array of Oauth2Scopes' => [
-                function() {
+                function () {
                     return [
                         new Oauth2Scope(['identifier' => 'user.id.read']),
                         new Oauth2Scope(['identifier' => 'user.username.read']),

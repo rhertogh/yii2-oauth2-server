@@ -13,7 +13,11 @@ use yii\helpers\ArrayHelper;
 
 class Oauth2ClientController extends Oauth2BaseConsoleController
 {
+    /**
+     * @inheritdoc
+     */
     public $defaultAction = 'list';
+
     /**
      * @var string|null
      */

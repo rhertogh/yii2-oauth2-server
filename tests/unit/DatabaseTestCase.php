@@ -15,7 +15,6 @@ use Yii2Oauth2ServerTests\Helper\Yii2Module;
 
 abstract class DatabaseTestCase extends TestCase
 {
-
     /**
      * @throws \yii\db\Exception
      */

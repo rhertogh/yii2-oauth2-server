@@ -403,7 +403,10 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
 
         $this->assertInstanceOf(Response::class, $response);
         $this->assertEquals(HttpCode::FOUND, $response->statusCode);
-        $this->assertEquals('http://localhost/redirect_uri/?error=scope_not_allowed_for_client', $response->headers->get('location'));
+        $this->assertEquals(
+            'http://localhost/redirect_uri/?error=scope_not_allowed_for_client',
+            $response->headers->get('location')
+        );
     }
 
     public function testRunNonExistingScope()

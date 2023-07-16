@@ -227,7 +227,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $expected = [
             'https://localhost/redirect_uri_1',
             'https://localhost/redirect_uri_2',
-            // expect 'https://${DOES_NOT_EXIST}/test' to be removed,
+            // expect 'https://${DOES_NOT_EXIST}/test' to be removed.
             "https://app.$envTestHost/$envTestPath",
         ];
 
@@ -321,7 +321,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
     public function testIsVariableRedirectUriQueryAllowed()
     {
         $client = $this->getMockModel();
-        // Should be `false` by default
+        // Should be `false` by default.
         $this->assertFalse($client->isVariableRedirectUriQueryAllowed());
 
         $client = $this->getMockModel(['allow_variable_redirect_uri_query' => true]);
@@ -331,7 +331,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
     public function testSetAllowVariableRedirectUriQuery()
     {
         $client = $this->getMockModel();
-        // Should be `false` by default
+        // Should be `false` by default.
         $this->assertFalse($client->isVariableRedirectUriQueryAllowed());
 
         $client->setAllowVariableRedirectUriQuery(true);
@@ -715,7 +715,6 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
 
         $deleted = ArrayHelper::getColumn($syncResult['deleted'], 'scope.identifier', false);
         $this->assertEquals($expected['deleted'], $deleted);
-
     }
 
     public function syncClientScopesProvider()
@@ -745,20 +744,20 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
             'as array[]' => [
                 'clientId' => 1003006,
                 'scopes' => [
-                    'user.id.read' => [], // new, identifier as key
-                    'openid' => [], // unaffected, identifier as key
-                    'profile' => [ // updated, identifier as key
+                    'user.id.read' => [], // new, identifier as key.
+                    'openid' => [], // unaffected, identifier as key.
+                    'profile' => [ // updated, identifier as key.
                         'applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_AUTOMATICALLY,
                     ],
-                    [ // unaffected, scope id as column
-                        'scope_id' => 3, // identifier: 'email',
+                    [ // unaffected, scope id as column.
+                        'scope_id' => 3, // identifier: 'email'.
                     ],
                     [ // updated, scope id as column
-                        'scope_id' => 5, // identifier: 'phone',
+                        'scope_id' => 5, // identifier: 'phone'.
                         'applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_AUTOMATICALLY,
                     ],
                     [ // new, scope id as column
-                        'scope_id' => 1005001, // identifier: 'user.username.read'
+                        'scope_id' => 1005001, // identifier: 'user.username.read'.
                     ],
                 ],
                 'expected' => [
@@ -770,7 +769,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
             ],
             'as Oauth2ClientScope[]' => [
                 'clientId' => 1003006,
-                'scopes' => function() {
+                'scopes' => function () {
                     $currentClientScopes = Oauth2ClientScope::find()
                         ->andWhere([
                             'client_id' => 1003006,
@@ -806,7 +805,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
             ],
             'as Oauth2Scope[]' => [
                 'clientId' => 1003006,
-                'scopes' => function() {
+                'scopes' => function () {
                     return Oauth2Scope::findAll([
                         'identifier' => ['openid', 'profile', 'address', 'offline_access', 'user.email_address.read'],
                     ]);
