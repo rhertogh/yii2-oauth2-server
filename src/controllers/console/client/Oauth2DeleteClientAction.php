@@ -4,10 +4,7 @@ namespace rhertogh\Yii2Oauth2Server\controllers\console\client;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\client\base\Oauth2BaseClientAction;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2ClientController;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
-use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\console\ExitCode;
-use yii\console\widgets\Table;
 use yii\helpers\Console;
 
 /**

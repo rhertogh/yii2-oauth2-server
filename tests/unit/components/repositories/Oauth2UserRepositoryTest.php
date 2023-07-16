@@ -2,7 +2,6 @@
 
 namespace Yii2Oauth2ServerTests\unit\components\repositories;
 
-use League\OAuth2\Server\Entities\ClientEntityInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2UserRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2PasswordGrantUserInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;

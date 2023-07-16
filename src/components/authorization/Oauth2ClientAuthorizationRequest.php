@@ -10,7 +10,6 @@ use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserClientScopeInterface;
-use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
 use Yii;
 use yii\base\InvalidCallException;
 use yii\helpers\StringHelper;

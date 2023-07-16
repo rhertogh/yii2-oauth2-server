@@ -5,7 +5,6 @@ namespace Yii2Oauth2ServerTests\unit\module;
 use Codeception\Util\HttpCode;
 use Defuse\Crypto\Exception\EnvironmentIsBrokenException;
 use League\OAuth2\Server\CryptKey;
-use League\OAuth2\Server\Entities\ScopeEntityInterface;
 use League\OAuth2\Server\Grant\AuthCodeGrant;
 use League\OAuth2\Server\Grant\ClientCredentialsGrant;
 use League\OAuth2\Server\Grant\ImplicitGrant;
