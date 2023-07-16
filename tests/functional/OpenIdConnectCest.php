@@ -47,7 +47,7 @@ class OpenIdConnectCest extends BaseGrantCest
     public function openIdConnectTest(ApiTester $I, Example $example)
     {
         $module = Oauth2Module::getInstance();
-        $module->defaultAccessTokenTTL = $example['accessTokenTTL'];
+        $module->setDefaultAccessTokenTTL($example['accessTokenTTL']);
         $module->openIdConnectIssueRefreshTokenWithoutOfflineAccessScope = true;
 
         $oauthClient = $this->getOpenIdConnectTestClient($I, [

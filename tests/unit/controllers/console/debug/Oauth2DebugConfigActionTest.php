@@ -48,6 +48,10 @@ class Oauth2DebugConfigActionTest extends TestCase
      */
     public function testGetConfiguration($moduleConfig)
     {
+        $getterProperties = [
+            'defaultAccessTokenTTL',
+        ];
+
         $ignoreModuleProperties = [
             'appType', // Irrelevant for the cli actions (always console).
             'controllerNamespace', // Only defined in module to override default Yii behavior.
@@ -69,6 +73,7 @@ class Oauth2DebugConfigActionTest extends TestCase
         ));
 
         $moduleProperties = array_diff($moduleProperties, $ignoreModuleProperties);
+        $moduleProperties = array_merge($moduleProperties, $getterProperties);
         sort($moduleProperties);
 
         $this->assertEquals($moduleProperties, $configurationProperties);

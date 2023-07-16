@@ -32,7 +32,7 @@ abstract class BaseSimpleGrantCest extends BaseGrantCest
     public function simpleGrantTest(ApiTester $I, Example $example)
     {
         $module = Oauth2Module::getInstance();
-        $module->defaultAccessTokenTTL = $example['accessTokenTTL'];
+        $module->setDefaultAccessTokenTTL($example['accessTokenTTL']);
 
         $provider = $this->getProvider($example['providerOptions']);
         $jwtConfiguration = Configuration::forSymmetricSigner(

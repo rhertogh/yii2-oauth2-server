@@ -14,13 +14,17 @@ class Oauth2ImplicitGrantFactory extends base\Oauth2BaseGrantTypeFactory impleme
      */
     public function getGrantType()
     {
+        $accessTokenTtl = $this->getDefaultAccessTokenTTL()
+            ?? $this->module->getDefaultAccessTokenTTL()
+            ?? new \DateInterval('PT1H');
+
         return Yii::createObject(
             [
                 'class' => Oauth2ImplicitGrantInterface::class,
                 'module' => $this->module,
             ],
             [
-                new \DateInterval($this->accessTokenTTL ?? $this->module->defaultAccessTokenTTL ?? 'PT1H')
+                $accessTokenTtl
             ]
         );
     }

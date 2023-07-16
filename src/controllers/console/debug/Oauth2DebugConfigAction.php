@@ -4,6 +4,7 @@ namespace rhertogh\Yii2Oauth2Server\controllers\console\debug;
 
 use League\OAuth2\Server\Grant\GrantTypeInterface;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2DebugController;
+use rhertogh\Yii2Oauth2Server\helpers\DateIntervalHelper;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\base\Action;
 use yii\console\ExitCode;
@@ -51,8 +52,10 @@ class Oauth2DebugConfigAction extends Action
                 fn(GrantTypeInterface $grant) => $grant->getIdentifier(),
                 $module->getAuthorizationServer()->getEnabledGrantTypes()
             ));
+            $defaultAccessTokenTTL = DateIntervalHelper::toString($module->getDefaultAccessTokenTTL()) ?? '[NOT SET]';
         } else {
             $grantTypes = '-';
+            $defaultAccessTokenTTL = '-';
         }
 
         if ($module->serverRole & Oauth2Module::SERVER_ROLE_RESOURCE_SERVER) {
@@ -88,7 +91,7 @@ class Oauth2DebugConfigAction extends Action
 
             'grantTypes' => $grantTypes,
 
-            'defaultAccessTokenTTL' => $module->defaultAccessTokenTTL,
+            'defaultAccessTokenTTL' => $defaultAccessTokenTTL,
             'resourceServerAccessTokenRevocationValidation' => $module->resourceServerAccessTokenRevocationValidation,
 
             'enableOpenIdConnect' => $module->enableOpenIdConnect ? 'true' : 'false',

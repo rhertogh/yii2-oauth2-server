@@ -21,6 +21,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Fixed
 
 ### Improved
+- Refactored and added tests for defaultAccessTokenTTL. (rhertogh)
 
 ### Security
 

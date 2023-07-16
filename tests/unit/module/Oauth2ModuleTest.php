@@ -18,6 +18,7 @@ use rhertogh\Yii2Oauth2Server\components\openidconnect\scopes\Oauth2OidcScopeCol
 use rhertogh\Yii2Oauth2Server\components\server\Oauth2AuthorizationServer;
 use rhertogh\Yii2Oauth2Server\components\server\Oauth2ResourceServer;
 use rhertogh\Yii2Oauth2Server\filters\auth\Oauth2HttpBearerAuth;
+use rhertogh\Yii2Oauth2Server\helpers\DateIntervalHelper;
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2EncryptorInterface;
@@ -28,8 +29,8 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\server\Oauth2O
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2AccessTokenRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ConsentControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\filters\auth\Oauth2HttpBearerAuthInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
@@ -93,6 +94,25 @@ class Oauth2ModuleTest extends DatabaseTestCase
 
         $this->expectExceptionMessage('Unable to detect application type, configure it manually by setting `$appType`.');
         $this->mockConsoleApplication([], $class);
+    }
+
+    public function testAccessTokenTTL()
+    {
+        $this->mockConsoleApplication([
+            'modules' => [
+                'oauth2' => [
+                    'defaultAccessTokenTTL' => 'P1Y2M3DT4H5M6S',
+                ],
+            ],
+        ]);
+
+        $server = Oauth2Module::getInstance()->getAuthorizationServer();
+        $grantTypesTTL = $server->getGrantTypesAccessTokenTTLs();
+        foreach (Oauth2Module::GRANT_TYPE_IDENTIFIERS as $grantType) {
+            $actual = DateIntervalHelper::toString($grantTypesTTL[$grantType]);
+            $expected = $grantType === Oauth2Module::GRANT_TYPE_IDENTIFIER_PERSONAL_ACCESS_TOKEN ? 'P1Y' : 'P1Y2M3DT4H5M6S';
+            $this->assertEquals($expected, $actual, "Failed asserting that '$actual' is equal to the expected '$expected' value for {$grantType}");
+        }
     }
 
     /**

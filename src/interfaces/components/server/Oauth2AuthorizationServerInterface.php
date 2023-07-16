@@ -93,4 +93,10 @@ interface Oauth2AuthorizationServerInterface extends EmitterAwareInterface
      * @since 1.0.0
      */
     public function getEnabledGrantTypes();
+
+    /**
+     * Get the Access Token TTLs for the enabled grand types
+     * @return \DateInterval[]
+     */
+    public function getGrantTypesAccessTokenTTLs();
 }

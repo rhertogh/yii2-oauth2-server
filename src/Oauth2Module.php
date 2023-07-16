@@ -25,6 +25,7 @@ use rhertogh\Yii2Oauth2Server\exceptions\Oauth2ServerException;
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\helpers\Psr7Helper;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\common\DefaultAccessTokenTtlInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2EncryptorInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\encryption\Oauth2EncryptionKeyFactoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\grants\base\Oauth2GrantTypeFactoryInterface;
@@ -44,6 +45,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterfac
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
+use rhertogh\Yii2Oauth2Server\traits\DefaultAccessTokenTtlTrait;
 use Yii;
 use yii\base\BootstrapInterface;
 use yii\base\InvalidArgumentException;
@@ -76,10 +78,13 @@ use yii\web\UrlRule;
  * ]
  * ~~~
  *
+ * @property \DateInterval|string|null $defaultAccessTokenTTL
  * @since 1.0.0
  */
-class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
+class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface,  DefaultAccessTokenTtlInterface
 {
+    use DefaultAccessTokenTtlTrait;
+
     /**
      * Application type "web": http response.
      * @since 1.0.0
@@ -337,14 +342,6 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
      * @since 1.0.0
      */
     public $grantTypes = [];
-
-    /**
-     * @var string|null Default Time To Live for the access token, used when the Grant Type does not specify it.
-     * When `null` default value of 1 hour is used.
-     * The format should be a DateInterval duration (https://www.php.net/manual/en/dateinterval.construct.php).
-     * @since 1.0.0
-     */
-    public $defaultAccessTokenTTL = null;
 
     /**
      * @var bool Should the resource server check for revocation of the access token.
@@ -741,9 +738,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
 
                     foreach ($grantTypes as $grantTypeDefinition) {
                         if ($grantTypeDefinition instanceof GrantTypeInterface) {
-                            $accessTokenTTL = $this->defaultAccessTokenTTL
-                                ? new \DateInterval($this->defaultAccessTokenTTL)
-                                : null;
+                            $accessTokenTTL = $this->getDefaultAccessTokenTTL();
                             $this->_authorizationServer->enableGrantType($grantTypeDefinition, $accessTokenTTL);
                         } elseif (
                             (
@@ -764,11 +759,9 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface
                                 'class' => $grantTypeDefinition,
                                 'module' => $this,
                             ]);
-                            $accessTokenTTL = $factory->accessTokenTTL ?? $this->defaultAccessTokenTTL ?? null;
-                            $this->_authorizationServer->enableGrantType(
-                                $factory->getGrantType(),
-                                $accessTokenTTL ? new \DateInterval($accessTokenTTL) : null
-                            );
+                            $accessTokenTTL = $factory->getDefaultAccessTokenTTL()
+                                ?? $this->getDefaultAccessTokenTTL();
+                            $this->_authorizationServer->enableGrantType($factory->getGrantType(), $accessTokenTTL);
                         } else {
                             throw new InvalidConfigException(
                                 'Unknown grantType '

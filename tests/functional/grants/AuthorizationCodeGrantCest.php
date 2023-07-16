@@ -29,7 +29,7 @@ class AuthorizationCodeGrantCest extends BaseGrantCest
     public function authorizationCodeGrantTest(ApiTester $I, Example $example)
     {
         $module = Oauth2Module::getInstance();
-        $module->defaultAccessTokenTTL = $example['accessTokenTTL'];
+        $module->setDefaultAccessTokenTTL($example['accessTokenTTL']);
 
         $jwtConfiguration = Configuration::forSymmetricSigner(
             new Sha256(),

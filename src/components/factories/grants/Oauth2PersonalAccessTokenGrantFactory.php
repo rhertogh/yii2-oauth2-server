@@ -9,11 +9,10 @@ use Yii;
 class Oauth2PersonalAccessTokenGrantFactory extends base\Oauth2BaseGrantTypeFactory implements Oauth2PersonalAccessTokenGrantFactoryInterface
 {
     /**
-     * Time To Live for the access token, default value: 1 year.
-     * The format should be a DateInterval duration (https://www.php.net/manual/en/dateinterval.construct.php).
-     * @var string
+     * Default TTL for Personal Access Tokens is 1 year.
+     * @inheritdoc
      */
-    public $accessTokenTTL = 'P1Y';
+    protected $_accessTokenTTL = 'P1Y';
 
     /**
      * @inheritDoc
