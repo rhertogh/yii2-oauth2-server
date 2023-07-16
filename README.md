@@ -83,6 +83,14 @@ tests/      Codeception unit and functional tests
 ```
 
 
+Importing/Migrating
+-------------------
+To ease migrating from another project, the Yii2-Oauth2-Server supports importing data from other projects. 
+For example from the [filsh/yii2-oauth2-server](https://github.com/filsh/yii2-oauth2-server)
+
+Please see[Importing/Migrating from other servers](docs/guide/importing-migrating.md) for more information.
+
+
 Credits
 -------
 - [Rutger Hertogh](https://github.com/rhertogh)

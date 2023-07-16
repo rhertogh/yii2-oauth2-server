@@ -18,6 +18,10 @@ Security
 * [Client Secret Rotation](security-client-secret-rotation.md)
 * [Encryption Key Rotation](security-encryption-key-rotation.md)
 
+Importing/Migrating
+-------------------
+* [Importing/Migrating from other servers](importing-migrating.md)
+
 Development
 -----------
 * [Development Guide](../internals/README.md)

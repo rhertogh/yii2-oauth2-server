@@ -13,6 +13,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Added
 - Support for default values in `Oauth2GeneratePatAction`. (rhertogh)
 - The `Oauth2ClientInterface` now defines `get`- and `set`-`MinimumSecretLength`.  (rhertogh)
+- Support for importing data from other projects. (rhertogh)
 
 ### Changed
 
