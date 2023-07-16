@@ -24,7 +24,7 @@ class Oauth2GeneratePatAction extends Action
         if (empty($clientIdentifier)) {
             $clientIdentifier = $this->controller->prompt('Client Identifier?', [
                 'required' => true,
-                'default' => $defaultClientIdentifier ?? null,
+                'default' => $this->controller->defaultClientIdentifier ?? null,
                 'validator' => function ($input, &$error) {
                     $client = $this->getClient($input);
                     if ($client) {
@@ -47,7 +47,7 @@ class Oauth2GeneratePatAction extends Action
         if (empty($clientSecret) && $client->isConfidential()) {
             $clientSecret = $this->controller->prompt('Client Secret?', [
                 'required' => true,
-                'default' => $defaultClientSecret ?? null,
+                'default' => $this->controller->defaultClientSecret ?? null,
             ]);
         }
 
@@ -58,7 +58,7 @@ class Oauth2GeneratePatAction extends Action
         if (empty($userId)) {
             $userId = $this->controller->prompt('User Identifier?', [
                 'required' => true,
-                'default' => $defaultUserId ?? null,
+                'default' => $this->controller->defaultUserId ?? null,
                 'validator' => function ($input, &$error) {
                     $user = $this->getUser($input);
                     if (!$user) {
@@ -73,7 +73,7 @@ class Oauth2GeneratePatAction extends Action
         if (empty($scope)) {
             $scope = $this->controller->prompt('Scope?', [
                 'required' => false,
-                'default' => $defaultScope ?? null,
+                'default' => $this->controller->defaultScope ?? null,
             ]);
         }
 

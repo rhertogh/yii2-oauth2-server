@@ -11,6 +11,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ----------------------------
 
 ### Added
+- Support for default values in `Oauth2GeneratePatAction`. (rhertogh)
 
 ### Changed
 

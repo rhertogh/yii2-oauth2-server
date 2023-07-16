@@ -11,6 +11,26 @@ class Oauth2PersonalAccessTokenController extends Oauth2BaseConsoleController
     /**
      * @var string|null
      */
+    public $defaultClientIdentifier = null;
+
+    /**
+     * @var string|null
+     */
+    public $defaultClientSecret = null;
+
+    /**
+     * @var int|string|null
+     */
+    public $defaultUserId = null;
+
+    /**
+     * @var string|null
+     */
+    public $defaultScope = null;
+
+    /**
+     * @var string|null
+     */
     public $client = null;
 
     /**
