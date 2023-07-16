@@ -32,8 +32,8 @@ If you're not yet familiar with Oauth 2 check out [An Illustrated Guide to OAuth
 https://developer.okta.com/blog/2019/10/21/illustrated-guide-to-oauth-and-oidc)
 
 
-Installation
-------------
+🐣 Getting started 
+------------------
 * The minimum required PHP version is 7.4 (compatibility tested up till and including PHP 8.1).
 * The minimum required Yii version is 2.0.43.
 
@@ -44,36 +44,21 @@ composer install rhertogh/yii2-oauth2-server
 Full installation details can be found in the docs under [Installing the Yii2-Oauth2-Server](docs/guide/start-installation.md)
 
 
-Documentation
--------------
-There are two main sections in the documentation
+📖 Documentation
+----------------
+There are two main sections in the documentation:
 * [Usage Guide](docs/guide/README.md) for using the Yii2-Oauth2-Server in your own project.
 * [Development Guide](docs/internals/README.md) for contributing to the Yii2-Oauth2-Server.
 
 
-Contributing
-------------
-The Yii2-Oauth2-Server is [Open Source](LICENSE.md). You can help by:
-
-- [Report an issue](docs/internals/report-an-issue.md)
-- [Contribute with new features or bug fixes](docs/internals/pull-request-qa.md)
-
-
-Reporting Security issues
--------------------------
-In case you found a security issue please [contact us directly](
-https://forms.gle/8aEGxmN51Hvb7oLJ7)
-DO NOT use the issue tracker or discuss it in the public forum as it will cause more damage than help.
-
-
-Versioning & Change Log
------------------------
+📜 Versioning & Change Log
+--------------------------
 The Yii2-Oauth2-Server follows [Semantic Versioning 2.0](https://semver.org/spec/v2.0.0.html)  
 Please see the [Change Log](CHANGELOG.md) for more information on version history 
 and the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer version.
 
-Directory Structure
--------------------
+📂 Directory Structure
+----------------------
 ```
 docker/     Docker container definition
 docs/       Documentation (for both usage and development)
@@ -83,21 +68,38 @@ tests/      Codeception unit and functional tests
 ```
 
 
-Importing/Migrating
--------------------
+↘️ Importing/Migrating
+----------------------
 To ease migrating from another project, the Yii2-Oauth2-Server supports importing data from other projects. 
 For example from the [filsh/yii2-oauth2-server](https://github.com/filsh/yii2-oauth2-server)
 
-Please see[Importing/Migrating from other servers](docs/guide/importing-migrating.md) for more information.
+Please see [Importing/Migrating from other servers](docs/guide/importing-migrating.md) for more information.
 
 
-Credits
--------
+🔎 Reporting Security issues
+-------------------------
+In case you found a security issue please [contact us directly](
+https://forms.gle/8aEGxmN51Hvb7oLJ7)
+DO NOT use the issue tracker or discuss it in the public forum as it will cause more damage than help.
+
+
+🚀 Contributing
+--------------
+The Yii2-Oauth2-Server is [Open Source](LICENSE.md). You can help by:
+
+- [Report an issue](docs/internals/report-an-issue.md)
+- [Contribute with new features or bug fixes](docs/internals/pull-request-qa.md)
+
+Thanks in advance for your contribution!
+
+
+🎉 Credits
+----------
 - [Rutger Hertogh](https://github.com/rhertogh)
 - [All Contributors](https://github.com/rhertogh/yii2-oauth2-server/graphs/contributors)
 
 
-License
--------
+📗 License
+----------
 The Yii2-Oauth2-Server is free software. It is released under the terms of the Apache License.
 Please see [`LICENSE.md`](LICENSE.md) for more information.
