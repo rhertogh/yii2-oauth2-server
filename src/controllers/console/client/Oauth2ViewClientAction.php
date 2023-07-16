@@ -34,8 +34,8 @@ class Oauth2ViewClientAction extends Oauth2BaseClientAction
                 : '[Using default: '
                     . Oauth2Module::USER_ACCOUNT_SELECTION_NAMES[$module->defaultUserAccountSelection]
                     . ']',
-            'Is Auth Code without PKCE allowed' => $client->isAuthCodeWithoutPkceAllowed()  ? 'Yes' : 'No',
-            'Skip authorization if scope is allowed' => $client->skipAuthorizationIfScopeIsAllowed()  ? 'Yes' : 'No',
+            'Is Auth Code without PKCE allowed' => $client->isAuthCodeWithoutPkceAllowed() ? 'Yes' : 'No',
+            'Skip authorization if scope is allowed' => $client->skipAuthorizationIfScopeIsAllowed() ? 'Yes' : 'No',
             'Logo URI' => $client->getLogoUri(),
             'Terms of Service URI' => $client->getTermsOfServiceUri(),
             'Contacts' => $client->getContacts(),
@@ -47,10 +47,10 @@ class Oauth2ViewClientAction extends Oauth2BaseClientAction
 
         if ($module->enableOpenIdConnect) {
             $clientInfo['OIDC allow offline access without consent'] =
-                $client->getOpenIdConnectAllowOfflineAccessWithoutConsent()  ? 'Yes' : 'No';
+                $client->getOpenIdConnectAllowOfflineAccessWithoutConsent() ? 'Yes' : 'No';
         }
 
-        $clientInfo['Enabled'] = $client->isEnabled()  ? 'Yes' : 'No';
+        $clientInfo['Enabled'] = $client->isEnabled() ? 'Yes' : 'No';
 
         $this->controller->stdout(Table::widget([
             'rows' => array_map(fn($property) => [$property, $clientInfo[$property]], array_keys($clientInfo)),

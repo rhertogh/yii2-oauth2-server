@@ -18,11 +18,11 @@ class Oauth2GrantTraitTest extends TestCase
 {
     public function testValidateRedirectUriWithInvalidClient()
     {
-        $mock = new class () {
+        $mock = new class {
             use Oauth2GrantTrait;
         };
 
-        $client = new class () implements ClientEntityInterface {
+        $client = new class implements ClientEntityInterface {
             public function getIdentifier()
             {
                 return '';

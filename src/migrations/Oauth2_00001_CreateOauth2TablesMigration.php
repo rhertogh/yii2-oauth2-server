@@ -314,7 +314,7 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                         'update' => static::CASCADE,
                     ],
                     ...(
-                    $userTable
+                        $userTable
                         ? [
                         [
                             'name' => 'user_id',
@@ -330,7 +330,7 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                 ],
                 'indexes' => [
                     ...(
-                    !$userTable
+                        !$userTable
                         ? [
                         [
                             'name' => 'user_id',
@@ -403,7 +403,7 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                         'update' => static::CASCADE,
                     ],
                     ...(
-                    $userTable
+                        $userTable
                         ? [
                             [
                                 'name' => 'user_id',
@@ -419,7 +419,7 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                 ],
                 'indexes' => [
                     ...(
-                    !$userTable
+                        !$userTable
                         ? [
                             [
                                 'name' => 'user_id',
@@ -526,7 +526,7 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                         'update' => static::CASCADE,
                     ],
                     ...(
-                    $userTable
+                        $userTable
                         ? [
                             [
                                 'name' => 'user_id',
@@ -542,7 +542,7 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                 ],
                 'indexes' => [
                     ...(
-                    !$userTable
+                        !$userTable
                         ? [
                             [
                                 'name' => 'user_id',

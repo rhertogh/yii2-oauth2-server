@@ -33,7 +33,8 @@ class Oauth2ListClientsAction extends Action
                 'identifier' => $client->getIdentifier(),
                 'type' => $client->isConfidential() ? 'Confidential' : 'Public',
                 'redirect_uris' => $redirectUris
-                    ? ($redirectUris[0]
+                    ? (
+                        $redirectUris[0]
                         . (count($redirectUris) > 1
                             ? ' +' . (count($redirectUris) - 1) . ' more'
                             : '')

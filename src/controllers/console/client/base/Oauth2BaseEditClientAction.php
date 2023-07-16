@@ -139,7 +139,8 @@ class Oauth2BaseEditClientAction extends Oauth2BaseClientAction
             empty($controller->redirectURIs)
             && (
                 $redirectUrisRequired
-                || (!$client->getIsNewRecord() && $client->getRedirectUri()
+                || (
+                    !$client->getIsNewRecord() && $client->getRedirectUri()
                 )
             )
         ) {
