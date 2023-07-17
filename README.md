@@ -25,6 +25,21 @@ an [Oauth2](https://oauth.net/2/) server based on the [League OAuth2 server](htt
 The server also supports [OpenID Connect Core](https://openid.net/specs/openid-connect-core-1_0.html).
 
 
+### Contents
+
+- [Getting started](#-getting-started)
+- [Documentation](#-documentation)
+- [FAQ](#-faq)
+- [Importing/Migrating](#-importingmigrating)
+- [Versioning & Change Log](#-versioning--change-log)
+- [Reporting Security issues](#-reporting-security-issues)
+- [Directory Structure](#-directory-structure)
+- [Contributing](#-contributing)
+- [Credits](#-credits)
+- [License](#-license)
+
+---
+
 🐣 Getting started
 ------------------
 If you're not yet familiar with Oauth 2 we recommend to check out
@@ -50,7 +65,7 @@ There are two main sections in the documentation:
 * [Development Guide](docs/internals/README.md) for contributing to the Yii2-Oauth2-Server.
 
 
-🔮 FAQ 
+🔮 FAQ
 ------
 This is a quick FAQ, the full version can be found [here](docs/guide/faq.md).
 
