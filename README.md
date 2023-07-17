@@ -24,24 +24,23 @@ The Yii2-Oauth2-Server is an extension for [Yii framework 2.0](http://www.yiifra
 an [Oauth2](https://oauth.net/2/) server based on the [League OAuth2 server](https://github.com/thephpleague/oauth2-server).
 The server also supports [OpenID Connect Core](https://openid.net/specs/openid-connect-core-1_0.html).
 
-For license information please check the [LICENSE](LICENSE.md)-file.
 
-Documentation is at [docs/guide/README.md](docs/guide/README.md).
-
-If you're not yet familiar with Oauth 2 check out [An Illustrated Guide to OAuth and OpenID Connect](
-https://developer.okta.com/blog/2019/10/21/illustrated-guide-to-oauth-and-oidc)
-
-
-🐣 Getting started 
+🐣 Getting started
 ------------------
+If you're not yet familiar with Oauth 2 we recommend to check out
+[An Illustrated Guide to OAuth and OpenID Connect](https://developer.okta.com/blog/2019/10/21/illustrated-guide-to-oauth-and-oidc)
+
+#### Requirements:
 * The minimum required PHP version is 7.4 (compatibility tested up till and including PHP 8.1).
 * The minimum required Yii version is 2.0.43.
 
+#### Installation:
 ```bash
 composer install rhertogh/yii2-oauth2-server
 ```
 
-Full installation details can be found in the docs under [Installing the Yii2-Oauth2-Server](docs/guide/start-installation.md)
+Full installation and configuration details can be found in the docs under
+[Installing the Yii2-Oauth2-Server](docs/guide/start-installation.md)
 
 
 📖 Documentation
@@ -66,11 +65,26 @@ Please check out the [full FAQ](docs/guide/faq.md#error-messages) first.
 If that doesn't solve the problem, please [report an issue](docs/internals/report-an-issue.md).
 
 
+↘️ Importing/Migrating
+----------------------
+To ease migrating from another project, the Yii2-Oauth2-Server supports importing data from other projects.
+For example from the [filsh/yii2-oauth2-server](https://github.com/filsh/yii2-oauth2-server)
+
+Please see [Importing/Migrating from other servers](docs/guide/importing-migrating.md) for more information.
+
+
 📜 Versioning & Change Log
 --------------------------
 The Yii2-Oauth2-Server follows [Semantic Versioning 2.0](https://semver.org/spec/v2.0.0.html)  
-Please see the [Change Log](CHANGELOG.md) for more information on version history 
+Please see the [Change Log](CHANGELOG.md) for more information on version history
 and the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer version.
+
+
+🔎 Reporting Security issues
+----------------------------
+In case you found a security issue please [contact us directly](
+https://forms.gle/8aEGxmN51Hvb7oLJ7)
+DO NOT use the issue tracker or discuss it in the public forum as it will cause more damage than help.
 
 
 📂 Directory Structure
@@ -82,21 +96,6 @@ sample/     Sample app for the server
 src/        Yii2-Oauth2-Server source
 tests/      Codeception unit and functional tests
 ```
-
-
-↘️ Importing/Migrating
-----------------------
-To ease migrating from another project, the Yii2-Oauth2-Server supports importing data from other projects. 
-For example from the [filsh/yii2-oauth2-server](https://github.com/filsh/yii2-oauth2-server)
-
-Please see [Importing/Migrating from other servers](docs/guide/importing-migrating.md) for more information.
-
-
-🔎 Reporting Security issues
-----------------------------
-In case you found a security issue please [contact us directly](
-https://forms.gle/8aEGxmN51Hvb7oLJ7)
-DO NOT use the issue tracker or discuss it in the public forum as it will cause more damage than help.
 
 
 🚀 Contributing
