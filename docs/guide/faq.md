@@ -3,6 +3,10 @@ Frequently Asked Questions
 
 This FAQ describes common questions and errors and provides possible solutions for them.
 
+Configuration
+-------------
+To assist in debugging and finding endpoint URLs you can run the `./yii oauth2/debug/config` command.
+
 Error Messages
 --------------
 

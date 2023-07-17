@@ -51,11 +51,27 @@ There are two main sections in the documentation:
 * [Development Guide](docs/internals/README.md) for contributing to the Yii2-Oauth2-Server.
 
 
+🔮 FAQ 
+------
+This is a quick FAQ, the full version can be found [here](docs/guide/faq.md).
+
+#### *Where can I find the Oauth2 endpoints?*  
+To see an overview of the endpoints and other configuration you can run: `./yii oauth2/debug/config`
+
+#### *How can I see the configured clients?*  
+To see an overview of the clients you can run: `./yii oauth2/client/list`
+
+#### *The Oauth2 server throws an error, what should I do?*  
+Please check out the [full FAQ](docs/guide/faq.md#error-messages) first.
+If that doesn't solve the problem, please [report an issue](docs/internals/report-an-issue.md).
+
+
 📜 Versioning & Change Log
 --------------------------
 The Yii2-Oauth2-Server follows [Semantic Versioning 2.0](https://semver.org/spec/v2.0.0.html)  
 Please see the [Change Log](CHANGELOG.md) for more information on version history 
 and the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer version.
+
 
 📂 Directory Structure
 ----------------------
@@ -77,14 +93,14 @@ Please see [Importing/Migrating from other servers](docs/guide/importing-migrati
 
 
 🔎 Reporting Security issues
--------------------------
+----------------------------
 In case you found a security issue please [contact us directly](
 https://forms.gle/8aEGxmN51Hvb7oLJ7)
 DO NOT use the issue tracker or discuss it in the public forum as it will cause more damage than help.
 
 
 🚀 Contributing
---------------
+---------------
 The Yii2-Oauth2-Server is [Open Source](LICENSE.md). You can help by:
 
 - [Report an issue](docs/internals/report-an-issue.md)
