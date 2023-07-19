@@ -23,16 +23,18 @@ Upgrade from v1.0.0-alpha14
   If you don't define a custom implementation for the interface and don't use the classes and functions directly this
   won't affect you, otherwise you might have to rename the class(es)/function(s).
 
+
 Upgrade from v1.0.0-alpha13
---------------------------
+---------------------------
 
 * The `Oauth2UserInterface` now defines the `getId()` function and
   the `Oauth2ClientInterface` now defines `getMinimumSecretLength` and `setMinimumSecretLength` functions.  
   If you don't define a custom implementation for these interfaces this won't affect you,
-  otherwise you might have implement these functions.
+  otherwise you might have to implement these functions.
+
 
 Upgrade from v1.0.0-alpha12
---------------------------
+---------------------------
 
 * The Model interfaces and traits have been refactored to use a more generic findByPk() instead of findById().
   If you don't use these interfaces and traits directly this won't affect you.
@@ -42,8 +44,9 @@ Upgrade from v1.0.0-alpha12
     their functionality is replaced by the `Oauth2ActiveRecordInterface` and `Oauth2ActiveRecordTrait` respectively.
   - The `Oauth2ClientInterface` has additional getters and setters and a `syncClientScopes()` function. 
 
+
 Upgrade from v1.0.0-alpha10
---------------------------
+---------------------------
 
 * > Note: Database changes will not be incremental till the first stable release.
 
@@ -57,6 +60,7 @@ Upgrade from v1.0.0-alpha10
   ```SQL
   ALTER TABLE `oauth2_client` ADD COLUMN `allow_variable_redirect_uri_query` BOOLEAN NOT NULL DEFAULT false AFTER `redirect_uris`;
   ```
+
 
 Upgrade from v1.0.0-alpha5
 --------------------------
@@ -103,6 +107,7 @@ Upgrade from v1.0.0-alpha5
 * The method `\rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface::getScopesAppliedByDefaultAutomatically()`  
   has been renamed to: `\rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface::getScopesAppliedByDefaultWithoutConfirm()`  
   This most likely only affect you if you use your own implementation of the `Oauth2ClientAuthorizationRequestInterface`
+
 
 Upgrade from v1.0.0-alpha2
 --------------------------
