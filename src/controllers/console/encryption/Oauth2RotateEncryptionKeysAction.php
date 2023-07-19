@@ -20,10 +20,10 @@ class Oauth2RotateEncryptionKeysAction extends Action
         $newKeyName = $this->controller->keyName;
 
         if (empty($newKeyName)) {
-            $newKeyName = $module->getEncryptor()->getDefaultKeyName();
+            $newKeyName = $module->getCryptographer()->getDefaultKeyName();
         }
 
-        if (!$module->getEncryptor()->hasKey($newKeyName)) {
+        if (!$module->getCryptographer()->hasKey($newKeyName)) {
             throw new InvalidArgumentException('No key with name "' . $newKeyName . '" available.');
         }
 

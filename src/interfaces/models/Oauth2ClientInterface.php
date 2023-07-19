@@ -4,7 +4,7 @@ namespace rhertogh\Yii2Oauth2Server\interfaces\models;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2EncryptorInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2CryptographerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2ActiveRecordInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2EnabledInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2EncryptedStorageInterface;
@@ -221,19 +221,19 @@ interface Oauth2ClientInterface extends
     public function validateGrantType($grantTypeIdentifier);
 
     /**
-     * Set the client secret. It will be encrypted by the encryptor.
+     * Set the client secret. It will be encrypted by the cryptographer.
      * Note: For security if $oldSecretValidUntil is not specified the old secret will be cleared
      * (regardless if it was expired or not).
      *
      * @param string|null $secret
-     * @param Oauth2EncryptorInterface $encryptor
+     * @param Oauth2CryptographerInterface $cryptographer
      * @param \DateTimeImmutable|\DateInterval|null $oldSecretValidUntil
      * @param string|null $keyName The name of the key to use for the encryption
      * (must be present in the available keys).
      * @return $this
      * @since 1.0.0
      */
-    public function setSecret($secret, $encryptor, $oldSecretValidUntil = null, $keyName = null);
+    public function setSecret($secret, $cryptographer, $oldSecretValidUntil = null, $keyName = null);
 
     /**
      * Validate new secret against the validation rules.
@@ -263,19 +263,19 @@ interface Oauth2ClientInterface extends
 
     /**
      * Get the decrypted secret.
-     * @param Oauth2EncryptorInterface $encryptor
+     * @param Oauth2CryptographerInterface $cryptographer
      * @return string
      * @since 1.0.0
      */
-    public function getDecryptedSecret($encryptor);
+    public function getDecryptedSecret($cryptographer);
 
     /**
      * Get the decrypted old secret.
-     * @param Oauth2EncryptorInterface $encryptor
+     * @param Oauth2CryptographerInterface $cryptographer
      * @return string
      * @since 1.0.0
      */
-    public function getDecryptedOldSecret($encryptor);
+    public function getDecryptedOldSecret($cryptographer);
 
     /**
      * Get the old secret expiry date/time.
@@ -289,11 +289,11 @@ interface Oauth2ClientInterface extends
      * If an "old" secret is set (and its "valid until" date is valid) the secret will also be validated against it
      * in case the regular stored secret fails.
      * @param string $secret
-     * @param Oauth2EncryptorInterface $encryptor
+     * @param Oauth2CryptographerInterface $cryptographer
      * @return bool
      * @since 1.0.0
      */
-    public function validateSecret($secret, $encryptor);
+    public function validateSecret($secret, $cryptographer);
 
     /**
      * Validate the requested scopes for the client.

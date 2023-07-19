@@ -7,7 +7,7 @@ use Defuse\Crypto\Exception\BadFormatException;
 use Defuse\Crypto\Exception\EnvironmentIsBrokenException;
 use Defuse\Crypto\Exception\WrongKeyOrModifiedCiphertextException;
 use Defuse\Crypto\Key;
-use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2EncryptorInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2CryptographerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\encryption\Oauth2EncryptionKeyFactoryInterface;
 use Yii;
 use yii\base\Component;
@@ -15,7 +15,7 @@ use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
 use yii\helpers\Json;
 
-class Oauth2Encryptor extends Component implements Oauth2EncryptorInterface
+class Oauth2Cryptographer extends Component implements Oauth2CryptographerInterface
 {
     /**
      * Separator between different parts in the data. E.g. the keyName and secret.

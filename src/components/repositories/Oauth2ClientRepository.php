@@ -43,7 +43,7 @@ class Oauth2ClientRepository extends Oauth2BaseRepository implements Oauth2Clien
             $client
             && $client->isEnabled()
             && $client->validateGrantType($grantType)
-            && (!$client->isConfidential() || $client->validateSecret($clientSecret, $this->_module->getEncryptor()))
+            && (!$client->isConfidential() || $client->validateSecret($clientSecret, $this->_module->getCryptographer()))
         ) {
             return true;
         }

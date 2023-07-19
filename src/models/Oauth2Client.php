@@ -349,7 +349,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritDoc
      */
-    public static function rotateStorageEncryptionKeys($encryptor, $newKeyName = null)
+    public static function rotateStorageEncryptionKeys($cryptographer, $newKeyName = null)
     {
         $numUpdated = 0;
         $encryptedAttributes = static::getEncryptedAttributes();
@@ -359,7 +359,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
         try {
             /** @var static $client */
             foreach ($query->each() as $client) {
-                $client->rotateStorageEncryptionKey($encryptor, $newKeyName);
+                $client->rotateStorageEncryptionKey($cryptographer, $newKeyName);
                 if ($client->getDirtyAttributes($encryptedAttributes)) {
                     $client->persist();
                     $numUpdated++;
@@ -377,7 +377,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritDoc
      */
-    public static function getUsedStorageEncryptionKeys($encryptor)
+    public static function getUsedStorageEncryptionKeys($cryptographer)
     {
         $encryptedAttributes = static::getEncryptedAttributes();
         $query = static::find()->andWhere(['NOT', array_fill_keys($encryptedAttributes, null)]);
@@ -387,7 +387,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
             foreach ($encryptedAttributes as $encryptedAttribute) {
                 $data = $client->$encryptedAttribute;
                 if (!empty($data)) {
-                    ['keyName' => $keyName] = $encryptor->parseData($data);
+                    ['keyName' => $keyName] = $cryptographer->parseData($data);
                     if (array_key_exists($keyName, $keyUsage)) {
                         $keyUsage[$keyName][] = $client->getPrimaryKey();
                     } else {
@@ -403,13 +403,13 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritDoc
      */
-    public function rotateStorageEncryptionKey($encryptor, $newKeyName = null)
+    public function rotateStorageEncryptionKey($cryptographer, $newKeyName = null)
     {
         foreach (static::getEncryptedAttributes() as $attribute) {
             $data = $this->getAttribute($attribute);
             if ($data) {
                 try {
-                    $this->setAttribute($attribute, $encryptor->rotateKey($data, $newKeyName));
+                    $this->setAttribute($attribute, $cryptographer->rotateKey($data, $newKeyName));
                 } catch (\Exception $e) {
                     throw new Exception('Unable to rotate key for client "' . $this->identifier
                         . '", attribute "' . $attribute . '": ' . $e->getMessage(), 0, $e);
@@ -421,7 +421,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritDoc
      */
-    public function setSecret($secret, $encryptor, $oldSecretValidUntil = null, $keyName = null)
+    public function setSecret($secret, $cryptographer, $oldSecretValidUntil = null, $keyName = null)
     {
         if ($this->isConfidential()) {
             if (!$this->validateNewSecret($secret, $error)) {
@@ -436,7 +436,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
                 $oldSecretData = $this->getAttribute('secret') ?? null;
                 if ($oldSecretData) {
                     // Ensure correct encryption key.
-                    $oldSecretData = $encryptor->encryp($encryptor->decrypt($oldSecretData), $keyName);
+                    $oldSecretData = $cryptographer->encryp($cryptographer->decrypt($oldSecretData), $keyName);
                     $this->setAttribute('old_secret', $oldSecretData);
 
                     if ($oldSecretValidUntil instanceof \DateInterval) {
@@ -446,7 +446,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
                 }
             }
 
-            $this->setAttribute('secret', $encryptor->encryp($secret, $keyName));
+            $this->setAttribute('secret', $cryptographer->encryp($secret, $keyName));
         } else {
             if ($secret !== null) {
                 throw new InvalidArgumentException(
@@ -496,17 +496,17 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritDoc
      */
-    public function getDecryptedSecret($encryptor)
+    public function getDecryptedSecret($cryptographer)
     {
-        return $encryptor->decrypt($this->secret);
+        return $cryptographer->decrypt($this->secret);
     }
 
     /**
      * @inheritDoc
      */
-    public function getDecryptedOldSecret($encryptor)
+    public function getDecryptedOldSecret($cryptographer)
     {
-        return $encryptor->decrypt($this->old_secret);
+        return $cryptographer->decrypt($this->old_secret);
     }
 
     /**
@@ -520,17 +520,17 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritdoc
      */
-    public function validateSecret($secret, $encryptor)
+    public function validateSecret($secret, $cryptographer)
     {
         return is_string($secret)
             && strlen($secret)
             && (
-                Yii::$app->security->compareString($this->getDecryptedSecret($encryptor), $secret)
+                Yii::$app->security->compareString($this->getDecryptedSecret($cryptographer), $secret)
                 || (
                     !empty($this->old_secret)
                     && !empty($this->old_secret_valid_until)
                     && $this->old_secret_valid_until > (new \DateTime())
-                    && Yii::$app->security->compareString($encryptor->decrypt($this->old_secret), $secret)
+                    && Yii::$app->security->compareString($cryptographer->decrypt($this->old_secret), $secret)
                 )
             );
     }

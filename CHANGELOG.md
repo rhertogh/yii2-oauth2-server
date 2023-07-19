@@ -13,6 +13,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Added
 
 ### Changed
+- Renamed the `Oauth2EncryptorInterface` (and all related classes/functions) to `Oauth2CryptographerInterface` to better reflect its purpose and future use. (rhertogh) 
 
 ### Deprecated
 

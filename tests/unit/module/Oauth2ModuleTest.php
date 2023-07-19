@@ -20,7 +20,7 @@ use rhertogh\Yii2Oauth2Server\filters\auth\Oauth2HttpBearerAuth;
 use rhertogh\Yii2Oauth2Server\helpers\DateIntervalHelper;
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2EncryptorInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2CryptographerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\encryption\Oauth2EncryptionKeyFactoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeCollectionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeInterface;
@@ -456,14 +456,14 @@ class Oauth2ModuleTest extends DatabaseTestCase
     /**
      * @depends testInstantiateModule
      */
-    public function testGetEncryptor()
+    public function testGetCryptographer()
     {
         $this->mockConsoleApplication();
         $module = Oauth2Module::getInstance();
-        $encryptor = $module->getEncryptor();
+        $cryptographer = $module->getCryptographer();
         $data = 'test';
-        $this->assertInstanceOf(Oauth2EncryptorInterface::class, $encryptor);
-        $this->assertEquals($data, $encryptor->decrypt($encryptor->encryp($data)));
+        $this->assertInstanceOf(Oauth2CryptographerInterface::class, $cryptographer);
+        $this->assertEquals($data, $cryptographer->decrypt($cryptographer->encryp($data)));
     }
 
     public function testRotateStorageEncryptionKeys()

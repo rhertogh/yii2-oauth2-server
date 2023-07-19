@@ -14,6 +14,15 @@ Please see the [Change Log](CHANGELOG.md) for more information on version histor
   from version A to version C and there is version B between A and C, you need to follow the instructions
   for both A and B.
 
+Upgrade from v1.0.0-alpha14
+---------------------------
+
+* The `Oauth2EncryptorInterface` has been renamed to `Oauth2CryptographerInterface`.
+  This also applies to all related classes and functions like the `Oauth2Cryptographer` itself and 
+  `Oauth2Module::getCryptographer`.  
+  If you don't define a custom implementation for the interface and don't use the classes and functions directly this
+  won't affect you, otherwise you might have to rename the class(es)/function(s).
+
 Upgrade from v1.0.0-alpha13
 --------------------------
 

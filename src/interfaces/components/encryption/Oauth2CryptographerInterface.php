@@ -2,7 +2,7 @@
 
 namespace rhertogh\Yii2Oauth2Server\interfaces\components\encryption;
 
-interface Oauth2EncryptorInterface
+interface Oauth2CryptographerInterface
 {
     /**
      * Set the available encryption keys.

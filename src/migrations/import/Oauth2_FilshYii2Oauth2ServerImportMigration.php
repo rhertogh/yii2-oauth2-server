@@ -114,7 +114,7 @@ abstract class Oauth2_FilshYii2Oauth2ServerImportMigration extends Oauth2BaseMig
                 }
                 $client
                     ->setType(Oauth2ClientInterface::TYPE_CONFIDENTIAL)
-                    ->setSecret($clientData['client_secret'], $module->getEncryptor());
+                    ->setSecret($clientData['client_secret'], $module->getCryptographer());
             } else {
                 $client->setType(Oauth2ClientInterface::TYPE_PUBLIC);
             }

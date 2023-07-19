@@ -26,7 +26,7 @@ use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\helpers\Psr7Helper;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\common\DefaultAccessTokenTtlInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2EncryptorInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2CryptographerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\encryption\Oauth2EncryptionKeyFactoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\grants\base\Oauth2GrantTypeFactoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeCollectionInterface;
@@ -444,10 +444,10 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
     protected $_resourceServer = null;
 
     /**
-     * @var Oauth2EncryptorInterface|null Cache for the Oauth2Encryptor
+     * @var Oauth2CryptographerInterface|null Cache for the Oauth2Cryptographer
      * @since 1.0.0
      */
-    protected $_encryptor = null;
+    protected $_cryptographer = null;
 
     /**
      * @var string|null The authorization header used when the authorization request was validated.
@@ -627,7 +627,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
 
         try {
             if ($type == Oauth2ClientInterface::TYPE_CONFIDENTIAL) {
-                $client->setSecret($secret, $this->getEncryptor());
+                $client->setSecret($secret, $this->getCryptographer());
             }
 
             $client
@@ -685,7 +685,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
         if (!$this->_authorizationServer) {
             $this->ensureProperties(static::REQUIRED_SETTINGS_AUTHORIZATION_SERVER);
 
-            if (!$this->getEncryptor()->hasKey($this->defaultStorageEncryptionKey)) {
+            if (!$this->getCryptographer()->hasKey($this->defaultStorageEncryptionKey)) {
                 throw new InvalidConfigException(
                     'Key "' . $this->defaultStorageEncryptionKey . '" is not set in $storageEncryptionKeys'
                 );
@@ -840,21 +840,21 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
     }
 
     /**
-     * @return Oauth2EncryptorInterface The data encryptor for the module.
+     * @return Oauth2CryptographerInterface The data cryptographer for the module.
      * @throws InvalidConfigException
      * @since 1.0.0
      */
-    public function getEncryptor()
+    public function getCryptographer()
     {
-        if (!$this->_encryptor) {
-            $this->_encryptor = Yii::createObject([
-                'class' => Oauth2EncryptorInterface::class,
+        if (!$this->_cryptographer) {
+            $this->_cryptographer = Yii::createObject([
+                'class' => Oauth2CryptographerInterface::class,
                 'keys' => $this->storageEncryptionKeys,
                 'defaultKeyName' => $this->defaultStorageEncryptionKey,
             ]);
         }
 
-        return $this->_encryptor;
+        return $this->_cryptographer;
     }
 
     /**
@@ -864,7 +864,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
      */
     public function rotateStorageEncryptionKeys($newKeyName = null)
     {
-        $encryptor = $this->getEncryptor();
+        $cryptographer = $this->getCryptographer();
 
         $result = [];
         foreach (static::ENCRYPTED_MODELS as $modelInterface) {
@@ -873,7 +873,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
                 throw new InvalidConfigException($modelInterface . ' must implement '
                     . Oauth2EncryptedStorageInterface::class);
             }
-            $result[$modelClass] = $modelClass::rotateStorageEncryptionKeys($encryptor, $newKeyName);
+            $result[$modelClass] = $modelClass::rotateStorageEncryptionKeys($cryptographer, $newKeyName);
         }
 
         return $result;
@@ -885,7 +885,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
      */
     public function getStorageEncryptionKeyUsage()
     {
-        $encryptor = $this->getEncryptor();
+        $cryptographer = $this->getCryptographer();
 
         $result = [];
         foreach (static::ENCRYPTED_MODELS as $modelInterface) {
@@ -895,7 +895,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
                     . Oauth2EncryptedStorageInterface::class);
             }
 
-            $result[$modelClass] = $modelClass::getUsedStorageEncryptionKeys($encryptor);
+            $result[$modelClass] = $modelClass::getUsedStorageEncryptionKeys($cryptographer);
         }
 
         return $result;
@@ -1137,7 +1137,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
             /** @var Oauth2ClientInterface $client */
             $client = $this->getClientRepository()->findModelByIdentifier($clientIdentifier);
             if ($client && $client->isConfidential()) {
-                $clientSecret = $client->getDecryptedSecret($this->getEncryptor());
+                $clientSecret = $client->getDecryptedSecret($this->getCryptographer());
             } else {
                 $clientSecret = null;
             }

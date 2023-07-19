@@ -66,7 +66,7 @@ class Oauth2SetClientSecretAction extends Action
             }
         }
 
-        $client->setSecret($secret, $module->getEncryptor(), $oldSecretValidUntil);
+        $client->setSecret($secret, $module->getCryptographer(), $oldSecretValidUntil);
         $client->persist();
 
         if ($oldSecretValidUntil) {

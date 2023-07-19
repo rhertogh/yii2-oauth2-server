@@ -3,14 +3,14 @@
 namespace Yii2Oauth2ServerTests\unit\components\encryption;
 
 use Defuse\Crypto\Exception\EnvironmentIsBrokenException;
-use rhertogh\Yii2Oauth2Server\components\encryption\Oauth2Encryptor;
+use rhertogh\Yii2Oauth2Server\components\encryption\Oauth2Cryptographer;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\encryption\Oauth2EncryptionKeyFactoryInterface;
 use Yii2Oauth2ServerTests\unit\TestCase;
 
 /**
- * @covers \rhertogh\Yii2Oauth2Server\components\encryption\Oauth2Encryptor
+ * @covers \rhertogh\Yii2Oauth2Server\components\encryption\Oauth2Cryptographer
  */
-class Oauth2EncryptorTest extends TestCase
+class Oauth2CryptographerTest extends TestCase
 {
     protected $keys = [
         // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
@@ -22,16 +22,16 @@ class Oauth2EncryptorTest extends TestCase
     public function testEncAndDecryption()
     {
         $this->mockConsoleApplication();
-        $encryptor = new Oauth2Encryptor([
+        $cryptographer = new Oauth2Cryptographer([
             'keys' => $this->keys,
             'defaultKeyName' => 'test',
         ]);
         $data = 'secret';
 
-        $ciphertext = $encryptor->encryp($data);
+        $ciphertext = $cryptographer->encryp($data);
         $this->assertFalse(strpos($ciphertext, $data));
 
-        $plaintext = $encryptor->decrypt($ciphertext);
+        $plaintext = $cryptographer->decrypt($ciphertext);
         $this->assertEquals($data, $plaintext);
     }
 
@@ -41,7 +41,7 @@ class Oauth2EncryptorTest extends TestCase
         $this->expectExceptionMessage(
             'Encryption key "test" is malformed: Encoding::hexToBin() input is not a hex string.'
         );
-        new Oauth2Encryptor([
+        new Oauth2Cryptographer([
             'keys' => [
                 'test' => 'malformed'
             ],
@@ -66,52 +66,52 @@ class Oauth2EncryptorTest extends TestCase
         ]);
 
         $this->expectExceptionMessage('Could not instantiate key "test": test message');
-        new Oauth2Encryptor([
+        new Oauth2Cryptographer([
             'keys' => $this->keys,
         ]);
     }
 
     public function testGetSetDefaultKeyName()
     {
-        $encryptor = new Oauth2Encryptor();
+        $cryptographer = new Oauth2Cryptographer();
 
-        $encryptor->setDefaultKeyName('test_default_key');
-        $this->assertEquals('test_default_key', $encryptor->getDefaultKeyName());
+        $cryptographer->setDefaultKeyName('test_default_key');
+        $this->assertEquals('test_default_key', $cryptographer->getDefaultKeyName());
     }
 
     public function testGetDefaultKeyNameWithoutItBeingSet()
     {
-        $encryptor = new Oauth2Encryptor();
+        $cryptographer = new Oauth2Cryptographer();
 
         $this->expectExceptionMessage('Unable to get the defaultKeyName since it is not set.');
-        $encryptor->encryp('test');
+        $cryptographer->encryp('test');
     }
 
     public function testEncryptWithoutKey()
     {
-        $encryptor = new Oauth2Encryptor();
+        $cryptographer = new Oauth2Cryptographer();
 
         $this->expectExceptionMessage('Unable to encrypt, no key with name "non-existing" has been set');
-        $encryptor->encryp('test', 'non-existing');
+        $cryptographer->encryp('test', 'non-existing');
     }
 
     public function testEncryptWithoutDataSeparator()
     {
         $this->mockConsoleApplication();
-        $encryptor = new Oauth2Encryptor([
+        $cryptographer = new Oauth2Cryptographer([
             'keys' => $this->keys,
             'defaultKeyName' => 'test',
             'dataSeparator' => '',
         ]);
 
         $this->expectExceptionMessage('Unable to encrypt, dataSeparator is empty');
-        $encryptor->encryp('test');
+        $cryptographer->encryp('test');
     }
 
     public function testEncryptWithoutKeyContainingDataSeparator()
     {
         $this->mockConsoleApplication();
-        $encryptor = new Oauth2Encryptor([
+        $cryptographer = new Oauth2Cryptographer([
             'keys' => [
                 'test::' => $this->keys['test'],
             ],
@@ -120,52 +120,52 @@ class Oauth2EncryptorTest extends TestCase
         ]);
 
         $this->expectExceptionMessage('Unable to encrypt, key name "test::" contains dataSeparator "::"');
-        $encryptor->encryp('test');
+        $cryptographer->encryp('test');
     }
 
     public function testDecryptWithInvalidSeparator()
     {
-        $encryptor = new Oauth2Encryptor([
+        $cryptographer = new Oauth2Cryptographer([
             'dataSeparator' => '::',
         ]);
 
         $this->expectExceptionMessage('Unable to decrypt, $data must be in format "keyName::ciphertext"');
-        $encryptor->decrypt('test:data');
+        $cryptographer->decrypt('test:data');
     }
 
     public function testDecryptWithMissingKey()
     {
-        $encryptor = new Oauth2Encryptor();
+        $cryptographer = new Oauth2Cryptographer();
 
         $this->expectExceptionMessage('Unable to decrypt, no key with name "test" has been set');
-        $encryptor->decrypt('test::data');
+        $cryptographer->decrypt('test::data');
     }
 
     public function testRotateKey()
     {
         $this->mockConsoleApplication();
-        $encryptor = new Oauth2Encryptor([
+        $cryptographer = new Oauth2Cryptographer([
             'keys' => $this->keys,
             'defaultKeyName' => 'test',
         ]);
         $data = 'secret';
 
-        $ciphertext = $encryptor->encryp($data);
+        $ciphertext = $cryptographer->encryp($data);
         $this->assertStringStartsWith('test::', $ciphertext);
 
-        $ciphertext = $encryptor->rotateKey($ciphertext, 'new');
+        $ciphertext = $cryptographer->rotateKey($ciphertext, 'new');
         $this->assertStringStartsWith('new::', $ciphertext);
 
         // Same key shouldn't change the data.
-        $this->assertEquals($ciphertext, $encryptor->rotateKey($ciphertext, 'new'));
+        $this->assertEquals($ciphertext, $cryptographer->rotateKey($ciphertext, 'new'));
 
-        $plaintext = $encryptor->decrypt($ciphertext);
+        $plaintext = $cryptographer->decrypt($ciphertext);
         $this->assertEquals($data, $plaintext);
 
         // Rotate back to default key (no `newKeyName` specified).
-        $ciphertext = $encryptor->rotateKey($ciphertext);
+        $ciphertext = $cryptographer->rotateKey($ciphertext);
         $this->assertStringStartsWith('test::', $ciphertext);
-        $plaintext = $encryptor->decrypt($ciphertext);
+        $plaintext = $cryptographer->decrypt($ciphertext);
         $this->assertEquals($data, $plaintext);
     }
 }

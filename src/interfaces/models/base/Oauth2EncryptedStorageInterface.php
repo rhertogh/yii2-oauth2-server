@@ -2,29 +2,29 @@
 
 namespace rhertogh\Yii2Oauth2Server\interfaces\models\base;
 
-use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2EncryptorInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2CryptographerInterface;
 
 interface Oauth2EncryptedStorageInterface
 {
     /**
      * Encrypt all models with a new key.
      *
-     * @param Oauth2EncryptorInterface $encryptor
+     * @param Oauth2CryptographerInterface $cryptographer
      * @param string|null $newKeyName The name of the new key to use for the encryption
      * (must be present in the available keys).
      * @return int Number of updated records
      * @since 1.0.0
      */
-    public static function rotateStorageEncryptionKeys($encryptor, $newKeyName = null);
+    public static function rotateStorageEncryptionKeys($cryptographer, $newKeyName = null);
 
     /**
      * Get the encryption key usages
      *
-     * @param Oauth2EncryptorInterface $encryptor
+     * @param Oauth2CryptographerInterface $cryptographer
      * @return array
      * @since 1.0.0
      */
-    public static function getUsedStorageEncryptionKeys($encryptor);
+    public static function getUsedStorageEncryptionKeys($cryptographer);
 
     /**
      * The attributes that are encrypted for this model
@@ -37,11 +37,11 @@ interface Oauth2EncryptedStorageInterface
     /**
      * Encrypt the model's data with a new key.
      *
-     * @param Oauth2EncryptorInterface $encryptor
+     * @param Oauth2CryptographerInterface $cryptographer
      * @param string|null $newKeyName The name of the new key to use for the encryption
      * (must be present in the available keys).
      * if `null` the default key name will be used.
      * @since 1.0.0
      */
-    public function rotateStorageEncryptionKey($encryptor, $newKeyName = null);
+    public function rotateStorageEncryptionKey($cryptographer, $newKeyName = null);
 }

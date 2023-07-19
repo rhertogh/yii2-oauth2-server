@@ -8,7 +8,7 @@ use Lcobucci\JWT\Signer\Rsa\Sha256;
 use League\OAuth2\Server\CryptKey;
 use rhertogh\Yii2Oauth2Server\components\authorization\Oauth2ClientAuthorizationRequest;
 use rhertogh\Yii2Oauth2Server\components\authorization\Oauth2ScopeAuthorizationRequest;
-use rhertogh\Yii2Oauth2Server\components\encryption\Oauth2Encryptor;
+use rhertogh\Yii2Oauth2Server\components\encryption\Oauth2Cryptographer;
 use rhertogh\Yii2Oauth2Server\components\factories\encryption\Oauth2EncryptionKeyFactory;
 use rhertogh\Yii2Oauth2Server\components\factories\grants\Oauth2AuthCodeGrantFactory;
 use rhertogh\Yii2Oauth2Server\components\factories\grants\Oauth2ClientCredentialsGrantFactory;
@@ -41,7 +41,7 @@ use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ServerController;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2WellKnownController;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ScopeAuthorizationRequestInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2EncryptorInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2CryptographerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\encryption\Oauth2EncryptionKeyFactoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\grants\Oauth2AuthCodeGrantFactoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\grants\Oauth2ClientCredentialsGrantFactoryInterface;
@@ -335,7 +335,7 @@ abstract class Oauth2BaseModule extends Module
         Oauth2OidcClaimInterface::class => Oauth2OidcClaim::class,
         Oauth2OidcBearerTokenResponseInterface::class => Oauth2OidcBearerTokenResponse::class,
         # Components (Misc)
-        Oauth2EncryptorInterface::class => Oauth2Encryptor::class,
+        Oauth2CryptographerInterface::class => Oauth2Cryptographer::class,
         Oauth2ClientAuthorizationRequestInterface::class => Oauth2ClientAuthorizationRequest::class,
         Oauth2ScopeAuthorizationRequestInterface::class => Oauth2ScopeAuthorizationRequest::class,
     ];

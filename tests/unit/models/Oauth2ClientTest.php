@@ -69,7 +69,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
                 ],
                 true,
                 function (Oauth2Client $model) {
-                    $model->setSecret('my-test-secret', Oauth2Module::getInstance()->getEncryptor());
+                    $model->setSecret('my-test-secret', Oauth2Module::getInstance()->getCryptographer());
                 }
             ],
             // Valid, multiple redirect URIs.
@@ -84,7 +84,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
                 ],
                 true,
                 function (Oauth2Client $model) {
-                    $model->setSecret('my-test-secret', Oauth2Module::getInstance()->getEncryptor());
+                    $model->setSecret('my-test-secret', Oauth2Module::getInstance()->getCryptographer());
                 }
             ],
             // Invalid (missing secret for type confidential).
@@ -351,7 +351,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
     {
         $oldKeyName = '2021-01-01';
         $newKeyName = '2022-01-01'; // default key name.
-        $encryptor = Oauth2Module::getInstance()->getEncryptor();
+        $cryptographer = Oauth2Module::getInstance()->getCryptographer();
 
         Oauth2Client::updateAll(['old_secret' => new Expression('secret')], ['NOT', ['secret' => null]]);
 
@@ -365,7 +365,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
             $this->assertStringStartsWith($oldKeyName . '::', $ciphertext);
         }
 
-        Oauth2Client::rotateStorageEncryptionKeys($encryptor);
+        Oauth2Client::rotateStorageEncryptionKeys($cryptographer);
 
         foreach ($clients as $client) {
             $client->refresh();
@@ -393,10 +393,10 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
             }
         });
 
-        $encryptor = Oauth2Module::getInstance()->getEncryptor();
+        $cryptographer = Oauth2Module::getInstance()->getCryptographer();
 
         $this->expectException(\Exception::class);
-        $modelClass::rotateStorageEncryptionKeys($encryptor);
+        $modelClass::rotateStorageEncryptionKeys($cryptographer);
     }
 
     public function testRotateStorageEncryptionKey()
@@ -404,17 +404,17 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $secret = 'my-test-secret';
         $oldKeyName = '2021-01-01';
         $newKeyName = '2022-01-01'; // default key name.
-        $encryptor = Oauth2Module::getInstance()->getEncryptor();
+        $cryptographer = Oauth2Module::getInstance()->getCryptographer();
         $client = $this->getMockModel();
-        $client->setSecret($secret, $encryptor, null, $oldKeyName);
+        $client->setSecret($secret, $cryptographer, null, $oldKeyName);
 
         $ciphertext = $client->getAttribute('secret');
         $this->assertStringStartsWith($oldKeyName . '::', $ciphertext);
 
-        $client->rotateStorageEncryptionKey($encryptor);
+        $client->rotateStorageEncryptionKey($cryptographer);
         $this->assertStringStartsWith($newKeyName . '::', $client->getAttribute('secret'));
 
-        $this->assertEquals($secret, $client->getDecryptedSecret($encryptor));
+        $this->assertEquals($secret, $client->getDecryptedSecret($cryptographer));
     }
 
     public function testSecret()
@@ -426,37 +426,37 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $secret2 = 'my-test-secret-2';
         $secret3 = 'my-test-secret-3';
 
-        $encryptor = Oauth2Module::getInstance()->getEncryptor();
+        $cryptographer = Oauth2Module::getInstance()->getCryptographer();
 
         $client = $this->getMockModel();
-        $client->setSecret($secret, $encryptor);
+        $client->setSecret($secret, $cryptographer);
 
         $ciphertext = $client->getAttribute('secret');
         $this->assertStringStartsWith($newKeyName . '::', $ciphertext);
         $this->assertFalse(strpos($secret, $client->getAttribute('secret')));
-        $this->assertEquals($secret, $client->getDecryptedSecret($encryptor));
-        $this->assertTrue($client->validateSecret($secret, $encryptor));
-        $this->assertFalse($client->validateSecret('incorrect', $encryptor));
+        $this->assertEquals($secret, $client->getDecryptedSecret($cryptographer));
+        $this->assertTrue($client->validateSecret($secret, $cryptographer));
+        $this->assertFalse($client->validateSecret('incorrect', $cryptographer));
 
-        $client->setSecret($secret2, $encryptor, new \DateInterval('P1D'), $oldKeyName);
+        $client->setSecret($secret2, $cryptographer, new \DateInterval('P1D'), $oldKeyName);
         $ciphertext = $client->getAttribute('secret');
         $this->assertStringStartsWith($oldKeyName . '::', $ciphertext);
         $ciphertext = $client->getAttribute('old_secret');
         $this->assertStringStartsWith($oldKeyName . '::', $ciphertext);
-        $this->assertEquals($secret2, $client->getDecryptedSecret($encryptor));
-        $this->assertTrue($client->validateSecret($secret2, $encryptor)); // new secret.
-        $this->assertTrue($client->validateSecret($secret, $encryptor)); // old secret (which should still be valid).
-        $this->assertFalse($client->validateSecret('incorrect', $encryptor));
+        $this->assertEquals($secret2, $client->getDecryptedSecret($cryptographer));
+        $this->assertTrue($client->validateSecret($secret2, $cryptographer)); // new secret.
+        $this->assertTrue($client->validateSecret($secret, $cryptographer)); // old secret (which should still be valid).
+        $this->assertFalse($client->validateSecret('incorrect', $cryptographer));
 
-        $client->setSecret($secret3, $encryptor, (new \DateTimeImmutable('yesterday')));
+        $client->setSecret($secret3, $cryptographer, (new \DateTimeImmutable('yesterday')));
         $ciphertext = $client->getAttribute('secret');
         $this->assertStringStartsWith($newKeyName . '::', $ciphertext);
         $ciphertext = $client->getAttribute('old_secret');
         $this->assertStringStartsWith($newKeyName . '::', $ciphertext);
-        $this->assertEquals($secret3, $client->getDecryptedSecret($encryptor));
-        $this->assertTrue($client->validateSecret($secret3, $encryptor)); // new secret.
-        $this->assertFalse($client->validateSecret($secret2, $encryptor)); // old secret (which has expired).
-        $this->assertFalse($client->validateSecret('incorrect', $encryptor));
+        $this->assertEquals($secret3, $client->getDecryptedSecret($cryptographer));
+        $this->assertTrue($client->validateSecret($secret3, $cryptographer)); // new secret.
+        $this->assertFalse($client->validateSecret($secret2, $cryptographer)); // old secret (which has expired).
+        $this->assertFalse($client->validateSecret('incorrect', $cryptographer));
     }
 
     /**
@@ -467,7 +467,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $client = $this->getMockModel();
 
         $this->expectException(InvalidArgumentException::class);
-        $client->setSecret('too-short', Oauth2Module::getInstance()->getEncryptor());
+        $client->setSecret('too-short', Oauth2Module::getInstance()->getCryptographer());
     }
 
     public function testSetSecretViaProperty()
@@ -483,20 +483,20 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
      */
     public function testSetSecretForTypeNonConfidential()
     {
-        $encryptor = Oauth2Module::getInstance()->getEncryptor();
+        $cryptographer = Oauth2Module::getInstance()->getCryptographer();
         $client = $this->getMockModel([
             'type' => Oauth2ClientInterface::TYPE_CONFIDENTIAL,
         ]);
 
-        $client->setSecret('my-test-secret', $encryptor);
+        $client->setSecret('my-test-secret', $cryptographer);
 
         $this->assertNotEmpty($client->secret);
         $client->type = Oauth2ClientInterface::TYPE_PUBLIC;
-        $client->setSecret(null, $encryptor); // Setting secret to `null` on public type should be allowed.
+        $client->setSecret(null, $cryptographer); // Setting secret to `null` on public type should be allowed.
         $this->assertNull($client->secret);
 
         $this->expectExceptionMessage('The secret for a non-confidential client can only be set to `null`');
-        $client->setSecret('my-test-secret', $encryptor);
+        $client->setSecret('my-test-secret', $cryptographer);
     }
 
     public function testValidateGrantType()

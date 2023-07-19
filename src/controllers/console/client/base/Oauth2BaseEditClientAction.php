@@ -164,7 +164,7 @@ class Oauth2BaseEditClientAction extends Oauth2BaseClientAction
                     'validator' => [$client, 'validateNewSecret'],
                 ]);
             }
-            $client->setSecret($secret, $module->getEncryptor());
+            $client->setSecret($secret, $module->getCryptographer());
         }
 
         if ($controller->allowVariableRedirectUriQuery !== null) {
