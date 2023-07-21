@@ -11,6 +11,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ----------------------------
 
 ### Added
+- The `EnvironmentHelper` class was added with the function `parseEnvVars()` to aid in the replacing of env vars in strings. (rhertogh)
 
 ### Changed
 - Renamed the `Oauth2EncryptorInterface` (and all related classes/functions) to `Oauth2CryptographerInterface` to better reflect its purpose and future use. (rhertogh) 
