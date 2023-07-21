@@ -156,6 +156,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $termsOfServiceUri = 'https://test.com/tos';
         $contacts = 'admin@test.com';
         $endUsersMayAuthorizeClient = false;
+        $minimumSecretLength = 123;
 
         $client = $this->getMockModel()
             ->setName($name)
@@ -170,7 +171,8 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
             ->setLogoUri($logoUri)
             ->setTermsOfServiceUri($termsOfServiceUri)
             ->setContacts($contacts)
-            ->setEndUsersMayAuthorizeClient($endUsersMayAuthorizeClient);
+            ->setEndUsersMayAuthorizeClient($endUsersMayAuthorizeClient)
+            ->setMinimumSecretLength($minimumSecretLength);
 
         // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
         $this->assertEquals($name, $client->getName());
@@ -186,6 +188,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $this->assertEquals($termsOfServiceUri, $client->getTermsOfServiceUri());
         $this->assertEquals($contacts, $client->getContacts());
         $this->assertEquals($endUsersMayAuthorizeClient, $client->endUsersMayAuthorizeClient());
+        $this->assertEquals($minimumSecretLength, $client->getMinimumSecretLength());
         // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
