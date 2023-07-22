@@ -16,7 +16,7 @@ return ArrayHelper::merge(require('main.php'), [
         'debug',
     ],
 
-    'controllerNamespace' => 'sample\controllers',
+    'controllerNamespace' => 'sample\\controllers\\web',
 
     'defaultRoute' => 'default/index',
 

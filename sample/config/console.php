@@ -26,6 +26,7 @@ return ArrayHelper::merge(require('main.php'), [
             ],
         ],
     ],
+    'controllerNamespace' => 'sample\\controllers\\console',
     'controllerMap' => [
         'migrate' => [
             'class' => MigrateController::class,
