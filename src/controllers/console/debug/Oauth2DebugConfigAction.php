@@ -9,6 +9,7 @@ use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\base\Action;
 use yii\console\ExitCode;
 use yii\console\widgets\Table;
+use yii\helpers\VarDumper;
 
 /**
  * @property Oauth2DebugController $controller
@@ -48,7 +49,7 @@ class Oauth2DebugConfigAction extends Action
         $serverRoles = [];
         if ($module->serverRole & Oauth2Module::SERVER_ROLE_AUTHORIZATION_SERVER) {
             $serverRoles[] = 'Authorization Server';
-            $grantTypes = implode(', ', array_map(
+            $grantTypes = array_values(array_map(
                 fn(GrantTypeInterface $grant) => $grant->getIdentifier(),
                 $module->getAuthorizationServer()->getEnabledGrantTypes()
             ));
@@ -68,6 +69,10 @@ class Oauth2DebugConfigAction extends Action
         $codesEncryptionKey = $module->codesEncryptionKey ? '[SET]' : '[NOT SET]';
         $storageEncryptionKeys = $module->storageEncryptionKeys ? '[SET]' : '[NOT SET]';
 
+        $clientRedirectUriEnvVarConfig = $module->clientRedirectUriEnvVarConfig
+            ? VarDumper::export($module->clientRedirectUriEnvVarConfig)
+            : '';
+
         return [
             'serverRole' => $module->serverRole . ' (' . implode(', ', $serverRoles) . ')',
 
@@ -77,6 +82,8 @@ class Oauth2DebugConfigAction extends Action
             'codesEncryptionKey' => $codesEncryptionKey,
             'storageEncryptionKeys' => $storageEncryptionKeys,
             'defaultStorageEncryptionKey' => $module->defaultStorageEncryptionKey,
+
+            'clientRedirectUriEnvVarConfig' => $clientRedirectUriEnvVarConfig,
 
             'identityClass' => $module->identityClass,
 

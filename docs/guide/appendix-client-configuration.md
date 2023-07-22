@@ -6,9 +6,9 @@ This chapter describes how to set up different clients.
 ## Configuring Postman
 1. Create a new Collection  
    ![Create new Collection in Postman](images/postman-new-collection.png)
-2. Set the authorization method of the new Collection to Oauth2  
-   ![Set authorization method to Oauth2 in Postman](images/postman-collection-set-authorization-oauth2.png)
-3. Configure Oauth2
+2. Set the authorization method of the new Collection to Oauth 2.0  
+   ![Set authorization method to Oauth 2.0 in Postman](images/postman-collection-set-authorization-oauth2.png)
+3. Configure Oauth 2.0
 
 | Setting       | Value                                     | Note                                            |
 | ------------- | ----------------------------------------- | ----------------------------------------------- |
@@ -21,7 +21,7 @@ This chapter describes how to set up different clients.
 | Client Secret | your-client-secret                        | The secret you used when creating the client.   |
 
 4. Click "Get New Access Token".
-5. The Oauth2 client authentication flow will start.
+5. The Oauth 2.0 client authentication flow will start.
     * In case you're not logged in you will be prompted to log in to your app as usual.
     * Authorize the Postman Sample Client by clicking "Allow".
     * The client is now authorized, and you will be redirected back to Postman.

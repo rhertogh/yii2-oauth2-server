@@ -11,6 +11,7 @@ Getting Started
 * [Installing the Yii2-Oauth2-Server](start-installation.md)
 * [OpenID Connect for the Yii2-Oauth2-Server](start-openid-connect.md)
 * [OpenID Connect Claims](start-openid-connect-claims.md)
+* [Advanced Redirect URI Configuration](start-redirect-uris.md)
 
 Security
 --------

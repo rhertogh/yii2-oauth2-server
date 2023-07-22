@@ -161,7 +161,36 @@ interface Oauth2ClientInterface extends
     public function setRedirectUri($uri);
 
     /**
-     * Validate the client against the full redirect uri, or allow for a variable "query" part.
+     * Get configuration for parsing environment variables in the redirect URI(s).
+     * @return array{
+     *             allowList: string[],
+     *             denyList: string[]|null,
+     *             parseNested: bool,
+     *             exceptionWhenNotSet: bool,
+     *             exceptionWhenNotAllowed: bool,
+     *         }|null
+     * @since 1.0.0
+     * @see \rhertogh\Yii2Oauth2Server\helpers\EnvironmentHelper::parseEnvVars()
+     */
+    public function getRedirectUriEnvVarConfig();
+
+    /**
+     * When configured, environment variables specified in the redirect URI(s) will be replaced by their values.
+     * @param array{
+     *             allowList: string[],
+     *             denyList: string[]|null,
+     *             parseNested: bool,
+     *             exceptionWhenNotSet: bool,
+     *             exceptionWhenNotAllowed: bool,
+     *        }|null $config
+     * @return $this
+     * @since 1.0.0
+     * @see \rhertogh\Yii2Oauth2Server\helpers\EnvironmentHelper::parseEnvVars()
+     */
+    public function setRedirectUriEnvVarConfig($config);
+
+    /**
+     * Validate the client against the full redirect URI, or allow for a variable "query" part.
      * @return bool
      * @see setAllowVariableRedirectUriQuery
      * @since 1.0.0
@@ -169,7 +198,7 @@ interface Oauth2ClientInterface extends
     public function isVariableRedirectUriQueryAllowed();
 
     /**
-     * By default, the client is validated against the full redirect uri including the "query" part.
+     * By default, the client is validated against the full redirect URI including the "query" part.
      * If the "query" part of the return uri is variable it may be marked as such.
      *
      * Warning: Using a variable return uri query should be avoided, since it might introduce an attack vector.

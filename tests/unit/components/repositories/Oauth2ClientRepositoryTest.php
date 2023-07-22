@@ -31,10 +31,23 @@ class Oauth2ClientRepositoryTest extends BaseOauth2RepositoryTest
      */
     public function testGetClientEntity($identifier, $class)
     {
-        $client = $this->getClientRepository()->getClientEntity($identifier);
+        $clientRedirectUriEnvVarConfig = [
+            'allowList' => 'TEST_*',
+        ];
+
+        $appConfig = [
+            'modules' => [
+                'oauth2' => [
+                    'clientRedirectUriEnvVarConfig' => $clientRedirectUriEnvVarConfig,
+                ],
+            ],
+        ];
+
+        $client = $this->getClientRepository($appConfig)->getClientEntity($identifier);
 
         if ($class !== null) {
             $this->assertInstanceOf($class, $client);
+            $this->assertEquals($clientRedirectUriEnvVarConfig, $client->getRedirectUriEnvVarConfig());
         } else {
             $this->assertNull($client);
         }
@@ -88,8 +101,10 @@ class Oauth2ClientRepositoryTest extends BaseOauth2RepositoryTest
      * @return Oauth2ClientRepositoryInterface
      * @throws \yii\base\InvalidConfigException
      */
-    protected function getClientRepository()
+    protected function getClientRepository($appConfig = [])
     {
+        $this->mockConsoleApplication($appConfig);
+
         return Yii::createObject([
             'class' => Oauth2ClientRepositoryInterface::class,
             'module' => Oauth2Module::getInstance(),

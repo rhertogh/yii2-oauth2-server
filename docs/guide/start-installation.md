@@ -132,7 +132,7 @@ Configuration
 
 User Identity Class
 -------------------
-In order to support Oauth 2 your User Identity Class (a.k.a. the User Model) must implement
+In order to support Oauth 2.0 your User Identity Class (a.k.a. the User Model) must implement
 `rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserInterface`
 
 ```php
@@ -266,31 +266,31 @@ A new client can be defined in one of the following ways:
    > Note: this option is *not* recommended since it requires manual encryption of the secrets.
 
 ### Redirect URIs
-Redirect URLs are a critical part of the OAuth 2 flow. After a user successfully authorizes an application,
+Redirect URLs are a critical part of the OAuth 2.0 flow. After a user successfully authorizes an application,
 the authorization server will redirect the user back to the application.
 Because the redirect URL will contain sensitive information, it is critical that the service doesn't redirect the user 
 to arbitrary locations.  
 To ensure the user will only be redirected to appropriate locations it is required to register one or more redirect URLs
 when defining a client.
 
-The Oauth2Client stores the redirect URIs in `redirect_uris` as JSON, e.g.:
-```JSON
-["http://localhost/redirect_uri/"]
+The redirect URIs can be set during the creation of the `Oauth2Module::createClient()` via the `$redirectUris` parameter
+or via the `Oauth2Client::setRedirectUri()` method.  
+In both cases a string or array of strings can be used, e.g.:
+```php
+[
+    'https://localhost:4200/auth/return/',
+    'https://app.my-domain.com/auth/return/',
+]
 ```
-> Note: Since MySQL prior to version 8 treats JSON as string the data will be stored as such, e.g.:
-> ```JSON
-> "[\"http://localhost/redirect_uri/\"]"
-> ```
-
-To allow variable redirect URIs (e.g. [between environments](https://12factor.net/config)) environment variables can be
-used in `redirect_uris` in the format of `${MY_ENV_VAR}`, e.g.:
-```JSON
-["https://${MY_APP_HOST}/redirect_uri/"]
+When enabled, it's also possible to use environment variables inside the redirect urls, e.g.:
+```php
+[
+    'https://${MY_APPLICATION_DOMAIN}/auth/return/',
+]
 ```
-> Hint: It's possible to use multiple environment variables in the same URL. 
+Please see the [Yii2-Oauth2-Server Redirect URIs Configuration](start-redirect-uris.md#using-environment-variables)
+on how to configure environment variables substitution.
 
-> Note: For security all variables in a redirect URL must be set. In case an empty environment variable is encountered
-> the redirect URL will be excluded.
 
 ### Sample client
 In order to quickly get started you can create a sample client for [Postman](https://www.postman.com/)

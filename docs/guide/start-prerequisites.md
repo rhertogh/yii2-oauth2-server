@@ -5,8 +5,8 @@ Although this package aims to be as self-explanatory as possible, some prior kno
 
 ## Oauth2 (and OpenID Connect)
 
-There are a lot of terminology specific Oauth2 and OpenID Connect like "grant types", "clients", "scopes" and "claims".
-It is *strongly* recommended that you get familiar with Oauth2 (and OpenID Connect if applicable) before continuing
+There are a lot of terminology specific Oauth 2.0 and OpenID Connect like "grant types", "clients", "scopes" and "claims".
+It is *strongly* recommended that you get familiar with Oauth 2.0 (and OpenID Connect if applicable) before continuing
 the installation and setup.  
 
 #### Good places to start are:

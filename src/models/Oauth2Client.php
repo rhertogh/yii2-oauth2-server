@@ -3,6 +3,9 @@
 namespace rhertogh\Yii2Oauth2Server\models;
 
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
+use rhertogh\Yii2Oauth2Server\helpers\EnvironmentHelper;
+use rhertogh\Yii2Oauth2Server\helpers\exceptions\EnvironmentVariableNotAllowedException;
+use rhertogh\Yii2Oauth2Server\helpers\exceptions\EnvironmentVariableNotSetException;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
@@ -30,6 +33,19 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
      * @var int
      */
     protected $minimumSecretLength = 10;
+
+    /**
+     * Configuration for parsing the `redirect_uris` with the EnvironmentHelper::parseEnvVars().
+     * @var array{
+     *          allowList: array,
+     *          denyList: array|null,
+     *          parseNested: bool,
+     *          exceptionWhenNotSet: bool,
+     *          exceptionWhenNotAllowed: bool,
+     *      }|null
+     * @see \rhertogh\Yii2Oauth2Server\helpers\EnvironmentHelper::parseEnvVars()
+     */
+    protected $redirectUriEnvVarConfig = null;
 
     /////////////////////////////
     /// ActiveRecord Settings ///
@@ -121,6 +137,8 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritdoc
      * @throws InvalidConfigException
+     * @throws EnvironmentVariableNotSetException
+     * @throws EnvironmentVariableNotAllowedException
      */
     public function getRedirectUri()
     {
@@ -129,11 +147,30 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
             return [];
         }
 
+        // Compatibility with DBMSs that don't support JSON data type
         if (is_string($uris)) {
             try {
                 $uris = Json::decode($uris);
             } catch (InvalidArgumentException $e) {
                 throw new InvalidConfigException('Invalid json in redirect_uris for client ' . $this->id, 0, $e);
+            }
+        }
+
+        $redirectUriEnvVarConfig = $this->getRedirectUriEnvVarConfig();
+        if ($redirectUriEnvVarConfig && version_compare(PHP_VERSION, '8.1.0', '<')) {
+            // PHP < 8.1 can only handle indexed array when unpacking.
+            $redirectUriEnvVarConfig = array_values($redirectUriEnvVarConfig);
+        }
+
+        if (is_string($uris)) {
+            if ($redirectUriEnvVarConfig && preg_match('/^\${[a-zA-Z0-9_]+}$/', $uris)) {
+                $uris = EnvironmentHelper::parseEnvVars($uris, ...$redirectUriEnvVarConfig);
+                try {
+                    // Try to parse the content of the environment variable(s) as JSON.
+                    $uris = Json::decode($uris);
+                } catch (InvalidArgumentException $e) {
+                    // Use as plain text if it failed.
+                }
             }
         }
 
@@ -149,14 +186,10 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
             if (!is_string($uri)) {
                 throw new InvalidConfigException('`redirect_uris` must be a JSON encoded string or array of strings.');
             }
-            preg_match_all('/\${(?<name>[a-zA-Z0-9_]+)}/', $uri, $matches, PREG_SET_ORDER);
-            foreach ($matches as $match) {
-                $envVar = getenv($match['name']);
-                if (strlen($envVar)) {
-                    $uris[$key] = str_replace($match[0], $envVar, $uris[$key]);
-                } else {
+            if ($redirectUriEnvVarConfig) {
+                $uris[$key] = EnvironmentHelper::parseEnvVars($uri, ...$redirectUriEnvVarConfig);
+                if (!$uris[$key]) {
                     unset($uris[$key]);
-                    break;
                 }
             }
         }
@@ -185,6 +218,24 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
 
         return $this;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getRedirectUriEnvVarConfig()
+    {
+        return $this->redirectUriEnvVarConfig;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setRedirectUriEnvVarConfig($config)
+    {
+        $this->redirectUriEnvVarConfig = $config;
+        return $this;
+    }
+
 
     public function isVariableRedirectUriQueryAllowed()
     {

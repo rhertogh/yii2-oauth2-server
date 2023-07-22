@@ -11,11 +11,13 @@ class EnvironmentHelper
     /**
      * Replace environment variables in a string with their respective value.
      * The format for env vars is '${ENV_VAR_NAME}', e.g.: 'Hello ${NAME}' will return 'Hello world' if the `NAME`
-     * environment variable is set to 'world'. Nesting is, when enabled, also possible, e.g.:
-     * Let's assume whe have the following environment variables set `NAMES=${NAME1} and ${NAME2},NAME1=Alice,NAME2=Bob`
+     * environment variable is set to 'world'.
+     * Nesting is, when enabled via the `$parseNested` argument, also possible, e.g.:
+     * Let's assume whe have the following environment variables set:
+     * `NAME1=Alice`, `NAME2=Bob`, `NAMES=${NAME1} and ${NAME2}`,
      * the string 'Hello ${NAMES}' would return 'Hello Alice and Bob'.
      *
-     * For security at least the $allowList must be set.
+     * For security, at least the $allowList must be set.
      * When the $allowList is set the variable(s) must match at least 1 pattern in the list to be allowed
      * (others will be denied).
      * When both the $allowList and the $denyList are set the variable(s) must match at least 1 pattern in the
@@ -29,8 +31,8 @@ class EnvironmentHelper
      * By default an `EnvironmentVariableNotSetException` is thrown when a specified environment variable is not set.
      * Similarly, an `EnvironmentVariableNotAllowedException` is thrown when access to a specified environment variable
      * is not allowed by the $allowList and/or $denyList.
-     * This behavior can be disabled by setting the $exceptionWhenNotSet or $exceptionWhenNotAllowed respectively
-     * to `false`. In that case, instead of an exception being thrown, the specified environment variable will be
+     * This behavior can be disabled by setting the $exceptionWhenNotSet or $exceptionWhenNotAllowed to `false`
+     * respectively. In that case, instead of an exception being thrown, the specified environment variable will be
      * replaced with an empty string.
      *
      * @param string $string The input string containing the environment variable(s).
@@ -99,19 +101,24 @@ class EnvironmentHelper
         );
     }
 
-    protected static function matchList($list, $item)
+    /**
+     * @param string[] $patterns
+     * @param string $subject
+     * @return bool
+     */
+    protected static function matchList($patterns, $subject)
     {
-        foreach ($list as $pattern) {
-            if ($pattern === '*' || $item === $pattern) {
+        foreach ($patterns as $pattern) {
+            if ($pattern === '*' || $subject === $pattern) {
                 return true;
             }
-            $pregMatch = @preg_match($pattern, $item);
+            $pregMatch = @preg_match($pattern, $subject);
             if ($pregMatch === 1) { // Regex match.
                 return true;
             } elseif ($pregMatch === false) { // Not a Regex.
                 if (mb_strpos($pattern, '*') !== false) {
                     $regex = '/^' . str_replace('*', '[a-zA-Z0-9_]*', $pattern) . '$/';
-                    if (preg_match($regex, $item)) {
+                    if (preg_match($regex, $subject)) {
                         return true;
                     }
                 }

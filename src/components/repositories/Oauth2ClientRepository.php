@@ -28,7 +28,12 @@ class Oauth2ClientRepository extends Oauth2BaseRepository implements Oauth2Clien
      */
     public function getClientEntity($clientIdentifier)
     {
-        return $this->findModelByIdentifier($clientIdentifier);
+        /** @var Oauth2ClientInterface $client */
+        $client = $this->findModelByIdentifier($clientIdentifier);
+        if ($client) {
+            $client->setRedirectUriEnvVarConfig($this->_module->clientRedirectUriEnvVarConfig);
+        }
+        return $client;
     }
 
     /**

@@ -52,6 +52,9 @@ return [
             'defaultAccessTokenTTL' => 'PT2H', // Set the default Access Token TTL if the grant type doesn't specify its own TTL (e.g. the Personal Access Token grant has its own TTL of 1 year).
             'migrationsFileOwnership' => '1000:1000', // The file ownership for generated migrations.
             'migrationsFileMode' => 0660, // The file access mode for generated migrations.
+            'clientRedirectUriEnvVarConfig' => [ // Enable environment variable substitution in oauth2 clients `redirect_uris`.
+                'allowList' => ['*'], // ⚠️ WARNING: Setting `allowList` to `['*']` allows all environment variables to be used, this is only used as an example and should be replaced by an actual list of allowed environment variables.
+            ],
         ],
     ],
 

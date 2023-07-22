@@ -319,6 +319,22 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
     public $clientAuthorizationView = 'authorize-client';
 
     /**
+     * Configuration for `Oauth2Client::setRedirectUriEnvVarConfig()`.
+     * When configured, environment variables specified in the `Oauth2Client` redirect URI(s) will be substituted with their values.
+     *
+     * @var array{
+     *          allowList: array,
+     *          denyList: array|null,
+     *          parseNested: bool,
+     *          exceptionWhenNotSet: bool,
+     *          exceptionWhenNotAllowed: bool,
+     *      }|null
+     * @see Oauth2ClientInterface::setRedirectUriEnvVarConfig()
+     * @see \rhertogh\Yii2Oauth2Server\helpers\EnvironmentHelper::parseEnvVars()
+     */
+    public $clientRedirectUriEnvVarConfig = null;
+
+    /**
      * @var string|null The URL path to the OpenID Connect Provider Configuration Information Action.
      * If set to `null` the endpoint will be disabled.
      * Note: This path is defined in the

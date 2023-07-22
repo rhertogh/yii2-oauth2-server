@@ -1,7 +1,7 @@
 Importing/Migrating from other servers
 ======================================
 
-To ease the transition from other Oauth2 Servers this extension can generate migrations to import existing data.
+To ease the transition from other Oauth 2.0 Servers this extension can generate migrations to import existing data.
 
 ## Generating and running an import migration
 

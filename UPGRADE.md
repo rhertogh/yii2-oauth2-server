@@ -17,6 +17,13 @@ Please see the [Change Log](CHANGELOG.md) for more information on version histor
 Upgrade from v1.0.0-alpha14
 ---------------------------
 
+* Using environment variable substitution in the `redirect_uri` of `Oauth2Client` now requires those environment
+  variables to be explicitly allowed by configuring the `Oauth2Mudule::$clientRedirectUriEnvVarConfig`.  
+  Please see the [Yii2-Oauth2-Server Redirect URIs Configuration](docs/guide/start-redirect-uris.md#using-environment-variables)
+  documentation for more details.
+* The `Oauth2ClientInterface` now defines `getRedirectUriEnvVarConfig` and `setRedirectUriEnvVarConfig` functions.  
+  If you don't define a custom implementation for this interface this won't affect you,
+  otherwise you might have to implement these functions.
 * The `Oauth2EncryptorInterface` has been renamed to `Oauth2CryptographerInterface`.
   This also applies to all related classes and functions like the `Oauth2Cryptographer` itself and 
   `Oauth2Module::getCryptographer`.  

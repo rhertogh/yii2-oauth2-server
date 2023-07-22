@@ -15,6 +15,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 
 ### Changed
 - Renamed the `Oauth2EncryptorInterface` (and all related classes/functions) to `Oauth2CryptographerInterface` to better reflect its purpose and future use. (rhertogh) 
+- The `redirectUris` for the `Oauth2Client` now supports an env var that contains a JSON array and now requires used env vars to be allow-/deny-listed. (rhertogh)
 
 ### Deprecated
 
@@ -82,7 +83,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ----------------------------
 
 ### Added
-- An Oauth2Client can now be configured to accept a variable query part in the redirect uri (`allow_variable_redirect_uri_query`). (rhertogh)
+- An Oauth2Client can now be configured to accept a variable query part in the redirect URI (`allow_variable_redirect_uri_query`). (rhertogh)
 
 ### Fixed
 - Using `true` (instead of `1`) as defautl value for DB column `user.enabled`. (rhertogh)

@@ -2,6 +2,8 @@
 
 namespace Yii2Oauth2ServerTests\unit\models;
 
+use rhertogh\Yii2Oauth2Server\helpers\exceptions\EnvironmentVariableNotAllowedException;
+use rhertogh\Yii2Oauth2Server\helpers\exceptions\EnvironmentVariableNotSetException;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
@@ -222,19 +224,118 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $redirectUris = [
             'https://localhost/redirect_uri_1',
             'https://localhost/redirect_uri_2',
-            'https://${DOES_NOT_EXIST}/test',
+            '${DOES_NOT_EXIST}',
             'https://app.${TEST_GET_REDIRECT_URI_HOST_NAME}/${TEST_GET_REDIRECT_PATH}',
         ];
         $client = $this->getMockModel(['redirect_uris' => Json::encode($redirectUris)]);
+        $client->setRedirectUriEnvVarConfig([
+            'allowList' => ['*'],
+            'denyList' => null,
+            'parseNested' => true,
+            'exceptionWhenNotSet' => false,
+        ]);
 
         $expected = [
             'https://localhost/redirect_uri_1',
             'https://localhost/redirect_uri_2',
-            // expect 'https://${DOES_NOT_EXIST}/test' to be removed.
+            // expect '${DOES_NOT_EXIST}' to be removed.
             "https://app.$envTestHost/$envTestPath",
         ];
 
         $this->assertEquals($expected, $client->getRedirectUri());
+    }
+
+    public function testGetRedirectUriByEnvVar()
+    {
+        $envTestUri = 'https://test-host1.com';
+        putenv('TEST_GET_REDIRECT_URI=' . $envTestUri);
+
+        $redirectUris = '${TEST_GET_REDIRECT_URI}';
+        $client = $this->getMockModel(['redirect_uris' => Json::encode($redirectUris)]);
+        $client->setRedirectUriEnvVarConfig([
+            'allowList' => ['TEST_GET_REDIRECT_URI'],
+        ]);
+
+        $this->assertEquals([$envTestUri], $client->getRedirectUri());
+    }
+
+    public function testGetRedirectUriByEnvVarJsonString()
+    {
+        $envTestUri = 'https://test-host1.com';
+        putenv('TEST_GET_REDIRECT_URI=' . Json::encode($envTestUri));
+
+        $redirectUris = '${TEST_GET_REDIRECT_URI}';
+        $client = $this->getMockModel(['redirect_uris' => Json::encode($redirectUris)]);
+        $client->setRedirectUriEnvVarConfig([
+            'allowList' => ['TEST_GET_REDIRECT_URI'],
+        ]);
+
+        $this->assertEquals([$envTestUri], $client->getRedirectUri());
+    }
+
+    public function testGetRedirectUriByEnvVarJsonArray()
+    {
+        $envTestUris = [
+            'https://test-host1.com',
+            'https://test-host2.com',
+        ];
+        putenv('TEST_GET_REDIRECT_URIS=' . Json::encode($envTestUris));
+
+        $redirectUris = '${TEST_GET_REDIRECT_URIS}';
+        $client = $this->getMockModel(['redirect_uris' => Json::encode($redirectUris)]);
+        $client->setRedirectUriEnvVarConfig([
+            'allowList' => ['TEST_GET_REDIRECT_URIS'],
+        ]);
+
+        $this->assertEquals($envTestUris, $client->getRedirectUri());
+    }
+
+    public function testGetRedirectUriWithEnvVarConfigNotSet()
+    {
+        $redirectUris = [
+            'https://${DOES_NOT_EXIST}/test',
+        ];
+        $client = $this->getMockModel(['redirect_uris' => Json::encode($redirectUris)]);
+
+        // Expect no parsing
+        $this->assertEquals($redirectUris, $client->getRedirectUri());
+    }
+
+    public function testGetRedirectUriWithNotSetEnvVar()
+    {
+        $redirectUris = [
+            'https://${DOES_NOT_EXIST}/test',
+        ];
+        $client = $this->getMockModel(['redirect_uris' => Json::encode($redirectUris)]);
+        $client->setRedirectUriEnvVarConfig([
+            'allowList' => ['*'],
+        ]);
+
+        $this->expectException(EnvironmentVariableNotSetException::class);
+        $client->getRedirectUri();
+    }
+
+    public function testGetRedirectUriWithNotAllowedEnvVar()
+    {
+        $envTestHost = 'test-host.com';
+        putenv('TEST_GET_REDIRECT_URI_HOST_NAME=' . $envTestHost);
+
+        $redirectUris = [
+            'https://app.${TEST_GET_REDIRECT_URI_HOST_NAME}/test',
+        ];
+        $client = $this->getMockModel(['redirect_uris' => Json::encode($redirectUris)]);
+        $client->setRedirectUriEnvVarConfig([
+            'allowList' => ['*'],
+        ]);
+        // Ensure test is working by first validating the setup
+        $this->assertEquals(["https://app.$envTestHost/test"], $client->getRedirectUri());
+
+        // Now ensure exception is thrown on "not allowed"
+        $client->setRedirectUriEnvVarConfig([
+            'allowList' => ['TEST'],
+        ]);
+        $this->expectException(EnvironmentVariableNotAllowedException::class);
+        $client->getRedirectUri();
     }
 
     public function testRedirectUriNotSet()

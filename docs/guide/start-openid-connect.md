@@ -177,7 +177,7 @@ For customization of the scopes/claims please see [OpenID Connect Claims](start-
 
 OpenID Connect and Oauth2 Refresh Tokens
 ----------------------------------------
-In order for a client to obtain an Oauth2 Refresh Token OpenID Connect the client should include the 'offline_access' scope.  
+In order for a client to obtain an Oauth 2.0 Refresh Token OpenID Connect the client should include the 'offline_access' scope.  
 Please see https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess for more details.
 
 This behavior can be overridden by setting the `openIdConnectIssueRefreshTokenWithoutOfflineAccessScope` to `true`.
