@@ -1,6 +1,6 @@
 <?php
 
-namespace sample\controllers;
+namespace sample\controllers\web;
 
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use sample\models\AccountSelectionForm;
