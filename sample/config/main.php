@@ -49,8 +49,9 @@ return [
             'migrationsNamespace' => 'sample\\migrations\\oauth2',  // The namespace with which migrations will be created (and by which they will be located).
             'enableOpenIdConnect' => true, // Only required if OpenID Connect support is required.
             'defaultUserAccountSelection' => Oauth2Module::USER_ACCOUNT_SELECTION_UPON_CLIENT_REQUEST, // Allow clients to request user account selection (OpenID Connect).
-            'migrationsFileOwnership' => '1000:1000',
-            'migrationsFileMode' => 0660
+            'defaultAccessTokenTTL' => 'PT2H', // Set the default Access Token TTL if the grant type doesn't specify its own TTL (e.g. the Personal Access Token grant has its own TTL of 1 year).
+            'migrationsFileOwnership' => '1000:1000', // The file ownership for generated migrations.
+            'migrationsFileMode' => 0660, // The file access mode for generated migrations.
         ],
     ],
 
