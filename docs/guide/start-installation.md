@@ -15,7 +15,7 @@ The preferred way to install this extension is through [composer](http://getcomp
 
 To install the latest stable version of the Yii2-Oauth2-Server run:
 ```bash
-composer install rhertogh/yii2-oauth2-server
+composer require rhertogh/yii2-oauth2-server
 ```
 
 Configuration
