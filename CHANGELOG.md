@@ -26,6 +26,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Improved
 
 ### Security
+- Changed minimum version for league/oauth2-server to 8.4.2. (rhertogh)
 
 
 [1.0.0-alpha14] - 2023-07-17

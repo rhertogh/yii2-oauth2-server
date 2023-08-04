@@ -20,7 +20,7 @@
     "require": {
         "php": ">=7.4.0",
         "yiisoft/yii2": "~2.0.43",
-        "league/oauth2-server": "~8.4.1"
+        "league/oauth2-server": "~8.4.2"
     },
     "require-dev": {
         "ext-json": "*",
