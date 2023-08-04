@@ -7,15 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer version.  
 
-[1.0.0-alpha15] - Unreleased
+[1.0.0-alpha16] - Unreleased
 ----------------------------
 
 ### Added
-- The `EnvironmentHelper` class was added with the function `parseEnvVars()` to aid in the replacing of env vars in strings. (rhertogh)
 
 ### Changed
-- Renamed the `Oauth2EncryptorInterface` (and all related classes/functions) to `Oauth2CryptographerInterface` to better reflect its purpose and future use. (rhertogh) 
-- The `redirectUris` for the `Oauth2Client` now supports an env var that contains a JSON array and now requires used env vars to be allow-/deny-listed. (rhertogh)
 
 ### Deprecated
 
@@ -26,7 +23,20 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Improved
 
 ### Security
-- Changed minimum version for league/oauth2-server to 8.4.2. (rhertogh)
+
+
+[1.0.0-alpha15] - 2023-08-04
+----------------------------
+
+### Added
+- The `EnvironmentHelper` class was added with the function `parseEnvVars()` to aid in the replacing of env vars in strings. (rhertogh)
+
+### Changed
+- Renamed the `Oauth2EncryptorInterface` (and all related classes/functions) to `Oauth2CryptographerInterface` to better reflect its purpose and future use. (rhertogh) 
+- The `redirectUris` for the `Oauth2Client` now supports an env var that contains a JSON array and now requires used env vars to be allow-/deny-listed. (rhertogh)
+
+### Security
+- Upgraded `league/oauth2-server` to v8.4.2 for https://github.com/advisories/GHSA-wj7q-gjg8-3cpm. (rhertogh)
 
 
 [1.0.0-alpha14] - 2023-07-17
