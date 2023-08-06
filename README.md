@@ -51,7 +51,7 @@ If you're not yet familiar with Oauth 2 we recommend to check out
 
 #### Installation:
 ```bash
-composer install rhertogh/yii2-oauth2-server
+composer require rhertogh/yii2-oauth2-server
 ```
 
 Full installation and configuration details can be found in the docs under
