@@ -50,6 +50,7 @@ If you're not yet familiar with Oauth 2 we recommend to check out
 * The minimum required Yii version is 2.0.43.
 
 #### Installation:
+The preferred way to install this extension is through [composer](https://getcomposer.org/download/).
 ```bash
 composer require rhertogh/yii2-oauth2-server
 ```
