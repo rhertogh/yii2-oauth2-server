@@ -1,8 +1,10 @@
 Identity, RBAC Permissions and Scopes
 =====================================
 
-This chapter describes how the Yii2-Oauth2-Server integrates with the Yii2 user component, [RBAC permissions](
-https://www.yiiframework.com/doc/guide/2.0/en/security-authorization#rbac) and the usage of OAuth 2.0 scopes. 
+This chapter describes how the Yii2-Oauth2-Server integrates with the 
+[Yii2 user component](https://www.yiiframework.com/doc/guide/2.0/en/security-authentication), 
+[RBAC permissions](https://www.yiiframework.com/doc/guide/2.0/en/security-authorization#rbac) 
+and the usage of OAuth 2.0 scopes.
 
 OAuth 2.0 flows (3-legged vs 2-legged)
 --------------------------------------
@@ -109,37 +111,48 @@ Since the client authentication is used as the authorization grant, no additiona
 Yii2-Oauth2-Server Integration
 ------------------------------
 
+This section requires knowledge about
+[Authentication](https://www.yiiframework.com/doc/guide/2.0/en/security-authentication)
+and [Authorization](https://www.yiiframework.com/doc/guide/2.0/en/security-authorization)
+within the Yii framework. Please read these Yii2 Guide chapters first if you're not fully familiar with these concepts.
+
 The Yii2-Oauth2-Server integrates with the Yii2 application by taking care of the entire Oauth 2.0 flow.
-After successful authorization, when the Client makes server requests with a valid authorization header
+After successful authorization, when the Client makes server requests with a valid access token in the
+["Bearer Token" authorization header](https://datatracker.ietf.org/doc/html/rfc6750)
 the Yii2-Oauth2-Server will set the Yii2 "user identity class" (`Yii::$app->user->identity`) for the "user component"
-(`Yii::$app->user`). 
+(`Yii::$app->user`).
 
 ### Identity and RBAC usage
 
-Let's say that in our example there is a backend application (from now on abbreviated as BEA) has 2 roles:
-'user' and 'admin'.
-When a User authorizes a Client, let's say a frontend application(from now on abbreviated as BEA), to use the BEA,
-all calls that are made by that Client will be automatically (under the condition that the Client correctly sends the 
-"authentication" header) done with that user's identity.
+Let's say that in our example there is a backend application (from now on abbreviated as BEA) which has 2 roles:
+"user" and "admin", and has two users: Alice is "admin" and user Bob is a regular "user".
 
-Let's say that whe have two users: Alice is "admin" and user Bob is a regular "user".
+When a User authorizes a Client, let's say a frontend application(from now on abbreviated as FEA), to use the BEA,
+all calls that are made by the FEA will be automatically done with that user's identity
+(assuming the FEA correctly sends the "authorization" header).
 
-When Alice authorizes the FEA via the Authorization Code Grand the FEA can use the "bearer token" authorization header
-to make API calls against the BEA. For all these calls the `Yii::$app->user->identity` will be set to the user identity
-of Alice. When Bob would authorize the FEA all calls with his bearer token by the FEA will set the
-`Yii::$app->user->identity` to Bob's identity.
+If Alice authorizes the FEA via the Authorization Code Grand the BEA will issue an access token for Alice which the FEA 
+can use in the authorization header to make API calls against the BEA.
+For all these calls the `Yii::$app->user->identity` will be set to the user identity of Alice. When Bob would authorize 
+the FEA all calls by the FEA with his bearer token will set the `Yii::$app->user->identity` to Bob's identity.
 
-Since the identity is set, you can simply use `Yii::$app->user->can('role_you_want_to_check')` anywhere you want.
-E.g. `Yii::$app->user->can('admin')` would return `true` for Alice and `false` for Bob.
+Since the identity is set, you can check if the user is allowed to perform actions or access certain 
+resources like you do in any Yii application, e.g. `Yii::$app->user->can('role_you_want_to_check')`.  
+In our example `Yii::$app->user->can('admin')` returns `true` for Alice and `false` for Bob, since Alice has the "admin"
+role while Bob have just has the "user" role.
 
-> Note: Until now "scope" is never used and probably is not needed. 
-  Only when we have multiple clients, let's say FEA1 and FEA2, that need a different access scope for the *same* user,
-  scopes come into play.
+> Note: In our sample app we had no need for scopes so far since our FEA is trusted to do all Bob and Alice are allowed 
+  to do respectively. Now assume Bob and Alice can use another Client.
+  For example a third-party mobile app which requires a different level of trust for the *same* user.  
+  Let us say FEA is trusted in such a way it can be allowed to do things that a third-party app is not allowed to do. 
+  We need to scope these different Clients so that each will be limited to what it is entrusted to do.
+  That is where scopes comes into play!
 
 ### Scope usage
 
-> Scopes only come into play in delegation scenarios, and always *limit* what a Client can do on *behalf* of a user:
-  a scope cannot allow an application to do more than what the user can do.
+> Scopes only come into play in delegation scenarios, and always *limit* what a Client can do on *behalf* of a User:
+  a scope cannot allow an application to do more than what the user can do.  
+  If your Client(s) are allowed to do everything the User can do you probably don't need Scopes.
 
 Let's say (continuing from our sample above) that Bob (with the "user" role) wants to authorize two different clients:
 - Your own front-end application (FEA) to read, create and delete emails on his behalf.
@@ -156,6 +169,7 @@ clients, e.g.:
 
 When scopes are used you can use `Yii::$app->getModule('oauth2')->requestHasScope('scope_you_want_to_check')` to see if
 the client that makes the request has the required scope.
+Think of it as access control, but now it applies to the Client not the User account!
 
 So in the case of Bob and Charles:
 - `Yii::$app->user->can('admin')` would be `false` for both.
