@@ -10,7 +10,7 @@ services:
     networks:
       - dev
     depends_on:
-      - MySql
+      - ${YII_DB_DRIVER:-MySQL}
     ports:
       - '${DOCKER_HOST_HTTP_PORT:-80}:80' # http port mapping
     volumes:
@@ -19,6 +19,9 @@ services:
       # Mount source-code for development
       - .:/app
     environment:
+      # Yii2
+      - YII_ENV=${YII_ENV:-dev}
+      - YII_DB_DRIVER=${YII_DB_DRIVER:-MySQL}
       # PHP
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG:-serverName=Yii2Oauth2Server}
       - PHP_ENABLE_XDEBUG=${PHP_ENABLE_XDEBUG:-1}
@@ -26,16 +29,21 @@ services:
       - YII2_OAUTH2_SERVER_PRIVATE_KEY_PASSPHRASE=${YII2_OAUTH2_SERVER_PRIVATE_KEY_PASSPHRASE:?err}
       - YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY=${YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY:?err}
       - YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEYS=${YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEYS:?err}
-      # Database
-      - MYSQL_HOST=${MYSQL_HOST:?err}
+      # MySql
+      - MYSQL_HOST=${MYSQL_HOST:-mysql}
       - MYSQL_PORT=${MYSQL_PORT}
       - MYSQL_DB_NAME=${MYSQL_DB_NAME:?err}
       - MYSQL_USER_NAME=${MYSQL_USER_NAME:?err}
       - MYSQL_USER_PASSWORD=${MYSQL_USER_PASSWORD:?err}
+      # PostgreSQL
+      - POSTGRES_HOST=${POSTGRES_HOST:-postgresql}
+      - POSTGRES_USER=${POSTGRES_USER:?err}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?err}
+      - POSTGRES_DB=${POSTGRES_DB:?err}
     extra_hosts:
       - host.docker.internal:host-gateway
 
-  MySql:
+  MySQL:
     image: "mysql:5.7"
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:?err}
@@ -50,6 +58,20 @@ services:
     ports:
       - "${DOCKER_HOST_MYSQL_PORT:-3306}:3306" # mysql port mapping
 
+  PostgreSQL:
+    image: "postgres:14-alpine"
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:?err}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?err}
+      - POSTGRES_DB=${POSTGRES_DB:?err}
+    networks:
+      - dev
+    volumes:
+      - Postgres:/var/lib/postgresql/data
+    ports:
+      - "${DOCKER_HOST_POSTGRES_PORT:-5432}:5432" # Postgres port mapping, it's recommended to use a different port than the default sample app.
+
 networks:
   dev:
     driver: bridge
@@ -57,3 +79,4 @@ networks:
 
 volumes:
   MySql:
+  Postgres:

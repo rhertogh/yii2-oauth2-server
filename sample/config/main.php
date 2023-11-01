@@ -5,6 +5,44 @@
 
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use sample\components\AppBootstrap;
+use yii\base\InvalidConfigException;
+
+$dbDriver = getenv('YII_DB_DRIVER');
+
+if ($dbDriver === 'MySQL') {
+    $db = [
+        'class' => yii\db\Connection::class,
+        'dsn' => getenv('MYSQL_HOST') && getenv('MYSQL_DB_NAME')
+            ? 'mysql:host=' . getenv('MYSQL_HOST')
+            . (getenv('MYSQL_PORT') ? ';port=' . getenv('MYSQL_PORT') : '')
+            . ';dbname=' . getenv('MYSQL_DB_NAME')
+            : null,
+        'username' => getenv('MYSQL_USER_NAME'),
+        'password' => getenv('MYSQL_USER_PASSWORD'),
+        'charset' => 'utf8mb4',
+        'enableSchemaCache' => true,
+        'schemaCacheDuration' => 0, // never expire.
+        'enableLogging' => YII_DEBUG,
+        'enableProfiling' => YII_DEBUG,
+    ];
+} elseif ($dbDriver === 'PostgreSQL') {
+    $db = [
+        'class' => yii\db\Connection::class,
+        'dsn' =>
+            'pgsql:host=' . getenv('POSTGRES_HOST')
+            . (getenv('POSTGRES_PORT') ? ';port=' . getenv('POSTGRES_PORT') : '')
+            . ';dbname=' . getenv('POSTGRES_DB'),
+        'username' => getenv('POSTGRES_USER'),
+        'password' => getenv('POSTGRES_PASSWORD'),
+        'charset' => 'utf8',
+        'enableSchemaCache' => true,
+        'schemaCacheDuration' => 0, // never expire.
+        'enableLogging' => YII_DEBUG,
+        'enableProfiling' => YII_DEBUG,
+    ];
+} else {
+    throw new InvalidConfigException("Unknown database driver '$dbDriver'.");
+}
 
 // phpcs:disable Generic.Files.LineLength.TooLong -- Sample documentation
 return [
@@ -52,7 +90,7 @@ return [
             'defaultAccessTokenTTL' => 'PT2H', // Set the default Access Token TTL if the grant type doesn't specify its own TTL (e.g. the Personal Access Token grant has its own TTL of 1 year).
             'migrationsFileOwnership' => '1000:1000', // The file ownership for generated migrations.
             'migrationsFileMode' => 0660, // The file access mode for generated migrations.
-            'clientRedirectUriEnvVarConfig' => [ // Enable environment variable substitution in oauth2 clients `redirect_uris`.
+            'clientRedirectUrisEnvVarConfig' => [ // Enable environment variable substitution in oauth2 clients `redirect_uris`.
                 'allowList' => ['*'], // ⚠️ WARNING: Setting `allowList` to `['*']` allows all environment variables to be used, this is only used as an example and should be replaced by an actual list of allowed environment variables.
             ],
         ],
@@ -66,21 +104,7 @@ return [
             'class' => yii\caching\DummyCache::class,
             'serializer' => false,
         ],
-        'db' => [
-            'class' => yii\db\Connection::class,
-            'dsn' => getenv('MYSQL_HOST') && getenv('MYSQL_DB_NAME')
-                ? 'mysql:host=' . getenv('MYSQL_HOST')
-                  . (getenv('MYSQL_PORT') ? ';port=' . getenv('MYSQL_PORT') : '')
-                  . ';dbname=' . getenv('MYSQL_DB_NAME')
-                : null,
-            'username' => getenv('MYSQL_USER_NAME'),
-            'password' => getenv('MYSQL_USER_PASSWORD'),
-            'charset' => 'utf8mb4',
-            'enableSchemaCache' => true,
-            'schemaCacheDuration' => 0, // never expire.
-            'enableLogging' => YII_DEBUG,
-            'enableProfiling' => YII_DEBUG,
-        ],
+        'db' => $db,
         'log' => [
             'traceLevel' => 10,
             'flushInterval' => 1,
