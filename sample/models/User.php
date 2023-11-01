@@ -128,6 +128,13 @@ class User extends ActiveRecord implements
     }
     # endregion
 
+    # region Sample for a custom OpenID Connect Claim
+    public function getCustomOpenIdConnectClaimProperty()
+    {
+        return 'Custom property for user ' . $this->id;
+    }
+    # endregion
+
     # region Application specific implementation for user identity selection
     /**
      * Checks if this user has another identity linked to their account

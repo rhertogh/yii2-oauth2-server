@@ -3,6 +3,7 @@
 /// WARNING! This configuration is optimized for local development and should NOT be used in any other environment
 /// (for both security and performance)!
 
+use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeCollectionInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use sample\components\AppBootstrap;
 use yii\base\InvalidConfigException;
@@ -85,13 +86,20 @@ return [
                 Oauth2Module::GRANT_TYPE_PERSONAL_ACCESS_TOKEN,
             ],
             'migrationsNamespace' => 'sample\\migrations\\oauth2',  // The namespace with which migrations will be created (and by which they will be located).
-            'enableOpenIdConnect' => true, // Only required if OpenID Connect support is required.
             'defaultUserAccountSelection' => Oauth2Module::USER_ACCOUNT_SELECTION_UPON_CLIENT_REQUEST, // Allow clients to request user account selection (OpenID Connect).
             'defaultAccessTokenTTL' => 'PT2H', // Set the default Access Token TTL if the grant type doesn't specify its own TTL (e.g. the Personal Access Token grant has its own TTL of 1 year).
             'migrationsFileOwnership' => '1000:1000', // The file ownership for generated migrations.
             'migrationsFileMode' => 0660, // The file access mode for generated migrations.
             'clientRedirectUrisEnvVarConfig' => [ // Enable environment variable substitution in oauth2 clients `redirect_uris`.
                 'allowList' => ['*'], // ⚠️ WARNING: Setting `allowList` to `['*']` allows all environment variables to be used, this is only used as an example and should be replaced by an actual list of allowed environment variables.
+            ],
+            // OpenID Connect specific settings (Only required if OpenID Connect support is required)
+            'enableOpenIdConnect' => true, // Enable OpenID Connect support.
+            'openIdConnectScopes' => [ // Optional, list of enabled OpenID Connect Scopes
+                ...Oauth2OidcScopeCollectionInterface::OPENID_CONNECT_DEFAULT_SCOPES, // Include the default OpenID Connect scopes
+                'my_custom_oidc_scope' => [ // Add a custom scope
+                    'my_custom_oidc_claim' => 'customOpenIdConnectClaimProperty', // Add a custom claim
+                ],
             ],
         ],
     ],

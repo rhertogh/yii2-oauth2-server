@@ -1,6 +1,8 @@
 <?php
 
+use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeCollectionInterface;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
+use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\db\Migration;
 
 /**
@@ -112,6 +114,39 @@ class m210103_000000_oauth2_sample extends Migration
             'created_at' => time(),
             'updated_at' => time(),
         ]);
+
+        $this->insert('{{oauth2_client}}', [
+            'identifier' => 'sample-oidc-client',
+            'type' => 1, # Confidential
+            'secret' => '2021-01-01::3vUCADtKx59NPQl3/1fJXmppRbiug3iccJc1S9XY6TPvLE02/+ggB8GtIc24J5oMTj38NIPIpNt8ClNDS7ZBI4+ykNxYOuEHQfdkDiUf5WVKtLegx43gLXfq', # "secret"
+            'name' => 'Sample client for OpenID Connect with Grant Type Auth Code',
+            'redirect_uris' => '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
+            'token_types' => 1, # Bearer
+            'grant_types' => 5, # AUTH_CODE | REFRESH_TOKEN
+            'enabled' => 1,
+            'created_at' => time(),
+            'updated_at' => time(),
+        ]);
+        $oidcClientId = $this->db->lastInsertID;
+
+        $oidcScopes = Oauth2Scope::findAll(['identifier' => Oauth2OidcScopeCollectionInterface::OPENID_CONNECT_DEFAULT_SCOPES]);
+        $oidcScopes[] = (new Oauth2Scope([
+            'identifier' => 'my_custom_oidc_scope',
+            'description' => 'A custom scope with custom claims',
+            'authorization_message' => 'Access custom user properties',
+        ]))->persist();
+
+        foreach ($oidcScopes as $scope) {
+            $this->insert(
+                '{{oauth2_client_scope}}',
+                [
+                    'client_id' => $oidcClientId,
+                    'scope_id' => $scope->id,
+                    'created_at' => time(),
+                    'updated_at' => time(),
+                ]
+            );
+        }
 
         $this->batchInsert(
             '{{oauth2_scope}}',
