@@ -48,7 +48,7 @@ class m210103_000000_oauth2_sample extends Migration
             'identifier' => 'sample-auth-code-client',
             'type' => 1, # Confidential
             'secret' => '2021-01-01::3vUCADtKx59NPQl3/1fJXmppRbiug3iccJc1S9XY6TPvLE02/+ggB8GtIc24J5oMTj38NIPIpNt8ClNDS7ZBI4+ykNxYOuEHQfdkDiUf5WVKtLegx43gLXfq', # "secret"
-            'name' => 'Valid client with Grant Type Auth Code',
+            'name' => 'Sample client with Grant Type Auth Code',
             'redirect_uris' => '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
             'token_types' => 1, # Bearer
             'grant_types' => 5, # AUTH_CODE | REFRESH_TOKEN
@@ -62,7 +62,7 @@ class m210103_000000_oauth2_sample extends Migration
             'identifier' => 'sample-client-credentials-client',
             'type' => 1, # Confidential
             'secret' => '2021-01-01::3vUCADtKx59NPQl3/1fJXmppRbiug3iccJc1S9XY6TPvLE02/+ggB8GtIc24J5oMTj38NIPIpNt8ClNDS7ZBI4+ykNxYOuEHQfdkDiUf5WVKtLegx43gLXfq', # "secret"
-            'name' => 'Valid client with Grant Type client credentials',
+            'name' => 'Sample client with Grant Type client credentials',
             'redirect_uris' => '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
             'token_types' => 1, # Bearer
             'grant_types' => 2, # CLIENT_CREDENTIALS
@@ -77,7 +77,7 @@ class m210103_000000_oauth2_sample extends Migration
             'identifier' => 'sample-client-credentials-client-no-user',
             'type' => 1, # Confidential
             'secret' => '2021-01-01::3vUCADtKx59NPQl3/1fJXmppRbiug3iccJc1S9XY6TPvLE02/+ggB8GtIc24J5oMTj38NIPIpNt8ClNDS7ZBI4+ykNxYOuEHQfdkDiUf5WVKtLegx43gLXfq', # "secret"
-            'name' => 'Valid client with Grant Type client credentials (but no user id)',
+            'name' => 'Sample client with Grant Type client credentials (but no user id)',
             'redirect_uris' => '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
             'token_types' => 1, # Bearer
             'grant_types' => 2, # CLIENT_CREDENTIALS
@@ -90,7 +90,7 @@ class m210103_000000_oauth2_sample extends Migration
         $this->insert('{{oauth2_client}}', [
             'identifier' => 'sample-password-public-client',
             'type' => 2, # Public
-            'name' => 'Valid client with Grant Type password',
+            'name' => 'Sample client with Grant Type password',
             'redirect_uris' => '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
             'token_types' => 1, # Bearer
             'grant_types' => 1024, # PASSWORD
@@ -104,7 +104,7 @@ class m210103_000000_oauth2_sample extends Migration
             'identifier' => 'sample-implicit-client',
             'type' => 1, # Confidential
             'secret' => '2021-01-01::3vUCADtKx59NPQl3/1fJXmppRbiug3iccJc1S9XY6TPvLE02/+ggB8GtIc24J5oMTj38NIPIpNt8ClNDS7ZBI4+ykNxYOuEHQfdkDiUf5WVKtLegx43gLXfq', # "secret"
-            'name' => 'Valid client with Grant Type implicit',
+            'name' => 'Sample client with Grant Type implicit',
             'redirect_uris' => '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
             'token_types' => 1, # Bearer
             'grant_types' => 2048, # IMPLICIT
