@@ -3,7 +3,6 @@
 namespace rhertogh\Yii2Oauth2Server\controllers\console\client\base;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2ClientController;
-use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use yii\base\Action;
 use yii\base\InvalidConfigException;
 use yii\console\Exception;

@@ -66,7 +66,7 @@ class EchoMigrateController extends MigrateController
 
         $migrations = [];
         foreach ($migrationPaths as $item) {
-            list($migrationPath, $namespace) = $item;
+            [$migrationPath, $namespace] = $item;
             if (!file_exists($migrationPath)) {
                 continue;
             }

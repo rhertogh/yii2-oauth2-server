@@ -14,7 +14,6 @@ use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
-use yii\db\ActiveRecord;
 use yii\db\Expression;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;

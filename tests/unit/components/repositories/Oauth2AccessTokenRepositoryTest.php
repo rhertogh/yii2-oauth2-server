@@ -30,12 +30,12 @@ class Oauth2AccessTokenRepositoryTest extends BaseOauth2RepositoryTest
 
     public function testGetNewToken()
     {
-        list(
+        [
             'accessToken' => $accessToken,
             'client' => $client,
             'scopes' => $scopes,
             'userIdentifier' => $userIdentifier
-        ) = $this->generateMockAccessToken();
+        ] = $this->generateMockAccessToken();
 
         $this->assertInstanceOf($this->getModelInterface(), $accessToken);
 

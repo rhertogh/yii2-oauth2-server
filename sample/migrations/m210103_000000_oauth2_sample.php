@@ -2,7 +2,6 @@
 
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeCollectionInterface;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
-use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\db\Migration;
 
 /**
