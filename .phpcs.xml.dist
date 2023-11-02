@@ -7,6 +7,7 @@
     <file>tests</file>
 
     <exclude-pattern>sample/runtime</exclude-pattern>
+    <exclude-pattern>sample/web/assets</exclude-pattern>
     <exclude-pattern>tests/_runtime</exclude-pattern>
     <exclude-pattern>/sample/dev/giiant/generators/model/templates</exclude-pattern>
 

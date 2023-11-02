@@ -10,6 +10,10 @@
 /* @var $sourceClass string the source class to extend */
 /* @var $config array the source class to extend */
 
+/**
+ * phpcs:disable
+ */
+
 use yii\helpers\StringHelper;
 use yii\helpers\VarDumper;
 

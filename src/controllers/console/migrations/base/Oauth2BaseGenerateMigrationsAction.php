@@ -12,7 +12,6 @@ use yii\console\ExitCode;
 use yii\helpers\Console;
 use yii\helpers\FileHelper;
 use yii\helpers\StringHelper;
-use function rhertogh\Yii2Oauth2Server\controllers\console\migrations\sort;
 
 /**
  * @property Oauth2MigrationsController $controller
@@ -99,7 +98,8 @@ abstract class Oauth2BaseGenerateMigrationsAction extends Action
 
         $n = count($generateMigrations);
         $this->controller->stdout(
-            "There " . ($n === 1 ? 'is' : 'are') . " $n " . ($n === 1 ? 'migration' : 'migrations') . ' to generate:' . PHP_EOL,
+            "There " . ($n === 1 ? 'is' : 'are') . " $n " . ($n === 1 ? 'migration' : 'migrations')
+                . ' to generate:' . PHP_EOL,
             Console::FG_YELLOW
         );
         foreach ($generateMigrations as $file => $content) {
@@ -109,9 +109,9 @@ abstract class Oauth2BaseGenerateMigrationsAction extends Action
             } else {
                 $this->controller->stdout('[new]', Console::BG_GREEN);
             }
-            $this->controller->stdout( PHP_EOL);
+            $this->controller->stdout(PHP_EOL);
         }
-        $this->controller->stdout( PHP_EOL);
+        $this->controller->stdout(PHP_EOL);
 
         if ($this->controller->confirm('Generate new migration?', true)) {
             FileHelper::createDirectory($migrationsPath);

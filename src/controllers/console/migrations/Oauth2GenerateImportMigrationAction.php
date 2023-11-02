@@ -24,8 +24,7 @@ class Oauth2GenerateImportMigrationAction extends Oauth2BaseGenerateMigrationsAc
 
         if (!array_key_exists($origin, $imports)) {
             throw new InvalidArgumentException('Unknown import origin "' . $origin . '", available origins: '
-                . implode(', ', array_keys($imports)) . '.'
-            );
+                . implode(', ', array_keys($imports)) . '.');
         }
 
         return call_user_func($imports[$origin]);

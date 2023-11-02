@@ -66,7 +66,7 @@ class EnvironmentHelper
 
         return preg_replace_callback(
             static::ENV_VAR_REGEX,
-            function(array $matches) use (
+            function (array $matches) use (
                 $allowList,
                 $denyList,
                 $parseNested,

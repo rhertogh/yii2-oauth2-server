@@ -93,12 +93,12 @@ return [
             'clientRedirectUrisEnvVarConfig' => [ // Enable environment variable substitution in oauth2 clients `redirect_uris`.
                 'allowList' => ['*'], // ⚠️ WARNING: Setting `allowList` to `['*']` allows all environment variables to be used, this is only used as an example and should be replaced by an actual list of allowed environment variables.
             ],
-            // OpenID Connect specific settings (Only required if OpenID Connect support is required)
+            // OpenID Connect specific settings (Only required if OpenID Connect support is required).
             'enableOpenIdConnect' => true, // Enable OpenID Connect support.
-            'openIdConnectScopes' => [ // Optional, list of enabled OpenID Connect Scopes
-                ...Oauth2OidcScopeCollectionInterface::OPENID_CONNECT_DEFAULT_SCOPES, // Include the default OpenID Connect scopes
-                'my_custom_oidc_scope' => [ // Add a custom scope
-                    'my_custom_oidc_claim' => 'customOpenIdConnectClaimProperty', // Add a custom claim
+            'openIdConnectScopes' => [ // Optional, list of enabled OpenID Connect Scopes.
+                ...Oauth2OidcScopeCollectionInterface::OPENID_CONNECT_DEFAULT_SCOPES, // Include the default OpenID Connect scopes.
+                'my_custom_oidc_scope' => [ // Add a custom scope.
+                    'my_custom_oidc_claim' => 'customOpenIdConnectClaimProperty', // Add a custom claim.
                 ],
             ],
         ],

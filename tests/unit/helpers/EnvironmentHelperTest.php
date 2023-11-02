@@ -31,8 +31,7 @@ class EnvironmentHelperTest extends TestCase
         bool $exceptionWhenNotSet,
         bool $exceptionWhenNotAllowed,
         string $expected
-    )
-    {
+    ) {
         if (is_a($expected, \Exception::class, true)) {
             $this->expectException($expected);
         }
@@ -73,7 +72,7 @@ class EnvironmentHelperTest extends TestCase
         putenv('test_env_var_nested_not_set=nested ${test_not_set} var');
 
         return [
-            // successful parsing
+            // successful parsing.
             'only' => [
                 '${test_env_var}',
                 ['*'],
@@ -201,7 +200,7 @@ class EnvironmentHelperTest extends TestCase
                 'a ${test_env_var} case',
             ],
 
-            // Invalid arguments
+            // Invalid arguments.
             'empty allow lists' => [
                 '',
                 [],
@@ -212,7 +211,7 @@ class EnvironmentHelperTest extends TestCase
                 \InvalidArgumentException::class,
             ],
 
-            // Not set exceptions
+            // Not set exceptions.
             'not set exception' => [
                 '${test_not_set}',
                 ['*'],
@@ -232,7 +231,7 @@ class EnvironmentHelperTest extends TestCase
                 EnvironmentVariableNotSetException::class,
             ],
 
-            // Allowed
+            // Allowed.
             'allowList exact match' => [
                 '${test_env_var}',
                 ['test_mismatch', 'test_env_var', 'test_another_mismatch'],
@@ -279,7 +278,7 @@ class EnvironmentHelperTest extends TestCase
                 'test',
             ],
 
-            // Not allowed
+            // Not allowed.
             'not allowed allowList - exception' => [
                 '${test_env_var}',
                 ['test_mismatch', 'wildcard_mismatch*', '/regex_mismatch/'],

@@ -156,7 +156,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
             return [];
         }
 
-        // Compatibility with DBMSs that don't support JSON data type
+        // Compatibility with DBMSs that don't support JSON data type.
         if (is_string($uris)) {
             try {
                 $uris = Json::decode($uris);
@@ -946,7 +946,8 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
                             . $scopeIdentifier . '" found.');
                     }
                     if (!($scope instanceof Oauth2ScopeInterface)) {
-                        throw new InvalidConfigException(get_class($scope) . ' must implement ' . Oauth2ScopeInterface::class);
+                        throw new InvalidConfigException(get_class($scope)
+                            . ' must implement ' . Oauth2ScopeInterface::class);
                     }
                     $clientScopeConfig['scope_id'] = $scope->getPrimaryKey();
                 } else {

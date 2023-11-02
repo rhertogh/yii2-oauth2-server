@@ -14,6 +14,10 @@ class Oauth2EncryptionController extends Oauth2BaseConsoleController
      * @var string|null
      */
     public $keyName = null;
+
+    /**
+     * @var int
+     */
     public $secretLength = 32;
 
     /**

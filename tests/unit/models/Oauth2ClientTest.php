@@ -259,18 +259,18 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
 
         $client = $this->getMockModel();
 
-        // No config set
+        // No config set.
         $this->assertNull($client->getRedirectUrisEnvVarConfig());
 
-        // Module config set
+        // Module config set.
         Oauth2Module::getInstance()->clientRedirectUrisEnvVarConfig = $moduleLevelConfig;
         $this->assertEquals($moduleLevelConfig, $client->getRedirectUrisEnvVarConfig());
 
-        // Client config set
+        // Client config set.
         $client->setEnvVarConfig(['redirectUris' => $clientLevelConfig]);
         $this->assertEquals($clientLevelConfig, $client->getRedirectUrisEnvVarConfig());
 
-        // Client config reset, expect fallback to module
+        // Client config reset, expect fallback to module.
         $client->setEnvVarConfig(null);
         $this->assertEquals($moduleLevelConfig, $client->getRedirectUrisEnvVarConfig());
     }
@@ -366,7 +366,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         ];
         $client = $this->getMockModel(['redirect_uris' => Json::encode($redirectUris)]);
 
-        // Expect no parsing
+        // Expect no parsing.
         $this->assertEquals($redirectUris, $client->getRedirectUri());
     }
 
@@ -400,10 +400,10 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
                 'allowList' => ['*'],
             ],
         ]);
-        // Ensure test is working by first validating the setup
+        // Ensure test is working by first validating the setup.
         $this->assertEquals(["https://app.$envTestHost/test"], $client->getRedirectUri());
 
-        // Now ensure exception is thrown on "not allowed"
+        // Now ensure exception is thrown on "not allowed".
         $client->setEnvVarConfig([
             'redirectUris' => [
                 'allowList' => ['TEST'],
@@ -968,11 +968,11 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
                     [ // unaffected, scope id as column.
                         'scope_id' => 3, // identifier: 'email'.
                     ],
-                    [ // updated, scope id as column
+                    [ // updated, scope id as column.
                         'scope_id' => 5, // identifier: 'phone'.
                         'applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_AUTOMATICALLY,
                     ],
-                    [ // new, scope id as column
+                    [ // new, scope id as column.
                         'scope_id' => 1005001, // identifier: 'user.username.read'.
                     ],
                 ],

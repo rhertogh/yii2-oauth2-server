@@ -9,7 +9,8 @@ abstract class BaseEnvironmentVariableException extends \Exception
      */
     public $variable;
 
-    public function __construct($variable, $message, $code = 0, \Throwable $previous = null) {
+    public function __construct($variable, $message, $code = 0, \Throwable $previous = null)
+    {
         $this->variable = $variable;
         parent::__construct($message, $code, $previous);
     }

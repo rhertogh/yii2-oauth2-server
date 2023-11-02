@@ -11,6 +11,7 @@ $finder = PhpCsFixer\Finder::create()
         'dev/giiant/generators/model/templates',
         '_runtime',
         '_support/_generated',
+        'web/assets',
     ])
     ->notPath(
         // Exclude till https://github.com/FriendsOfPHP/PHP-CS-Fixer/pull/6408 is merged.

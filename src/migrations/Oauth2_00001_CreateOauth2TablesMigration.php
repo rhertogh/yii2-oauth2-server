@@ -335,15 +335,15 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                     ...(
                         $userTable
                         ? [
-                        [
-                            'name' => 'user_id',
-                            'columns' => ['user_id'],
-                            'refTable' => $userTable,
-                            'refColumns' => $userPkColumn,
-                            'delete' => static::CASCADE,
-                            'update' => static::CASCADE,
-                        ],
-                    ]
+                            [
+                                'name' => 'user_id',
+                                'columns' => ['user_id'],
+                                'refTable' => $userTable,
+                                'refColumns' => $userPkColumn,
+                                'delete' => static::CASCADE,
+                                'update' => static::CASCADE,
+                            ],
+                        ]
                         : []
                     ),
                 ],
@@ -351,12 +351,12 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                     ...(
                         !$userTable
                         ? [
-                        [
-                            'name' => 'user_id',
-                            'columns' => ['user_id'],
-                            'unique' => false,
-                        ],
-                    ]
+                            [
+                                'name' => 'user_id',
+                                'columns' => ['user_id'],
+                                'unique' => false,
+                            ],
+                        ]
                         : []
                     ),
                     [

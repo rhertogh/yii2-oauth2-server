@@ -34,7 +34,7 @@ interface Oauth2ModelRepositoryInterface extends Oauth2RepositoryInterface
     /**
      * Find a model by its primary key, and fall back to find by its identifier.
      *
-     * @param string $identifier
+     * @param int|string $pkOrIdentifier
      * @return Oauth2ActiveRecordInterface|null
      * @throws InvalidConfigException
      * @since 1.0.0
