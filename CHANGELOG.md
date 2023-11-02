@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer version.  
 
-[1.0.0-alpha16] - Unreleased
+[1.0.0-alpha17] - Unreleased
 ----------------------------
 
 ### Added
@@ -25,6 +25,14 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Improved
 
 ### Security
+
+
+[1.0.0-alpha16] - 2023-11-02
+----------------------------
+
+### Added
+- It's now possible to specify "environment variables configuration" for Oauth2 Clients which allows env var usage in secrets and redirect URIs.
+- You can now generate a secret via the command line (`yii oauth2/encryption/generate-secret`);
 
 
 [1.0.0-alpha15] - 2023-08-04
