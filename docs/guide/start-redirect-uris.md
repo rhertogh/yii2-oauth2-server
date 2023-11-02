@@ -52,7 +52,7 @@ setting the `Oauth2Client::$allow_variable_redirect_uri_query` to `true`.
 
 To allow dynamic redirect URIs (e.g. [between environments](https://12factor.net/config)) the Oauth2 server can be
 configured to substitute environment variables in `redirect_uris`.  
-This can be done by configuring the `clientRedirectUriEnvVarConfig` for the Oauth2 module.
+This can be done by configuring the `clientRedirectUrisEnvVarConfig` for the Oauth2 module.
 
 > Note: For security all variables in a redirect URL must be allowed match at least 1 pattern the `$allowList`
 > (and don't match any in the `$denyList`).
@@ -66,7 +66,7 @@ return [
         'oauth2' => [
             'class' => rhertogh\Yii2Oauth2Server\Oauth2Module::class,
             // ...
-            'clientRedirectUriEnvVarConfig' => [
+            'clientRedirectUrisEnvVarConfig' => [
                 'allowList' => ['MY_ENV_VARS_*'], // List of patterns of which at least 1 has to match to allow replacement.
                 'denyList' => [], // List of patterns of which any match will deny replacement.
                 'parseNested' = false, // Should nested (a.k.a. recursive) environment variables be parsed.
@@ -108,7 +108,7 @@ For details, please see `\rhertogh\Yii2Oauth2Server\helpers\EnvironmentHelper::p
 
 * Nested environment variables are also supported, e.g. `MY_APPLICATION_DOMAIN` inside `MY_REDIRECT_URIS`:
   
-  > Note: To enable nested parsing set `clientRedirectUriEnvVarConfig.parseNested` to `true`.
+  > Note: To enable nested parsing set `clientRedirectUrisEnvVarConfig.parseNested` to `true`.
   
   ```php
   // This would normally most likely not done in your code, but by the environment (e.g. Nginx, Apache, Docker, etc) 

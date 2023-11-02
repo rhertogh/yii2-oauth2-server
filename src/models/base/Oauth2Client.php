@@ -17,9 +17,10 @@ use Yii;
  * @property string $secret
  * @property string $old_secret
  * @property string $old_secret_valid_until
+ * @property array $env_var_config
  * @property string $logo_uri
  * @property string $tos_uri
- * @property string $contacts
+ * @property array $contacts
  * @property array $redirect_uris
  * @property boolean $allow_variable_redirect_uri_query
  * @property integer $token_types
@@ -56,8 +57,8 @@ abstract class Oauth2Client extends \rhertogh\Yii2Oauth2Server\models\base\Oauth
             [['identifier', 'name', 'created_at', 'updated_at'], 'required'],
             [['type', 'token_types', 'grant_types', 'scope_access', 'user_account_selection', 'client_credentials_grant_user_id', 'created_at', 'updated_at'], 'default', 'value' => null],
             [['type', 'token_types', 'grant_types', 'scope_access', 'user_account_selection', 'client_credentials_grant_user_id', 'created_at', 'updated_at'], 'integer'],
-            [['secret', 'old_secret', 'contacts'], 'string'],
-            [['old_secret_valid_until', 'redirect_uris'], 'safe'],
+            [['secret', 'old_secret'], 'string'],
+            [['old_secret_valid_until', 'env_var_config', 'contacts', 'redirect_uris'], 'safe'],
             [['allow_variable_redirect_uri_query', 'end_users_may_authorize_client', 'allow_auth_code_without_pkce', 'skip_authorization_if_scope_is_allowed', 'oidc_allow_offline_access_without_consent', 'enabled'], 'boolean'],
             [['identifier', 'name', 'logo_uri', 'tos_uri', 'oidc_userinfo_encrypted_response_alg'], 'string', 'max' => 255],
             [['identifier'], 'unique']
@@ -77,6 +78,7 @@ abstract class Oauth2Client extends \rhertogh\Yii2Oauth2Server\models\base\Oauth
             'secret' => Yii::t('oauth2', 'Secret'),
             'old_secret' => Yii::t('oauth2', 'Old Secret'),
             'old_secret_valid_until' => Yii::t('oauth2', 'Old Secret Valid Until'),
+            'env_var_config' => Yii::t('oauth2', 'Env Var Config'),
             'logo_uri' => Yii::t('oauth2', 'Logo Uri'),
             'tos_uri' => Yii::t('oauth2', 'Tos Uri'),
             'contacts' => Yii::t('oauth2', 'Contacts'),

@@ -11,7 +11,10 @@ use yii\base\InvalidConfigException;
 
 class Oauth2ClientRepository extends Oauth2BaseRepository implements Oauth2ClientRepositoryInterface
 {
-    use Oauth2ModelRepositoryTrait;
+    use Oauth2ModelRepositoryTrait {
+        findModelByPk as traitFindModelByPk;
+        findModelByIdentifier as traitFindModelByIdentifier;
+    }
 
     /**
      * @inheritDoc
@@ -22,18 +25,33 @@ class Oauth2ClientRepository extends Oauth2BaseRepository implements Oauth2Clien
         return Oauth2ClientInterface::class;
     }
 
+    public function findModelByPk($pk)
+    {
+        /** @var Oauth2ClientInterface $client */
+        $client = $this->traitFindModelByPk($pk);
+        if ($client) {
+            $client->setModule($this->_module);
+        }
+        return $client;
+    }
+
+    public function findModelByIdentifier($identifier)
+    {
+        /** @var Oauth2ClientInterface $client */
+        $client = $this->traitFindModelByIdentifier($identifier);
+        if ($client) {
+            $client->setModule($this->_module);
+        }
+        return $client;
+    }
+
     /**
      * @inheritDoc
      * @throws InvalidConfigException
      */
     public function getClientEntity($clientIdentifier)
     {
-        /** @var Oauth2ClientInterface $client */
-        $client = $this->findModelByIdentifier($clientIdentifier);
-        if ($client) {
-            $client->setRedirectUriEnvVarConfig($this->_module->clientRedirectUriEnvVarConfig);
-        }
-        return $client;
+        return $this->findModelByIdentifier($clientIdentifier);
     }
 
     /**
@@ -62,8 +80,11 @@ class Oauth2ClientRepository extends Oauth2BaseRepository implements Oauth2Clien
         /** @var class-string<Oauth2ClientInterface> $className */
         $className = DiHelper::getValidatedClassName($class);
 
-        return $className::find()
-            ->andFilterWhere($filter)
-            ->all();
+        return array_map(
+            fn(Oauth2ClientInterface $client) => $client->setModule($this->_module),
+            $className::find()
+                ->andFilterWhere($filter)
+                ->all(),
+        );
     }
 }

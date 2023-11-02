@@ -35,13 +35,22 @@ use Yii2Oauth2ServerTests\unit\models\_traits\Oauth2IdTestTrait;
  * @covers \rhertogh\Yii2Oauth2Server\models\behaviors\DateTimeBehavior
  * @covers \rhertogh\Yii2Oauth2Server\models\behaviors\TimestampBehavior
  *
- * @method Oauth2ClientInterface|ActiveRecord getMockModel(array $config = [])
  */
 
 class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
 {
     use Oauth2IdTestTrait;
     use Oauth2IdentifierTestTrait;
+
+    /**
+     * @param array $config
+     * @return Oauth2ClientInterface
+     * @throws InvalidConfigException
+     */
+    protected function getMockModel($config = [])
+    {
+        return parent::getMockModel($config)->setModule(Oauth2Module::getInstance());
+    }
 
     /**
      * @return class-string<Oauth2ClientInterface>
@@ -159,10 +168,27 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $contacts = 'admin@test.com';
         $endUsersMayAuthorizeClient = false;
         $minimumSecretLength = 123;
+        $envVarConfig = [
+            'redirectUris' => [
+                'allowList' => ['test'],
+                'denyList' => ['not_allowed'],
+                'parseNested' => true,
+                'exceptionWhenNotSet' => false,
+                'exceptionWhenNotAllowed' => false,
+            ],
+            'secrets' => [
+                'allowList' => ['test'],
+                'denyList' => ['not_allowed'],
+                'parseNested' => true,
+                'exceptionWhenNotSet' => false,
+                'exceptionWhenNotAllowed' => false,
+            ],
+        ];
 
         $client = $this->getMockModel()
             ->setName($name)
             ->setType($type)
+            ->setEnvVarConfig($envVarConfig)
             ->setUserAccountSelection($userAccountSelection)
             ->setAllowAuthCodeWithoutPkce($allowAuthCodeWithoutPkce)
             ->setSkipAuthorizationIfScopeIsAllowed($skipAuthorizationIfScopeIsAllowed)
@@ -179,6 +205,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
         $this->assertEquals($name, $client->getName());
         $this->assertEquals($type, $client->getType());
+        $this->assertEquals($envVarConfig, $client->getEnvVarConfig());
         $this->assertEquals($userAccountSelection, $client->getUserAccountSelection());
         $this->assertEquals($allowAuthCodeWithoutPkce, $client->isAuthCodeWithoutPkceAllowed());
         $this->assertEquals($skipAuthorizationIfScopeIsAllowed, $client->skipAuthorizationIfScopeIsAllowed());
@@ -214,6 +241,41 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $client->setScopeAccess(999);
     }
 
+    public function testGetRedirectUrisEnvVarConfig()
+    {
+        $moduleLevelConfig = [
+            'allowList' => ['test_module'],
+            'denyList' => ['not_allowed_module'],
+            'parseNested' => true,
+            'exceptionWhenNotSet' => true,
+            'exceptionWhenNotAllowed' => true,
+        ];
+        $clientLevelConfig = [
+            'allowList' => ['test_module'],
+            'denyList' => ['not_allowed_module'],
+            'parseNested' => true,
+            'exceptionWhenNotSet' => true,
+            'exceptionWhenNotAllowed' => true,
+        ];
+
+        $client = $this->getMockModel();
+
+        // No config set
+        $this->assertNull($client->getRedirectUrisEnvVarConfig());
+
+        // Module config set
+        Oauth2Module::getInstance()->clientRedirectUrisEnvVarConfig = $moduleLevelConfig;
+        $this->assertEquals($moduleLevelConfig, $client->getRedirectUrisEnvVarConfig());
+
+        // Client config set
+        $client->setEnvVarConfig(['redirectUris' => $clientLevelConfig]);
+        $this->assertEquals($clientLevelConfig, $client->getRedirectUrisEnvVarConfig());
+
+        // Client config reset, expect fallback to module
+        $client->setEnvVarConfig(null);
+        $this->assertEquals($moduleLevelConfig, $client->getRedirectUrisEnvVarConfig());
+    }
+
     public function testGetRedirectUri()
     {
         $envTestHost = 'test-host.com';
@@ -228,11 +290,13 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
             'https://app.${TEST_GET_REDIRECT_URI_HOST_NAME}/${TEST_GET_REDIRECT_PATH}',
         ];
         $client = $this->getMockModel(['redirect_uris' => Json::encode($redirectUris)]);
-        $client->setRedirectUriEnvVarConfig([
-            'allowList' => ['*'],
-            'denyList' => null,
-            'parseNested' => true,
-            'exceptionWhenNotSet' => false,
+        $client->setEnvVarConfig([
+            'redirectUris' => [
+                'allowList' => ['*'],
+                'denyList' => null,
+                'parseNested' => true,
+                'exceptionWhenNotSet' => false,
+            ],
         ]);
 
         $expected = [
@@ -252,8 +316,10 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
 
         $redirectUris = '${TEST_GET_REDIRECT_URI}';
         $client = $this->getMockModel(['redirect_uris' => Json::encode($redirectUris)]);
-        $client->setRedirectUriEnvVarConfig([
-            'allowList' => ['TEST_GET_REDIRECT_URI'],
+        $client->setEnvVarConfig([
+            'redirectUris' => [
+                'allowList' => ['TEST_GET_REDIRECT_URI'],
+            ],
         ]);
 
         $this->assertEquals([$envTestUri], $client->getRedirectUri());
@@ -266,8 +332,10 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
 
         $redirectUris = '${TEST_GET_REDIRECT_URI}';
         $client = $this->getMockModel(['redirect_uris' => Json::encode($redirectUris)]);
-        $client->setRedirectUriEnvVarConfig([
-            'allowList' => ['TEST_GET_REDIRECT_URI'],
+        $client->setEnvVarConfig([
+            'redirectUris' => [
+                'allowList' => ['TEST_GET_REDIRECT_URI'],
+            ],
         ]);
 
         $this->assertEquals([$envTestUri], $client->getRedirectUri());
@@ -283,8 +351,10 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
 
         $redirectUris = '${TEST_GET_REDIRECT_URIS}';
         $client = $this->getMockModel(['redirect_uris' => Json::encode($redirectUris)]);
-        $client->setRedirectUriEnvVarConfig([
-            'allowList' => ['TEST_GET_REDIRECT_URIS'],
+        $client->setEnvVarConfig([
+            'redirectUris' => [
+                'allowList' => ['TEST_GET_REDIRECT_URIS'],
+            ],
         ]);
 
         $this->assertEquals($envTestUris, $client->getRedirectUri());
@@ -307,8 +377,10 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
             'https://${DOES_NOT_EXIST}/test',
         ];
         $client = $this->getMockModel(['redirect_uris' => Json::encode($redirectUris)]);
-        $client->setRedirectUriEnvVarConfig([
-            'allowList' => ['*'],
+        $client->setEnvVarConfig([
+            'redirectUris' => [
+                'allowList' => ['*'],
+            ],
         ]);
 
         $this->expectException(EnvironmentVariableNotSetException::class);
@@ -324,15 +396,19 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
             'https://app.${TEST_GET_REDIRECT_URI_HOST_NAME}/test',
         ];
         $client = $this->getMockModel(['redirect_uris' => Json::encode($redirectUris)]);
-        $client->setRedirectUriEnvVarConfig([
-            'allowList' => ['*'],
+        $client->setEnvVarConfig([
+            'redirectUris' => [
+                'allowList' => ['*'],
+            ],
         ]);
         // Ensure test is working by first validating the setup
         $this->assertEquals(["https://app.$envTestHost/test"], $client->getRedirectUri());
 
         // Now ensure exception is thrown on "not allowed"
-        $client->setRedirectUriEnvVarConfig([
-            'allowList' => ['TEST'],
+        $client->setEnvVarConfig([
+            'redirectUris' => [
+                'allowList' => ['TEST'],
+            ],
         ]);
         $this->expectException(EnvironmentVariableNotAllowedException::class);
         $client->getRedirectUri();
@@ -561,6 +637,43 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $this->assertTrue($client->validateSecret($secret3, $cryptographer)); // new secret.
         $this->assertFalse($client->validateSecret($secret2, $cryptographer)); // old secret (which has expired).
         $this->assertFalse($client->validateSecret('incorrect', $cryptographer));
+    }
+
+    public function testSecretViaEnvVar()
+    {
+        $secret = 'iWjgoZNcof';
+        $secretEnvVarName = 'SECRET_VIA_ENV_VAR_SECRET';
+        $secretEnvVarValue = '2022-01-01::3vUCAL1/Qh2FzmH99AUxSxc/y7w2DSGKbv8PC5Qxl46S70xVB7oBz5m3YNkD0dDByxPgAlAKimVlRr98+oIqUo2McahxkqNkBATBLcNPrPzTfCDxH8ZA++ZcsDjBhA==';
+
+        $oldSecret = 'bvuH7joLZN';
+        $oldSecretEnvVarName = 'SECRET_VIA_ENV_VAR_OLD_SECRET';
+        $oldSecretEnvVarValue = '2021-01-01::3vUCALFgiRV0PVg7owgeUO2+hpeVsrwVx0OViUcbf5QcoB6wmzjq5rcWpJX8l6T5qvNFMRBILtCTKhW0w0o+KpH4oJmzLZL4If3wvmWSremPutwc1jn38w2MSUdZWg==';
+
+        $client = $this->getMockModel();
+
+        putenv($secretEnvVarName . '=' . $secretEnvVarValue);
+        putenv($oldSecretEnvVarName . '=' . $oldSecretEnvVarValue);
+        $client->setSecretsAsEnvVars($secretEnvVarName, $oldSecretEnvVarName, new \DateInterval('P1D'));
+        $client->setEnvVarConfig([
+            'secrets' => [
+                'allowList' => ['SECRET_VIA_ENV_VAR_SECRET', 'SECRET_VIA_ENV_VAR_OLD_SECRET'],
+            ],
+        ]);
+
+        $cryptographer = Oauth2Module::getInstance()->getCryptographer();
+
+        $this->assertTrue($client->validateSecret($secret, $cryptographer));
+        $this->assertTrue($client->validateSecret($oldSecret, $cryptographer));
+
+        $client->setEnvVarConfig([
+            'secrets' => [
+                'allowList' => ['DOES_NOT_EXIST'],
+            ],
+        ]);
+
+        $this->expectException(EnvironmentVariableNotAllowedException::class);
+        $this->expectExceptionMessage('Usage of environment variable "SECRET_VIA_ENV_VAR_SECRET" is not allowed');
+        $this->assertTrue($client->validateSecret($secret, $cryptographer));
     }
 
     /**

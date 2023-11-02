@@ -8,6 +8,8 @@ use rhertogh\Yii2Oauth2Server\helpers\exceptions\EnvironmentVariableNotSetExcept
 
 class EnvironmentHelper
 {
+    public const ENV_VAR_REGEX = '/\${(?<name>[a-zA-Z0-9_]+)}/';
+
     /**
      * Replace environment variables in a string with their respective value.
      * The format for env vars is '${ENV_VAR_NAME}', e.g.: 'Hello ${NAME}' will return 'Hello world' if the `NAME`
@@ -63,7 +65,7 @@ class EnvironmentHelper
         }
 
         return preg_replace_callback(
-            '/\${(?<name>[a-zA-Z0-9_]+)}/',
+            static::ENV_VAR_REGEX,
             function(array $matches) use (
                 $allowList,
                 $denyList,

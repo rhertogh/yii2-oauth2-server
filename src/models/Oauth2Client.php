@@ -29,23 +29,15 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     protected const ENCRYPTED_ATTRIBUTES = ['secret', 'old_secret'];
 
     /**
+     * @var Oauth2Module
+     */
+    protected $module;
+
+    /**
      * Minimum length for new client secrets.
      * @var int
      */
     protected $minimumSecretLength = 10;
-
-    /**
-     * Configuration for parsing the `redirect_uris` with the EnvironmentHelper::parseEnvVars().
-     * @var array{
-     *          allowList: array,
-     *          denyList: array|null,
-     *          parseNested: bool,
-     *          exceptionWhenNotSet: bool,
-     *          exceptionWhenNotAllowed: bool,
-     *      }|null
-     * @see \rhertogh\Yii2Oauth2Server\helpers\EnvironmentHelper::parseEnvVars()
-     */
-    protected $redirectUriEnvVarConfig = null;
 
     /////////////////////////////
     /// ActiveRecord Settings ///
@@ -94,6 +86,23 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
         } else {
             parent::__set($name, $value);
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getModule(): Oauth2Module
+    {
+        return $this->module;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setModule($module)
+    {
+        $this->module = $module;
+        return $this;
     }
 
     /**
@@ -156,15 +165,15 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
             }
         }
 
-        $redirectUriEnvVarConfig = $this->getRedirectUriEnvVarConfig();
-        if ($redirectUriEnvVarConfig && version_compare(PHP_VERSION, '8.1.0', '<')) {
+        $redirectUrisEnvVarConfig = $this->getRedirectUrisEnvVarConfig();
+        if ($redirectUrisEnvVarConfig && version_compare(PHP_VERSION, '8.1.0', '<')) {
             // PHP < 8.1 can only handle indexed array when unpacking.
-            $redirectUriEnvVarConfig = array_values($redirectUriEnvVarConfig);
+            $redirectUrisEnvVarConfig = array_values($redirectUrisEnvVarConfig);
         }
 
         if (is_string($uris)) {
-            if ($redirectUriEnvVarConfig && preg_match('/^\${[a-zA-Z0-9_]+}$/', $uris)) {
-                $uris = EnvironmentHelper::parseEnvVars($uris, ...$redirectUriEnvVarConfig);
+            if ($redirectUrisEnvVarConfig && preg_match('/^\${[a-zA-Z0-9_]+}$/', $uris)) {
+                $uris = EnvironmentHelper::parseEnvVars($uris, ...$redirectUrisEnvVarConfig);
                 try {
                     // Try to parse the content of the environment variable(s) as JSON.
                     $uris = Json::decode($uris);
@@ -186,8 +195,8 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
             if (!is_string($uri)) {
                 throw new InvalidConfigException('`redirect_uris` must be a JSON encoded string or array of strings.');
             }
-            if ($redirectUriEnvVarConfig) {
-                $uris[$key] = EnvironmentHelper::parseEnvVars($uri, ...$redirectUriEnvVarConfig);
+            if ($redirectUrisEnvVarConfig) {
+                $uris[$key] = EnvironmentHelper::parseEnvVars($uri, ...$redirectUrisEnvVarConfig);
                 if (!$uris[$key]) {
                     unset($uris[$key]);
                 }
@@ -222,20 +231,41 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritdoc
      */
-    public function getRedirectUriEnvVarConfig()
+    public function getEnvVarConfig()
     {
-        return $this->redirectUriEnvVarConfig;
+        return $this->env_var_config;
     }
 
     /**
      * @inheritdoc
      */
-    public function setRedirectUriEnvVarConfig($config)
+    public function setEnvVarConfig($config)
     {
-        $this->redirectUriEnvVarConfig = $config;
+        $this->env_var_config = $config;
         return $this;
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function getRedirectUrisEnvVarConfig()
+    {
+        $envVarConfig = $this->getEnvVarConfig();
+        return is_array($envVarConfig) && array_key_exists('redirectUris', $envVarConfig)
+            ? $this->getEnvVarConfig()['redirectUris']
+            : $this->getModule()->clientRedirectUrisEnvVarConfig;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSecretsEnvVarConfig()
+    {
+        $envVarConfig = $this->getEnvVarConfig();
+        return is_array($envVarConfig) && array_key_exists('secrets', $envVarConfig)
+            ? $envVarConfig['secrets']
+            : null;
+    }
 
     public function isVariableRedirectUriQueryAllowed()
     {
@@ -514,6 +544,39 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritDoc
      */
+    public function setSecretsAsEnvVars($secretEnvVarName, $oldSecretEnvVarName = null, $oldSecretValidUntil = null)
+    {
+        if (empty($secretEnvVarName)) {
+            throw new InvalidArgumentException(
+                'Parameter $secretEnvVarName can not be empty.'
+            );
+        }
+
+        if ($oldSecretEnvVarName) {
+            if (!$oldSecretValidUntil) {
+                throw new InvalidArgumentException(
+                    'Parameter $oldSecretValidUntil must be set when $oldSecretEnvVar is set.'
+                );
+            }
+            $this->setAttribute('old_secret', '${' . $oldSecretEnvVarName . '}');
+
+            if ($oldSecretValidUntil instanceof \DateInterval) {
+                $oldSecretValidUntil = (new \DateTimeImmutable())->add($oldSecretValidUntil);
+            }
+            $this->setAttribute('old_secret_valid_until', $oldSecretValidUntil);
+        } else {
+            $this->setAttribute('old_secret', null);
+            $this->setAttribute('old_secret_valid_until', null);
+        }
+
+        $this->setAttribute('secret', '${' . $secretEnvVarName . '}');
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function validateNewSecret($secret, &$error)
     {
         $error = null;
@@ -549,7 +612,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
      */
     public function getDecryptedSecret($cryptographer)
     {
-        return $cryptographer->decrypt($this->secret);
+        return $cryptographer->decrypt($this->envVarParseSecret($this->secret));
     }
 
     /**
@@ -557,7 +620,32 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
      */
     public function getDecryptedOldSecret($cryptographer)
     {
-        return $cryptographer->decrypt($this->old_secret);
+        return $cryptographer->decrypt($this->envVarParseSecret($this->old_secret));
+    }
+
+    /**
+     * Replaces environment variables with their values in the secret
+     *
+     * @param string $secret
+     * @return string
+     * @throws EnvironmentVariableNotAllowedException
+     * @throws EnvironmentVariableNotSetException
+     * @throws InvalidConfigException
+     */
+    protected function envVarParseSecret($secret)
+    {
+        $secretsEnvVarConfig = $this->getSecretsEnvVarConfig();
+        if ($secretsEnvVarConfig) {
+            if (version_compare(PHP_VERSION, '8.1.0', '<')) {
+                // PHP < 8.1 can only handle indexed array when unpacking.
+                $secretsEnvVarConfig = array_values($secretsEnvVarConfig);
+            }
+            $secret = EnvironmentHelper::parseEnvVars($secret, ...$secretsEnvVarConfig);
+        } elseif (preg_match(EnvironmentHelper::ENV_VAR_REGEX, $secret)) {
+            throw new InvalidConfigException('Environment variable used without env_var_config being set.');
+        }
+
+        return $secret;
     }
 
     /**
@@ -581,7 +669,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
                     !empty($this->old_secret)
                     && !empty($this->old_secret_valid_until)
                     && $this->old_secret_valid_until > (new \DateTime())
-                    && Yii::$app->security->compareString($cryptographer->decrypt($this->old_secret), $secret)
+                    && Yii::$app->security->compareString($this->getDecryptedOldSecret($cryptographer), $secret)
                 )
             );
     }

@@ -600,7 +600,7 @@ abstract class Oauth2BaseModule extends Module
      * @param Oauth2OidcUserInterface $user
      * @param string $clientIdentifier
      * @param CryptKey $privateKey
-     * @param string $scopeIdentifiers
+     * @param string[] $scopeIdentifiers
      * @param string|null $nonce
      * @param \DateTimeImmutable|null $expiryDateTime
      * @return \Lcobucci\JWT\Token\Plain

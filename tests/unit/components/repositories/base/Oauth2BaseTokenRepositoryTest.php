@@ -111,6 +111,11 @@ class Oauth2BaseTokenRepositoryTest extends DatabaseTestCase
             {
                 // Not used at the moment.
             }
+
+            public function findModelByPkOrIdentifier($pkOrIdentifier)
+            {
+                // Not used at the moment.
+            }
         };
     }
 }

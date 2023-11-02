@@ -31,14 +31,14 @@ class Oauth2ClientRepositoryTest extends BaseOauth2RepositoryTest
      */
     public function testGetClientEntity($identifier, $class)
     {
-        $clientRedirectUriEnvVarConfig = [
+        $clientRedirectUrisEnvVarConfig = [
             'allowList' => 'TEST_*',
         ];
 
         $appConfig = [
             'modules' => [
                 'oauth2' => [
-                    'clientRedirectUriEnvVarConfig' => $clientRedirectUriEnvVarConfig,
+                    'clientRedirectUrisEnvVarConfig' => $clientRedirectUrisEnvVarConfig,
                 ],
             ],
         ];
@@ -47,7 +47,7 @@ class Oauth2ClientRepositoryTest extends BaseOauth2RepositoryTest
 
         if ($class !== null) {
             $this->assertInstanceOf($class, $client);
-            $this->assertEquals($clientRedirectUriEnvVarConfig, $client->getRedirectUriEnvVarConfig());
+            $this->assertEquals($clientRedirectUrisEnvVarConfig, $client->getRedirectUrisEnvVarConfig());
         } else {
             $this->assertNull($client);
         }

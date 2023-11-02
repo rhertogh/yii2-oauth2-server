@@ -29,6 +29,7 @@ abstract class BaseOauth2GrantTest extends DatabaseTestCase
             'redirect_uris' => $redirectUris,
             'allow_variable_redirect_uri_query' => $allowVariableRedirectUriQuery
         ]);
+        $client->setModule(Oauth2Module::getInstance());
         $request = new ServerRequest('POST', 'https://localhost/test');
 
         if (!$expectValid) {

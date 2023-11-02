@@ -83,6 +83,21 @@ interface Oauth2ClientInterface extends
     public static function find();
 
     /**
+     * Get the Oauth2Module
+     * @return Oauth2Module
+     * @since 1.0.0
+     */
+    public function getModule();
+
+    /**
+     * Set the Oauth2Module
+     * @param Oauth2Module $module
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setModule($module);
+
+    /**
      * Set the client name
      * @param string $name
      * @return $this
@@ -161,33 +176,89 @@ interface Oauth2ClientInterface extends
     public function setRedirectUri($uri);
 
     /**
-     * Get configuration for parsing environment variables in the redirect URI(s).
+     * Get configuration for parsing environment variables in the redirect URI(s) and/or
+     * secrets (`secret` and `oldSecret`).
+     *
      * @return array{
-     *             allowList: string[],
-     *             denyList: string[]|null,
-     *             parseNested: bool,
-     *             exceptionWhenNotSet: bool,
-     *             exceptionWhenNotAllowed: bool,
+     *             redirectUris?: array{
+     *                 allowList: string[],
+     *                 denyList?: string[]|null,
+     *                 parseNested?: bool,
+     *                 exceptionWhenNotSet?: bool,
+     *                 exceptionWhenNotAllowed?: bool,
+     *             },
+     *             secrets?: array{
+     *                 allowList: string[],
+     *                 denyList?: string[]|null,
+     *                 parseNested?: bool,
+     *                 exceptionWhenNotSet?: bool,
+     *                 exceptionWhenNotAllowed?: bool,
+     *             },
      *         }|null
      * @since 1.0.0
      * @see \rhertogh\Yii2Oauth2Server\helpers\EnvironmentHelper::parseEnvVars()
      */
-    public function getRedirectUriEnvVarConfig();
+    public function getEnvVarConfig();
 
     /**
-     * When configured, environment variables specified in the redirect URI(s) will be replaced by their values.
+     * When configured, environment variables specified in the redirect URI(s) and/or
+     * secrets (`secret` and `oldSecret`) will be replaced by their values.
+     *
      * @param array{
-     *             allowList: string[],
-     *             denyList: string[]|null,
-     *             parseNested: bool,
-     *             exceptionWhenNotSet: bool,
-     *             exceptionWhenNotAllowed: bool,
+     *            redirectUris?: array{
+     *                allowList: string[],
+     *                denyList?: string[]|null,
+     *                parseNested?: bool,
+     *                exceptionWhenNotSet?: bool,
+     *                exceptionWhenNotAllowed?: bool,
+     *            },
+     *            secrets?: array{
+     *                allowList: string[],
+     *                denyList?: string[]|null,
+     *                parseNested?: bool,
+     *                exceptionWhenNotSet?: bool,
+     *                exceptionWhenNotAllowed?: bool,
+     *            },
      *        }|null $config
      * @return $this
      * @since 1.0.0
      * @see \rhertogh\Yii2Oauth2Server\helpers\EnvironmentHelper::parseEnvVars()
      */
-    public function setRedirectUriEnvVarConfig($config);
+    public function setEnvVarConfig($config);
+
+    /**
+     * Get configuration for parsing environment variables in the redirect URI(s).
+     * Falls back to the Oauth2Module::$clientRedirectUrisEnvVarConfig if there is no specific configuration for this
+     * client.
+     * Please see `EnvironmentHelper::parseEnvVars()` for more details.
+     *
+     * @return array{
+     *             allowList: string[],
+     *             denyList?: string[]|null,
+     *             parseNested?: bool,
+     *             exceptionWhenNotSet?: bool,
+     *             exceptionWhenNotAllowed?: bool,
+     *         }|null
+     * @since 1.0.0
+     * @see \rhertogh\Yii2Oauth2Server\helpers\EnvironmentHelper::parseEnvVars()
+     */
+    public function getRedirectUrisEnvVarConfig();
+
+    /**
+     * Get configuration for parsing environment variables in the secrets (`secret` and `oldSecret`).
+     * Please see `EnvironmentHelper::parseEnvVars()` for more details.
+     *
+     * @return array{
+     *             allowList: string[],
+     *             denyList?: string[]|null,
+     *             parseNested?: bool,
+     *             exceptionWhenNotSet?: bool,
+     *             exceptionWhenNotAllowed?: bool,
+     *         }|null
+     * @since 1.0.0
+     * @see \rhertogh\Yii2Oauth2Server\helpers\EnvironmentHelper::parseEnvVars()
+     */
+    public function getSecretsEnvVarConfig();
 
     /**
      * Validate the client against the full redirect URI, or allow for a variable "query" part.
@@ -263,6 +334,17 @@ interface Oauth2ClientInterface extends
      * @since 1.0.0
      */
     public function setSecret($secret, $cryptographer, $oldSecretValidUntil = null, $keyName = null);
+
+    /**
+     * Set the client secret (and optionally the old_secret) to environment variable names.
+     *
+     * @param string $secretEnvVarName
+     * @param string|null $oldSecretEnvVarName
+     * @param \DateTimeImmutable|\DateInterval|null $oldSecretValidUntil
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setSecretsAsEnvVars($secretEnvVarName, $oldSecretEnvVarName = null, $oldSecretValidUntil = null);
 
     /**
      * Validate new secret against the validation rules.

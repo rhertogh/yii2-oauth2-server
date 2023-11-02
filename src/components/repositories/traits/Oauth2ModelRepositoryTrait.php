@@ -54,4 +54,23 @@ trait Oauth2ModelRepositoryTrait
 
         return $result;
     }
+
+    /**
+     * @inheritDoc
+     * @throws InvalidConfigException
+     */
+    public function findModelByPkOrIdentifier($pkOrIdentifier)
+    {
+        try {
+            $model = $this->findModelByPk($pkOrIdentifier);
+        } catch (\Exception $e) {
+            // Silently ignore.
+        }
+
+        if (empty($model)) {
+            $model = $this->findModelByIdentifier($pkOrIdentifier);
+        }
+
+        return $model;
+    }
 }

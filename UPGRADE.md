@@ -14,6 +14,26 @@ Please see the [Change Log](CHANGELOG.md) for more information on version histor
   from version A to version C and there is version B between A and C, you need to follow the instructions
   for both A and B.
 
+Upgrade from v1.0.0-alpha15
+---------------------------
+* > Note: Database changes will not be incremental till the first stable release.
+
+  v1.0.0-alpha16 introduces a new column for the `oauth2_client` table.    
+  In order to apply these changes you can run the following statement:
+  MySQL:
+  ```MySQL
+  ALTER TABLE `oauth2_client` ADD COLUMN `env_var_config` JSON AFTER `old_secret_valid_until`;
+  ```
+  PostgeSQL:
+  ```SQL
+  ALTER TABLE oauth2_client ADD COLUMN env_var_config JSONB;
+  ```
+* The `Oauth2Module::$clientRedirectUriEnvVarConfig` property is renamed to `Oauth2Module::$clientRedirectUrisEnvVarConfig`
+  (note the plural 's' in 'Uris'), if you are using this property rename it accordingly.
+* The `Oauth2ModelRepositoryInterface` now defines the `findModelByPkOrIdentifier()` method.
+  If your implementation uses the `Oauth2ModelRepositoryTrait` this function is implemented automatically,   
+  otherwise you will need to implement it yourself.
+
 Upgrade from v1.0.0-alpha14
 ---------------------------
 
@@ -65,7 +85,7 @@ Upgrade from v1.0.0-alpha10
   ```
   PostgeSQL:
   ```SQL
-  ALTER TABLE `oauth2_client` ADD COLUMN `allow_variable_redirect_uri_query` BOOLEAN NOT NULL DEFAULT false AFTER `redirect_uris`;
+  ALTER TABLE oauth2_client ADD COLUMN allow_variable_redirect_uri_query BOOLEAN NOT NULL DEFAULT false;
   ```
 
 
@@ -82,7 +102,7 @@ Upgrade from v1.0.0-alpha5
   ```
   PostgeSQL:  
   ```SQL
-  ALTER TABLE `oauth2_client` ADD COLUMN `end_users_may_authorize_client` BOOLEAN NOT NULL DEFAULT true AFTER `scope_access`;
+  ALTER TABLE oauth2_client ADD COLUMN end_users_may_authorize_client BOOLEAN NOT NULL DEFAULT true;
   ```
 
 * The interface `\rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface` defines a new method

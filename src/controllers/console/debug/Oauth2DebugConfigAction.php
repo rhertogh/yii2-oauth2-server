@@ -69,8 +69,8 @@ class Oauth2DebugConfigAction extends Action
         $codesEncryptionKey = $module->codesEncryptionKey ? '[SET]' : '[NOT SET]';
         $storageEncryptionKeys = $module->storageEncryptionKeys ? '[SET]' : '[NOT SET]';
 
-        $clientRedirectUriEnvVarConfig = $module->clientRedirectUriEnvVarConfig
-            ? VarDumper::export($module->clientRedirectUriEnvVarConfig)
+        $clientRedirectUrisEnvVarConfig = $module->clientRedirectUrisEnvVarConfig
+            ? VarDumper::export($module->clientRedirectUrisEnvVarConfig)
             : '';
 
         return [
@@ -83,7 +83,7 @@ class Oauth2DebugConfigAction extends Action
             'storageEncryptionKeys' => $storageEncryptionKeys,
             'defaultStorageEncryptionKey' => $module->defaultStorageEncryptionKey,
 
-            'clientRedirectUriEnvVarConfig' => $clientRedirectUriEnvVarConfig,
+            'clientRedirectUrisEnvVarConfig' => $clientRedirectUrisEnvVarConfig,
 
             'identityClass' => $module->identityClass,
 

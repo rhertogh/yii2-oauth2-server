@@ -319,8 +319,13 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
     public $clientAuthorizationView = 'authorize-client';
 
     /**
-     * Configuration for `Oauth2Client::setRedirectUriEnvVarConfig()`.
-     * When configured, environment variables specified in the `Oauth2Client` redirect URI(s) will be substituted with their values.
+     * Configuration for `Oauth2Client::getRedirectUrisEnvVarConfig()` fallback (the
+     * Oauth2Client::$envVarConfig['redirectUris'] has precedence).
+     * When configured, environment variables specified in the `Oauth2Client` redirect URI(s) will be substituted with
+     * their values. Please see `EnvironmentHelper::parseEnvVars()` for more details.
+     *
+     * Warning: This setting applies to all clients, for security it's recommended to specify this configuration at the
+     * individual client level via its `envVarConfig` setting.
      *
      * @var array{
      *          allowList: array,
@@ -329,10 +334,11 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
      *          exceptionWhenNotSet: bool,
      *          exceptionWhenNotAllowed: bool,
      *      }|null
-     * @see Oauth2ClientInterface::setRedirectUriEnvVarConfig()
+     * @see Oauth2ClientInterface::setEnvVarConfig()
+     * @see Oauth2ClientInterface::getRedirectUrisEnvVarConfig()
      * @see \rhertogh\Yii2Oauth2Server\helpers\EnvironmentHelper::parseEnvVars()
      */
-    public $clientRedirectUriEnvVarConfig = null;
+    public $clientRedirectUrisEnvVarConfig = null;
 
     /**
      * @var string|null The URL path to the OpenID Connect Provider Configuration Information Action.

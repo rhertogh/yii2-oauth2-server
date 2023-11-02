@@ -152,6 +152,8 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                         ->comment('Checked when the `secret` does not match, can be used for key rotation.'),
                     'old_secret_valid_until' => $this->dateTime()
                         ->comment('Determines till which date the `old_secret` may be used.'),
+                    'env_var_config' => $this->json()
+                        ->comment('Configuration for environment variable replacement in the `redirect_uris`, setting this value overrides the `Oauth2Module::$clientRedirectUrisEnvVarConfig`.'),
                     'logo_uri' => $this->string()
                         ->comment('Logo which is presented to the end user during client authorization.'),
                     'tos_uri' => $this->string()
