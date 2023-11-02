@@ -12,6 +12,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 
 ### Added
 - It's now possible to specify "environment variables configuration" for Oauth2 Clients which allows env var usage in secrets and redirect URIs.
+- You can now generate a secret via the command line (`yii oauth2/encryption/generate-secret`);
 
 ### Changed
 
