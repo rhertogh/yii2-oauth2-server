@@ -140,23 +140,33 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
             $clientTable => [
                 'table' => [
                     'id' => $this->primaryKey(),
-                    'identifier' => $this->string()->notNull()->unique(),
-                    'name' => $this->string()->notNull(),
-                    'type' => $this->integer()->notNull()->defaultValue(Oauth2ClientInterface::TYPE_CONFIDENTIAL),
-                    'secret' => $this->text(),
-                    'old_secret' => $this->text(),
-                    'old_secret_valid_until' => $this->dateTime(),
-                    'logo_uri' => $this->string(),
-                    'tos_uri' => $this->string(),
-                    'contacts' => $this->text()
-                        ->comment('JSON encoded array of strings with contact details for the client.'),
-                    'redirect_uris' => $this->json(),
+                    'identifier' => $this->string()->notNull()->unique()
+                        ->comment('Unique textual identifier by which the Client identifies itself.'),
+                    'name' => $this->string()->notNull()
+                        ->comment('Descriptive name of the Client'),
+                    'type' => $this->integer()->notNull()->defaultValue(Oauth2ClientInterface::TYPE_CONFIDENTIAL)
+                        ->comment('Client type, "confidential" clients must authenticate themselves via a "client secret".'),
+                    'secret' => $this->text()
+                        ->comment('"Confidential" clients must authenticate themselves via this secret.'),
+                    'old_secret' => $this->text()
+                        ->comment('Checked when the `secret` does not match, can be used for key rotation.'),
+                    'old_secret_valid_until' => $this->dateTime()
+                        ->comment('Determines till which date the `old_secret` may be used.'),
+                    'logo_uri' => $this->string()
+                        ->comment('Logo which is presented to the end user during client authorization.'),
+                    'tos_uri' => $this->string()
+                        ->comment('Link to the "Term of Service" which is presented to the end user during client authorization.'),
+                    'contacts' => $this->json()
+                        ->comment('Array of e-mail addresses of people responsible for this Client.'),
+                    'redirect_uris' => $this->json()
+                        ->comment('Array of redirect uris which the Client is allowed to use.'),
                     'allow_variable_redirect_uri_query' => $this->boolean()->notNull()->defaultValue(false)
                         ->comment('By default, the client is validated against the full redirect URI including the "query" part. If the "query" part of the return URI is variable it may be marked as such.'),
                     'token_types' => $this->integer()->notNull()->defaultValue(Oauth2AccessToken::TYPE_BEARER),
-                    'grant_types' => $this->integer()->notNull()->defaultValue(Oauth2Module::GRANT_TYPE_AUTH_CODE | Oauth2Module::GRANT_TYPE_REFRESH_TOKEN),
+                    'grant_types' => $this->integer()->notNull()->defaultValue(Oauth2Module::GRANT_TYPE_AUTH_CODE | Oauth2Module::GRANT_TYPE_REFRESH_TOKEN)
+                        ->comment('Oauth2 grant types enabled for this Client.'),
                     'scope_access' => $this->integer()->notNull()->defaultValue(Oauth2Client::SCOPE_ACCESS_STRICT)
-                        ->comment('Determines how strict scopes must be defined for this client.'),
+                        ->comment('Determines if scopes must be specified for this client (default) or all defined scopes may be used.'),
                     'end_users_may_authorize_client' => $this->boolean()->notNull()->defaultValue(true)
                         ->comment('Determines if the user can authorize a client (the client has to be pre-authorized otherwise).'),
                     'user_account_selection' => $this->integer()
@@ -224,11 +234,16 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
             $scopeTable => [
                 'table' => [
                     'id' => $this->primaryKey(),
-                    'identifier' => $this->string()->notNull()->unique(),
-                    'description' => $this->text(),
-                    'authorization_message' => $this->text(),
-                    'applied_by_default' => $this->integer()->notNull()->defaultValue(Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO),
-                    'required_on_authorization' => $this->boolean()->notNull()->defaultValue(true),
+                    'identifier' => $this->string()->notNull()->unique()
+                        ->comment('Unique textual identifier by which the Client identifies the scope.'),
+                    'description' => $this->text()
+                        ->comment('Descriptive text about this scope.'),
+                    'authorization_message' => $this->text()
+                        ->comment('Message that is shown to the end user on the Client authorization screen for this scope.'),
+                    'applied_by_default' => $this->integer()->notNull()->defaultValue(Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO)
+                        ->comment('Should this scope be applied without the Client specifically requesting it, and if so, does the end user needs to authorize it.'),
+                    'required_on_authorization' => $this->boolean()->notNull()->defaultValue(true)
+                        ->comment('Is this scope required or optional on the Client authorization screen.'),
                     'enabled' => $this->boolean()->notNull()->defaultValue(true),
                     'created_at' => $this->integer()->notNull(),
                     'updated_at' => $this->integer()->notNull(),
@@ -251,8 +266,10 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                 'table' => [
                     'client_id' => $this->integer()->notNull(),
                     'scope_id' => $this->integer()->notNull(),
-                    'applied_by_default' => $this->integer(),
-                    'required_on_authorization' => $this->boolean(),
+                    'applied_by_default' => $this->integer()
+                        ->comment('Should this scope be applied without the Client specifically requesting it, and if so, does the end user needs to authorize it. Note: Setting this value overrides the `scope.applied_by_default`.'),
+                    'required_on_authorization' => $this->boolean()
+                        ->comment('Is this scope required or optional on the Client authorization screen. Note: Setting this value overrides the `scope.required_on_authorization`.'),
                     'enabled' => $this->boolean()->notNull()->defaultValue(true),
                     'created_at' => $this->integer()->notNull(),
                     'updated_at' => $this->integer()->notNull(),
