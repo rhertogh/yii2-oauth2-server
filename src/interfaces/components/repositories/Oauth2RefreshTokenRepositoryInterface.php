@@ -10,6 +10,26 @@ interface Oauth2RefreshTokenRepositoryInterface extends
     Oauth2ModelRepositoryInterface,
     RefreshTokenRepositoryInterface
 {
+    # region Oauth2ModelRepositoryInterface methods (overwritten for type covariance)
+    /**
+     * @inheritDoc
+     * @return Oauth2RefreshTokenInterface|null
+     */
+    public function findModelByPk($pk);
+
+    /**
+     * @inheritDoc
+     * @return Oauth2RefreshTokenInterface|null
+     */
+    public function findModelByIdentifier($identifier);
+
+    /**
+     * @inheritDoc
+     * @return Oauth2RefreshTokenInterface|null
+     */
+    public function findModelByPkOrIdentifier($pkOrIdentifier);
+    # endregion
+
     # region RefreshTokenRepositoryInterface methods (overwritten for type covariance)
     /**
      * @inheritDoc

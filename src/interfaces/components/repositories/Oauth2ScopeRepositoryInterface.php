@@ -11,6 +11,26 @@ interface Oauth2ScopeRepositoryInterface extends
     Oauth2ModelRepositoryInterface,
     ScopeRepositoryInterface
 {
+    # region Oauth2ModelRepositoryInterface methods (overwritten for type covariance)
+    /**
+     * @inheritDoc
+     * @return Oauth2ScopeInterface|null
+     */
+    public function findModelByPk($pk);
+
+    /**
+     * @inheritDoc
+     * @return Oauth2ScopeInterface|null
+     */
+    public function findModelByIdentifier($identifier);
+
+    /**
+     * @inheritDoc
+     * @return Oauth2ScopeInterface|null
+     */
+    public function findModelByPkOrIdentifier($pkOrIdentifier);
+    # endregion
+
     # region ScopeRepositoryInterface methods (overwritten for type covariance)
     /**
      * @inheritDoc

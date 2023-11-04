@@ -11,6 +11,26 @@ interface Oauth2ClientRepositoryInterface extends
     Oauth2ModelRepositoryInterface,
     ClientRepositoryInterface
 {
+    # region Oauth2ModelRepositoryInterface methods (overwritten for type covariance)
+    /**
+     * @inheritDoc
+     * @return Oauth2ClientInterface|null
+     */
+    public function findModelByPk($pk);
+
+    /**
+     * @inheritDoc
+     * @return Oauth2ClientInterface|null
+     */
+    public function findModelByIdentifier($identifier);
+
+    /**
+     * @inheritDoc
+     * @return Oauth2ClientInterface|null
+     */
+    public function findModelByPkOrIdentifier($pkOrIdentifier);
+    # endregion
+
     # region ClientRepositoryInterface methods (overwritten for type covariance)
     /**
      * @inheritDoc
