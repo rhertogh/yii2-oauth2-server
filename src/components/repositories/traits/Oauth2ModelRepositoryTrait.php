@@ -35,7 +35,7 @@ trait Oauth2ModelRepositoryTrait
     /**
      * @inheritDoc
      * @param string $identifier
-     * @return Oauth2IdentifierInterface
+     * @return Oauth2IdentifierInterface|null
      * @throws InvalidConfigException
      */
     public function findModelByIdentifier($identifier)
