@@ -3,9 +3,17 @@
 namespace Yii2Oauth2ServerTests\Helper;
 
 use Codeception\Module\Yii2;
+use Codeception\TestInterface;
 
 class Yii2Module extends Yii2
 {
+    public function _before(TestInterface $test)
+    {
+        parent::_before($test);
+
+        $this->client->setServerParameter('REMOTE_ADDR', '127.0.0.1');
+    }
+
     /**
      * @inheritdoc
      *

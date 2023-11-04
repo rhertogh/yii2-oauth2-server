@@ -83,6 +83,8 @@ class Oauth2DebugConfigAction extends Action
             'storageEncryptionKeys' => $storageEncryptionKeys,
             'defaultStorageEncryptionKey' => $module->defaultStorageEncryptionKey,
 
+            'nonTlsAllowedRanges' => $module->nonTlsAllowedRanges,
+
             'clientRedirectUrisEnvVarConfig' => $clientRedirectUrisEnvVarConfig,
 
             'identityClass' => $module->identityClass,

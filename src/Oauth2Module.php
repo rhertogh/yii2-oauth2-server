@@ -55,6 +55,7 @@ use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\helpers\StringHelper;
 use yii\i18n\PhpMessageSource;
+use yii\validators\IpValidator;
 use yii\web\Application as WebApplication;
 use yii\web\GroupUrlRule;
 use yii\web\IdentityInterface;
@@ -262,6 +263,17 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
      * @since 1.0.0
      */
     public $defaultStorageEncryptionKey = null;
+
+    /**
+     * @var string|string[]|null IP addresses, CIDR ranges, or range aliases that are allowed to connect over a
+     * non-TLS connection. If `null` or an empty array LTS is always required.
+     *
+     * Warning: Although you can use '*' or 'any' to allow a non-TLS connection from any ip address,
+     * doing so would most likely introduce a security risk and should be done for debugging purposes only!
+     *
+     * @see \yii\validators\IpValidator::$networks for a list of available alliasses.
+     */
+    public $nonTlsAllowedRanges = 'localhost';
 
     /**
      * @var class-string<Oauth2UserInterface>|null The Identity Class of your application,
@@ -899,6 +911,26 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
         }
 
         return $result;
+    }
+
+    /**
+     * Checks if the connection is using TLS or if the remote IP address is allowed to connect without TLS.
+     * @return bool
+     */
+    public function validateTlsConnection()
+    {
+        if (Yii::$app->request->getIsSecureConnection()) {
+            return true;
+        }
+
+        if (
+            !empty($this->nonTlsAllowedRanges)
+            && (new IpValidator(['ranges' => $this->nonTlsAllowedRanges]))->validate(Yii::$app->request->getRemoteIP())
+        ) {
+            return true;
+        }
+
+        return false;
     }
 
     /**

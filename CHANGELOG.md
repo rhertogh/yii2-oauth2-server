@@ -11,6 +11,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ----------------------------
 
 ### Added
+- Require TLS connection except for localhost (can be configured via `Oauth2Module::$nonTlsAllowedRanges`). (rhertogh)
 
 ### Changed
 

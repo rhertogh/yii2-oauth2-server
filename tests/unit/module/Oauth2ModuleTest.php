@@ -479,6 +479,85 @@ class Oauth2ModuleTest extends DatabaseTestCase
     }
 
     /**
+     * @param bool $isTLS
+     * @param string $remoteAddress
+     * @param string $nonTlsAllowedRanges
+     * @param bool $expected
+     *
+     * @dataProvider validateTlsConnectionProvider
+     */
+    public function testValidateTlsConnection($isTLS, $remoteAddress, $nonTlsAllowedRanges, $expected)
+    {
+        $_SERVER['HTTPS'] = (int)$isTLS;
+        $_SERVER['REMOTE_ADDR'] = $remoteAddress;
+
+        $this->mockWebApplication([
+            'modules' => [
+                'oauth2' => [
+                    'nonTlsAllowedRanges' => $nonTlsAllowedRanges,
+                ],
+            ],
+        ]);
+        $module = Oauth2Module::getInstance();
+
+        $this->assertEquals($expected, $module->validateTlsConnection());
+    }
+
+    public function validateTlsConnectionProvider()
+    {
+        return [
+            'tls' => [
+                'isTLS' => true,
+                'remoteAddress' => '1.2.3.4',
+                'nonTlsAllowedRanges' => null,
+                'expected' => true,
+            ],
+            'non-tls null' => [
+                'isTLS' => false,
+                'remoteAddress' => '127.0.0.1',
+                'nonTlsAllowedRanges' => null,
+                'expected' => false,
+            ],
+            'non-tls empty array' => [
+                'isTLS' => false,
+                'remoteAddress' => '127.0.0.1',
+                'nonTlsAllowedRanges' => [],
+                'expected' => false,
+            ],
+            'non-tls allowed localhost' => [
+                'isTLS' => false,
+                'remoteAddress' => '127.0.0.1',
+                'nonTlsAllowedRanges' => 'localhost',
+                'expected' => true,
+            ],
+            'non-tls allowed [localhost, private]' => [
+                'isTLS' => false,
+                'remoteAddress' => '192.168.0.1',
+                'nonTlsAllowedRanges' => ['localhost', 'private'],
+                'expected' => true,
+            ],
+            'non-tls allowed CIDR' => [
+                'isTLS' => false,
+                'remoteAddress' => '123.200.0.1',
+                'nonTlsAllowedRanges' => '123.150.0.0/9',
+                'expected' => true,
+            ],
+            'non-tls not allowed CIDR' => [
+                'isTLS' => false,
+                'remoteAddress' => '123.200.0.1',
+                'nonTlsAllowedRanges' => '123.150.0.0/10',
+                'expected' => false,
+            ],
+            'non-tls host not allowed' => [
+                'isTLS' => false,
+                'remoteAddress' => '1.2.3.4',
+                'nonTlsAllowedRanges' => 'localhost',
+                'expected' => false,
+            ],
+        ];
+    }
+
+    /**
      * @depends testInstantiateModule
      */
     public function testGetAuthorizationServer()
