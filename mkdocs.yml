@@ -1,0 +1,44 @@
+site_name: Yii2 Oauth2 Server
+
+theme:
+  name: readthedocs
+  custom_dir: docs/_mkdocs/theme
+
+extra_css:
+  - _mkdocs/style.css
+
+nav:
+  - Introduction:
+    - 'guide/intro-about-yii2-oauth2-server.md'
+
+  - Getting Started:
+    - 'guide/start-prerequisites.md'
+    - 'guide/start-installation.md'
+    - 'guide/start-openid-connect.md'
+    - 'guide/start-openid-connect-claims.md'
+    - 'guide/start-redirect-uris.md'
+
+  - Security:
+    - 'guide/security-introduction.md'
+    - 'guide/security-client-secret-rotation.md'
+    - 'guide/security-encryption-key-rotation.md'
+
+  - Importing/Migrating:
+    - 'guide/importing-migrating.md'
+
+  - Development:
+    - 'internals/README.md'
+
+  - FAQ:
+    - 'guide/faq.md'
+
+  - Appendix:
+    - 'guide/appendix-client-configuration.md'
+
+markdown_extensions:
+  - admonition
+  - footnotes
+  - toc:
+      permalink: true
+
+copyright: <a href="https://github.com/rhertogh/yii2-oauth2-server/blob/master/LICENSE.md" target="_blank">Apache License 2.0</a>
