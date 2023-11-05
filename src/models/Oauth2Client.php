@@ -10,6 +10,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use rhertogh\Yii2Oauth2Server\models\behaviors\DateTimeBehavior;
+use rhertogh\Yii2Oauth2Server\models\queries\Oauth2ClientScopeQuery;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2EnabledTrait;
 use rhertogh\Yii2Oauth2Server\models\traits\Oauth2EntityIdentifierTrait;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
@@ -64,11 +65,6 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
                 'required',
                 'when' => fn(self $model) => $model->isConfidential(),
             ],
-            [
-                ['scope_access'],
-                'in',
-                'range' => static::SCOPE_ACCESSES,
-            ]
         ]);
     }
 
@@ -401,21 +397,34 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritDoc
      */
-    public function getScopeAccess()
+    public function getAllowGenericScopes()
     {
-        return (int)$this->scope_access;
+        return (bool)$this->allow_generic_scopes;
     }
 
     /**
      * @inheritDoc
      */
-    public function setScopeAccess($scopeAccess)
+    public function setAllowGenericScopes($allowGenericScopes)
     {
-        if (!in_array($scopeAccess, Oauth2ClientInterface::SCOPE_ACCESSES)) {
-            throw new InvalidArgumentException('Unknown scope access "' . $scopeAccess . '".');
-        }
+        $this->allow_generic_scopes = $allowGenericScopes;
+        return $this;
+    }
 
-        $this->scope_access = $scopeAccess;
+    /**
+     * @inheritDoc
+     */
+    public function getExceptionOnInvalidScope()
+    {
+        return $this->exception_on_invalid_scope;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setExceptionOnInvalidScope($exceptionOnInvalidScope)
+    {
+        $this->exception_on_invalid_scope = $exceptionOnInvalidScope;
         return $this;
     }
 
@@ -768,26 +777,33 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
 
     /**
      * @inheritDoc
+     * @throws InvalidConfigException
      */
-    public function validateAuthRequestScopes($scopeIdentifiers, &$unauthorizedScopes = [])
+    public function validateAuthRequestScopes($scopeIdentifiers, &$unknownScopes = [], &$unauthorizedScopes = [])
     {
-        if (
-            empty($scopeIdentifiers)
-            // Quiet mode will always allow the request (scopes will silently be limited to the defined ones).
-            || $this->getScopeAccess() === static::SCOPE_ACCESS_STRICT_QUIET
-        ) {
+        if (empty($scopeIdentifiers)) {
+            $unknownScopes = [];
             $unauthorizedScopes = [];
             return true;
         }
 
+        /** @var Oauth2ScopeInterface $scopeClass */
+        $scopeClass = DiHelper::getValidatedClassName(Oauth2ScopeInterface::class);
+        $knownScopeIdentifiers = $scopeClass::find()
+            ->andWhere(['identifier' => $scopeIdentifiers])
+            ->select('identifier')
+            ->column();
+
+        $unknownScopes = array_diff($scopeIdentifiers, $knownScopeIdentifiers);
+
         $allowedScopeIdentifiers = array_map(
             fn($scope) => $scope->getIdentifier(),
-            $this->getAllowedScopes($scopeIdentifiers)
+            $this->getAllowedScopes($knownScopeIdentifiers)
         );
 
-        $unauthorizedScopes = array_values(array_diff($scopeIdentifiers, $allowedScopeIdentifiers));
+        $unauthorizedScopes = array_values(array_diff($knownScopeIdentifiers, $allowedScopeIdentifiers));
 
-        return empty($unauthorizedScopes);
+        return empty($unknownScopes) && empty($unauthorizedScopes);
     }
 
     /**
@@ -803,54 +819,69 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
         $scopeClass = DiHelper::getValidatedClassName(Oauth2ScopeInterface::class);
         $scopeTableName = $scopeClass::tableName();
 
-        $possibleScopesConditions = [
-            // Default scopes defined for this client.
-            ['AND',
-                [$clientScopeTableName . '.client_id' => $this->getPrimaryKey()],
-                [$clientScopeTableName . '.enabled' => 1],
-                ['OR',
-                    ...(
+        if (is_array($requestedScopeIdentifiers)) {
+            $possibleScopesConditions = [
+                // Requested and default scopes defined for this client.
+                ['AND',
+                    [$clientScopeTableName . '.client_id' => $this->getPrimaryKey()],
+                    [$clientScopeTableName . '.enabled' => 1],
+                    ['OR',
+                        ...(
                         !empty($requestedScopeIdentifiers)
                             ? [[$scopeTableName . '.identifier' => $requestedScopeIdentifiers]]
                             : []
-                    ),
-                    ['NOT', [
-                        $clientScopeTableName . '.applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO
-                    ]],
-                    ['AND',
-                        [$clientScopeTableName . '.applied_by_default' => null],
+                        ),
                         ['NOT', [
-                            $scopeTableName . '.applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO
+                            $clientScopeTableName . '.applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO
                         ]],
+                        ['AND',
+                            [$clientScopeTableName . '.applied_by_default' => null],
+                            ['NOT', [
+                                $scopeTableName . '.applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO
+                            ]],
+                        ],
                     ],
                 ],
-            ],
-        ];
+            ];
+        } else {
+            if ($requestedScopeIdentifiers === true) {
+                $possibleScopesConditions = [
+                    // All scopes defined for this client.
+                    [$clientScopeTableName . '.enabled' => 1],
+                ];
+            } else {
+                throw new InvalidArgumentException('`$possibleScopesConditions` must be either an array of strings or `true`.');
+            }
+        }
 
-        $scopeAccess = $this->getScopeAccess();
-        if ($scopeAccess === Oauth2Client::SCOPE_ACCESS_PERMISSIVE) {
-            // Default scopes defined by scope for all client.
-            $possibleScopesConditions[] = ['AND',
-                [$clientScopeTableName . '.client_id' => null],
-                ['OR',
-                    ...(
+        $allowGenericScopes = $this->getAllowGenericScopes();
+        if ($allowGenericScopes) {
+            if (is_array($requestedScopeIdentifiers)) {
+                // Requested and default scopes defined by scope for all clients.
+                $possibleScopesConditions[] = ['AND',
+                    [$clientScopeTableName . '.client_id' => null],
+                    ['OR',
+                        ...(
                         !empty($requestedScopeIdentifiers)
                             ? [[$scopeTableName . '.identifier' => $requestedScopeIdentifiers]]
                             : []
-                    ),
-                    ['NOT', [$scopeTableName . '.applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO]],
-                ],
-            ];
-        } elseif (
-            ($scopeAccess !== Oauth2Client::SCOPE_ACCESS_STRICT)
-            && ($scopeAccess !== Oauth2Client::SCOPE_ACCESS_STRICT_QUIET)
-        ) {
-            // safeguard against unknown types.
-            throw new \LogicException('Unknown scope_access: "' . $scopeAccess . '".');
+                        ),
+                        ['NOT', [$scopeTableName . '.applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO]],
+                    ],
+                ];
+            } elseif ($requestedScopeIdentifiers === true) {
+                // All scopes defined by scope for all clients.
+                $possibleScopesConditions[] = [$clientScopeTableName . '.client_id' => null];
+            }
         }
 
         return $scopeClass::find()
-            ->joinWith('clientScopes', true)
+            ->joinWith(
+                ['clientScopes' => function(Oauth2ClientScopeQuery $query) use ($clientScopeTableName) {
+                    $query->andOnCondition([$clientScopeTableName . '.client_id' => $this->getPrimaryKey()]);
+                }],
+                true
+            )
             ->enabled()
             ->andWhere(['OR', ...$possibleScopesConditions])
             ->orderBy('id')
@@ -869,7 +900,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     public function syncClientScopes($scopes, $scopeRepository)
     {
         if (is_string($scopes)) {
-            $scopes = explode(' ', $scopes);
+            $scopes = array_filter(array_map('trim', explode(' ', $scopes)));
         } elseif ($scopes === null) {
             $scopes = [];
         } elseif (!is_array($scopes)) {

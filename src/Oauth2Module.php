@@ -54,6 +54,7 @@ use yii\console\Application as ConsoleApplication;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Json;
 use yii\helpers\StringHelper;
+use yii\helpers\VarDumper;
 use yii\i18n\PhpMessageSource;
 use yii\validators\IpValidator;
 use yii\web\Application as WebApplication;
@@ -329,6 +330,13 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
      * @since 1.0.0
      */
     public $clientAuthorizationView = 'authorize-client';
+
+    /**
+     * @var bool Will the server throw an exception when a Client requests an unknown or unauthorized scope
+     * (would be silently ignored otherwise).
+     * Note: this setting can be overwritten per client.
+     */
+    public $exceptionOnInvalidScope = false;
 
     /**
      * Configuration for `Oauth2Client::getRedirectUrisEnvVarConfig()` fallback (the
@@ -953,6 +961,32 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
         }
 
         return $result;
+    }
+
+    /**
+     * @param Oauth2ClientInterface $client
+     * @param string[] $requestedScopeIdentifiers
+     * @throws Oauth2ServerException
+     */
+    public function validateAuthRequestScopes($client, $requestedScopeIdentifiers, $redirectUri = null)
+    {
+        if (!$client->validateAuthRequestScopes($requestedScopeIdentifiers, $unknownScopes, $unauthorizedScopes)) {
+            Yii::info('Invalid scope for client "' . $client->getIdentifier() . '": '
+                . VarDumper::export(['unauthorizedScopes' => $unauthorizedScopes, 'unknownScopes' => $unknownScopes]));
+
+            if (
+                $client->getExceptionOnInvalidScope() === true
+                || (
+                    $client->getExceptionOnInvalidScope() === null
+                    && $this->exceptionOnInvalidScope === true
+                )
+            ) {
+                if ($unknownScopes) {
+                    throw Oauth2ServerException::unknownScope(array_shift($unknownScopes), $redirectUri);
+                }
+                throw Oauth2ServerException::scopeNotAllowedForClient(array_shift($unauthorizedScopes), $redirectUri);
+            }
+        }
     }
 
     /**

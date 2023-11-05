@@ -14,6 +14,42 @@ Please see the [Change Log](CHANGELOG.md) for more information on version histor
   from version A to version C and there is version B between A and C, you need to follow the instructions
   for both A and B.
 
+Upgrade from v1.0.0-alpha16
+---------------------------
+* > Note: Database changes will not be incremental till the first stable release.
+
+  v1.0.0-alpha17 changed the `scope_access` column to `allow_generic_scopes` and introduces a new column for the 
+  `oauth2_client` table.    
+  In order to apply these changes you can run the following statement:
+  MySQL:
+  ```MySQL
+  UPDATE `oauth2_client` SET `scope_access`= 0 WHERE `scope_access` < 2;
+  UPDATE `oauth2_client` SET `scope_access`= 1 WHERE `scope_access` > 1;
+  ALTER TABLE `oauth2_client` CHANGE `scope_access` `allow_generic_scopes` TINYINT(1) DEFAULT 0 NOT NULL;
+  ALTER TABLE `oauth2_client` ADD COLUMN `exception_on_invalid_scope` TINYINT(1) AFTER `allow_generic_scopes`;
+  ```
+  PostgeSQL:
+  ```SQL
+  ALTER TABLE oauth2_client RENAME COLUMN scope_access TO allow_generic_scopes;
+  ALTER TABLE oauth2_client ALTER COLUMN allow_generic_scopes DROP DEFAULT;
+  ALTER TABLE oauth2_client ALTER COLUMN allow_generic_scopes TYPE BOOLEAN USING CASE WHEN allow_generic_scopes=2 THEN true ELSE false END;
+  ALTER TABLE oauth2_client ALTER COLUMN allow_generic_scopes SET DEFAULT false;
+  ALTER TABLE oauth2_client ALTER COLUMN allow_generic_scopes SET NOT NULL;
+  ALTER TABLE oauth2_client ADD COLUMN exception_on_invalid_scope BOOLEAN;
+  ```
+* `Oauth2ClientInterface` "ScopeAccess" has been split into "AllowGenericScopes" and "ExceptionOnInvalidScope".
+  If your code uses the `getScopeAccess()` and/or `setScopeAccess()` functions you will have to change the getter to 
+  `getAllowGenericScopes()` and `getExceptionOnInvalidScope()` and the setter to 
+  `setAllowGenericScopes()` and `setExceptionOnInvalidScope()` respectively. 
+  In case you have a custom implementation of `Oauth2ClientInterface` you might need to update it accordingly.
+* Since v1.0.0-alpha17 the server no longer throws an exception when the Client requests an unknown/unauthorized scope
+  by default. This behavior can be changed via the `Oauth2Module::$exceptionOnInvalidScope` or per Client via the
+  `oauth2_client.exception_on_invalid_scope` setting.
+* The signature of `Oauth2ClientInterface::validateAuthRequestScopes()` has been changed by the introduction of the
+  `$unknownScopes` parameter.
+  In case you use this function directly or have a custom implementation of `Oauth2ClientInterface` you might need to
+  update it accordingly.
+
 Upgrade from v1.0.0-alpha15
 ---------------------------
 * > Note: Database changes will not be incremental till the first stable release.

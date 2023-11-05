@@ -45,38 +45,6 @@ interface Oauth2ClientInterface extends
     ];
 
     /**
-     * Scope access "strict" will throw an exception if the client requests a scope not defined for the client.
-     * @since 1.0.0
-     */
-    public const SCOPE_ACCESS_STRICT = 0;
-    /**
-     * Scope access "strict quite" will only grant scopes defined for the client, other scopes will be silently ignored.
-     * @since 1.0.0
-     */
-    public const SCOPE_ACCESS_STRICT_QUIET = 1;
-    /**
-     * Scope access "permissive" will grant any scopes requested that are defined in general
-     * (not necessarily defined for the client). An exception will be thrown if the client requests a scope not defined.
-     * @since 1.0.0
-     */
-    public const SCOPE_ACCESS_PERMISSIVE = 2;
-    /**
-     * Scope Access options
-     * @since 1.0.0
-     */
-    public const SCOPE_ACCESSES = [
-        self::SCOPE_ACCESS_STRICT,
-        self::SCOPE_ACCESS_STRICT_QUIET,
-        self::SCOPE_ACCESS_PERMISSIVE,
-    ];
-
-    public const SCOPE_ACCESSES_LABELS = [
-        self::SCOPE_ACCESS_STRICT => 'strict',
-        self::SCOPE_ACCESS_STRICT_QUIET => 'strict_quiet',
-        self::SCOPE_ACCESS_PERMISSIVE => 'permissive',
-    ];
-
-    /**
      * @inheritDoc
      * @return Oauth2ClientQueryInterface
      */
@@ -281,21 +249,35 @@ interface Oauth2ClientInterface extends
     public function setAllowVariableRedirectUriQuery($allowVariableRedirectUriQuery);
 
     /**
-     * Get the client's scope access.
-     * @return int
-     * @see SCOPE_ACCESSES
+     * Is the client is allowed to use "generic" scopes. By default, scopes must be explicitly linked to the client.
+     * @return bool
      * @since 1.0.0
      */
-    public function getScopeAccess();
+    public function getAllowGenericScopes();
 
     /**
-     * Set the client's scope access.
-     * @param int $scopeAccess
-     * @see SCOPE_ACCESSES
+     * Set if the client is allowed to use "generic" scopes. By default, scopes must be explicitly linked to the client.
+     * @param bool $allowGenericScopes
      * @return $this
      * @since 1.0.0
      */
-    public function setScopeAccess($scopeAccess);
+    public function setAllowGenericScopes($allowGenericScopes);
+
+    /**
+     * Will the server throw an exception when an unknown scope is requested by the client.
+     * Note: If this setting is not explicitly defined for the client, the Oauth2Module's value will be used.
+     * @return bool|null
+     * @since 1.0.0
+     */
+    public function getExceptionOnInvalidScope();
+
+    /**
+     * Set if server throws an exception when an unknown scope is requested by the client.
+     * @param bool|null $exceptionOnInvalidScope
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setExceptionOnInvalidScope($exceptionOnInvalidScope);
 
     /**
      * Get the Grant Types enabled for the client.
@@ -410,14 +392,15 @@ interface Oauth2ClientInterface extends
      * Validate the requested scopes for the client.
      * @param string[] $scopeIdentifiers
      * @return bool
-     * @see getScopeAccess()
+     * @see getAllowedScopes()
      * @since 1.0.0
      */
-    public function validateAuthRequestScopes($scopeIdentifiers, &$unauthorizedScopes = []);
+    public function validateAuthRequestScopes($scopeIdentifiers, &$unknownScopes = [], &$unauthorizedScopes = []);
 
     /**
      * Get the requested scopes that are allowed for this client.
-     * @param string[] $requestedScopeIdentifiers
+     * When $requestedScopeIdentifiers is `true`, all possible scopes are returned.
+     * @param string[]|true $requestedScopeIdentifiers
      * @return Oauth2ScopeInterface[]
      * @since 1.0.0
      */

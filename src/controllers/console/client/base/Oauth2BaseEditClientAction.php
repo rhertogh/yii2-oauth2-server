@@ -170,8 +170,11 @@ class Oauth2BaseEditClientAction extends Oauth2BaseClientAction
         if ($controller->allowVariableRedirectUriQuery !== null) {
             $client->setAllowVariableRedirectUriQuery((bool)$controller->allowVariableRedirectUriQuery);
         }
-        if ($controller->scopeAccess !== null) {
-            $client->setScopeAccess((int)$controller->scopeAccess);
+        if ($controller->allowGenericScopes !== null) {
+            $client->setAllowGenericScopes((bool)$controller->allowGenericScopes);
+        }
+        if ($controller->exceptionOnInvalidScope !== null) {
+            $client->setExceptionOnInvalidScope((bool)$controller->exceptionOnInvalidScope);
         }
         if ($controller->endUsersMayAuthorizeClient !== null) {
             $client->setEndUsersMayAuthorizeClient((bool)$controller->endUsersMayAuthorizeClient);
@@ -213,10 +216,17 @@ class Oauth2BaseEditClientAction extends Oauth2BaseClientAction
                 $clientScopes = $client->getClientScopes()->with('scope')->all();
                 $defaultScopes = implode(' ', ArrayHelper::getColumn($clientScopes, 'scope.identifier'));
             }
-            $scopes = $controller->prompt('Scopes (space separated)?', [
-                'default' => $defaultScopes
-            ]);
-            $scopes = implode(' ', array_filter(array_map('trim', explode(' ', $scopes))));
+            do {
+                $scopes = $controller->prompt('Scopes (space separated)?', [
+                    'default' => $defaultScopes
+                ]);
+                $scopes = implode(' ', array_filter(array_map('trim', explode(' ', $scopes))));
+                $valid = $this->validateScope($scopes, $error);
+                if (!$valid){
+                    $controller->stdout("Invalid scopes: $error" . PHP_EOL);
+                    $scopes = null;
+                }
+            } while(!$valid);
         }
 
         return $scopes;
@@ -227,7 +237,7 @@ class Oauth2BaseEditClientAction extends Oauth2BaseClientAction
         $error = null;
         if (!empty($scope)) {
             $scopeRepository = $this->controller->module->getScopeRepository();
-            $scopeIdentifiers = array_map('trim', explode(' ', $scope));
+            $scopeIdentifiers = array_filter(array_map('trim', explode(' ', $scope)));
             $unknownScopeIdentifiers = [];
             foreach ($scopeIdentifiers as $scopeIdentifier) {
                 if (empty($scopeRepository->getScopeEntityByIdentifier($scopeIdentifier))) {

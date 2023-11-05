@@ -73,7 +73,12 @@ class Oauth2ClientController extends Oauth2BaseConsoleController
     /**
      * @var string|null
      */
-    public $scopeAccess = null;
+    public $allowGenericScopes = null;
+
+    /**
+     * @var string|null
+     */
+    public $exceptionOnInvalidScope = null;
 
     /**
      * @var string|null
@@ -126,7 +131,8 @@ class Oauth2ClientController extends Oauth2BaseConsoleController
                 'grantTypes',
                 'secret',
                 'scopes',
-                'scopeAccess',
+                'allowGenericScopes',
+                'exceptionOnInvalidScope',
                 'endUsersMayAuthorizeClient',
                 'userAccountSelection',
                 'isAuthCodeWithoutPkceAllowed',

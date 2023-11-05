@@ -14,14 +14,20 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - Require TLS connection except for localhost (can be configured via `Oauth2Module::$nonTlsAllowedRanges`). (rhertogh)
 
 ### Changed
+- `Oauth2ClientInterface` "ScopeAccess" has been split into "AllowGenericScopes" and "ExceptionOnInvalidScope". (rhertogh)
+- The `$unknownScopes` parameter has been added to `Oauth2ClientInterface::validateAuthRequestScopes()` (rhertogh)
+- The `$requestedScopeIdentifiers` parameter for `Oauth2ClientInterface::getAllowedScopes()` now accepts `true` which will return all available scopes. (rhertogh)
 
 ### Deprecated
 
 ### Removed
+- `Oauth2ClientInterface` "ScopeAccess" related constants. (rhertogh)
 
 ### Fixed
+- Incorrect ClientScope relation in `Oauth2Client::getAllowedScopes()`. (rhertogh)
 
 ### Improved
+- The `yii oauth2/client/view` console command now supports scopes.  (rhertogh)
 
 ### Security
 

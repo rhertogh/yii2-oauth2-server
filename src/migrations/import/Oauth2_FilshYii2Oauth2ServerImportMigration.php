@@ -47,7 +47,7 @@ abstract class Oauth2_FilshYii2Oauth2ServerImportMigration extends Oauth2BaseMig
         $scopeIdentifiers = [];
         foreach (array_column($clientsData, 'scope') as $scope) {
             if ($scope) {
-                $scopeIdentifiers = array_merge($scopeIdentifiers, explode(' ', $scope));
+                $scopeIdentifiers = array_merge($scopeIdentifiers, array_filter(array_map('trim', explode(' ', $scope))));
             }
         }
         $scopeIdentifiers = array_unique($scopeIdentifiers);
@@ -102,7 +102,7 @@ abstract class Oauth2_FilshYii2Oauth2ServerImportMigration extends Oauth2BaseMig
                 throw new InvalidConfigException('Empty `grant_types` for client ' . $clientIdentifier);
             }
             $client->setGrantTypes(array_reduce(
-                explode(' ', $clientData['grant_types']),
+                array_filter(array_map('trim', explode(' ', $clientData['grant_types']))),
                 fn ($grantType, $identifier) => $grantType |= Oauth2Module::getGrantTypeId($identifier),
             ));
 
@@ -121,7 +121,9 @@ abstract class Oauth2_FilshYii2Oauth2ServerImportMigration extends Oauth2BaseMig
 
             $client->setClientCredentialsGrantUserId($clientData['user_id'] ?? null);
 
-            $scopes = isset($clientData['scope']) ? explode(' ', $clientData['scope']) : [];
+            $scopes = isset($clientData['scope'])
+                ? array_filter(array_map('trim', explode(' ', $clientData['scope'])))
+                : [];
 
             $client
                 ->persist()

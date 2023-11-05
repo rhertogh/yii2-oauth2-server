@@ -3,6 +3,7 @@
 namespace rhertogh\Yii2Oauth2Server\controllers\console\client\base;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2ClientController;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use yii\base\Action;
 use yii\base\InvalidConfigException;
 use yii\console\Exception;
@@ -15,6 +16,7 @@ class Oauth2BaseClientAction extends Action
     /**
      * Find a client by its id or identifier.
      *
+     * @return Oauth2ClientInterface
      * @throws Exception
      * @throws InvalidConfigException
      */

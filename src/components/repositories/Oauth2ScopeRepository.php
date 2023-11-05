@@ -38,6 +38,8 @@ class Oauth2ScopeRepository extends Oauth2BaseRepository implements Oauth2ScopeR
 
     /**
      * @inheritDoc
+     * @throws Oauth2ServerException
+     * @throws InvalidConfigException
      */
     public function finalizeScopes(
         array $scopes,
@@ -70,14 +72,12 @@ class Oauth2ScopeRepository extends Oauth2BaseRepository implements Oauth2ScopeR
         // Validate requested scopes if they haven't been checked before (based on the grant type).
         if (
             !in_array($grantType, [
-            Oauth2Module::GRANT_TYPE_IDENTIFIER_AUTH_CODE,
-            Oauth2Module::GRANT_TYPE_IDENTIFIER_IMPLICIT,
-            Oauth2Module::GRANT_TYPE_IDENTIFIER_REFRESH_TOKEN,
+                Oauth2Module::GRANT_TYPE_IDENTIFIER_AUTH_CODE,
+                Oauth2Module::GRANT_TYPE_IDENTIFIER_IMPLICIT,
+                Oauth2Module::GRANT_TYPE_IDENTIFIER_REFRESH_TOKEN,
             ])
         ) {
-            if (!$client->validateAuthRequestScopes($requestedScopeIdentifiers, $unauthorizedScopes)) {
-                throw Oauth2ServerException::scopeNotAllowedForClient(array_shift($unauthorizedScopes));
-            }
+            $this->_module->validateAuthRequestScopes($client, $requestedScopeIdentifiers);
         }
 
         $clientAllowedScopes = $client->getAllowedScopes($requestedScopeIdentifiers);

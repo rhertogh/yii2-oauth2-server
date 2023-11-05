@@ -68,12 +68,7 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
             /** @var Oauth2ClientInterface $client */
             $client = $authRequest->getClient();
 
-            if (!$client->validateAuthRequestScopes($requestedScopeIdentifiers, $unauthorizedScopes)) {
-                throw Oauth2ServerException::scopeNotAllowedForClient(
-                    array_shift($unauthorizedScopes),
-                    $authRequest->getRedirectUri()
-                );
-            }
+            $module->validateAuthRequestScopes($client, $requestedScopeIdentifiers, $authRequest->getRedirectUri());
 
             if (
                 !$client->isAuthCodeWithoutPkceAllowed()

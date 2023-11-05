@@ -158,7 +158,8 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $userAccountSelection = 1;
         $allowAuthCodeWithoutPkce = 2;
         $skipAuthorizationIfScopeIsAllowed = 3;
-        $getScopeAccess = Oauth2ClientInterface::SCOPE_ACCESS_PERMISSIVE;
+        $allowGenericScopes = true;
+        $exceptionOnInvalidScope = true;
         $clientCredentialsGrantUserId = 5;
         $openIdConnectAllowOfflineAccessWithoutConsent = 6;
         $openIdConnectUserinfoEncryptedResponseAlg = 'RS256';
@@ -191,7 +192,8 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
             ->setUserAccountSelection($userAccountSelection)
             ->setAllowAuthCodeWithoutPkce($allowAuthCodeWithoutPkce)
             ->setSkipAuthorizationIfScopeIsAllowed($skipAuthorizationIfScopeIsAllowed)
-            ->setScopeAccess($getScopeAccess)
+            ->setAllowGenericScopes($allowGenericScopes)
+            ->setExceptionOnInvalidScope($exceptionOnInvalidScope)
             ->setClientCredentialsGrantUserId($clientCredentialsGrantUserId)
             ->setOpenIdConnectAllowOfflineAccessWithoutConsent($openIdConnectAllowOfflineAccessWithoutConsent)
             ->setOpenIdConnectUserinfoEncryptedResponseAlg($openIdConnectUserinfoEncryptedResponseAlg)
@@ -208,7 +210,8 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $this->assertEquals($userAccountSelection, $client->getUserAccountSelection());
         $this->assertEquals($allowAuthCodeWithoutPkce, $client->isAuthCodeWithoutPkceAllowed());
         $this->assertEquals($skipAuthorizationIfScopeIsAllowed, $client->skipAuthorizationIfScopeIsAllowed());
-        $this->assertEquals($getScopeAccess, $client->getScopeAccess());
+        $this->assertEquals($allowGenericScopes, $client->getAllowGenericScopes());
+        $this->assertEquals($exceptionOnInvalidScope, $client->getExceptionOnInvalidScope());
         $this->assertEquals($clientCredentialsGrantUserId, $client->getClientCredentialsGrantUserId());
         $this->assertEquals($openIdConnectAllowOfflineAccessWithoutConsent, $client->getOpenIdConnectAllowOfflineAccessWithoutConsent());
         $this->assertEquals($openIdConnectUserinfoEncryptedResponseAlg, $client->getOpenIdConnectUserinfoEncryptedResponseAlg());
@@ -228,16 +231,6 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $this->expectExceptionMessage('Unknown type "999".');
 
         $client->setType(999);
-    }
-
-    public function testSetInvalidScopeAccess()
-    {
-        $client = $this->getMockModel();
-
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Unknown scope access "999".');
-
-        $client->setScopeAccess(999);
     }
 
     public function testGetRedirectUrisEnvVarConfig()
@@ -754,63 +747,122 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
      */
     public function testValidateAuthRequestScopes(
         $requestedScopeIdentifiers,
-        $scopeAccess,
+        $allowGenericScopes,
         $expected,
+        $expectedUnknownScopes,
         $expectedUnauthorizedScopes
     ) {
         $client = $this->getMockModel([
             'id' => 1003000,
-            'scope_access' => $scopeAccess,
+            'allow_generic_scopes' => $allowGenericScopes,
         ]);
 
         $this->assertEquals(
             $expected,
-            $client->validateAuthRequestScopes($requestedScopeIdentifiers, $unauthorizedScopes)
+            $client->validateAuthRequestScopes($requestedScopeIdentifiers, $unknownScopes, $unauthorizedScopes)
         );
+        $this->assertEquals($expectedUnknownScopes, $unknownScopes);
         $this->assertEquals($expectedUnauthorizedScopes, $unauthorizedScopes);
     }
 
+    /**
+     * @return array{
+     *             scopes: string[],
+     *             allowGenericScopes: bool,
+     *             expected: bool,
+     *             expectedUnknownScopes: string[],
+     *             expectedUnauthorizedScopes: string[],
+     *         }[]
+     */
     public function validateAuthRequestScopesProvider()
     {
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         return [
-            [['user.username.read', 'user.email_address.read'], Oauth2Client::SCOPE_ACCESS_STRICT, true, []],
-            [['user.username.read', 'user.email_address.read'], Oauth2Client::SCOPE_ACCESS_STRICT_QUIET, true, []],
-            [['user.username.read', 'disabled-scope'], Oauth2Client::SCOPE_ACCESS_STRICT, false, ['disabled-scope']],
-            [['user.email_address.read', 'disabled-scope-for-client'], Oauth2Client::SCOPE_ACCESS_STRICT, false, ['disabled-scope-for-client']],
-            [['defined-but-not-assigned'], Oauth2Client::SCOPE_ACCESS_STRICT, false, ['defined-but-not-assigned']],
-            [['non-existing'], Oauth2Client::SCOPE_ACCESS_STRICT, false, ['non-existing']],
+            'strict_ok' => [
+                ['user.username.read', 'user.email_address.read'],
+                false,
+                true,
+                [],
+                [],
+            ],
+            'strict_invalid_disabled' => [
+                ['user.username.read', 'disabled-scope'],
+                false,
+                false,
+                [],
+                ['disabled-scope'],
+            ],
+            'strict_invalid_disabled_for_client' => [
+                ['user.email_address.read', 'disabled-scope-for-client'],
+                false,
+                false,
+                [],
+                ['disabled-scope-for-client'],
+            ],
+            'strict_invalid_not_assigned' => [
+                ['defined-but-not-assigned'],
+                false,
+                false,
+                [],
+                ['defined-but-not-assigned'],
+            ],
+            'strict_non_existing' => [
+                ['non-existing'],
+                false,
+                false,
+                ['non-existing'],
+                [],
+            ],
 
-            [['defined-but-not-assigned'], Oauth2Client::SCOPE_ACCESS_STRICT_QUIET, true, []],
-            [['non-existing'], Oauth2Client::SCOPE_ACCESS_STRICT_QUIET, true, []],
-
-            [['defined-but-not-assigned'], Oauth2Client::SCOPE_ACCESS_PERMISSIVE, true, []],
-            [['non-existing'], Oauth2Client::SCOPE_ACCESS_PERMISSIVE, false, ['non-existing']],
+            'generic_ok' => [
+                ['defined-but-not-assigned'],
+                true,
+                true,
+                [],
+                [],
+            ],
+            'generic_non_existing' => [
+                ['non-existing'],
+                true,
+                false,
+                ['non-existing'],
+                [],
+            ],
         ];
-        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     /**
      * @dataProvider getAllowedScopesProvider
      */
-    public function testGetAllowedScopes($clientId, $requestedScopeIdentifiers, $scopeAccess, $expectedScopes)
-    {
+    public function testGetAllowedScopes(
+        $clientId,
+        $requestedScopeIdentifiers,
+        $allowGenericScopes,
+        $expectedScopes
+    ) {
         $client = $this->getMockModel([
             'id' => $clientId,
-            'scope_access' => $scopeAccess,
+            'allow_generic_scopes' => $allowGenericScopes,
         ]);
 
         $allowedScopeIdentifiers = array_column($client->getAllowedScopes($requestedScopeIdentifiers), 'identifier');
         $this->assertEquals($expectedScopes, $allowedScopeIdentifiers);
     }
 
+    /**
+     * @return array{
+     *             clientId: int,
+     *             requestedScopeIdentifiers: string[],
+     *             allowGenericScopes: bool,
+     *             expectedScopes: string[],
+     *         }[]
+     */
     public function getAllowedScopesProvider()
     {
         return [
-            [
+            'default_only_strict' => [
                 1003000,
                 [],
-                Oauth2Client::SCOPE_ACCESS_STRICT,
+                false,
                 [
                     'user.id.read',
                     'applied-by-default',
@@ -822,10 +874,10 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
                     'applied-by-default-if-requested-for-client',
                 ],
             ],
-            [
+            'default_only_generic' => [
                 1003000,
                 [],
-                Oauth2Client::SCOPE_ACCESS_PERMISSIVE,
+                true,
                 [
                     'user.id.read',
                     'applied-by-default',
@@ -839,7 +891,61 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
                     'applied-by-default-if-requested-for-client',
                 ],
             ],
-            [
+            'all_strict' => [
+                1003000,
+                true, // Request all possible scopes
+                false, // only strictly defined scopes
+                [
+                    'user.id.read',
+                    'user.username.read',
+                    'user.email_address.read',
+                    'user.enabled.read',
+                    'user.created_at.read',
+                    'user.updated_at.read',
+                    'applied-by-default',
+                    'applied-by-default-for-client',
+                    'applied-automatically-by-default',
+                    'applied-automatically-by-default-for-client',
+                    'applied-by-default-by-client-not-required-for-client',
+                    'pre-assigned-for-user-test',
+                    'not-required',
+                    'applied-by-default-if-requested',
+                    'applied-by-default-if-requested-for-client',
+                ],
+            ],
+            'all_generic' => [
+                1003000,
+                true, // Request all possible scopes
+                true, // include generic scopes (not only directly connected to the client)
+                [
+                    'openid',
+                    'profile',
+                    'email',
+                    'address',
+                    'phone',
+                    'offline_access',
+                    'user.id.read',
+                    'user.username.read',
+                    'user.email_address.read',
+                    'user.enabled.read',
+                    'user.created_at.read',
+                    'user.updated_at.read',
+                    'defined-but-not-assigned',
+                    'applied-by-default',
+                    'applied-by-default-for-client',
+                    'applied-automatically-by-default',
+                    'applied-automatically-by-default-for-client',
+                    'applied-automatically-by-default-not-assigned',
+                    'applied-automatically-by-default-not-assigned-not-required',
+                    'applied-by-default-by-client-not-required-for-client',
+                    'pre-assigned-for-user-test',
+                    'not-required',
+                    'not-required-has-been-rejected-before',
+                    'applied-by-default-if-requested',
+                    'applied-by-default-if-requested-for-client',
+                ],
+            ],
+            'specific_strict' => [
                 1003000,
                 [
                     'user.username.read',
@@ -849,7 +955,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
                     'disabled-scope-for-client',
                     'non-existing',
                 ],
-                Oauth2Client::SCOPE_ACCESS_STRICT,
+                false,
                 [
                     'user.id.read',
                     'user.username.read',
@@ -863,7 +969,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
                     'applied-by-default-if-requested-for-client',
                 ],
             ],
-            [
+            'specific_generic' => [
                 1003000,
                 [
                     'user.username.read',
@@ -873,7 +979,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
                     'disabled-scope-for-client',
                     'non-existing',
                 ],
-                Oauth2Client::SCOPE_ACCESS_PERMISSIVE,
+                true,
                 [
                     'user.id.read',
                     'user.username.read',
@@ -891,17 +997,6 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
                 ],
             ],
         ];
-    }
-
-    public function testValidateAuthRequestScopesInvalid()
-    {
-        $client = $this->getMockModel([
-            'id' => 1003000,
-            'scope_access' => 999999999,
-        ]);
-
-        $this->expectExceptionMessage('Unknown scope_access: "999999999".');
-        $client->validateAuthRequestScopes(['user.username.read']);
     }
 
     /**

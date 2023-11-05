@@ -262,7 +262,7 @@ INSERT INTO `oauth2_scope` VALUES
     (
         1005008,
         'defined-but-not-assigned',
-        'defined, but not assigned to any client',
+        'defined, but not assigned to any client (might be used based on oauth2_client.allow_generic_scopes)',
         null,
         0,
         1,
@@ -273,7 +273,7 @@ INSERT INTO `oauth2_scope` VALUES
     (
         1005009,
         'applied-by-default',
-        'applied by default based on client.scope_access',
+        'applied by default',
         null,
         1,
         1,
@@ -284,7 +284,7 @@ INSERT INTO `oauth2_scope` VALUES
     (
         1005010,
         'applied-by-default-for-client',
-        'applied by default based for client (not applied itself, but applied in oauth2_client_scope)',
+        'applied by default via the client_scope (not applied itself)',
         null,
         0,
         1,

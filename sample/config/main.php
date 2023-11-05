@@ -94,6 +94,7 @@ return [
             'clientRedirectUrisEnvVarConfig' => [ // Enable environment variable substitution in oauth2 clients `redirect_uris`.
                 'allowList' => ['*'], // ⚠️ WARNING: Setting `allowList` to `['*']` allows all environment variables to be used, this is only used as an example and should be replaced by an actual list of allowed environment variables.
             ],
+            'exceptionOnInvalidScope' => YII_DEBUG, // Throw an exception when a Client requests an unknown or unauthorized scope (would be silently ignored otherwise).
             // OpenID Connect specific settings (Only required if OpenID Connect support is required).
             'enableOpenIdConnect' => true, // Enable OpenID Connect support.
             'openIdConnectScopes' => [ // Optional, list of enabled OpenID Connect Scopes.

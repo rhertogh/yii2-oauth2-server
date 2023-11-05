@@ -79,12 +79,17 @@ interface Oauth2ScopeInterface extends
     public function getClientScope($clientId);
 
     /**
-     * Returns if the scope is applied by default for all clients. If so, the scope will be added without a client
-     * requesting it via the authorization request's scope parameter. This setting can be overwritten in the
-     * ClientScope relation.
-     * Note: Whether a scope is applied also depends on the client's `getScopeAccess()` setting.
+     * Returns if the scope is applied by default (but only if it is available for the client).
+     * If so, the scope will be added without a client requesting it via the authorization request's scope parameter.
+     * This setting can be overwritten in the ClientScope relation.
+     *
+     * Note: Whether a scope can be applied foremost depends on its availability for a Client. It must either be linked
+     * via the `oauth2_client_scope` table or the Client must explicitly allow all scopes via its `getAllowGenericScopes()`
+     * setting (or `oauth2_client.allow_generic_scopes` database column).
+     *
      * @return int
-     * @see \rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface::getScopeAccess()
+     * @see \rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface
+     * @see \rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface::getAllowGenericScopes()
      * @see APPLIED_BY_DEFAULT_OPTIONS
      * @since 1.0.0
      */

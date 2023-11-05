@@ -14,7 +14,6 @@ use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserClientScopeInterface;
 use rhertogh\Yii2Oauth2Server\migrations\base\Oauth2BaseMigration;
 use rhertogh\Yii2Oauth2Server\models\Oauth2AccessToken;
-use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\base\InvalidConfigException;
 use yii\db\Schema;
@@ -167,8 +166,10 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                     'token_types' => $this->integer()->notNull()->defaultValue(Oauth2AccessToken::TYPE_BEARER),
                     'grant_types' => $this->integer()->notNull()->defaultValue(Oauth2Module::GRANT_TYPE_AUTH_CODE | Oauth2Module::GRANT_TYPE_REFRESH_TOKEN)
                         ->comment('Oauth2 grant types enabled for this Client.'),
-                    'scope_access' => $this->integer()->notNull()->defaultValue(Oauth2Client::SCOPE_ACCESS_STRICT)
-                        ->comment('Determines if scopes must be specified for this client (default) or all defined scopes may be used.'),
+                    'allow_generic_scopes' => $this->boolean()->notNull()->defaultValue(false)
+                        ->comment('Determines if scopes must be explicitly linked this client (default) or all defined scopes may be used.'),
+                    'exception_on_invalid_scope' => $this->boolean()
+                        ->comment('Determines if an exception is thrown when the Client requests an unknown scope.'),
                     'end_users_may_authorize_client' => $this->boolean()->notNull()->defaultValue(true)
                         ->comment('Determines if the user can authorize a client (the client has to be pre-authorized otherwise).'),
                     'user_account_selection' => $this->integer()

@@ -25,7 +25,8 @@ use Yii;
  * @property boolean $allow_variable_redirect_uri_query
  * @property integer $token_types
  * @property integer $grant_types
- * @property integer $scope_access
+ * @property boolean $allow_generic_scopes
+ * @property boolean $exception_on_invalid_scope
  * @property boolean $end_users_may_authorize_client
  * @property integer $user_account_selection
  * @property boolean $allow_auth_code_without_pkce
@@ -55,11 +56,11 @@ abstract class Oauth2Client extends \rhertogh\Yii2Oauth2Server\models\base\Oauth
     {
         return [
             [['identifier', 'name', 'created_at', 'updated_at'], 'required'],
-            [['type', 'token_types', 'grant_types', 'scope_access', 'user_account_selection', 'client_credentials_grant_user_id', 'created_at', 'updated_at'], 'default', 'value' => null],
-            [['type', 'token_types', 'grant_types', 'scope_access', 'user_account_selection', 'client_credentials_grant_user_id', 'created_at', 'updated_at'], 'integer'],
+            [['type', 'token_types', 'grant_types', 'user_account_selection', 'client_credentials_grant_user_id', 'created_at', 'updated_at'], 'default', 'value' => null],
+            [['type', 'token_types', 'grant_types', 'user_account_selection', 'client_credentials_grant_user_id', 'created_at', 'updated_at'], 'integer'],
             [['secret', 'old_secret'], 'string'],
             [['old_secret_valid_until', 'env_var_config', 'contacts', 'redirect_uris'], 'safe'],
-            [['allow_variable_redirect_uri_query', 'end_users_may_authorize_client', 'allow_auth_code_without_pkce', 'skip_authorization_if_scope_is_allowed', 'oidc_allow_offline_access_without_consent', 'enabled'], 'boolean'],
+            [['allow_variable_redirect_uri_query', 'allow_generic_scopes', 'exception_on_invalid_scope', 'end_users_may_authorize_client', 'allow_auth_code_without_pkce', 'skip_authorization_if_scope_is_allowed', 'oidc_allow_offline_access_without_consent', 'enabled'], 'boolean'],
             [['identifier', 'name', 'logo_uri', 'tos_uri', 'oidc_userinfo_encrypted_response_alg'], 'string', 'max' => 255],
             [['identifier'], 'unique']
         ];
@@ -86,7 +87,8 @@ abstract class Oauth2Client extends \rhertogh\Yii2Oauth2Server\models\base\Oauth
             'allow_variable_redirect_uri_query' => Yii::t('oauth2', 'Allow Variable Redirect Uri Query'),
             'token_types' => Yii::t('oauth2', 'Token Types'),
             'grant_types' => Yii::t('oauth2', 'Grant Types'),
-            'scope_access' => Yii::t('oauth2', 'Scope Access'),
+            'allow_generic_scopes' => Yii::t('oauth2', 'Allow Generic Scopes'),
+            'exception_on_invalid_scope' => Yii::t('oauth2', 'Exception On Invalid Scope'),
             'end_users_may_authorize_client' => Yii::t('oauth2', 'End Users May Authorize Client'),
             'user_account_selection' => Yii::t('oauth2', 'User Account Selection'),
             'allow_auth_code_without_pkce' => Yii::t('oauth2', 'Allow Auth Code Without Pkce'),

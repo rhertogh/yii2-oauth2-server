@@ -383,7 +383,13 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
 
     public function testRunInvalidScope()
     {
-        $this->mockWebApplication();
+        $this->mockWebApplication([
+            'modules' => [
+                'oauth2' => [
+                    'exceptionOnInvalidScope' => true,
+                ],
+            ],
+        ]);
         $module = Oauth2Module::getInstance();
 
         $controller = new Controller('test', $module);

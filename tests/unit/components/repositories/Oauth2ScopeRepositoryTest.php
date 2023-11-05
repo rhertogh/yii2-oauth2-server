@@ -21,7 +21,8 @@ use Yii2Oauth2ServerTests\unit\components\repositories\_base\BaseOauth2Repositor
 class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
 {
     protected const TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NONE = 0;
-    protected const TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NOT_ALLOWED = 1;
+    protected const TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NOT_FOUND = 1;
+    protected const TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NOT_ALLOWED = 2;
 
     /**
      * @return class-string<Oauth2ScopeInterface>
@@ -67,21 +68,26 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
         $clientId,
         $userId,
         $requestedScopeIdentifiers,
-        $scopeAccess,
+        $allowGenericScopes,
+        $exceptionOnInvalidScope,
         $grantType,
         $expectedScopes,
         $expectedError
     ) {
         $scopeRepository = $this->getScopeRepository();
+        $scopeRepository->setModule(Oauth2Module::getInstance());
 
         $client = Oauth2Client::findOne($clientId);
-        $client->scope_access = $scopeAccess;
+        $client->allow_generic_scopes = $allowGenericScopes;
+        $client->exception_on_invalid_scope = $exceptionOnInvalidScope;
         $requestedScopes = Oauth2Scope::findAll(['identifier' => $requestedScopeIdentifiers]);
         if (count($requestedScopes) !== count($requestedScopeIdentifiers)) {
             throw new \InvalidArgumentException('Not all scopes could be found.');
         }
 
-        if ($expectedError === static::TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NOT_ALLOWED) {
+        if ($expectedError === static::TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NOT_FOUND) {
+            $this->expectExceptionMessage('The requested scope is unknown.');
+        } elseif ($expectedError === static::TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NOT_ALLOWED) {
             $this->expectExceptionMessage('The requested scope is not allowed for the specified client.');
         }
 
@@ -98,7 +104,7 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
         if ($expectedError === static::TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NONE) {
             $this->assertEquals($expectedScopes, $finalizedScopes);
         } else {
-            throw new InvalidConfigException('Unknown expected error type: ' . $expectedError);
+            throw new InvalidConfigException('Test failed: Unknown expected error type: ' . $expectedError);
         }
     }
 
@@ -107,7 +113,8 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
      *             clientId: int,
      *             userId: int,
      *             requestedScopeIdentifiers: string[],
-     *             scopeAccess: int,
+     *             allowGenericScopes: bool,
+     *             exceptionOnInvalidScope: bool,
      *             grantType: string,
      *             expectedScope: string[],
      *             expectedError: int,
@@ -126,7 +133,8 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
                     // since the scope is checked during authorization we simply don't return it.
                     'defined-but-not-assigned',
                 ],
-                Oauth2Client::SCOPE_ACCESS_STRICT,
+                false,
+                true,
                 Oauth2Module::GRANT_TYPE_IDENTIFIER_AUTH_CODE,
                 [
                     'applied-automatically-by-default',
@@ -142,7 +150,8 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
                     // since the scope is checked during authorization we simply don't return it.
                     'defined-but-not-assigned',
                 ],
-                Oauth2Client::SCOPE_ACCESS_STRICT,
+                false,
+                true,
                 Oauth2Module::GRANT_TYPE_IDENTIFIER_IMPLICIT,
                 [
                     'applied-automatically-by-default',
@@ -156,7 +165,8 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
                 [
                     'defined-but-not-assigned',
                 ],
-                Oauth2Client::SCOPE_ACCESS_STRICT,
+                false,
+                true,
                 Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS,
                 [],
                 static::TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NOT_ALLOWED,
@@ -167,7 +177,8 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
                 [
                     'defined-but-not-assigned',
                 ],
-                Oauth2Client::SCOPE_ACCESS_STRICT,
+                false,
+                true,
                 Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD,
                 [],
                 static::TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NOT_ALLOWED,
@@ -182,7 +193,8 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
                     // since the scope is checked during authorization we simply don't return it.
                     'disabled-scope',
                 ],
-                Oauth2Client::SCOPE_ACCESS_STRICT,
+                false,
+                true,
                 Oauth2Module::GRANT_TYPE_IDENTIFIER_AUTH_CODE,
                 [
                     'applied-automatically-by-default',
@@ -198,7 +210,8 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
                     // since the scope is checked during authorization we simply don't return it.
                     'disabled-scope',
                 ],
-                Oauth2Client::SCOPE_ACCESS_STRICT,
+                false,
+                true,
                 Oauth2Module::GRANT_TYPE_IDENTIFIER_IMPLICIT,
                 [
                     'applied-automatically-by-default',
@@ -212,7 +225,8 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
                 [
                     'disabled-scope',
                 ],
-                Oauth2Client::SCOPE_ACCESS_STRICT,
+                false,
+                true,
                 Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS,
                 [],
                 static::TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NOT_ALLOWED,
@@ -223,7 +237,8 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
                 [
                     'disabled-scope',
                 ],
-                Oauth2Client::SCOPE_ACCESS_STRICT,
+                false,
+                true,
                 Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD,
                 [],
                 static::TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NOT_ALLOWED,
@@ -234,7 +249,8 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
                 1003000,
                 123,
                 [],
-                Oauth2Client::SCOPE_ACCESS_STRICT,
+                false,
+                true,
                 Oauth2Module::GRANT_TYPE_IDENTIFIER_AUTH_CODE,
                 [
                     'applied-automatically-by-default',
@@ -242,11 +258,12 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
                 ],
                 static::TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NONE,
             ],
-            'permissive_auth_code_default' => [
+            'generic_auth_code_default' => [
                 1003000,
                 123,
                 [],
-                Oauth2Client::SCOPE_ACCESS_PERMISSIVE,
+                true,
+                false,
                 Oauth2Module::GRANT_TYPE_IDENTIFIER_AUTH_CODE,
                 [
                     'applied-automatically-by-default',
@@ -263,7 +280,8 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
                 [
                     'disabled-scope-for-client',
                 ],
-                Oauth2Client::SCOPE_ACCESS_STRICT,
+                false,
+                true,
                 Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS,
                 [],
                 static::TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NOT_ALLOWED,
@@ -274,7 +292,8 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
                 [
                     'defined-but-not-assigned',
                 ],
-                Oauth2Client::SCOPE_ACCESS_STRICT,
+                false,
+                true,
                 Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS,
                 [],
                 static::TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NOT_ALLOWED,
@@ -286,7 +305,8 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
 //                    'user.username.read',
 //                    'user.email_address.read',
 //                ],
-//                Oauth2Client::SCOPE_ACCESS_STRICT,
+//                false,
+//                true,
 //                Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS,
 //                [
 //                    'user.id.read',
@@ -300,7 +320,7 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
 //                ],
 //                static::TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NONE,
 //            ],
-//            'permissive_client_credentials_custom' => [
+//            'generic_client_credentials_custom' => [
 //                1003000,
 //                null,
 //                [
@@ -311,7 +331,8 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
 //                    'disabled-scope-for-client',
 //                    'non-existing',
 //                ],
-//                Oauth2Client::SCOPE_ACCESS_PERMISSIVE,
+//                true,
+//                false,
 //                Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS,
 //                [
 //                    'user.id.read',
@@ -339,7 +360,8 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
 //                    'disabled-scope-for-client',
 //                    'non-existing',
 //                ],
-//                Oauth2Client::SCOPE_ACCESS_STRICT,
+//                false,
+//                true,
 //                Oauth2Module::GRANT_TYPE_IDENTIFIER_AUTH_CODE,
 //                [
 //                    'user.id.read',
@@ -349,7 +371,7 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
 //                ],
 //                static::TEST_FINALIZE_SCOPES_EXPECTED_ERROR_NONE,
 //            ],
-//            'permissive_auth_code_custom' => [
+//            'generic_auth_code_custom' => [
 //                1003002,
 //                124,
 //                [
@@ -360,7 +382,8 @@ class Oauth2ScopeRepositoryTest extends BaseOauth2RepositoryTest
 //                    'disabled-scope-for-client',
 //                    'non-existing',
 //                ],
-//                Oauth2Client::SCOPE_ACCESS_PERMISSIVE,
+//                true,
+//                false,
 //                Oauth2Module::GRANT_TYPE_IDENTIFIER_AUTH_CODE,
 //                [
 //                    'user.id.read',

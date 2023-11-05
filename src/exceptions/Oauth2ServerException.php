@@ -22,7 +22,27 @@ class Oauth2ServerException extends OAuthServerException implements Oauth2Server
     }
 
     /**
-     * Invalid scope error.
+     * Unknown scope error.
+     *
+     * @param string      $scope       The bad scope
+     * @param null|string $redirectUri A HTTP URI to redirect the user back to
+     *
+     * @return static
+     */
+    public static function unknownScope($scope, $redirectUri = null)
+    {
+        $errorMessage = 'The requested scope is unknown.';
+
+        $hint = \sprintf(
+            'Check the spelling of the `%s` scope or remove it from the request.',
+            \htmlspecialchars($scope, ENT_QUOTES, 'UTF-8', false)
+        );
+
+        return new static($errorMessage, 5, 'scope_not_allowed_for_client', 403, $hint, $redirectUri);
+    }
+
+    /**
+     * Unauthorized scope error.
      *
      * @param string      $scope       The bad scope
      * @param null|string $redirectUri A HTTP URI to redirect the user back to
@@ -34,7 +54,7 @@ class Oauth2ServerException extends OAuthServerException implements Oauth2Server
         $errorMessage = 'The requested scope is not allowed for the specified client.';
 
         $hint = \sprintf(
-            'Configure the `%s` scope for the client or remove it from the request.',
+            'Request access to the `%s` scope for the client or remove it from the request.',
             \htmlspecialchars($scope, ENT_QUOTES, 'UTF-8', false)
         );
 

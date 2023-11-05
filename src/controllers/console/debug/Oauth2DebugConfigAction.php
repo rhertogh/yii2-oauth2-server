@@ -98,6 +98,8 @@ class Oauth2DebugConfigAction extends Action
             'clientAuthorizationView' => $module->clientAuthorizationView,
             'openIdConnectUserinfoPath' => $module->openIdConnectUserinfoPath,
 
+            'exceptionOnInvalidScope' => $module->exceptionOnInvalidScope,
+
             'grantTypes' => $grantTypes,
 
             'defaultAccessTokenTTL' => $defaultAccessTokenTTL,
