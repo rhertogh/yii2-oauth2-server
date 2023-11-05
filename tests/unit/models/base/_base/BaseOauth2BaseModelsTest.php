@@ -42,6 +42,8 @@ abstract class BaseOauth2BaseModelsTest extends TestCase
     }
 
     /**
+     * Note: The main purpose of this test is to function as a reminder to update the translation files.
+     *
      * @param string[] $attributeLabels
      *
      * @dataProvider attributeLabelsProvider
