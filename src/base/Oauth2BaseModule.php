@@ -114,7 +114,6 @@ use rhertogh\Yii2Oauth2Server\models\queries\Oauth2RefreshTokenQuery;
 use rhertogh\Yii2Oauth2Server\models\queries\Oauth2ScopeQuery;
 use rhertogh\Yii2Oauth2Server\models\queries\Oauth2UserClientQuery;
 use rhertogh\Yii2Oauth2Server\models\queries\Oauth2UserClientScopeQuery;
-use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
 use yii\base\InvalidCallException;
 use yii\base\InvalidConfigException;
@@ -212,12 +211,12 @@ abstract class Oauth2BaseModule extends Module
      * @since 1.0.0
      */
     public const GRANT_TYPE_MAPPING = [
-        Oauth2Module::GRANT_TYPE_IDENTIFIER_AUTH_CODE => self::GRANT_TYPE_AUTH_CODE,
-        Oauth2Module::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS => self::GRANT_TYPE_CLIENT_CREDENTIALS,
-        Oauth2Module::GRANT_TYPE_IDENTIFIER_REFRESH_TOKEN => self::GRANT_TYPE_REFRESH_TOKEN,
-        Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD => self::GRANT_TYPE_PASSWORD, // Legacy Grant.
-        Oauth2Module::GRANT_TYPE_IDENTIFIER_IMPLICIT => self::GRANT_TYPE_IMPLICIT, // Legacy Grant.
-        Oauth2Module::GRANT_TYPE_IDENTIFIER_PERSONAL_ACCESS_TOKEN => self::GRANT_TYPE_PERSONAL_ACCESS_TOKEN, // Custom Grant.
+        self::GRANT_TYPE_IDENTIFIER_AUTH_CODE => self::GRANT_TYPE_AUTH_CODE,
+        self::GRANT_TYPE_IDENTIFIER_CLIENT_CREDENTIALS => self::GRANT_TYPE_CLIENT_CREDENTIALS,
+        self::GRANT_TYPE_IDENTIFIER_REFRESH_TOKEN => self::GRANT_TYPE_REFRESH_TOKEN,
+        self::GRANT_TYPE_IDENTIFIER_PASSWORD => self::GRANT_TYPE_PASSWORD, // Legacy Grant.
+        self::GRANT_TYPE_IDENTIFIER_IMPLICIT => self::GRANT_TYPE_IMPLICIT, // Legacy Grant.
+        self::GRANT_TYPE_IDENTIFIER_PERSONAL_ACCESS_TOKEN => self::GRANT_TYPE_PERSONAL_ACCESS_TOKEN, // Custom Grant.
     ];
 
     /**
