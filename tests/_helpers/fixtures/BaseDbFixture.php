@@ -4,6 +4,7 @@ namespace Yii2Oauth2ServerTests\_helpers\fixtures;
 
 use Yii;
 use yii\db\Connection;
+use yii\helpers\ArrayHelper;
 
 abstract class BaseDbFixture extends \yii\test\InitDbFixture
 {
@@ -14,7 +15,10 @@ abstract class BaseDbFixture extends \yii\test\InitDbFixture
     public function init()
     {
         $this->driverName = $this->driverName ?: getenv('YII2_OAUTH2_SERVER_TEST_DB_DRIVER') ?: 'mysql';
-        $connectionConfig = DatabaseFixtures::getDbConfig($this->driverName)['connection'];
+        $connectionConfig = ArrayHelper::merge(
+            require __DIR__ . '/../../_config/db.php',
+            DatabaseFixtures::getDbConfig($this->driverName)['connection'],
+        );
         $this->db = new Connection($connectionConfig);
         Yii::$app->setComponents([
             'db' => $this->db,
