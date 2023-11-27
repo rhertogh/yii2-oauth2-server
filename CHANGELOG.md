@@ -7,7 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer version.  
 
-[1.0.0-alpha17] - Unreleased
+[1.0.0-alpha18] - Unreleased
+----------------------------
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Improved
+
+### Security
+
+
+[1.0.0-alpha17] - 2023-11-27
 ----------------------------
 
 ### Added
@@ -18,8 +36,6 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - The `$unknownScopes` parameter has been added to `Oauth2ClientInterface::validateAuthRequestScopes()` (rhertogh)
 - The `$requestedScopeIdentifiers` parameter for `Oauth2ClientInterface::getAllowedScopes()` now accepts `true` which will return all available scopes. (rhertogh)
 
-### Deprecated
-
 ### Removed
 - `Oauth2ClientInterface` "ScopeAccess" related constants. (rhertogh)
 
@@ -28,8 +44,6 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 
 ### Improved
 - The `yii oauth2/client/view` console command now supports scopes.  (rhertogh)
-
-### Security
 
 
 [1.0.0-alpha16] - 2023-11-02
