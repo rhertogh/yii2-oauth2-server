@@ -23,12 +23,12 @@ Upgrade from v1.0.0-alpha17
   MySQL:
   ```MySQL
   ALTER TABLE `oauth2_client` ADD COLUMN `post_logout_redirect_uris` JSON AFTER `redirect_uris`;
-  ALTER TABLE `oauth2_client` ADD COLUMN `oidc_rp_initiated_logout` INTEGER AFTER `oidc_allow_offline_access_without_consent`;
+  ALTER TABLE `oauth2_client` ADD COLUMN `oidc_rp_initiated_logout` INTEGER DEFAULT 0 NOT NULL AFTER `oidc_allow_offline_access_without_consent`;
   ```
   PostgeSQL:
   ```SQL
   ALTER TABLE oauth2_client ADD COLUMN `post_logout_redirect_uris` JSONB;
-  ALTER TABLE oauth2_client ADD COLUMN `oidc_rp_initiated_logout` INTEGER;
+  ALTER TABLE oauth2_client ADD COLUMN `oidc_rp_initiated_logout` INTEGER DEFAULT 0 NOT NULL;
   ```
 
 Upgrade from v1.0.0-alpha16
