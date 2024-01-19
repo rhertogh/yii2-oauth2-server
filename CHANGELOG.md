@@ -11,6 +11,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ----------------------------
 
 ### Added
+- Support for OpenID Connect RP-Initiated Logout. (rhertogh)
 
 ### Changed
 

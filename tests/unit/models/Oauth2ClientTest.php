@@ -447,7 +447,7 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
             'redirect_uris' => '[https://localhost/redirect_uri_1',
         ]);
 
-        $this->expectExceptionMessage('Invalid json in redirect_uris for client 1');
+        $this->expectExceptionMessage('Invalid json in `redirect_uris` for client 1');
         $client->getRedirectUri();
     }
 

@@ -2,10 +2,10 @@
 
 namespace rhertogh\Yii2Oauth2Server\controllers\web\consent;
 
+use rhertogh\Yii2Oauth2Server\controllers\web\base\Oauth2BaseWebAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ConsentController;
 use rhertogh\Yii2Oauth2Server\exceptions\Oauth2ServerHttpException;
 use Yii;
-use yii\base\Action;
 use yii\base\InvalidConfigException;
 use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
@@ -14,7 +14,7 @@ use yii\web\ServerErrorHttpException;
 /**
  * @property Oauth2ConsentController $controller
  */
-class Oauth2AuthorizeClientAction extends Action
+class Oauth2AuthorizeClientAction extends Oauth2BaseWebAction
 {
     /**
      * Path to view file for client authorization.

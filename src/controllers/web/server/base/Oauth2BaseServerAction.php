@@ -3,10 +3,10 @@
 namespace rhertogh\Yii2Oauth2Server\controllers\web\server\base;
 
 use League\OAuth2\Server\Exception\OAuthServerException;
+use rhertogh\Yii2Oauth2Server\controllers\web\base\Oauth2BaseWebAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\base\Oauth2BaseWebController;
 use rhertogh\Yii2Oauth2Server\helpers\UrlHelper;
 use Yii;
-use yii\base\Action;
 use yii\base\ErrorException;
 use yii\base\Exception;
 use yii\base\UserException;
@@ -16,7 +16,7 @@ use yii\web\Response;
 /**
  * @property Oauth2BaseWebController $controller
  */
-abstract class Oauth2BaseServerAction extends Action
+abstract class Oauth2BaseServerAction extends Oauth2BaseWebAction
 {
     /**
      * @param \Exception $exception

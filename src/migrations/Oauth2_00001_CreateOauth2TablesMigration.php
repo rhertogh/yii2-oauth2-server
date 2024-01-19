@@ -161,6 +161,8 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                         ->comment('Array of e-mail addresses of people responsible for this Client.'),
                     'redirect_uris' => $this->json()
                         ->comment('Array of redirect uris which the Client is allowed to use.'),
+                    'post_logout_redirect_uris' => $this->json()
+                        ->comment('Array of post logout redirect uris which the Client is allowed to use.'),
                     'allow_variable_redirect_uri_query' => $this->boolean()->notNull()->defaultValue(false)
                         ->comment('By default, the client is validated against the full redirect URI including the "query" part. If the "query" part of the return URI is variable it may be marked as such.'),
                     'token_types' => $this->integer()->notNull()->defaultValue(Oauth2AccessToken::TYPE_BEARER),
@@ -183,6 +185,8 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                         . " This user account should also be connected to the client via the `$userClientTable` table and, if applicable, the `$userClientScopeTable` table."),
                     'oidc_allow_offline_access_without_consent' => $this->boolean()->notNull()->defaultValue(false)
                         ->comment('Allow the OpenID Connect "offline_access" scope for this client without the "prompt" parameter contains "consent".'),
+                    'oidc_skip_logout_validation' => $this->boolean()->notNull()->defaultValue(false)
+                        ->comment('Skip user validation on client logout request.'),
                     'oidc_userinfo_encrypted_response_alg' => $this->string(),
                     'enabled' => $this->boolean()->notNull()->defaultValue(true),
                     'created_at' => $this->integer()->notNull(),

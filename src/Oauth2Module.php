@@ -374,8 +374,18 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
      * @var string The URL path to the OpenID Connect Userinfo Action (will be prefixed with $urlRulesPrefix).
      * Note: This setting will only be used if $enableOpenIdConnect and $openIdConnectUserinfoEndpoint are `true`.
      * @since 1.0.0
+     * @see $openIdConnectUserinfoEndpoint
      */
     public $openIdConnectUserinfoPath = 'oidc/userinfo';
+
+    /**
+     * @var string The URL path to the OpenID Connect EndSession Action (will be prefixed with $urlRulesPrefix).
+     * Note: This setting will only be used if $enableOpenIdConnect and $openIdConnectEndSessionEndpoint are `true`.
+     * @since 1.0.0
+     * @see $openIdConnectEndSessionEndpoint
+     * @see https://openid.net/specs/openid-connect-rpinitiated-1_0.html
+     */
+    public $openIdConnectEndSessionPath = 'oidc/end-session';
 
     /**
      * @var Oauth2GrantTypeFactoryInterface[]|GrantTypeInterface[]|string[]|Oauth2GrantTypeFactoryInterface|GrantTypeInterface|string|callable
@@ -420,8 +430,29 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
     /**
      * @var string|bool A string to a custom userinfo endpoint or `true` to enable the build in endpoint.
      * @since 1.0.0
+     * @see $openIdConnectUserinfoPath
      */
     public $openIdConnectUserinfoEndpoint = true;
+
+    /**
+     * @var string|bool A string to a custom logout endpoint or `true` to enable the build in endpoint.
+     * @since 1.0.0
+     * @see $openIdConnectEndSessionPath
+     * @see https://openid.net/specs/openid-connect-rpinitiated-1_0.html
+     */
+    public $openIdConnectEndSessionEndpoint = false;
+
+    /**
+     * @var bool Allow access to the "end session" endpoint without user authentication (in the form of the
+     * `id_token_hint` parameter). If enabled the "end session" endpoint will always prompt the user to verify the
+     * logout if no `id_token_hint` is provided and no redirect after logout will be performed.
+     * Note: If disabled the client's `oidc_skip_logout_validation` will be used
+     * to determine whether to prompt the end-user for logout validation.
+     * @since 1.0.0
+     * @see $openIdConnectEndSessionPath
+     * @see https://openid.net/specs/openid-connect-rpinitiated-1_0.html
+     */
+    public $openIdConnectAllowAnonymousEndSession = false;
 
     /**
      * Warning! Enabling this setting might introduce privacy concerns since the client could poll for the
@@ -571,6 +602,12 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
                 $rules[$this->openIdConnectUserinfoPath] =
                     Oauth2OidcControllerInterface::CONTROLLER_NAME
                     . '/' . Oauth2OidcControllerInterface::ACTION_NAME_USERINFO;
+            }
+
+            if ($this->enableOpenIdConnect && $this->openIdConnectEndSessionEndpoint === true) {
+                $rules[$this->openIdConnectEndSessionPath] =
+                    Oauth2OidcControllerInterface::CONTROLLER_NAME
+                    . '/' . Oauth2OidcControllerInterface::ACTION_END_SESSION;
             }
 
             $urlManager = $app->getUrlManager();
@@ -1280,5 +1317,10 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
                 throw new InvalidConfigException(__CLASS__ . '::$' . $property . ' must be set.');
             }
         }
+    }
+
+    public function logoutUser()
+    {
+        Yii::$app->user->logout();
     }
 }

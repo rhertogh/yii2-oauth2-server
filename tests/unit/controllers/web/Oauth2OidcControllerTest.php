@@ -24,6 +24,7 @@ class Oauth2OidcControllerTest extends Oauth2BaseWebControllerTest
     {
         return [
             Oauth2OidcController::ACTION_NAME_USERINFO,
+            Oauth2OidcController::ACTION_END_SESSION,
         ];
     }
 

@@ -136,12 +136,33 @@ interface Oauth2ClientInterface extends
     public function setContacts($contacts);
 
     /**
+     * @inheritdoc
+     * @return string[]
+     */
+    public function getRedirectUri();
+
+    /**
      * Sets the one or multiple redirect URIs
      * @param string|string[] $uri
      * @return $this
      * @since 1.0.0
      */
     public function setRedirectUri($uri);
+
+    /**
+     * Get the post logout redirect URI(s)
+     * @return string[]
+     * @since 1.0.0
+     */
+    public function getPostLogoutRedirectUris();
+
+    /**
+     * Sets the one or multiple post logout redirect URI(s)
+     * @param string|string[] $postLogoutRedirectUris
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setPostLogoutRedirectUris($postLogoutRedirectUris);
 
     /**
      * Get configuration for parsing environment variables in the redirect URI(s) and/or
@@ -515,6 +536,19 @@ interface Oauth2ClientInterface extends
      * @since 1.0.0
      */
     public function setOpenIdConnectAllowOfflineAccessWithoutConsent($allowOfflineAccessWithoutConsent);
+
+    /**
+     * @return bool If this setting is enabled the end-user won't be prompted to verify the logout.
+     * @since 1.0.0
+     */
+    public function getOpenIdConnectSkipLogoutValidation();
+
+    /**
+     * @param bool $skipLogoutValidation If this setting is enabled the end-user won't be prompted to verify the logout.
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setOpenIdConnectSkipLogoutValidation($skipLogoutValidation);
 
     /**
      * The encryption algorithm to use for the OpenID Connect Userinfo Endpoint. When `null`, no encryption is applied.

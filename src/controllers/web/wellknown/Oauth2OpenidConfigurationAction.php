@@ -4,20 +4,20 @@ namespace rhertogh\Yii2Oauth2Server\controllers\web\wellknown;
 
 use League\OAuth2\Server\Grant\AuthCodeGrant;
 use League\OAuth2\Server\Grant\ImplicitGrant;
+use rhertogh\Yii2Oauth2Server\controllers\web\base\Oauth2BaseWebAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2WellKnownController;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\request\Oauth2OidcAuthenticationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2CertificatesControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2OidcControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ServerControllerInterface;
 use Yii;
-use yii\base\Action;
 use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
 
 /**
  * @property Oauth2WellKnownController $controller
  */
-class Oauth2OpenidConfigurationAction extends Action
+class Oauth2OpenidConfigurationAction extends Oauth2BaseWebAction
 {
     /**
      *
@@ -92,6 +92,21 @@ class Oauth2OpenidConfigurationAction extends Action
                 );
             } else {
                 $openIdConfig['userinfo_endpoint'] = $module->openIdConnectUserinfoEndpoint;
+            }
+        }
+
+        // Add 'end_session_endpoint' if configured.
+        if (!empty($module->openIdConnectEndSessionEndpoint)) {
+            if ($module->openIdConnectEndSessionEndpoint === true) {
+                $openIdConfig['end_session_endpoint'] = Url::to(
+                    [
+                        Oauth2OidcControllerInterface::CONTROLLER_NAME
+                        . '/' . Oauth2OidcControllerInterface::ACTION_END_SESSION,
+                    ],
+                    true
+                );
+            } else {
+                $openIdConfig['end_session_endpoint'] = $module->openIdConnectEndSessionEndpoint;
             }
         }
 

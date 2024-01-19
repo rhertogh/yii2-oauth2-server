@@ -2,6 +2,7 @@
 
 namespace rhertogh\Yii2Oauth2Server\controllers\web\openidconnect;
 
+use rhertogh\Yii2Oauth2Server\controllers\web\base\Oauth2BaseWebAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2OidcController;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\request\Oauth2OidcAuthenticationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcClaimInterface;
@@ -9,7 +10,6 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2Oi
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
-use yii\base\Action;
 use yii\base\InvalidConfigException;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
@@ -17,7 +17,7 @@ use yii\web\Response;
 /**
  * @property Oauth2OidcController $controller
  */
-class Oauth2OidcUserinfoAction extends Action
+class Oauth2OidcUserinfoAction extends Oauth2BaseWebAction
 {
     /**
      * @see https://openid.net/specs/openid-connect-core-1_0.html#UserInfo
@@ -42,8 +42,10 @@ class Oauth2OidcUserinfoAction extends Action
         /** @var Oauth2OidcUserInterface $identity */
         $identity = $this->controller->module->getUserIdentity();
 
-        $nonce = Yii::$app->request->post(Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_NONCE)
-            ?? Yii::$app->request->get(Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_NONCE);
+        $nonce = $this->getRequestParam(
+            Yii::$app->request,
+            Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_NONCE
+        );
 
         $clientIdentifier = $module->getRequestOauthClientIdentifier();
         $client = $module->getClientRepository()->getClientEntity($clientIdentifier);

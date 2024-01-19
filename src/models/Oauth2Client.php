@@ -147,7 +147,30 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
      */
     public function getRedirectUri()
     {
-        $uris = $this->redirect_uris;
+        return $this->getUrisAttribute('redirect_uris');
+    }
+
+    /**
+     * @inheritdoc
+     * @throws InvalidConfigException
+     * @throws EnvironmentVariableNotSetException
+     * @throws EnvironmentVariableNotAllowedException
+     */
+    public function getPostLogoutRedirectUris()
+    {
+        return $this->getUrisAttribute('post_logout_redirect_uris');
+    }
+
+    /**
+     * @param string $attribute
+     * @return string[]
+     * @throws InvalidConfigException
+     * @throws EnvironmentVariableNotSetException
+     * @throws EnvironmentVariableNotAllowedException
+     */
+    protected function getUrisAttribute($attribute)
+    {
+        $uris = $this->$attribute;
         if (empty($uris)) {
             return [];
         }
@@ -157,7 +180,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
             try {
                 $uris = Json::decode($uris);
             } catch (InvalidArgumentException $e) {
-                throw new InvalidConfigException('Invalid json in redirect_uris for client ' . $this->id, 0, $e);
+                throw new InvalidConfigException('Invalid json in `' . $attribute . '` for client ' . $this->id, 0, $e);
             }
         }
 
@@ -184,12 +207,12 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
         } elseif (is_array($uris)) {
             $uris = array_values($uris);
         } else {
-            throw new InvalidConfigException('`redirect_uris` must be a JSON encoded string or array of strings.');
+            throw new InvalidConfigException('`' . $attribute . '` must be a JSON encoded string or array of strings.');
         }
 
         foreach ($uris as $key => $uri) {
             if (!is_string($uri)) {
-                throw new InvalidConfigException('`redirect_uris` must be a JSON encoded string or array of strings.');
+                throw new InvalidConfigException('`' . $attribute . '` must be a JSON encoded string or array of strings.');
             }
             if ($redirectUrisEnvVarConfig) {
                 $uris[$key] = EnvironmentHelper::parseEnvVars($uri, ...$redirectUrisEnvVarConfig);
@@ -206,6 +229,24 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
      */
     public function setRedirectUri($uri)
     {
+        return $this->setUrisAttribute('redirect_uris', $uri);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setPostLogoutRedirectUris($uri)
+    {
+        return $this->setUrisAttribute('post_logout_redirect_uris', $uri);
+    }
+
+    /**
+     * @param string $attribute
+     * @param string|string[] $uri
+     * @return $this
+     */
+    protected function setUrisAttribute($attribute, $uri)
+    {
         if (is_array($uri)) {
             foreach ($uri as $value) {
                 if (!is_string($value)) {
@@ -219,7 +260,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
             throw new InvalidArgumentException('$uri must be a string or an array, got: ' . gettype($uri));
         }
 
-        $this->redirect_uris = $uri;
+        $this->$attribute = $uri;
 
         return $this;
     }
@@ -366,6 +407,23 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     public function setOpenIdConnectAllowOfflineAccessWithoutConsent($allowOfflineAccessWithoutConsent)
     {
         $this->oidc_allow_offline_access_without_consent = $allowOfflineAccessWithoutConsent;
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getOpenIdConnectSkipLogoutValidation()
+    {
+        return (bool)$this->oidc_skip_logout_validation;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setOpenIdConnectSkipLogoutValidation($skipLogoutValidation)
+    {
+        $this->oidc_skip_logout_validation = $skipLogoutValidation;
         return $this;
     }
 

@@ -19,7 +19,6 @@ use Yii;
 use yii\base\InvalidConfigException;
 use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
-use yii\web\Request;
 use yii\web\UnauthorizedHttpException;
 
 /**
@@ -334,15 +333,5 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
             Yii::error((string)$e, __METHOD__);
             return $this->processException($e);
         }
-    }
-
-    /**
-     * @param Request $request
-     * @param string $name
-     * @return mixed
-     */
-    protected function getRequestParam($request, $name, $defaultValue = null)
-    {
-        return $request->post($name) ?? $request->get($name, $defaultValue);
     }
 }

@@ -14,6 +14,23 @@ Please see the [Change Log](CHANGELOG.md) for more information on version histor
   from version A to version C and there is version B between A and C, you need to follow the instructions
   for both A and B.
 
+Upgrade from v1.0.0-alpha17
+---------------------------
+* > Note: Database changes will not be incremental till the first stable release.
+
+  v1.0.0-alpha18 added the `post_logout_redirect_uris` and `oidc_skip_logout_validation` column to the `oauth2_client` table.    
+  In order to apply these changes you can run the following statement:
+  MySQL:
+  ```MySQL
+  ALTER TABLE `oauth2_client` ADD COLUMN `post_logout_redirect_uris` JSON AFTER `redirect_uris`;
+  ALTER TABLE `oauth2_client` ADD COLUMN `oidc_skip_logout_validation` TINYINT(1) AFTER `oidc_allow_offline_access_without_consent`;
+  ```
+  PostgeSQL:
+  ```SQL
+  ALTER TABLE oauth2_client ADD COLUMN `post_logout_redirect_uris` JSONB;
+  ALTER TABLE oauth2_client ADD COLUMN `oidc_skip_logout_validation` BOOLEAN;
+  ```
+
 Upgrade from v1.0.0-alpha16
 ---------------------------
 * > Note: Database changes will not be incremental till the first stable release.

@@ -3,6 +3,7 @@
 namespace rhertogh\Yii2Oauth2Server\controllers\web;
 
 use rhertogh\Yii2Oauth2Server\controllers\web\base\Oauth2BaseApiController;
+use rhertogh\Yii2Oauth2Server\controllers\web\openidconnect\Oauth2OidcEndSessionAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\openidconnect\Oauth2OidcUserinfoAction;
 use rhertogh\Yii2Oauth2Server\filters\auth\Oauth2HttpBearerAuth;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2OidcControllerInterface;
@@ -22,10 +23,14 @@ class Oauth2OidcController extends Oauth2BaseApiController implements Oauth2Oidc
                 'class' => VerbFilter::class,
                 'actions' => [
                     static::ACTION_NAME_USERINFO => ['GET', 'POST'],
+                    static::ACTION_END_SESSION => ['GET', 'POST'],
                 ],
             ],
             'authenticator' => [
                 'class' => Oauth2HttpBearerAuth::class,
+                'except' => [
+                    static::ACTION_END_SESSION,
+                ],
             ],
             'accessControl' => [
                 'class' => AccessControl::class,
@@ -34,6 +39,9 @@ class Oauth2OidcController extends Oauth2BaseApiController implements Oauth2Oidc
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                ],
+                'except' => [
+                    static::ACTION_END_SESSION,
                 ],
             ],
         ]);
@@ -46,6 +54,7 @@ class Oauth2OidcController extends Oauth2BaseApiController implements Oauth2Oidc
     {
         return [
             static::ACTION_NAME_USERINFO => Oauth2OidcUserinfoAction::class,
+            static::ACTION_END_SESSION => Oauth2OidcEndSessionAction::class,
         ];
     }
 }
