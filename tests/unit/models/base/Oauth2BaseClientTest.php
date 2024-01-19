@@ -64,7 +64,7 @@ class Oauth2BaseClientTest extends BaseOauth2BaseModelsTest
             'skip_authorization_if_scope_is_allowed' => 'Skip Authorization If Scope Is Allowed',
             'client_credentials_grant_user_id' => 'Client Credentials Grant User ID',
             'oidc_allow_offline_access_without_consent' => 'Oidc Allow Offline Access Without Consent',
-            'oidc_skip_logout_validation' => 'Oidc Skip Logout Validation',
+            'oidc_rp_initiated_logout' => 'Oidc Rp Initiated Logout',
             'oidc_userinfo_encrypted_response_alg' => 'Oidc Userinfo Encrypted Response Alg',
             'enabled' => 'Enabled',
             'created_at' => 'Created At',

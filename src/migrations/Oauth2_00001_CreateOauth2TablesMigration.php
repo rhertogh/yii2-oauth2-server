@@ -185,8 +185,8 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                         . " This user account should also be connected to the client via the `$userClientTable` table and, if applicable, the `$userClientScopeTable` table."),
                     'oidc_allow_offline_access_without_consent' => $this->boolean()->notNull()->defaultValue(false)
                         ->comment('Allow the OpenID Connect "offline_access" scope for this client without the "prompt" parameter contains "consent".'),
-                    'oidc_skip_logout_validation' => $this->boolean()->notNull()->defaultValue(false)
-                        ->comment('Skip user validation on client logout request.'),
+                    'oidc_rp_initiated_logout' => $this->integer()->notNull()->defaultValue(Oauth2ClientInterface::OIDC_RP_INITIATED_LOGOUT_DISABLED)
+                        ->comment('Configuration for OpenID Connect RP-Initiated Logout.'),
                     'oidc_userinfo_encrypted_response_alg' => $this->string(),
                     'enabled' => $this->boolean()->notNull()->defaultValue(true),
                     'created_at' => $this->integer()->notNull(),

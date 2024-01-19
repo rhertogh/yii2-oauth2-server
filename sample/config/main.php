@@ -103,7 +103,7 @@ return [
                     'my_custom_oidc_claim' => 'customOpenIdConnectClaimProperty', // Add a custom claim.
                 ],
             ],
-            'openIdConnectEndSessionEndpoint' => true, // Optional, enable the OpenID Connect end session endpoint for Single Sign Out.
+            'openIdConnectRpInitiatedLogoutEndpoint' => true, // Optional, enable the OpenID Connect end session endpoint for Single Sign Out.
         ],
     ],
 

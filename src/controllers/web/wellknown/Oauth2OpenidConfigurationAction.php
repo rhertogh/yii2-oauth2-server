@@ -96,8 +96,8 @@ class Oauth2OpenidConfigurationAction extends Oauth2BaseWebAction
         }
 
         // Add 'end_session_endpoint' if configured.
-        if (!empty($module->openIdConnectEndSessionEndpoint)) {
-            if ($module->openIdConnectEndSessionEndpoint === true) {
+        if (!empty($module->openIdConnectRpInitiatedLogoutEndpoint)) {
+            if ($module->openIdConnectRpInitiatedLogoutEndpoint === true) {
                 $openIdConfig['end_session_endpoint'] = Url::to(
                     [
                         Oauth2OidcControllerInterface::CONTROLLER_NAME
@@ -106,7 +106,7 @@ class Oauth2OpenidConfigurationAction extends Oauth2BaseWebAction
                     true
                 );
             } else {
-                $openIdConfig['end_session_endpoint'] = $module->openIdConnectEndSessionEndpoint;
+                $openIdConfig['end_session_endpoint'] = $module->openIdConnectRpInitiatedLogoutEndpoint;
             }
         }
 

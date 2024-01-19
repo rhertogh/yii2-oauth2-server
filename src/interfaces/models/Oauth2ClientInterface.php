@@ -44,6 +44,16 @@ interface Oauth2ClientInterface extends
         self::TYPE_PUBLIC,
     ];
 
+    public const OIDC_RP_INITIATED_LOGOUT_DISABLED = 0;
+    public const OIDC_RP_INITIATED_LOGOUT_ENABLED = 1;
+    public const OIDC_RP_INITIATED_LOGOUT_ENABLED_WITHOUT_VERIFICATION = 2;
+
+    public const  OIDC_RP_INITIATED_LOGOUT_OPTIONS = [
+        self::OIDC_RP_INITIATED_LOGOUT_DISABLED,
+        self::OIDC_RP_INITIATED_LOGOUT_ENABLED,
+        self::OIDC_RP_INITIATED_LOGOUT_ENABLED_WITHOUT_VERIFICATION,
+    ];
+
     /**
      * @inheritDoc
      * @return Oauth2ClientQueryInterface
@@ -538,17 +548,21 @@ interface Oauth2ClientInterface extends
     public function setOpenIdConnectAllowOfflineAccessWithoutConsent($allowOfflineAccessWithoutConsent);
 
     /**
-     * @return bool If this setting is enabled the end-user won't be prompted to verify the logout.
+     * @return int Get RP Initiated Logout configuration.
      * @since 1.0.0
+     * @see OIDC_RP_INITIATED_LOGOUT_OPTIONS
+     * @see https://openid.net/specs/openid-connect-rpinitiated-1_0.html
      */
-    public function getOpenIdConnectSkipLogoutValidation();
+    public function getOpenIdConnectRpInitiatedLogout();
 
     /**
-     * @param bool $skipLogoutValidation If this setting is enabled the end-user won't be prompted to verify the logout.
+     * @param int $rpInitiatedLogout Configure RP Initiated Logout.
      * @return $this
      * @since 1.0.0
+     * @see OIDC_RP_INITIATED_LOGOUT_OPTIONS
+     * @see https://openid.net/specs/openid-connect-rpinitiated-1_0.html
      */
-    public function setOpenIdConnectSkipLogoutValidation($skipLogoutValidation);
+    public function setOpenIdConnectRpInitiatedLogout($rpInitiatedLogout);
 
     /**
      * The encryption algorithm to use for the OpenID Connect Userinfo Endpoint. When `null`, no encryption is applied.

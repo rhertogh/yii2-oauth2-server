@@ -413,17 +413,17 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritDoc
      */
-    public function getOpenIdConnectSkipLogoutValidation()
+    public function getOpenIdConnectRpInitiatedLogout()
     {
-        return (bool)$this->oidc_skip_logout_validation;
+        return $this->oidc_rp_initiated_logout;
     }
 
     /**
      * @inheritDoc
      */
-    public function setOpenIdConnectSkipLogoutValidation($skipLogoutValidation)
+    public function setOpenIdConnectRpInitiatedLogout($skipLogoutValidation)
     {
-        $this->oidc_skip_logout_validation = $skipLogoutValidation;
+        $this->oidc_rp_initiated_logout = $skipLogoutValidation;
         return $this;
     }
 

@@ -15,6 +15,7 @@ use rhertogh\Yii2Oauth2Server\controllers\web\base\Oauth2BaseWebAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2OidcController;
 use rhertogh\Yii2Oauth2Server\helpers\UrlHelper;
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\web\BadRequestHttpException;
@@ -92,7 +93,7 @@ class Oauth2OidcEndSessionAction extends Oauth2BaseWebAction
                 }
             }
         } else {
-            if (!$module->openIdConnectAllowAnonymousEndSession) {
+            if (!$module->openIdConnectAllowAnonymousRpInitiatedLogout) {
                 throw new BadRequestHttpException('The `id_token_hint` parameter is required.');
             }
             $logoutVerificationRequired = true;
@@ -103,11 +104,21 @@ class Oauth2OidcEndSessionAction extends Oauth2BaseWebAction
             if (!$client || !$client->isEnabled()) {
                 throw new ForbiddenHttpException('Client "' . $clientIdentifier . '" not found or disabled.');
             }
+
+            if (
+                !($client->getOpenIdConnectRpInitiatedLogout()
+                    > Oauth2ClientInterface::OIDC_RP_INITIATED_LOGOUT_DISABLED)
+            ) {
+                throw new ForbiddenHttpException('Client "' . $clientIdentifier . '" is not allowed to initiated end-user logout.');
+            }
         }
 
         if (!$logoutVerificationRequired) {
             if (isset($client)) {
-                if (!$client->getOpenIdConnectSkipLogoutValidation()) {
+                if (
+                    $client->getOpenIdConnectRpInitiatedLogout()
+                        !== Oauth2ClientInterface::OIDC_RP_INITIATED_LOGOUT_ENABLED_WITHOUT_VERIFICATION
+                ) {
                     $logoutVerificationRequired = true;
                 }
             } else {
@@ -116,7 +127,7 @@ class Oauth2OidcEndSessionAction extends Oauth2BaseWebAction
         }
 
         if ($logoutVerificationRequired) {
-            throw new \LogicException('Not yet implemented');
+            throw new \LogicException('Not yet implemented: oidc_rp_initiated_logout is currently only supported without end-user verification.');
         }
 
         $module->logoutUser();

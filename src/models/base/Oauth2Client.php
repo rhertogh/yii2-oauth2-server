@@ -34,7 +34,7 @@ use Yii;
  * @property boolean $skip_authorization_if_scope_is_allowed
  * @property integer $client_credentials_grant_user_id
  * @property boolean $oidc_allow_offline_access_without_consent
- * @property boolean $oidc_skip_logout_validation
+ * @property integer $oidc_rp_initiated_logout
  * @property string $oidc_userinfo_encrypted_response_alg
  * @property boolean $enabled
  * @property integer $created_at
@@ -58,11 +58,11 @@ abstract class Oauth2Client extends \rhertogh\Yii2Oauth2Server\models\base\Oauth
     {
         return [
             [['identifier', 'name', 'created_at', 'updated_at'], 'required'],
-            [['type', 'token_types', 'grant_types', 'user_account_selection', 'client_credentials_grant_user_id', 'created_at', 'updated_at'], 'default', 'value' => null],
-            [['type', 'token_types', 'grant_types', 'user_account_selection', 'client_credentials_grant_user_id', 'created_at', 'updated_at'], 'integer'],
+            [['type', 'token_types', 'grant_types', 'user_account_selection', 'client_credentials_grant_user_id', 'oidc_rp_initiated_logout', 'created_at', 'updated_at'], 'default', 'value' => null],
+            [['type', 'token_types', 'grant_types', 'user_account_selection', 'client_credentials_grant_user_id', 'oidc_rp_initiated_logout', 'created_at', 'updated_at'], 'integer'],
             [['secret', 'old_secret'], 'string'],
             [['old_secret_valid_until', 'env_var_config', 'contacts', 'redirect_uris', 'post_logout_redirect_uris'], 'safe'],
-            [['allow_variable_redirect_uri_query', 'allow_generic_scopes', 'exception_on_invalid_scope', 'end_users_may_authorize_client', 'allow_auth_code_without_pkce', 'skip_authorization_if_scope_is_allowed', 'oidc_allow_offline_access_without_consent', 'oidc_skip_logout_validation', 'enabled'], 'boolean'],
+            [['allow_variable_redirect_uri_query', 'allow_generic_scopes', 'exception_on_invalid_scope', 'end_users_may_authorize_client', 'allow_auth_code_without_pkce', 'skip_authorization_if_scope_is_allowed', 'oidc_allow_offline_access_without_consent', 'enabled'], 'boolean'],
             [['identifier', 'name', 'logo_uri', 'tos_uri', 'oidc_userinfo_encrypted_response_alg'], 'string', 'max' => 255],
             [['identifier'], 'unique']
         ];
@@ -98,7 +98,7 @@ abstract class Oauth2Client extends \rhertogh\Yii2Oauth2Server\models\base\Oauth
             'skip_authorization_if_scope_is_allowed' => Yii::t('oauth2', 'Skip Authorization If Scope Is Allowed'),
             'client_credentials_grant_user_id' => Yii::t('oauth2', 'Client Credentials Grant User ID'),
             'oidc_allow_offline_access_without_consent' => Yii::t('oauth2', 'Oidc Allow Offline Access Without Consent'),
-            'oidc_skip_logout_validation' => Yii::t('oauth2', 'Oidc Skip Logout Validation'),
+            'oidc_rp_initiated_logout' => Yii::t('oauth2', 'Oidc Rp Initiated Logout'),
             'oidc_userinfo_encrypted_response_alg' => Yii::t('oauth2', 'Oidc Userinfo Encrypted Response Alg'),
             'enabled' => Yii::t('oauth2', 'Enabled'),
             'created_at' => Yii::t('oauth2', 'Created At'),

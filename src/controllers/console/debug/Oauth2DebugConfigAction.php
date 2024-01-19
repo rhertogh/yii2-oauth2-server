@@ -97,7 +97,7 @@ class Oauth2DebugConfigAction extends Action
             'clientAuthorizationPath' => $module->clientAuthorizationPath,
             'clientAuthorizationView' => $module->clientAuthorizationView,
             'openIdConnectUserinfoPath' => $module->openIdConnectUserinfoPath,
-            'openIdConnectEndSessionPath' => $module->openIdConnectEndSessionPath,
+            'openIdConnectRpInitiatedLogoutPath' => $module->openIdConnectRpInitiatedLogoutPath,
 
             'exceptionOnInvalidScope' => $module->exceptionOnInvalidScope,
 
@@ -113,8 +113,8 @@ class Oauth2DebugConfigAction extends Action
             'openIdConnectDiscoveryIncludeSupportedGrantTypes' =>
                 $module->openIdConnectDiscoveryIncludeSupportedGrantTypes ? 'true' : 'false',
             'openIdConnectUserinfoEndpoint' => $module->openIdConnectUserinfoEndpoint ? 'true' : 'false',
-            'openIdConnectEndSessionEndpoint' => $module->openIdConnectEndSessionEndpoint ? 'true' : 'false',
-            'openIdConnectAllowAnonymousEndSession' => $module->openIdConnectAllowAnonymousEndSession ? 'true' : 'false',
+            'openIdConnectRpInitiatedLogoutEndpoint' => $module->openIdConnectRpInitiatedLogoutEndpoint ? 'true' : 'false',
+            'openIdConnectAllowAnonymousRpInitiatedLogout' => $module->openIdConnectAllowAnonymousRpInitiatedLogout ? 'true' : 'false',
             'openIdConnectDiscoveryServiceDocumentationUrl' => $module->openIdConnectDiscoveryServiceDocumentationUrl,
             'openIdConnectIssueRefreshTokenWithoutOfflineAccessScope' =>
                 $module->openIdConnectIssueRefreshTokenWithoutOfflineAccessScope ? 'true' : 'false',
