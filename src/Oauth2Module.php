@@ -510,7 +510,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
      *  - A log level of `\yii\log\Logger` => LEVEL_ERROR, LEVEL_WARNING, LEVEL_INFO, LEVEL_TRACE.
      *  - `0` => disable logging for HTTP Client Errors
      *  - null => The `YII_DEBUG` constant will be used to determine the log level.
-     *            If `true` LEVEL_ERROR will be used, logging will be disabled otherwise.
+     *            If `true` LEVEL_ERROR will be used, LEVEL_INFO otherwise.
      * @var int|null
      * @see \yii\log\Logger
      */
@@ -581,10 +581,6 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
 
         if (empty($this->urlRulesPrefix)) {
             $this->urlRulesPrefix = $this->uniqueId;
-        }
-
-        if ($this->httpClientErrorsLogLevel === null) {
-            $this->httpClientErrorsLogLevel = YII_DEBUG ? Logger::LEVEL_ERROR : 0;
         }
 
         $this->registerTranslations();
@@ -1338,5 +1334,14 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
     public function logoutUser()
     {
         Yii::$app->user->logout();
+    }
+
+    public function getElaboratedHttpClientErrorsLogLevel()
+    {
+        if ($this->httpClientErrorsLogLevel === null) {
+            return YII_DEBUG ? Logger::LEVEL_ERROR : Logger::LEVEL_INFO;
+        }
+
+        return $this->httpClientErrorsLogLevel;
     }
 }

@@ -79,8 +79,9 @@ abstract class Oauth2BaseServerAction extends Oauth2BaseWebAction
         ];
 
         if ($response->getIsClientError()) {
-            if ($module->httpClientErrorsLogLevel) {
-                Yii::getLogger()->log((string)$exception, $module->httpClientErrorsLogLevel, $logCategory);
+            $httpClientErrorsLogLevel = $module->getElaboratedHttpClientErrorsLogLevel();
+            if ($httpClientErrorsLogLevel) {
+                Yii::getLogger()->log((string)$exception, $httpClientErrorsLogLevel, $logCategory);
             }
         } else {
             Yii::error((string)$exception, $logCategory);

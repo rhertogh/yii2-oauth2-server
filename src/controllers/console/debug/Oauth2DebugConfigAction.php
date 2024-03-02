@@ -74,6 +74,8 @@ class Oauth2DebugConfigAction extends Action
             ? VarDumper::export($module->clientRedirectUrisEnvVarConfig)
             : '';
 
+        $httpClientErrorsLogLevel = $module->getElaboratedHttpClientErrorsLogLevel();
+
         return [
             'serverRole' => $module->serverRole . ' (' . implode(', ', $serverRoles) . ')',
 
@@ -126,9 +128,9 @@ class Oauth2DebugConfigAction extends Action
                 ? 'null'
                 : ($module->displayConfidentialExceptionMessages ? 'true' : 'false'),
 
-            'httpClientErrorsLogLevel' => $module->httpClientErrorsLogLevel === 0
+            'httpClientErrorsLogLevel' => $httpClientErrorsLogLevel === 0
                 ? 'disabled'
-                : Logger::getLevelName($module->httpClientErrorsLogLevel),
+                : Logger::getLevelName($httpClientErrorsLogLevel),
         ];
     }
 
