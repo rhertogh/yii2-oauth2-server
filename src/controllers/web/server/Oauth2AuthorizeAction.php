@@ -330,8 +330,7 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction
 
             return Psr7Helper::psr7ToYiiResponse($psr7Response);
         } catch (\Exception $e) {
-            Yii::error((string)$e, __METHOD__);
-            return $this->processException($e);
+            return $this->processException($e, __METHOD__);
         }
     }
 }

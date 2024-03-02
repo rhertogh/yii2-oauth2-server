@@ -56,6 +56,7 @@ use yii\helpers\Json;
 use yii\helpers\StringHelper;
 use yii\helpers\VarDumper;
 use yii\i18n\PhpMessageSource;
+use yii\log\Logger;
 use yii\validators\IpValidator;
 use yii\web\Application as WebApplication;
 use yii\web\GroupUrlRule;
@@ -505,6 +506,17 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
     public $migrationsFileMode = null;
 
     /**
+     * The log level for HTTP Client Errors (HTTP status code 400 - 499). Can be one of the following:
+     *  - A log level of `\yii\log\Logger` => LEVEL_ERROR, LEVEL_WARNING, LEVEL_INFO, LEVEL_TRACE.
+     *  - `0` => disable logging for HTTP Client Errors
+     *  - null => The `YII_DEBUG` constant will be used to determine the log level.
+     *            If `true` LEVEL_ERROR will be used, logging will be disabled otherwise.
+     * @var int|null
+     * @see \yii\log\Logger
+     */
+    public $httpClientErrorsLogLevel = null;
+
+    /**
      * @var Oauth2AuthorizationServerInterface|null Cache for the authorization server
      * @since 1.0.0
      */
@@ -569,6 +581,10 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
 
         if (empty($this->urlRulesPrefix)) {
             $this->urlRulesPrefix = $this->uniqueId;
+        }
+
+        if ($this->httpClientErrorsLogLevel === null) {
+            $this->httpClientErrorsLogLevel = YII_DEBUG ? Logger::LEVEL_ERROR : 0;
         }
 
         $this->registerTranslations();

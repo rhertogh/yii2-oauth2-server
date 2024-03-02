@@ -25,7 +25,7 @@ class Oauth2BaseServerActionTest extends TestCase
         $baseServerAction = new class ('test', $controller) extends Oauth2BaseServerAction {
             public function processExceptionTest($e)
             {
-                return $this->processException($e);
+                return $this->processException($e, __METHOD__);
             }
         };
 
@@ -45,7 +45,7 @@ class Oauth2BaseServerActionTest extends TestCase
         $baseServerAction = new class ('test', $controller) extends Oauth2BaseServerAction {
             public function processExceptionTest($e)
             {
-                return $this->processException($e);
+                return $this->processException($e, __METHOD__);
             }
         };
 
@@ -69,7 +69,7 @@ class Oauth2BaseServerActionTest extends TestCase
         $baseServerAction = new class ('test', $controller) extends Oauth2BaseServerAction {
             public function processExceptionTest($e)
             {
-                return $this->processException($e);
+                return $this->processException($e, __METHOD__);
             }
         };
 
@@ -107,7 +107,7 @@ class Oauth2BaseServerActionTest extends TestCase
         $baseServerAction = new class ('test', $controller) extends Oauth2BaseServerAction {
             public function processExceptionTest($e)
             {
-                return $this->processException($e);
+                return $this->processException($e, __METHOD__);
             }
         };
 

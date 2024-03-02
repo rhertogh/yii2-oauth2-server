@@ -12,6 +12,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 
 ### Added
 - Support for OpenID Connect RP-Initiated Logout. (rhertogh)
+- Added `Oauth2Module::$httpClientErrorsLogLevel` in order to specify a log level for HTTP client error responses. (rhertogh)
 
 ### Changed
 

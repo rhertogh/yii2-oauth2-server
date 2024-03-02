@@ -7,6 +7,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2Oi
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use sample\components\AppBootstrap;
 use yii\base\InvalidConfigException;
+use yii\log\Logger;
 
 $dbDriver = getenv('YII_DB_DRIVER');
 
@@ -104,6 +105,7 @@ return [
                 ],
             ],
             'openIdConnectRpInitiatedLogoutEndpoint' => true, // Optional, enable the OpenID Connect end session endpoint for Single Sign Out.
+            'httpClientErrorsLogLevel' => Logger::LEVEL_ERROR, // Optional, defaults to "LEVEL_ERROR" when YII_DEBUG is `true` or "disabled" when YII_DEBUG `false`
         ],
     ],
 

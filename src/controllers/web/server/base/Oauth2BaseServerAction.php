@@ -23,8 +23,10 @@ abstract class Oauth2BaseServerAction extends Oauth2BaseWebAction
      * @return Response
      * @see https://datatracker.ietf.org/doc/html/rfc6749#section-5.2
      */
-    protected function processException($exception)
+    protected function processException($exception, $logCategory)
     {
+        $module = $this->controller->module;
+
         if (Yii::$app->has('response')) {
             $response = Yii::$app->getResponse();
             // reset parameters of response to avoid interference with partially created response data
@@ -56,8 +58,8 @@ abstract class Oauth2BaseServerAction extends Oauth2BaseWebAction
                 ? $exception->getName()
                 : 'Exception';
 
-            $displayNonHttpExceptionMessages = $this->controller->module->displayConfidentialExceptionMessages !== null
-                ? $this->controller->module->displayConfidentialExceptionMessages
+            $displayNonHttpExceptionMessages = $module->displayConfidentialExceptionMessages !== null
+                ? $module->displayConfidentialExceptionMessages
                 : YII_DEBUG;
 
             if (
@@ -75,6 +77,14 @@ abstract class Oauth2BaseServerAction extends Oauth2BaseWebAction
             'error' => $error,
             'error_description' => $description,
         ];
+
+        if ($response->getIsClientError()) {
+            if ($module->httpClientErrorsLogLevel) {
+                Yii::getLogger()->log((string)$exception, $module->httpClientErrorsLogLevel, $logCategory);
+            }
+        } else {
+            Yii::error((string)$exception, $logCategory);
+        }
 
         return $response;
     }

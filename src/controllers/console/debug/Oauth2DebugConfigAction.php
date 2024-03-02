@@ -10,6 +10,7 @@ use yii\base\Action;
 use yii\console\ExitCode;
 use yii\console\widgets\Table;
 use yii\helpers\VarDumper;
+use yii\log\Logger;
 
 /**
  * @property Oauth2DebugController $controller
@@ -124,6 +125,10 @@ class Oauth2DebugConfigAction extends Action
             'displayConfidentialExceptionMessages' => $module->displayConfidentialExceptionMessages === null
                 ? 'null'
                 : ($module->displayConfidentialExceptionMessages ? 'true' : 'false'),
+
+            'httpClientErrorsLogLevel' => $module->httpClientErrorsLogLevel === 0
+                ? 'disabled'
+                : Logger::getLevelName($module->httpClientErrorsLogLevel),
         ];
     }
 
