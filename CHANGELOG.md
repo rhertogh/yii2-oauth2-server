@@ -21,6 +21,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Removed
 
 ### Fixed
+- Allow `null` values for `Oauth2Client` `$uri` and `$postLogoutRedirectUris`. (rhertogh) 
 
 ### Improved
 

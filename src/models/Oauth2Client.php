@@ -242,7 +242,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
 
     /**
      * @param string $attribute
-     * @param string|string[] $uri
+     * @param string|string[]|null $uri
      * @return $this
      */
     protected function setUrisAttribute($attribute, $uri)
@@ -256,7 +256,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
             $uri = Json::encode($uri);
         } elseif (is_string($uri)) {
             $uri = Json::encode([$uri]);
-        } else {
+        } elseif ($uri !== null) {
             throw new InvalidArgumentException('$uri must be a string or an array, got: ' . gettype($uri));
         }
 

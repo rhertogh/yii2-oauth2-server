@@ -147,13 +147,13 @@ interface Oauth2ClientInterface extends
 
     /**
      * @inheritdoc
-     * @return string[]
+     * @return string[]|null
      */
     public function getRedirectUri();
 
     /**
      * Sets the one or multiple redirect URIs
-     * @param string|string[] $uri
+     * @param string|string[]|null $uri
      * @return $this
      * @since 1.0.0
      */
@@ -161,14 +161,14 @@ interface Oauth2ClientInterface extends
 
     /**
      * Get the post logout redirect URI(s)
-     * @return string[]
+     * @return string[]|null
      * @since 1.0.0
      */
     public function getPostLogoutRedirectUris();
 
     /**
      * Sets the one or multiple post logout redirect URI(s)
-     * @param string|string[] $postLogoutRedirectUris
+     * @param string|string[]|null $postLogoutRedirectUris
      * @return $this
      * @since 1.0.0
      */
