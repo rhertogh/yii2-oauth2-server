@@ -58,6 +58,20 @@ composer require rhertogh/yii2-oauth2-server
 Full installation and configuration details can be found in the docs under
 [Installing the Yii2-Oauth2-Server](docs/guide/start-installation.md)
 
+🏎️ Test Drive
+----------
+You can run a local preview instance using [Docker](https://docker.com/):
+```bash
+docker run --rm -p 82:80 --name Yii2Oauth2Server ghcr.io/rhertogh/yii2-oauth2-server:master
+```
+After the container is started you can access the Oauth2 server on [localhost:82](http://localhost:82).
+> Hint: The port number on the host machine is specified by the first part of the `-p` argument.
+> This can be changed if desired (e.g. `-p 88:80`).
+
+To access the CLI of the Docker container you can run:
+```bash
+docker container exec -it Yii2Oauth2Server bash
+```
 
 📖 Documentation
 ----------------
