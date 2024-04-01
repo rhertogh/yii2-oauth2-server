@@ -88,7 +88,7 @@ jobs:
                 "2022-01-01": "def00000c8fc3b1b8d017afc6a645f94e6d2f5fc9d71e8b3eb26e5b2de6ef23232dd19446bbeef26fbd51dd2fd4cd5641e68db28ec76f8460bb3f33aaab3cff7b9fcfe62"
             }
 
-          SQLITE_DB_FILE: ":memory:"
+          SQLITE_DB_FILE: "/var/sqlite/Yii2-Oauth2-Server.sqlite"
 
           MYSQL_HOST: 127.0.0.1
           MYSQL_PORT: ${{ job.services.mysql.ports[3306] }}
