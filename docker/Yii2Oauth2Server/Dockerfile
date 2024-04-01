@@ -43,6 +43,7 @@ RUN chown root:www-data ${APP_DIR}
 
 # Set Application specific permissions (replaces the `init` script)
 RUN chmod +x ${APP_DIR}/yii && \
+    chmod -R g=+wX ${APP_DIR}/sample/runtime && \
     chmod -R g=+wX ${APP_DIR}/sample/web/assets
 
 RUN chmod +x /app/yii
