@@ -35,7 +35,15 @@ RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-install pdo pdo_pgsql pgsql
 
 # Copy the app directory. NOTE! For development docker-compose will overwrite this directory with a mount
-COPY . ${APP_DIR}
+COPY --chown=root:www-data --chmod=740 . ${APP_DIR}
+# In the COPY above --chmod should be "=u=rwX,g=rX,o=" so no further `chmod` is needed but that's currently not supported: https://github.com/moby/buildkit/issues/1951
+RUN find ${APP_DIR} -path "./vendor" -prune -o -type d -exec chmod 750 {} +
+# Change ownership for the app root directory (not set by the COPY command). Note: no chown is currently needed since it's already set by the workaround above.
+RUN chown root:www-data ${APP_DIR}
+
+# Set Application specific permissions (replaces the `init` script)
+RUN chmod +x ${APP_DIR}/yii && \
+    chmod -R g=+wX ${APP_DIR}/sample/web/assets
 
 RUN chmod +x /app/yii
 ENV PATH="/app:${PATH}"
