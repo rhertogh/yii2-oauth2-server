@@ -47,7 +47,7 @@ If you're not yet familiar with Oauth 2 we recommend to check out
 
 #### Requirements:
 * The minimum required PHP version is 7.4 (compatibility tested up till and including PHP 8.1).
-* The minimum required Yii version is 2.0.43.
+* The minimum required Yii version is 2.0.49.
 
 #### Installation:
 The preferred way to install this extension is through [composer](https://getcomposer.org/download/).
