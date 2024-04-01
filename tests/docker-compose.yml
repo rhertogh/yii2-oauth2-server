@@ -10,8 +10,10 @@ services:
     networks:
       - test
     depends_on:
-      - MySql_5_7
-      - Postgres_14
+      MySQL:
+        condition: service_healthy
+      PostgreSQL:
+        condition: service_healthy
     ports:
       - '${DOCKER_HOST_HTTP_PORT:-88}:80' # http port mapping, it's recommended to use a different port than the default sample app.
     volumes:
@@ -46,7 +48,7 @@ services:
     extra_hosts:
       - host.docker.internal:host-gateway
 
-  MySql_5_7:
+  MySQL:
     image: "mysql:5.7"
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:?err}
@@ -58,8 +60,15 @@ services:
       - test
     ports:
       - "${DOCKER_HOST_MYSQL_PORT:-3307}:3306" # mysql port mapping, it's recommended to use a different port than the default sample app.
+    healthcheck:
+      test: mysqladmin ping -h localhost -u root -p$${MYSQL_ROOT_PASSWORD} || exit 1
+      start_period: 10s
+      start_interval: 1s
+      interval: 60s
+      timeout: 3s
+      retries: 3
 
-  Postgres_14:
+  PostgreSQL:
     image: "postgres:14-alpine"
     restart: always
     environment:
@@ -70,6 +79,13 @@ services:
       - test
     ports:
       - "${DOCKER_HOST_POSTGRES_PORT:-5433}:5432" # Postgres port mapping, it's recommended to use a different port than the default sample app.
+    healthcheck:
+      test: pg_isready || exit 1
+      start_period: 10s
+      start_interval: 1s
+      interval: 60s
+      timeout: 3s
+      retries: 3
 
 networks:
   test:

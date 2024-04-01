@@ -24,6 +24,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - Allow `null` values for `Oauth2Client` `$uri` and `$postLogoutRedirectUris`. (rhertogh) 
 
 ### Improved
+- Added health checks to docker compose files for MySQL and PostgreSQL. (rhertogh)
 
 ### Security
 
