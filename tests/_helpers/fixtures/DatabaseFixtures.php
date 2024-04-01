@@ -19,6 +19,8 @@ class DatabaseFixtures
         $runMigrations = true,
         $runPostMigrationsFixtures = true
     ) {
+        $driverName = strtolower($driverName);
+
         $dbConfig = static::getDbConfig($driverName);
 
         $pdoDriver = 'pdo_' . explode(':', $dbConfig['connection']['dsn'])[0];
@@ -133,7 +135,7 @@ class DatabaseFixtures
         }
 
         $databases = self::getParam('databases');
-        $dbConfig = $databases[$driverName];
+        $dbConfig = $databases[strtolower($driverName)];
         return $dbConfig;
     }
 

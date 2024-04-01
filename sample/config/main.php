@@ -9,9 +9,9 @@ use sample\components\AppBootstrap;
 use yii\base\InvalidConfigException;
 use yii\log\Logger;
 
-$dbDriver = getenv('YII_DB_DRIVER');
+$dbDriver = strtolower(getenv('YII_DB_DRIVER'));
 
-if ($dbDriver === 'MySQL') {
+if ($dbDriver === 'mysql') {
     $db = [
         'class' => yii\db\Connection::class,
         'dsn' => getenv('MYSQL_HOST') && getenv('MYSQL_DB_NAME')
@@ -27,7 +27,7 @@ if ($dbDriver === 'MySQL') {
         'enableLogging' => YII_DEBUG,
         'enableProfiling' => YII_DEBUG,
     ];
-} elseif ($dbDriver === 'PostgreSQL') {
+} elseif ($dbDriver === 'postgresql') {
     $db = [
         'class' => yii\db\Connection::class,
         'dsn' =>
@@ -36,6 +36,16 @@ if ($dbDriver === 'MySQL') {
             . ';dbname=' . getenv('POSTGRES_DB'),
         'username' => getenv('POSTGRES_USER'),
         'password' => getenv('POSTGRES_PASSWORD'),
+        'charset' => 'utf8',
+        'enableSchemaCache' => true,
+        'schemaCacheDuration' => 0, // never expire.
+        'enableLogging' => YII_DEBUG,
+        'enableProfiling' => YII_DEBUG,
+    ];
+} elseif ($dbDriver === 'sqlite') {
+    $db = [
+        'class' => yii\db\Connection::class,
+        'dsn' => 'sqlite:' . getenv('SQLITE_DB_FILE'),
         'charset' => 'utf8',
         'enableSchemaCache' => true,
         'schemaCacheDuration' => 0, // never expire.

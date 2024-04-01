@@ -14,6 +14,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - Support for OpenID Connect RP-Initiated Logout. (rhertogh)
 - Added `Oauth2Module::$httpClientErrorsLogLevel` in order to specify a log level for HTTP client error responses. (rhertogh)
 - Added DB driver info and logo to .bashrc
+- Support for SQLite. (rhertogh)
 
 ### Changed
 

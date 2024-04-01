@@ -21,29 +21,43 @@ class m210101_000000_create_user_table extends Migration
             'updated_at' => $this->integer()->notNull(),
         ]);
 
-        $this->createTable('{{user_identity_link}}', [
-            'user_id' => $this->integer()->notNull(),
-            'linked_user_id' => $this->integer()->notNull(),
-            'PRIMARY KEY (user_id, linked_user_id)',
-        ]);
-        $this->addForeignKey(
-            'linked_identity_user',
-            '{{user_identity_link}}',
-            'user_id',
-            'user',
-            'id',
-            'CASCADE',
-            'CASCADE',
-        );
-        $this->addForeignKey(
-            'linked_identity_linked_user',
-            '{{user_identity_link}}',
-            'linked_user_id',
-            'user',
-            'id',
-            'CASCADE',
-            'CASCADE',
-        );
+        if ($this->db->getDriverName() === 'sqlite') {
+
+            $this->createTable('{{user_identity_link}}', [
+                'user_id' => $this->integer()->notNull(),
+                'linked_user_id' => $this->integer()->notNull(),
+                'PRIMARY KEY (user_id, linked_user_id)',
+                'FOREIGN KEY (user_id) REFERENCES user(id)',
+                'FOREIGN KEY (linked_user_id) REFERENCES user(id)',
+            ]);
+
+        } else {
+
+            $this->createTable('{{user_identity_link}}', [
+                'user_id' => $this->integer()->notNull(),
+                'linked_user_id' => $this->integer()->notNull(),
+                'PRIMARY KEY (user_id, linked_user_id)',
+            ]);
+
+            $this->addForeignKey(
+                'linked_identity_user',
+                '{{user_identity_link}}',
+                'user_id',
+                'user',
+                'id',
+                'CASCADE',
+                'CASCADE',
+            );
+            $this->addForeignKey(
+                'linked_identity_linked_user',
+                '{{user_identity_link}}',
+                'linked_user_id',
+                'user',
+                'id',
+                'CASCADE',
+                'CASCADE',
+            );
+        }
     }
 
     public function safeDown()

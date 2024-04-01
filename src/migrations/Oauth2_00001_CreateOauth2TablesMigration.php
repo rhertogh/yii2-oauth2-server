@@ -16,7 +16,7 @@ use rhertogh\Yii2Oauth2Server\migrations\base\Oauth2BaseMigration;
 use rhertogh\Yii2Oauth2Server\models\Oauth2AccessToken;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\base\InvalidConfigException;
-use yii\db\Schema;
+use yii\db\ColumnSchemaBuilder;
 
 /**
  * phpcs:disable Squiz.Classes.ValidClassName.NotCamelCaps
@@ -44,15 +44,35 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
     public function safeUp()
     {
         foreach ($this->getTables() as $table => $definition) {
-            $this->createTable($table, $definition['table']);
+
+            $tableDefinition = $definition['table'];
+            if (!$this->commentsSupported()) {
+                foreach ($tableDefinition as $tableColumn) { /** @var ColumnSchemaBuilder $tableColumn */
+                    $tableColumn->comment(null);
+                }
+            }
+            if (!empty($definition['primaryKey']) && !$this->deferredPrimaryKeyCreationSupported()) {
+                $tableDefinition[] = 'PRIMARY KEY (' . implode(', ', $definition['primaryKey']['columns']) . ')';
+            }
+            if (!empty($definition['foreignKeys']) && !$this->deferredForeignKeyCreationSupported()) {
+                foreach ($definition['foreignKeys'] as $foreignKey) {
+                    $tableDefinition[] = 'FOREIGN KEY (' . implode(', ', $foreignKey['columns']) . ')'
+                        . ' REFERENCES ' . $foreignKey['refTable'] . '(' . implode(', ', $foreignKey['refColumns']) . ')'
+                        . ' ON DELETE ' . $foreignKey['delete'] . ' ON UPDATE ' . $foreignKey['update'];
+                }
+            }
+
+            $this->createTable($table, $tableDefinition);
             $rawTableName = $this->getDb()->getSchema()->getRawTableName($table);
-            if (!empty($definition['primaryKey'])) {
+
+            if (!empty($definition['primaryKey']) && $this->deferredPrimaryKeyCreationSupported()) {
                 $this->addPrimaryKey(
                     $rawTableName . '_pk',
                     $table,
                     $definition['primaryKey']['columns']
                 );
             }
+
             if (!empty($definition['indexes'])) {
                 foreach ($definition['indexes'] as $index) {
                     $this->createIndex(
@@ -63,7 +83,8 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                     );
                 }
             }
-            if (!empty($definition['foreignKeys'])) {
+
+            if (!empty($definition['foreignKeys']) && $this->deferredForeignKeyCreationSupported()) {
                 foreach ($definition['foreignKeys'] as $foreignKey) {
                     $this->addForeignKey(
                         $rawTableName . '_' . $foreignKey['name'] . '_fk',
@@ -200,7 +221,7 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                                 'name' => 'client_credentials_grant_user_id',
                                 'columns' => ['client_credentials_grant_user_id'],
                                 'refTable' => $userTable,
-                                'refColumns' => $userPkColumn,
+                                'refColumns' => [$userPkColumn],
                                 'delete' => static::RESTRICT,
                                 'update' => static::CASCADE,
                             ],
@@ -323,7 +344,7 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                     'redirect_uri' => $this->string(),
                     'expiry_date_time' => $this->dateTime()->notNull(),
                     'client_id' => $this->integer()->notNull(),
-                    'user_id' => ($userTable ? $userPkSchema->dbType : Schema::TYPE_STRING) . ' NOT NULL',
+                    'user_id' => (clone $userPkSchemaColumnBuilder)->notNull(),
                     'enabled' => $this->boolean()->notNull()->defaultValue(true), // ToDo: do we need this ???
                     'created_at' => $this->integer()->notNull(),
                     'updated_at' => $this->integer()->notNull(),
@@ -344,7 +365,7 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                                 'name' => 'user_id',
                                 'columns' => ['user_id'],
                                 'refTable' => $userTable,
-                                'refColumns' => $userPkColumn,
+                                'refColumns' => [$userPkColumn],
                                 'delete' => static::CASCADE,
                                 'update' => static::CASCADE,
                             ],
@@ -406,11 +427,11 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                     'id' => $this->bigPrimaryKey()->unsigned(),
                     'identifier' => $this->string()->notNull()->unique(),
                     'client_id' => $this->integer()->notNull(),
-                    'user_id' => ($userTable ? $userPkSchema->dbType : Schema::TYPE_STRING) . ' DEFAULT NULL',
+                    'user_id' => (clone $userPkSchemaColumnBuilder),
                     'type' => $this->integer()->notNull(),
                     'mac_key' => $this->string(500),
-                    'mac_algorithm' => Schema::TYPE_SMALLINT,
-                    'allowance' => Schema::TYPE_SMALLINT,
+                    'mac_algorithm' => $this->smallInteger(),
+                    'allowance' => $this->smallInteger(),
                     'allowance_updated_at' => $this->integer(),
                     'expiry_date_time' => $this->dateTime()->notNull(),
                     'enabled' => $this->boolean()->notNull()->defaultValue(true),
@@ -433,7 +454,7 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                                 'name' => 'user_id',
                                 'columns' => ['user_id'],
                                 'refTable' => $userTable,
-                                'refColumns' => $userPkColumn,
+                                'refColumns' => [$userPkColumn],
                                 'delete' => static::CASCADE,
                                 'update' => static::CASCADE,
                             ],
@@ -531,7 +552,7 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
 
             $userClientTable => [
                 'table' => [
-                    'user_id' => ($userTable ? $userPkSchema->dbType : Schema::TYPE_STRING) . ' NOT NULL',
+                    'user_id' => (clone $userPkSchemaColumnBuilder)->notNull(),
                     'client_id' => $this->integer()->notNull(),
                     'enabled' => $this->boolean()->notNull()->defaultValue(true),
                     'created_at' => $this->integer()->notNull(),
@@ -556,7 +577,7 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
                                 'name' => 'user_id',
                                 'columns' => ['user_id'],
                                 'refTable' => $userTable,
-                                'refColumns' => $userPkColumn,
+                                'refColumns' => [$userPkColumn],
                                 'delete' => static::CASCADE,
                                 'update' => static::CASCADE,
                             ],
@@ -586,7 +607,7 @@ abstract class Oauth2_00001_CreateOauth2TablesMigration extends Oauth2BaseMigrat
 
             $userClientScopeTable => [
                 'table' => [
-                    'user_id' => ($userTable ? $userPkSchema->dbType : Schema::TYPE_STRING) . ' NOT NULL',
+                    'user_id' => (clone $userPkSchemaColumnBuilder)->notNull(),
                     'client_id' => $this->integer()->notNull(),
                     'scope_id' => $this->integer()->notNull(),
                     'enabled' => $this->boolean()->notNull()->defaultValue(true),

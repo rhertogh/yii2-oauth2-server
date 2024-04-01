@@ -70,8 +70,23 @@ abstract class Oauth2BaseMigration extends Migration
                 'smallInteger',
                 'bigInteger',
             ],
-            $columnSchema->type
+            $columnSchema->type,
         );
         return $this->{$typeFunction}();
+    }
+
+    protected function deferredForeignKeyCreationSupported()
+    {
+        return $this->getDb()->getDriverName() !== 'sqlite';
+    }
+
+    protected function commentsSupported()
+    {
+        return $this->getDb()->getDriverName() !== 'sqlite';
+    }
+
+    protected function deferredPrimaryKeyCreationSupported()
+    {
+        return $this->getDb()->getDriverName() !== 'sqlite';
     }
 }

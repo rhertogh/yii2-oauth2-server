@@ -21,18 +21,22 @@ services:
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
       # Mount source-code for development
       - .:/app
+      # Mount for SQLite database
+      - ${DOCKER_HOST_SQLITE_DB_DIR:-SQLite}:/var/sqlite
     environment:
       # Yii2
       - YII_ENV=${YII_ENV:-dev}
-      - YII_DB_DRIVER=${YII_DB_DRIVER:-MySQL}
-      # PHP
+      - YII_DB_DRIVER=${YII_DB_DRIVER:-MySQL} # Note: Defaults to MySQL, the stand-alone Docker image defaults to SQLite
+      # PHP & Xdebug
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG:-serverName=Yii2Oauth2Server}
       - PHP_ENABLE_XDEBUG=${PHP_ENABLE_XDEBUG:-1}
+      - XDEBUG_MODE=${XDEBUG_MODE}
+      - XDEBUG_CONFIG=${XDEBUG_CONFIG}
       # Oauth2 Server
       - YII2_OAUTH2_SERVER_PRIVATE_KEY_PASSPHRASE=${YII2_OAUTH2_SERVER_PRIVATE_KEY_PASSPHRASE:?err}
       - YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY=${YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY:?err}
       - YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEYS=${YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEYS:?err}
-      # MySql
+      # MySQL
       - MYSQL_HOST=${MYSQL_HOST:-mysql}
       - MYSQL_PORT=${MYSQL_PORT}
       - MYSQL_DB_NAME=${MYSQL_DB_NAME:?err}
@@ -97,3 +101,4 @@ networks:
 volumes:
   MySql:
   Postgres:
+  SQLite:

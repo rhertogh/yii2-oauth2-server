@@ -21,6 +21,8 @@ services:
       - ~/.composer-docker/cache:/root/.composer/cache:delegated
       # Mount source-code for development
       - ..:/app
+      # Mount for SQLite database
+      - ${DOCKER_HOST_SQLITE_DB_DIR:-SQLite}:/var/sqlite
     environment:
       # PHP & Xdebug
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG:-serverName=Yii2Oauth2Server}
@@ -32,17 +34,16 @@ services:
       - YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY=${YII2_OAUTH2_SERVER_CODES_ENCRYPTION_KEY:?err}
       - YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEYS=${YII2_OAUTH2_SERVER_STORAGE_ENCRYPTION_KEYS:?err}
       # MySQL
+      - MYSQL_HOST=${MYSQL_HOST:-mysql}
       - MYSQL_PORT=${MYSQL_PORT}
       - MYSQL_DB_NAME=${MYSQL_DB_NAME:?err}
       - MYSQL_USER_NAME=${MYSQL_USER_NAME:?err}
       - MYSQL_USER_PASSWORD=${MYSQL_USER_PASSWORD:?err}
-      # Postgres
+      # PostgreSQL
+      - POSTGRES_HOST=${POSTGRES_HOST:-postgresql}
       - POSTGRES_USER=${POSTGRES_USER:?err}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?err}
       - POSTGRES_DB=${POSTGRES_DB:?err}
-      # Docker Hosts
-      - MYSQL_HOST=${MYSQL_HOST:?err}
-      - POSTGRES_HOST=${POSTGRES_HOST:?err}
       # Tests
       - YII2_OAUTH2_SERVER_TEST_DB_DRIVER=${YII2_OAUTH2_SERVER_TEST_DB_DRIVER}
     extra_hosts:

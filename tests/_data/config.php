@@ -34,7 +34,7 @@ $config = [
                 ...(is_file(__DIR__ . '/mysql_post.local.sql') ? [__DIR__ . '/mysql_post.local.sql'] : []),
             ],
         ],
-        'postgres' => [
+        'postgresql' => [
             'connection' => [
                 'dsn' =>
                     'pgsql:host=' . getenv('POSTGRES_HOST')
@@ -60,9 +60,22 @@ $config = [
         ],
         'sqlite' => [
             'connection' => [
-                'dsn' => 'sqlite::memory:',
+                //'dsn' => 'sqlite::memory:',
+                'dsn' => 'sqlite:' . getenv('SQLITE_DB_FILE'),
             ],
-            'fixture' => __DIR__ . '/sqlite.sql',
+            'preMigrationsFixtures' => [
+                __DIR__ . '/sqlite_pre.sql',
+                ...(is_file(__DIR__ . '/postgres_pre.local.sql') ? [__DIR__ . '/postgres_pre.local.sql'] : []),
+            ],
+            'migrations' => [
+                'migrationNamespaces' => [
+                    'rhertogh\\Yii2Oauth2Server\\migrations',
+                ],
+            ],
+            'postMigrationsFixtures' => [
+                __DIR__ . '/sqlite_post.sql',
+                ...(is_file(__DIR__ . '/postgres_post.local.sql') ? [__DIR__ . '/postgres_post.local.sql'] : []),
+            ],
         ],
         'sqlsrv' => [
             'connection' => [

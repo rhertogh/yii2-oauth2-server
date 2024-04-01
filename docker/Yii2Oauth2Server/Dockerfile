@@ -1,5 +1,10 @@
 FROM yiisoftware/yii2-php:7.4-apache
 
+# Note: Using SQLite for the stand-alone Docker image, the docker-compose configuration defaults to MySQL.
+ENV YII_DB_DRIVER=SQLite
+
+ENV SQLITE_DB_FILE="/var/sqlite/Yii2-Oauth2-Server.sqlite"
+
 COPY docker/Yii2Oauth2Server/.bashrc /root/.bashrc
 
 ARG APP_DIR=/app
