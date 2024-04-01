@@ -1,5 +1,7 @@
 FROM yiisoftware/yii2-php:7.4-apache
 
+COPY docker/Yii2Oauth2Server/.bashrc /root/.bashrc
+
 ARG APP_DIR=/app
 RUN echo "APP_DIR: ${APP_DIR}"
 
