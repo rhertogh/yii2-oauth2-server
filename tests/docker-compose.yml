@@ -22,7 +22,7 @@ services:
       # Mount source-code for development
       - ..:/app
       # Mount for SQLite database
-      - ${DOCKER_HOST_SQLITE_DB_DIR:-SQLite}:/var/sqlite
+      - ${DOCKER_HOST_SQLITE_DB_DIR:-SQLite}:/var/sqlite # Mounting location should be kept in sync with the default value for the `SQLITE_DB_FILE` environment variable.
     environment:
       # PHP & Xdebug
       - PHP_IDE_CONFIG=${PHP_IDE_CONFIG:-serverName=Yii2Oauth2Server}
@@ -44,6 +44,8 @@ services:
       - POSTGRES_USER=${POSTGRES_USER:?err}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:?err}
       - POSTGRES_DB=${POSTGRES_DB:?err}
+      # SQLite
+      - SQLITE_DB_FILE=${SQLITE_DB_FILE:-/var/sqlite/Yii2-Oauth2-Server.sqlite} # Default value should be kept in sync with the SQLite volume mounting
       # Tests
       - YII2_OAUTH2_SERVER_TEST_DB_DRIVER=${YII2_OAUTH2_SERVER_TEST_DB_DRIVER}
     extra_hosts:

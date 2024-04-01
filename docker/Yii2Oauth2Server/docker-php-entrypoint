@@ -25,7 +25,7 @@ if [ 0 -ne "${PHP_ENABLE_XDEBUG:-0}" ] ; then
     echo "Enabled xdebug"
 fi
 
-if [ "${YII_DB_DRIVER}" == "SQLite" ] ; then
+if [ "${YII_DB_DRIVER}" == "SQLite" ] && [ "${SQLITE_DB_FILE}" != ":memory:" ] ; then
     echo "Creating SQLite database file: $SQLITE_DB_FILE"
     install -g www-data -m 777 -d `dirname $SQLITE_DB_FILE`
     touch $SQLITE_DB_FILE
