@@ -5,7 +5,7 @@ on: [push, pull_request]
 env:
   DEFAULT_COMPOSER_FLAGS: "--prefer-dist --no-interaction --no-progress --optimize-autoloader --ansi"
   XDEBUG_MODE: coverage, develop
-  SQLITE_DB_FILE: "/var/sqlite/Yii2-Oauth2-Server.sqlite"
+  SQLITE_DB_FILE: "${{ runner.temp }}/sqlite/Yii2-Oauth2-Server.sqlite"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
