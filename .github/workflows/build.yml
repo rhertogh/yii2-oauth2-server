@@ -5,7 +5,7 @@ on: [push, pull_request]
 env:
   DEFAULT_COMPOSER_FLAGS: "--prefer-dist --no-interaction --no-progress --optimize-autoloader --ansi"
   XDEBUG_MODE: coverage, develop
-  SQLITE_DB_FILE: "${{ runner.temp }}/sqlite/Yii2-Oauth2-Server.sqlite"
+  TMP_SQLITE_DB_FILE: "sqlite/Yii2-Oauth2-Server.sqlite"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -60,6 +60,8 @@ jobs:
 
       - name: Create SQLite DB file
         if: matrix.db == 'SQLite'
+        env:
+          SQLITE_DB_FILE: "${{ runner.temp }}/$TMP_SQLITE_DB_FILE"
         run: |
           echo "Creating SQLite database file: $SQLITE_DB_FILE"
           install -m 777 -d `dirname $SQLITE_DB_FILE`
@@ -96,6 +98,8 @@ jobs:
                 "2021-01-01": "def00000cb36fd6ed6641e0ad70805b28da86192765eb73daae7306acc537ca5e9678db80e92dbfcb489debbac0ed96139e6ff210fc0281078e99c1420d2d18e2c7388ac",
                 "2022-01-01": "def00000c8fc3b1b8d017afc6a645f94e6d2f5fc9d71e8b3eb26e5b2de6ef23232dd19446bbeef26fbd51dd2fd4cd5641e68db28ec76f8460bb3f33aaab3cff7b9fcfe62"
             }
+
+          SQLITE_DB_FILE: "${{ runner.temp }}/$TMP_SQLITE_DB_FILE"
 
           MYSQL_HOST: 127.0.0.1
           MYSQL_PORT: ${{ job.services.mysql.ports[3306] }}
