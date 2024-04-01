@@ -15,6 +15,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - Added `Oauth2Module::$httpClientErrorsLogLevel` in order to specify a log level for HTTP client error responses. (rhertogh)
 - Added DB driver info and logo to .bashrc
 - Support for SQLite. (rhertogh)
+- Ability to run sample app from a single Docker container (using SQLite). (rhertogh)
 
 ### Changed
 

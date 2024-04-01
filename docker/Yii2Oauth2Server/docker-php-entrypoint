@@ -1,0 +1,46 @@
+#!/bin/bash
+set -e
+
+# Set permissions based on ENV variable (debian only)
+if [ -x "$(command -v usermod)" ] && [ $PHP_USER_ID -ne "0" ] ; then
+    echo "Switching uid for 'www-data' to $PHP_USER_ID"
+    usermod -u ${PHP_USER_ID} www-data
+fi
+
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+    if [ -x "$(command -v apache2-foreground)" ]; then
+        set -- apache2-foreground "$@"
+    elif [ -x "$(command -v php-fpm)" ]; then
+        set -- php-fpm "$@"
+    else
+        set -- php "$@"
+    fi
+fi
+
+
+# Enable xdebug by ENV variable
+if [ 0 -ne "${PHP_ENABLE_XDEBUG:-0}" ] ; then
+    docker-php-ext-enable xdebug
+    echo "Enabled xdebug"
+fi
+
+if [ "${YII_DB_DRIVER}" == "SQLite" ] ; then
+    echo "Creating SQLite database file: $SQLITE_DB_FILE"
+    install -g www-data -m 777 -d `dirname $SQLITE_DB_FILE`
+    touch $SQLITE_DB_FILE
+    chown root:www-data $SQLITE_DB_FILE
+    chmod 666 $SQLITE_DB_FILE
+fi
+
+#openssl genrsa -aes128 -passout pass:$YII2_OAUTH2_SERVER_PRIVATE_KEY_PASSPHRASE -out /app/sample/config/keys/private.key 2048
+#openssl rsa -in /app/sample/config/keys/private.key -passin pass:$YII2_OAUTH2_SERVER_PRIVATE_KEY_PASSPHRASE -pubout -out /app/sample/config/keys/public.key
+chown :www-data /app/sample/config/keys/private.key /app/sample/config/keys/public.key
+chmod 660 /app/sample/config/keys/private.key /app/sample/config/keys/public.key
+
+echo "Running database migrations (db driver: $YII_DB_DRIVER)"
+# Always finish this command successfully to avoid startup problems.
+yii migrate --interactive=0 || true
+
+echo "Running: $@"
+exec "$@"
