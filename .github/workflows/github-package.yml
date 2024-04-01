@@ -25,7 +25,7 @@ jobs:
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '7.4' # Should be kept in sync with PHP version in `docker/Yii2Oauth2Server/Dockerfile`
           tools: pecl
           extensions: curl, dom, imagick, intl, mbstring, mcrypt, memcached, mysql, pdo, pdo_mysql, pdo_pgsql, pdo_sqlite, pgsql, sqlite
           ini-values: date.timezone='UTC', session.save_path="${{ runner.temp }}"
