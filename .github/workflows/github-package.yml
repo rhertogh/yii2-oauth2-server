@@ -7,6 +7,7 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  DEFAULT_COMPOSER_FLAGS: "--prefer-dist --no-interaction --no-progress --optimize-autoloader --ansi"
 
 jobs:
   build-and-push-image:
@@ -41,7 +42,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: composer update $DEFAULT_COMPOSER_FLAGS
+        run: composer install $DEFAULT_COMPOSER_FLAGS
 
       - name: Set private and public key permissions
         id: set-private-and-public-key-permissions
