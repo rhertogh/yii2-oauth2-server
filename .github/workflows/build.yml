@@ -87,6 +87,9 @@ jobs:
                 "2021-01-01": "def00000cb36fd6ed6641e0ad70805b28da86192765eb73daae7306acc537ca5e9678db80e92dbfcb489debbac0ed96139e6ff210fc0281078e99c1420d2d18e2c7388ac",
                 "2022-01-01": "def00000c8fc3b1b8d017afc6a645f94e6d2f5fc9d71e8b3eb26e5b2de6ef23232dd19446bbeef26fbd51dd2fd4cd5641e68db28ec76f8460bb3f33aaab3cff7b9fcfe62"
             }
+
+          SQLITE_DB_FILE: ":memory:"
+
           MYSQL_HOST: 127.0.0.1
           MYSQL_PORT: ${{ job.services.mysql.ports[3306] }}
           MYSQL_DB_NAME: Yii2Oauth2ServerTest
