@@ -116,6 +116,7 @@ In case you found a security issue please [contact us directly](
 https://forms.gle/8aEGxmN51Hvb7oLJ7)
 DO NOT use the issue tracker or discuss it in the public forum as it will cause more damage than help.
 
+Please note that as a non-commercial OpenSource project we are not able to pay bounties.
 
 📂 Directory Structure
 ----------------------
