@@ -105,6 +105,7 @@ class Oauth2DebugConfigActionTest extends TestCase
         $defaultTestEndpoints = [
             'accessToken' => ['Access Token', 'oauth2/access-token', 'urlRulesPrefix, accessTokenPath'],
             'authorizeClient' => ['Authorize Client', 'oauth2/authorize', 'urlRulesPrefix, authorizePath'],
+            'tokenRevocation' => ['Token Revocation', 'oauth2/revoke', 'urlRulesPrefix, tokenRevocationPath'],
             'clientAuthorization' =>
                 ['Client Authorization', 'oauth2/authorize-client', 'urlRulesPrefix, clientAuthorizationPath'],
             'jwks' => ['JSON Web Key Sets', 'oauth2/certs', 'urlRulesPrefix, jwksPath'],
@@ -151,6 +152,7 @@ class Oauth2DebugConfigActionTest extends TestCase
                         'serverRole',
                     ],
                     'accessToken' => ['Access Token', '[Only available for "authorization_server" role]', 'serverRole'],
+                    'tokenRevocation' => ['Token Revocation', '[Only available for "authorization_server" role]', 'serverRole'],
                     'jwks' => ['JSON Web Key Sets', '[Only available for "authorization_server" role]', 'serverRole'],
                     'clientAuthorization' =>
                         ['Client Authorization', '[Only available for "authorization_server" role]', 'serverRole'],
@@ -161,6 +163,14 @@ class Oauth2DebugConfigActionTest extends TestCase
                     ],
                     'oidcUserinfo' =>
                         ['OpenId Connect Userinfo', '[Only available for "authorization_server" role]', 'serverRole'],
+                ],
+            ],
+            'revocation disabled' => [
+                [
+                    'enableTokenRevocation' => false,
+                ],
+                [
+                    'tokenRevocation' => ['Token Revocation', '[Token Revocation is disabled]', 'enableTokenRevocation'],
                 ],
             ],
             'OpenID Connect disabled' => [

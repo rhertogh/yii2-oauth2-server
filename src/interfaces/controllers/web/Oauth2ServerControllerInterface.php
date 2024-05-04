@@ -20,4 +20,6 @@ interface Oauth2ServerControllerInterface
      * @since 1.0.0
      */
     public const ACTION_NAME_AUTHORIZE = 'authorize';
+
+    public const ACTION_NAME_REVOKE = 'revoke';
 }

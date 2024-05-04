@@ -92,9 +92,12 @@ class Oauth2DebugConfigAction extends Action
 
             'identityClass' => $module->identityClass,
 
+            'enableTokenRevocation' => $module->enableTokenRevocation ? 'true' : 'false',
+
             'urlRulesPrefix' => $module->urlRulesPrefix,
             'authorizePath' => $module->authorizePath,
             'accessTokenPath' => $module->accessTokenPath,
+            'tokenRevocationPath' => $module->tokenRevocationPath,
             'jwksPath' => $module->jwksPath,
             'clientAuthorizationUrl' => $module->clientAuthorizationUrl,
             'clientAuthorizationPath' => $module->clientAuthorizationPath,
@@ -147,6 +150,14 @@ class Oauth2DebugConfigAction extends Action
             $accessTokenValue = $module->urlRulesPrefix . '/' . $module->accessTokenPath;
             $accessTokenSettings = 'urlRulesPrefix, accessTokenPath';
 
+            if ($module->enableTokenRevocation) {
+                $tokenRevocationValue = $module->urlRulesPrefix . '/' . $module->tokenRevocationPath;
+                $tokenRevocationSettings  = 'urlRulesPrefix, tokenRevocationPath';
+            } else {
+                $tokenRevocationValue = '[Token Revocation is disabled]';
+                $tokenRevocationSettings  = 'enableTokenRevocation';
+            }
+
             $jwksValue = $module->urlRulesPrefix . '/' . $module->jwksPath;
             $jwksSettings = 'urlRulesPrefix, jwksPath';
 
@@ -188,6 +199,9 @@ class Oauth2DebugConfigAction extends Action
             $accessTokenValue = '[Only available for "authorization_server" role]';
             $accessTokenSettings = 'serverRole';
 
+            $tokenRevocationValue = '[Only available for "authorization_server" role]';
+            $tokenRevocationSettings  = 'serverRole';
+
             $jwksValue = '[Only available for "authorization_server" role]';
             $jwksSettings = 'serverRole';
 
@@ -204,6 +218,7 @@ class Oauth2DebugConfigAction extends Action
         return [
             'authorizeClient' => ['Authorize Client', $authorizeClientValue, $authorizeClientSettings],
             'accessToken' => ['Access Token', $accessTokenValue, $accessTokenSettings],
+            'tokenRevocation' => ['Token Revocation', $tokenRevocationValue, $tokenRevocationSettings],
             'jwks' => ['JSON Web Key Sets', $jwksValue, $jwksSettings],
             'clientAuthorization' => ['Client Authorization', $clientAuthorizationValue, $clientAuthorizationSettings],
             'oidcProviderConfigInfo' => [

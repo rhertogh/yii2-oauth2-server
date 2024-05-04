@@ -304,6 +304,12 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
     public $accessTokenPath = 'access-token';
 
     /**
+     * @var string URL path for the token revocation endpoint (will be prefixed with $urlRulesPrefix).
+     * @since 1.0.0
+     */
+    public $tokenRevocationPath = 'revoke';
+
+    /**
      * @var string URL path for the certificates jwks endpoint (will be prefixed with $urlRulesPrefix).
      * @since 1.0.0
      */
@@ -332,6 +338,12 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
      * @since 1.0.0
      */
     public $clientAuthorizationView = 'authorize-client';
+
+    /**
+     * @var bool Allow clients to invoke token revocation (RFC 7009).
+     * @see https://datatracker.ietf.org/doc/html/rfc7009
+     */
+    public $enableTokenRevocation = true;
 
     /**
      * @var bool Will the server throw an exception when a Client requests an unknown or unauthorized scope
@@ -605,6 +617,11 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
                 $this->jwksPath => Oauth2CertificatesControllerInterface::CONTROLLER_NAME
                     . '/' . Oauth2CertificatesControllerInterface::ACTION_NAME_JWKS,
             ];
+
+            if ($this->enableTokenRevocation) {
+                $rules[$this->tokenRevocationPath] = Oauth2ServerControllerInterface::CONTROLLER_NAME
+                . '/' . Oauth2ServerControllerInterface::ACTION_NAME_REVOKE;
+            }
 
             if (empty($this->clientAuthorizationUrl)) {
                 $rules[$this->clientAuthorizationPath] = Oauth2ConsentControllerInterface::CONTROLLER_NAME
