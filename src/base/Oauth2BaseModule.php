@@ -19,7 +19,7 @@ use rhertogh\Yii2Oauth2Server\components\factories\grants\Oauth2RefreshTokenGran
 use rhertogh\Yii2Oauth2Server\components\openidconnect\claims\Oauth2OidcClaim;
 use rhertogh\Yii2Oauth2Server\components\openidconnect\scopes\Oauth2OidcScope;
 use rhertogh\Yii2Oauth2Server\components\openidconnect\scopes\Oauth2OidcScopeCollection;
-use rhertogh\Yii2Oauth2Server\components\openidconnect\server\Oauth2OidcBearerTokenResponse;
+use rhertogh\Yii2Oauth2Server\components\openidconnect\server\responses\Oauth2OidcBearerTokenResponse;
 use rhertogh\Yii2Oauth2Server\components\repositories\Oauth2AccessTokenRepository;
 use rhertogh\Yii2Oauth2Server\components\repositories\Oauth2AuthCodeRepository;
 use rhertogh\Yii2Oauth2Server\components\repositories\Oauth2ClientRepository;
@@ -34,6 +34,7 @@ use rhertogh\Yii2Oauth2Server\components\server\grants\Oauth2PersonalAccessToken
 use rhertogh\Yii2Oauth2Server\components\server\grants\Oauth2RefreshTokenGrant;
 use rhertogh\Yii2Oauth2Server\components\server\Oauth2AuthorizationServer;
 use rhertogh\Yii2Oauth2Server\components\server\Oauth2ResourceServer;
+use rhertogh\Yii2Oauth2Server\components\server\responses\Oauth2BearerTokenResponse;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2CertificatesController;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ConsentController;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2OidcController;
@@ -52,7 +53,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\factories\grants\Oauth2Refre
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcClaimInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeCollectionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\server\Oauth2OidcBearerTokenResponseInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\server\responses\Oauth2OidcBearerTokenResponseInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\base\Oauth2RepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2AccessTokenRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2AuthCodeRepositoryInterface;
@@ -68,6 +69,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2Personal
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2RefreshTokenGrantInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\Oauth2AuthorizationServerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\Oauth2ResourceServerInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\server\responses\Oauth2BearerTokenResponseInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2CertificatesControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ConsentControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2OidcControllerInterface;
@@ -328,6 +330,8 @@ abstract class Oauth2BaseModule extends Module
         Oauth2PasswordGrantInterface::class => Oauth2PasswordGrant::class,
         Oauth2RefreshTokenGrantInterface::class => Oauth2RefreshTokenGrant::class,
         Oauth2PersonalAccessTokenGrantInterface::class => Oauth2PersonalAccessTokenGrant::class,
+        # Components (Responses)
+        Oauth2BearerTokenResponseInterface::class => Oauth2BearerTokenResponse::class,
         # Components (OpenID Connect)
         Oauth2OidcScopeCollectionInterface::class => Oauth2OidcScopeCollection::class,
         Oauth2OidcScopeInterface::class => Oauth2OidcScope::class,

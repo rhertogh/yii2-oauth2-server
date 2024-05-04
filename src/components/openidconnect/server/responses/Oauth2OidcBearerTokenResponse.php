@@ -1,43 +1,21 @@
 <?php
 
-namespace rhertogh\Yii2Oauth2Server\components\openidconnect\server;
+namespace rhertogh\Yii2Oauth2Server\components\openidconnect\server\responses;
 
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
-use League\OAuth2\Server\ResponseTypes\BearerTokenResponse;
-use rhertogh\Yii2Oauth2Server\helpers\OpenIdConnectHelper;
+use rhertogh\Yii2Oauth2Server\components\server\responses\Oauth2BearerTokenResponse;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\request\Oauth2OidcAuthenticationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\server\Oauth2OidcBearerTokenResponseInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\server\responses\Oauth2OidcBearerTokenResponseInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenInterface;
-use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
 use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
+use yii\helpers\ArrayHelper;
 
-class Oauth2OidcBearerTokenResponse extends BearerTokenResponse implements Oauth2OidcBearerTokenResponseInterface
+class Oauth2OidcBearerTokenResponse extends Oauth2BearerTokenResponse implements Oauth2OidcBearerTokenResponseInterface
 {
-    /**
-     * @var Oauth2Module
-     */
-    protected $_module;
-
-    /**
-     * @inheritDoc
-     */
-    public function __construct(Oauth2Module $module)
-    {
-        $this->_module = $module;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getModule()
-    {
-        return $this->_module;
-    }
-
     /**
      * @inheritDoc
      * @param Oauth2AccessTokenInterface $accessToken
@@ -46,11 +24,13 @@ class Oauth2OidcBearerTokenResponse extends BearerTokenResponse implements Oauth
      */
     protected function getExtraParams(AccessTokenEntityInterface $accessToken)
     {
+        $extraParams = parent::getExtraParams($accessToken);
+
         $scopeIdentifiers = array_map(fn($scope) => $scope->getIdentifier(), $accessToken->getScopes());
 
         // Not a OpenId Connect request if OpenId scope is not present.
         if (!in_array(Oauth2OidcScopeInterface::OPENID_CONNECT_SCOPE_OPENID, $scopeIdentifiers)) {
-            return [];
+            return $extraParams;
         }
 
         $module = $this->getModule();
@@ -78,8 +58,8 @@ class Oauth2OidcBearerTokenResponse extends BearerTokenResponse implements Oauth
             $accessToken->getExpiryDateTime()
         );
 
-        return [
+        return ArrayHelper::merge($extraParams, [
             static::TOKEN_RESPONSE_ID_TOKEN => $token->toString()
-        ];
+        ]);
     }
 }

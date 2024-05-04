@@ -31,6 +31,18 @@ Upgrade from v1.0.0-alpha17
   ALTER TABLE oauth2_client ADD COLUMN `oidc_rp_initiated_logout` INTEGER DEFAULT 0 NOT NULL;
   ```
 
+* The namespaces of the `Oauth2OidcBearerTokenResponseInterface` and `Oauth2OidcBearerTokenResponse` have changed to 
+ `\rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\server\responses\` and
+ `rhertogh\Yii2Oauth2Server\components\openidconnect\server\responses` respectively (the "\responses" part has been added).
+ Unless you use these classes directly this won't require any change, otherwise you will need to update your import statements.
+
+* The `Oauth2OidcBearerTokenResponseInterface` now extends from 
+  `rhertogh\Yii2Oauth2Server\interfaces\components\server\responses\Oauth2BearerTokenResponseInterface`
+  (instead of `League\OAuth2\Server\ResponseTypes\ResponseTypeInterface`). If you have a custom implementation of
+  the `Oauth2OidcBearerTokenResponseInterface` you should update your class accordingly,
+  most likely by extending your class from `\rhertogh\Yii2Oauth2Server\components\openidconnect\server\responses\Oauth2OidcBearerTokenResponse`
+  and in case you overwrite the `getExtraParams()` method merge the return value from the parent class. 
+
 Upgrade from v1.0.0-alpha16
 ---------------------------
 * > Note: Database changes will not be incremental till the first stable release.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Yii2Oauth2ServerTests\unit\components\openidconnect\server;
+namespace Yii2Oauth2ServerTests\unit\components\openidconnect\server\responses;
 
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Key\InMemory;
@@ -8,7 +8,7 @@ use Lcobucci\JWT\Signer\Rsa\Sha256;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use rhertogh\Yii2Oauth2Server\components\openidconnect\claims\Oauth2OidcClaim;
 use rhertogh\Yii2Oauth2Server\components\openidconnect\scopes\Oauth2OidcScope;
-use rhertogh\Yii2Oauth2Server\components\openidconnect\server\Oauth2OidcBearerTokenResponse;
+use rhertogh\Yii2Oauth2Server\components\openidconnect\server\responses\Oauth2OidcBearerTokenResponse;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeCollectionInterface;
 use rhertogh\Yii2Oauth2Server\models\Oauth2AccessToken;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
@@ -20,7 +20,7 @@ use Yii2Oauth2ServerTests\_helpers\TestUserModelOidc;
 use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
 
 /**
- * @covers \rhertogh\Yii2Oauth2Server\components\openidconnect\server\Oauth2OidcBearerTokenResponse
+ * @covers \rhertogh\Yii2Oauth2Server\components\openidconnect\server\responses\Oauth2OidcBearerTokenResponse
  */
 class Oauth2OidcBearerTokenResponseTest extends DatabaseTestCase
 {
@@ -32,12 +32,6 @@ class Oauth2OidcBearerTokenResponseTest extends DatabaseTestCase
                 return $this->getExtraParams($accessToken);
             }
         };
-    }
-
-    public function testGetModule()
-    {
-        $response = $this->getMockOidcBearerTokenResponse();
-        $this->assertInstanceOf(Oauth2Module::class, $response->getModule());
     }
 
     public function testGetExtraParams()

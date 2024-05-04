@@ -3,9 +3,9 @@
 namespace Yii2Oauth2ServerTests\unit\traits;
 
 use rhertogh\Yii2Oauth2Server\components\openidconnect\claims\Oauth2OidcClaim;
-use rhertogh\Yii2Oauth2Server\components\openidconnect\server\Oauth2OidcBearerTokenResponse;
+use rhertogh\Yii2Oauth2Server\components\openidconnect\server\responses\Oauth2OidcBearerTokenResponse;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcClaimInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\server\Oauth2OidcBearerTokenResponseInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\server\responses\Oauth2OidcBearerTokenResponseInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use rhertogh\Yii2Oauth2Server\traits\models\Oauth2OidcUserIdentityTrait;
