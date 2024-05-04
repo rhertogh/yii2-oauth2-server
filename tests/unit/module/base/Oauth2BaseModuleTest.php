@@ -7,6 +7,12 @@ use rhertogh\Yii2Oauth2Server\base\Oauth2BaseModule;
 use rhertogh\Yii2Oauth2Server\components\openidconnect\claims\Oauth2OidcClaim;
 use rhertogh\Yii2Oauth2Server\components\openidconnect\scopes\Oauth2OidcScope;
 use rhertogh\Yii2Oauth2Server\components\openidconnect\scopes\Oauth2OidcScopeCollection;
+use rhertogh\Yii2Oauth2Server\components\repositories\Oauth2AccessTokenRepository;
+use rhertogh\Yii2Oauth2Server\components\repositories\Oauth2AuthCodeRepository;
+use rhertogh\Yii2Oauth2Server\components\repositories\Oauth2ClientRepository;
+use rhertogh\Yii2Oauth2Server\components\repositories\Oauth2RefreshTokenRepository;
+use rhertogh\Yii2Oauth2Server\components\repositories\Oauth2ScopeRepository;
+use rhertogh\Yii2Oauth2Server\components\repositories\Oauth2UserRepository;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\grants\base\Oauth2GrantTypeFactoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcClaimInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeCollectionInterface;
@@ -95,9 +101,9 @@ class Oauth2BaseModuleTest extends DatabaseTestCase
      * @param string $repositoryName
      * @param class-string<Oauth2RepositoryInterface> $repositoryInterface
      *
-     * @dataProvider getRepositoryProvider
+     * @dataProvider getDefaultRepositoryProvider
      */
-    public function testGetRepository($repositoryName, $repositoryInterface)
+    public function testGetDefaultRepository($repositoryName, $repositoryInterface)
     {
         $this->mockConsoleApplication();
         $module = Oauth2Module::getInstance();
@@ -107,9 +113,9 @@ class Oauth2BaseModuleTest extends DatabaseTestCase
 
     /**
      * @return string[][]
-     * @see testGetRepository()
+     * @see testGetDefaultRepository()
      */
-    public function getRepositoryProvider()
+    public function getDefaultRepositoryProvider()
     {
         return [
             ['AccessTokenRepository', Oauth2AccessTokenRepositoryInterface::class],
@@ -120,6 +126,35 @@ class Oauth2BaseModuleTest extends DatabaseTestCase
             ['UserRepository', Oauth2UserRepositoryInterface::class],
         ];
     }
+
+    /**
+     * @dataProvider setGetRepositoryProvider()
+     */
+    public function testSetGetRepository($repositoryName, $repository)
+    {
+        $this->mockConsoleApplication();
+        $module = Oauth2Module::getInstance();
+        $module->{'set' . $repositoryName}($repository);
+        $testRepository = $module->{'get' . $repositoryName}();
+        $this->assertSame($repository, $testRepository);
+    }
+
+    /**
+     * @return string[][]
+     * @see testSetGetRepository()
+     */
+    public function setGetRepositoryProvider()
+    {
+        return [
+            ['AccessTokenRepository', new Oauth2AccessTokenRepository()],
+            ['AuthCodeRepository', new Oauth2AuthCodeRepository()],
+            ['ClientRepository', new Oauth2ClientRepository()],
+            ['RefreshTokenRepository', new Oauth2RefreshTokenRepository()],
+            ['ScopeRepository', new Oauth2ScopeRepository()],
+            ['UserRepository', new Oauth2UserRepository()],
+        ];
+    }
+
 
     /**
      * @param string $getterName

@@ -448,12 +448,32 @@ abstract class Oauth2BaseModule extends Module
     }
 
     /**
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setAccessTokenRepository(Oauth2AccessTokenRepositoryInterface $repository)
+    {
+        $this->setRepository(Oauth2AccessTokenRepositoryInterface::class, $repository);
+        return $this;
+    }
+
+    /**
      * @return Oauth2AuthCodeRepositoryInterface The Auth Code Repository
      * @since 1.0.0
      */
     public function getAuthCodeRepository(): Oauth2AuthCodeRepositoryInterface
     {
         return $this->getRepository(Oauth2AuthCodeRepositoryInterface::class);
+    }
+
+    /**
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setAuthCodeRepository(Oauth2AuthCodeRepositoryInterface $repository)
+    {
+        $this->setRepository(Oauth2AuthCodeRepositoryInterface::class, $repository);
+        return $this;
     }
 
     /**
@@ -466,12 +486,32 @@ abstract class Oauth2BaseModule extends Module
     }
 
     /**
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setClientRepository(Oauth2ClientRepositoryInterface $repository)
+    {
+        $this->setRepository(Oauth2ClientRepositoryInterface::class, $repository);
+        return $this;
+    }
+
+    /**
      * @return Oauth2RefreshTokenRepositoryInterface The Refresh Token Repository
      * @since 1.0.0
      */
     public function getRefreshTokenRepository(): Oauth2RefreshTokenRepositoryInterface
     {
         return $this->getRepository(Oauth2RefreshTokenRepositoryInterface::class);
+    }
+
+    /**
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setRefreshTokenRepository(Oauth2RefreshTokenRepositoryInterface $repository)
+    {
+        $this->setRepository(Oauth2RefreshTokenRepositoryInterface::class, $repository);
+        return $this;
     }
 
     /**
@@ -484,12 +524,32 @@ abstract class Oauth2BaseModule extends Module
     }
 
     /**
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setScopeRepository(Oauth2ScopeRepositoryInterface $repository)
+    {
+        $this->setRepository(Oauth2ScopeRepositoryInterface::class, $repository);
+        return $this;
+    }
+
+    /**
      * @return Oauth2UserRepositoryInterface The User Repository
      * @since 1.0.0
      */
     public function getUserRepository(): Oauth2UserRepositoryInterface
     {
         return $this->getRepository(Oauth2UserRepositoryInterface::class);
+    }
+
+    /**
+     * @return $this
+     * @since 1.0.0
+     */
+    public function setUserRepository(Oauth2UserRepositoryInterface $repository)
+    {
+        $this->setRepository(Oauth2UserRepositoryInterface::class, $repository);
+        return $this;
     }
 
     /**
@@ -503,10 +563,23 @@ abstract class Oauth2BaseModule extends Module
     protected function getRepository($class)
     {
         if (empty($this->_repositories[$class])) {
-            $this->_repositories[$class] = Yii::createObject($class);
-            $this->_repositories[$class]->setModule($this);
+            $this->setRepository($class, Yii::createObject($class));
         }
+
         return $this->_repositories[$class];
+    }
+
+    /**
+     * @param class-string<Oauth2RepositoryInterface> $class
+     * @return $this
+     * @throws InvalidConfigException
+     */
+    protected function setRepository($class, $repository)
+    {
+        $repository->setModule($this);
+        $this->_repositories[$class] = $repository;
+
+        return $this;
     }
 
     /**
