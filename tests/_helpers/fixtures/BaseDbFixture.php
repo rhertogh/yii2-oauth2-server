@@ -14,7 +14,7 @@ abstract class BaseDbFixture extends \yii\test\InitDbFixture
 
     public function init()
     {
-        $this->driverName = $this->driverName ?: getenv('YII2_OAUTH2_SERVER_TEST_DB_DRIVER') ?: 'MySQL';
+        $this->driverName = $this->driverName ?: getenv('YII_DB_DRIVER') ?: 'MySQL';
         $connectionConfig = ArrayHelper::merge(
             require __DIR__ . '/../../_config/db.php',
             DatabaseFixtures::getDbConfig($this->driverName)['connection'],

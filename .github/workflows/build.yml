@@ -113,7 +113,7 @@ jobs:
           POSTGRES_PASSWORD: password
           POSTGRES_DB: Yii2Oauth2ServerTest
 
-          YII2_OAUTH2_SERVER_TEST_DB_DRIVER: ${{ matrix.db }}
+          YII_DB_DRIVER: ${{ matrix.db }}
 
 #      - name: Upload Scrutinizer coverage
 #        uses: sudo-bot/action-scrutinizer@latest
