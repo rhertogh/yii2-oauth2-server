@@ -30,9 +30,10 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2Cryptograph
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\encryption\Oauth2EncryptionKeyFactoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\grants\base\Oauth2GrantTypeFactoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeCollectionInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\server\Oauth2OidcBearerTokenResponseInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\server\responses\Oauth2OidcBearerTokenResponseInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\Oauth2AuthorizationServerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\Oauth2ResourceServerInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\server\responses\Oauth2BearerTokenResponseInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2CertificatesControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ConsentControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2OidcControllerInterface;
@@ -800,12 +801,14 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
                 );
             }
 
-            $responseType = null;
             if ($this->enableOpenIdConnect) {
-                $responseType = Yii::createObject(Oauth2OidcBearerTokenResponseInterface::class, [
-                    $this,
-                ]);
+                $responseTypeClass = Oauth2OidcBearerTokenResponseInterface::class;
+            } else {
+                $responseTypeClass = Oauth2BearerTokenResponseInterface::class;
             }
+            $responseType = Yii::createObject($responseTypeClass, [
+                $this,
+            ]);
 
             $this->_authorizationServer = Yii::createObject(Oauth2AuthorizationServerInterface::class, [
                 $this->getClientRepository(),
