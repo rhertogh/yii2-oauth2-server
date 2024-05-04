@@ -102,7 +102,7 @@ class Oauth2DebugConfigAction extends Action
             'openIdConnectUserinfoPath' => $module->openIdConnectUserinfoPath,
             'openIdConnectRpInitiatedLogoutPath' => $module->openIdConnectRpInitiatedLogoutPath,
 
-            'exceptionOnInvalidScope' => $module->exceptionOnInvalidScope,
+            'exceptionOnInvalidScope' => $module->exceptionOnInvalidScope ? 'true' : 'false',
 
             'grantTypes' => $grantTypes,
 
@@ -122,7 +122,7 @@ class Oauth2DebugConfigAction extends Action
             'openIdConnectIssueRefreshTokenWithoutOfflineAccessScope' =>
                 $module->openIdConnectIssueRefreshTokenWithoutOfflineAccessScope ? 'true' : 'false',
 
-            'defaultUserAccountSelection' => $module->defaultUserAccountSelection,
+            'defaultUserAccountSelection' => Oauth2Module::USER_ACCOUNT_SELECTION_NAMES[$module->defaultUserAccountSelection],
 
             'displayConfidentialExceptionMessages' => $module->displayConfidentialExceptionMessages === null
                 ? 'null'
