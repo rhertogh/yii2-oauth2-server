@@ -3,6 +3,7 @@
 namespace rhertogh\Yii2Oauth2Server\models;
 
 use DateTimeImmutable;
+use Lcobucci\JWT\Builder;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\Traits\AccessTokenTrait;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenInterface;
@@ -80,5 +81,35 @@ class Oauth2AccessToken extends base\Oauth2AccessToken implements Oauth2AccessTo
     public function getScopesRelationClassName()
     {
         return Oauth2AccessTokenScopeInterface::class;
+    }
+
+    /**
+     * @return \Lcobucci\JWT\Token\Plain
+     * @see https://github.com/thephpleague/oauth2-server/issues/885
+     */
+    private function convertToJWT()
+    {
+        $this->initJwtConfiguration();
+        $builder = $this->jwtConfiguration->builder();
+        return $this->buildJwt($builder)->getToken($this->jwtConfiguration->signer(), $this->jwtConfiguration->signingKey());
+    }
+
+    protected function buildJwt(Builder $builder)
+    {
+        // Default claims added by `\League\OAuth2\Server\Entities\Traits\AccessTokenTrait::convertToJWT`.
+        $builder
+            ->permittedFor($this->getClient()->getIdentifier())
+            ->identifiedBy($this->getIdentifier())
+            ->issuedAt(new DateTimeImmutable())
+            ->canOnlyBeUsedAfter(new DateTimeImmutable())
+            ->expiresAt($this->getExpiryDateTime())
+            ->relatedTo((string) $this->getUserIdentifier())
+            ->withClaim('scopes', $this->getScopes());
+
+        // Additional claims
+        $builder
+            ->withClaim(static::TOKEN_CLAIM_CLIENT_ID, $this->getClient()->getIdentifier());
+
+        return $builder;
     }
 }

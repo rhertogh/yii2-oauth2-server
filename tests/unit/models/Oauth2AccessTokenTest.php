@@ -196,4 +196,44 @@ class Oauth2AccessTokenTest extends BaseOauth2ActiveRecordTest
             is_a($accessToken->getScopesRelationClassName(), Oauth2AccessTokenScopeInterface::class, true)
         );
     }
+
+    public function testMonitorChangesOfCustomConvertToJwtImplementation()
+    {
+        $sourceMethod = 'League\\OAuth2\\Server\\Entities\\Traits\\AccessTokenTrait::convertToJWT';
+
+        $reflectionMethod = new \ReflectionMethod($sourceMethod);
+        $filename = $reflectionMethod->getFileName();
+        $startLine = $reflectionMethod->getStartLine() - 1;
+        $endLine = $reflectionMethod->getEndLine();
+        $length = $endLine - $startLine;
+
+        $source = file($filename);
+        $methodBody = implode('', array_slice($source, $startLine, $length));
+
+        $implementationSource = <<<'PHP'
+            private function convertToJWT()
+            {
+                $this->initJwtConfiguration();
+
+                return $this->jwtConfiguration->builder()
+                    ->permittedFor($this->getClient()->getIdentifier())
+                    ->identifiedBy($this->getIdentifier())
+                    ->issuedAt(new DateTimeImmutable())
+                    ->canOnlyBeUsedAfter(new DateTimeImmutable())
+                    ->expiresAt($this->getExpiryDateTime())
+                    ->relatedTo((string) $this->getUserIdentifier())
+                    ->withClaim('scopes', $this->getScopes())
+                    ->getToken($this->jwtConfiguration->signer(), $this->jwtConfiguration->signingKey());
+            }
+
+        PHP;
+
+        $this->assertEquals(
+            $implementationSource,
+            $methodBody,
+            'The source of `' . $sourceMethod . '` has changed since the implementation of `' . Oauth2AccessToken::class . '::convertToJWT`, make sure it is updated accordingly and update the test case with the new source.'
+        );
+
+    }
+
 }

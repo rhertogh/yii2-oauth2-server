@@ -17,6 +17,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - Support for SQLite. (rhertogh)
 - Ability to run sample app from a single Docker container (using SQLite). (rhertogh)
 - Added setters for module repositories. (rhertogh)
+- Added support for custom claims in access token and include `client_id` by default. (rhertogh)
 
 ### Changed
 - The `tests` now use the same environment variable name for the DB driver as the sample app (`YII2_OAUTH2_SERVER_TEST_DB_DRIVER` -> `YII_DB_DRIVER`). (rhertogh)

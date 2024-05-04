@@ -17,6 +17,8 @@ interface Oauth2AccessTokenInterface extends
     Oauth2ScopeRelationInterface,
     AccessTokenEntityInterface
 {
+    public const TOKEN_CLAIM_CLIENT_ID = 'client_id';
+
     /**
      * @inheritDoc
      * @return Oauth2AccessTokenQueryInterface
