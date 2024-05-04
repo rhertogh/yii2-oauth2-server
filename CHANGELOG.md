@@ -29,6 +29,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 
 ### Improved
 - Added health checks to docker compose files for MySQL and PostgreSQL. (rhertogh)
+- Postman can now be used to connect to the `tests` instance (redirect_uri has been added). (rhertogh)
 
 ### Security
 

@@ -40,6 +40,7 @@ class AuthorizationCodeGrantCest extends BaseGrantCest
             'clientId' => 'test-client-type-auth-code-valid',
             'clientSecret' => 'secret',
             'pkceMethod' => ClientTokenProvider::PKCE_METHOD_S256,
+            'redirectUri' => 'http://localhost/redirect_uri/',
         ]);
 
         $scope = [];
@@ -82,6 +83,7 @@ class AuthorizationCodeGrantCest extends BaseGrantCest
             'clientId' => 'test-client-type-auth-code-valid',
             'clientSecret' => 'secret',
             'pkceMethod' => ClientTokenProvider::PKCE_METHOD_S256,
+            'redirectUri' => 'http://localhost/redirect_uri/',
         ]);
 
         $provider->setPkceCode($pkceCode);

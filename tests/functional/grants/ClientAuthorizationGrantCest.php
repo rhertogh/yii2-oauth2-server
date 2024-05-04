@@ -18,6 +18,7 @@ class ClientAuthorizationGrantCest extends BaseGrantCest
             'clientId' => 'test-client-type-auth-code-valid',
             'clientSecret' => 'secret',
             'pkceMethod' => ClientTokenProvider::PKCE_METHOD_S256,
+            'redirectUri' => 'http://localhost/redirect_uri/',
         ]);
 
         $authorizationUrl = $provider->getAuthorizationUrl([
@@ -48,6 +49,7 @@ class ClientAuthorizationGrantCest extends BaseGrantCest
         $provider = $this->getProvider([
             'clientId' => 'test-client-type-auth-code-no-scopes',
             'pkceMethod' => ClientTokenProvider::PKCE_METHOD_S256,
+            'redirectUri' => 'http://localhost/redirect_uri/',
         ]);
 
         $authorizationUrl = $provider->getAuthorizationUrl();
@@ -73,6 +75,7 @@ class ClientAuthorizationGrantCest extends BaseGrantCest
             'clientId' => 'test-client-type-auth-code-valid',
             'clientSecret' => 'secret',
             'pkceMethod' => ClientTokenProvider::PKCE_METHOD_S256,
+            'redirectUri' => 'http://localhost/redirect_uri/',
         ]);
 
         $authorizationUrl = $provider->getAuthorizationUrl([

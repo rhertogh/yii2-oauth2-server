@@ -37,7 +37,8 @@ class Oauth2ServerHttpExceptionCest extends BaseGrantCest
     public function accessTokenActionOAuthServerExceptionTest(ApiTester $I)
     {
         $provider = $this->getProvider([
-            'clientId' => 'test-client-type-client-credentials-valid'
+            'clientId' => 'test-client-type-client-credentials-valid',
+            'redirectUri' => 'http://localhost/redirect_uri/',
         ]);
 
         $accessTokenRequest = $provider->getAccessTokenRequestWrapper(
@@ -51,6 +52,7 @@ class Oauth2ServerHttpExceptionCest extends BaseGrantCest
     {
         $provider = $this->getProvider([
             'clientId' => 'test-client-type-auth-code-valid',
+            'redirectUri' => 'http://localhost/redirect_uri/',
         ]);
 
         $I->sendGet($provider->getAuthorizationUrl());

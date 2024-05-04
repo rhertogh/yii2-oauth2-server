@@ -20,6 +20,7 @@ class ImplicitGrantCest extends BaseGrantCest
         $provider = $this->getProvider([
             'clientId' => 'test-client-type-implicit-valid',
             'clientSecret' => 'secret',
+            'redirectUri' => 'http://localhost/redirect_uri/',
         ]);
 
         $authorizationUrl = $provider->getAuthorizationUrl([

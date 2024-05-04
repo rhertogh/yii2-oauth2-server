@@ -38,7 +38,7 @@ INSERT INTO "oauth2_client"
         1, -- Confidential
         '2021-01-01::3vUCADtKx59NPQl3/1fJXmppRbiug3iccJc1S9XY6TPvLE02/+ggB8GtIc24J5oMTj38NIPIpNt8ClNDS7ZBI4+ykNxYOuEHQfdkDiUf5WVKtLegx43gLXfq', -- "secret"
         'Valid client with Grant Type Auth Code',
-        '["http://localhost/redirect_uri/"]',
+        '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
         1, -- Bearer
         5, -- AUTH_CODE | REFRESH_TOKEN
         false,
@@ -68,7 +68,7 @@ INSERT INTO "oauth2_client"
         2, -- Public
         NULL,
         'Valid client with Grant Type password',
-        '["http://localhost/redirect_uri/"]',
+        '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
         1, -- Bearer
         1028, -- PASSWORD | REFRESH_TOKEN
         false,
@@ -83,7 +83,7 @@ INSERT INTO "oauth2_client"
         1, -- Confidential
         '2021-01-01::3vUCADtKx59NPQl3/1fJXmppRbiug3iccJc1S9XY6TPvLE02/+ggB8GtIc24J5oMTj38NIPIpNt8ClNDS7ZBI4+ykNxYOuEHQfdkDiUf5WVKtLegx43gLXfq', -- "secret",
         'Valid client with Grant Type Implicit',
-        '["http://localhost/redirect_uri/"]',
+        '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
         1, -- Bearer
         2052, -- IMPLICIT // The authorization server MUST NOT issue a refresh token: https://datatracker.ietf.org/doc/html/rfc6749--section-4.2.2
         false,
@@ -98,7 +98,7 @@ INSERT INTO "oauth2_client"
         1, -- Confidential
         '2021-01-01::3vUCADtKx59NPQl3/1fJXmppRbiug3iccJc1S9XY6TPvLE02/+ggB8GtIc24J5oMTj38NIPIpNt8ClNDS7ZBI4+ykNxYOuEHQfdkDiUf5WVKtLegx43gLXfq', -- "secret"
         'Disabled client with Grant Type Auth Code',
-        '["http://localhost/redirect_uri/"]',
+        '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
         1, -- Bearer
         5, -- AUTH_CODE | REFRESH_TOKEN
         false,
@@ -113,7 +113,7 @@ INSERT INTO "oauth2_client"
         2, -- Public
         null,
         'Valid public client with Grant Type Auth Code without scopes',
-        '["http://localhost/redirect_uri/"]',
+        '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
         1, -- Bearer
         5, -- AUTH_CODE | REFRESH_TOKEN
         false,
@@ -128,7 +128,7 @@ INSERT INTO "oauth2_client"
         2, -- Public
         null,
         'Valid client with Grant Type Auth Code and OpenID connect',
-        '["http://localhost/redirect_uri/"]',
+        '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
         1, -- Bearer
         5, -- AUTH_CODE | REFRESH_TOKEN
         false,
@@ -144,7 +144,7 @@ INSERT INTO "oauth2_client"
         2, -- Public
         null,
         'Valid client with Grant Type Auth Code and OpenID connect skip authorization if scope allowed',
-        '["http://localhost/redirect_uri/"]',
+        '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
         1, -- Bearer
         5, -- AUTH_CODE | REFRESH_TOKEN
         true,
