@@ -3,7 +3,7 @@
 namespace Yii2Oauth2ServerTests\unit\components\authorization;
 
 use rhertogh\Yii2Oauth2Server\components\authorization\Oauth2ClientAuthorizationRequest;
-use rhertogh\Yii2Oauth2Server\components\authorization\Oauth2ScopeAuthorizationRequest;
+use rhertogh\Yii2Oauth2Server\components\authorization\Oauth2ClientScopeAuthorizationRequest;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
@@ -119,7 +119,7 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $clientAuthorizationRequest->setModule(Oauth2Module::getInstance());
 
         // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
-        $scopeAuthorizationRequests = [new Oauth2ScopeAuthorizationRequest()];
+        $scopeAuthorizationRequests = [new Oauth2ClientScopeAuthorizationRequest()];
         $scopesAppliedByDefaultWithoutConfirm = [new Oauth2Scope()];
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests', $scopeAuthorizationRequests);
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultWithoutConfirm', $scopesAppliedByDefaultWithoutConfirm);
@@ -162,7 +162,7 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $clientAuthorizationRequest->setModule(Oauth2Module::getInstance());
 
         // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
-        $scopeAuthorizationRequests = [new Oauth2ScopeAuthorizationRequest()];
+        $scopeAuthorizationRequests = [new Oauth2ClientScopeAuthorizationRequest()];
         $scopesAppliedByDefaultWithoutConfirm = [new Oauth2Scope()];
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests', $scopeAuthorizationRequests);
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultWithoutConfirm', $scopesAppliedByDefaultWithoutConfirm);
@@ -208,7 +208,7 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $clientAuthorizationRequest = $this->getMockClientAuthorizationRequest();
 
         // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
-        $scopeAuthorizationRequests = [new Oauth2ScopeAuthorizationRequest()];
+        $scopeAuthorizationRequests = [new Oauth2ClientScopeAuthorizationRequest()];
         $scopesAppliedByDefaultWithoutConfirm = [new Oauth2Scope()];
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests', $scopeAuthorizationRequests);
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopesAppliedByDefaultWithoutConfirm', $scopesAppliedByDefaultWithoutConfirm);

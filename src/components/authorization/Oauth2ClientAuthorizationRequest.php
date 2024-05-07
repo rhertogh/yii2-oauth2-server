@@ -5,7 +5,7 @@ namespace rhertogh\Yii2Oauth2Server\components\authorization;
 use rhertogh\Yii2Oauth2Server\components\authorization\base\Oauth2BaseClientAuthorizationRequest;
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\helpers\UrlHelper;
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ScopeAuthorizationRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientScopeAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserClientInterface;
@@ -42,7 +42,7 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
     protected $_client = null;
 
     /**
-     * @var Oauth2ScopeAuthorizationRequestInterface[]|null
+     * @var Oauth2ClientScopeAuthorizationRequestInterface[]|null
      */
     protected $_scopeAuthorizationRequests = null;
 
@@ -287,7 +287,7 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
 
     /**
      * Get all the Scope Authorization Requests for this Client Authorization Request.
-     * @return Oauth2ScopeAuthorizationRequestInterface[]
+     * @return Oauth2ClientScopeAuthorizationRequestInterface[]
      * @throws \yii\base\InvalidConfigException
      * @see determineScopeAuthorization()
      * @since 1.0.0
@@ -348,8 +348,8 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
                     ?? $scope->getRequiredOnAuthorization();
                 $userClientScope = $userClientScopes[$scope->getPrimaryKey()] ?? null;
 
-                /** @var Oauth2ScopeAuthorizationRequestInterface $scopeAuthorizationRequest */
-                $scopeAuthorizationRequest = Yii::createObject(Oauth2ScopeAuthorizationRequestInterface::class);
+                /** @var Oauth2ClientScopeAuthorizationRequestInterface $scopeAuthorizationRequest */
+                $scopeAuthorizationRequest = Yii::createObject(Oauth2ClientScopeAuthorizationRequestInterface::class);
                 $scopeAuthorizationRequest
                     ->setScope($scope)
                     ->setIsRequired($isRequired)

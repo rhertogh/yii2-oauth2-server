@@ -6,7 +6,7 @@ use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Grant\ClientCredentialsGrant;
 use rhertogh\Yii2Oauth2Server\components\server\grants\traits\Oauth2GrantTrait;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ScopeAuthorizationRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientScopeAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2ClientCredentialsGrantInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use Yii;
@@ -64,7 +64,7 @@ class Oauth2ClientCredentialsGrant extends ClientCredentialsGrant implements Oau
                 $userIdentifier = $clientCredentialsGrantUser->getIdentifier();
                 $previouslyApprovedScopes = $clientAuthorizationRequest->getPreviouslyApprovedScopes();
                 $scopes = array_map(
-                    fn(Oauth2ScopeAuthorizationRequestInterface $request) => $request->getScope(),
+                    fn(Oauth2ClientScopeAuthorizationRequestInterface $request) => $request->getScope(),
                     array_intersect_key($previouslyApprovedScopes, array_flip($scopeIdentifiers))
                 );
                 $scopes = array_merge($scopes, $clientAuthorizationRequest->getScopesAppliedByDefaultWithoutConfirm());

@@ -2,11 +2,11 @@
 
 namespace rhertogh\Yii2Oauth2Server\components\authorization\base;
 
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ScopeAuthorizationRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientScopeAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use yii\base\Component;
 
-abstract class Oauth2BaseScopeAuthorizationRequest extends Component implements Oauth2ScopeAuthorizationRequestInterface
+abstract class Oauth2BaseClientScopeAuthorizationRequest extends Component implements Oauth2ClientScopeAuthorizationRequestInterface
 {
     /**
      * @var Oauth2ScopeInterface|null

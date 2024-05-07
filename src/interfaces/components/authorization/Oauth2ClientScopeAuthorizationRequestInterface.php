@@ -4,7 +4,7 @@ namespace rhertogh\Yii2Oauth2Server\interfaces\components\authorization;
 
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 
-interface Oauth2ScopeAuthorizationRequestInterface
+interface Oauth2ClientScopeAuthorizationRequestInterface
 {
     /**
      * Get the scope for this Scope Authorization Request.

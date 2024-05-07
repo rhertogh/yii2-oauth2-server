@@ -316,14 +316,14 @@ interface Oauth2ClientAuthorizationRequestInterface extends Configurable
      * Returns Scope Authorization Requests for all scopes that require approval by the user. This includes scopes
      * requested by the client or are set as default scopes and excludes previously authorized scopes by the user
      * for this client.
-     * @return Oauth2ScopeAuthorizationRequestInterface[]
+     * @return Oauth2ClientScopeAuthorizationRequestInterface[]
      * @since 1.0.0
      */
     public function getApprovalPendingScopes();
 
     /**
      * Returns Scope Authorization Requests for all scopes that have been authorized before by the user for this client.
-     * @return Oauth2ScopeAuthorizationRequestInterface[]
+     * @return Oauth2ClientScopeAuthorizationRequestInterface[]
      * @since 1.0.0
      */
     public function getPreviouslyApprovedScopes();

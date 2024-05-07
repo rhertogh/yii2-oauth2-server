@@ -43,6 +43,10 @@ Upgrade from v1.0.0-alpha17
   most likely by extending your class from `\rhertogh\Yii2Oauth2Server\components\openidconnect\server\responses\Oauth2OidcBearerTokenResponse`
   and in case you overwrite the `getExtraParams()` method merge the return value from the parent class. 
 
+* The `\rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ScopeAuthorizationRequestInterface`
+  and implementing classes have been renamed to `Oauth2ClientScopeAuthorizationRequestInterface` (note the "Client" part).
+  If you use any of these classes you will need to update your import statements, otherwise this won't require any change.
+
 Upgrade from v1.0.0-alpha16
 ---------------------------
 * > Note: Database changes will not be incremental till the first stable release.

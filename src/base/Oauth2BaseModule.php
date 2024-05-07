@@ -7,7 +7,7 @@ use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use League\OAuth2\Server\CryptKey;
 use rhertogh\Yii2Oauth2Server\components\authorization\Oauth2ClientAuthorizationRequest;
-use rhertogh\Yii2Oauth2Server\components\authorization\Oauth2ScopeAuthorizationRequest;
+use rhertogh\Yii2Oauth2Server\components\authorization\Oauth2ClientScopeAuthorizationRequest;
 use rhertogh\Yii2Oauth2Server\components\encryption\Oauth2Cryptographer;
 use rhertogh\Yii2Oauth2Server\components\factories\encryption\Oauth2EncryptionKeyFactory;
 use rhertogh\Yii2Oauth2Server\components\factories\grants\Oauth2AuthCodeGrantFactory;
@@ -67,7 +67,7 @@ use rhertogh\Yii2Oauth2Server\controllers\web\server\Oauth2AuthorizeAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\server\Oauth2RevokeAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\wellknown\Oauth2OpenidConfigurationAction;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ScopeAuthorizationRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientScopeAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2CryptographerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\encryption\Oauth2EncryptionKeyFactoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\grants\Oauth2AuthCodeGrantFactoryInterface;
@@ -421,7 +421,7 @@ abstract class Oauth2BaseModule extends Module
         # Components (Misc)
         Oauth2CryptographerInterface::class => Oauth2Cryptographer::class,
         Oauth2ClientAuthorizationRequestInterface::class => Oauth2ClientAuthorizationRequest::class,
-        Oauth2ScopeAuthorizationRequestInterface::class => Oauth2ScopeAuthorizationRequest::class,
+        Oauth2ClientScopeAuthorizationRequestInterface::class => Oauth2ClientScopeAuthorizationRequest::class,
     ];
 
     /**

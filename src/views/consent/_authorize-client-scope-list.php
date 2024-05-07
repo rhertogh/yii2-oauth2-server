@@ -1,13 +1,13 @@
 <?php
 
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ScopeAuthorizationRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientScopeAuthorizationRequestInterface;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /**
  * @var Oauth2ClientAuthorizationRequestInterface $clientAuthorizationRequest
- * @var Oauth2ScopeAuthorizationRequestInterface[] $scopeRequests
+ * @var Oauth2ClientScopeAuthorizationRequestInterface[] $scopeRequests
  * @var ActiveForm $form
  */
 ?><?php // Workaround for https://github.com/phpstan/phpstan/issues/6688.
