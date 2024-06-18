@@ -25,12 +25,13 @@ an [Oauth2](https://oauth.net/2/) server based on the [League OAuth2 server](htt
 The server also supports [OpenID Connect Core](https://openid.net/specs/openid-connect-core-1_0.html).
 
 
-### Contents
+### 📑 Contents
 
 - [Getting started](#-getting-started)
 - [Test Drive](#%EF%B8%8F-test-drive)
 - [Documentation](#-documentation)
 - [FAQ](#-faq)
+- [Implemented Standards](#-implemented-standards)
 - [Importing/Migrating](#-importingmigrating)
 - [Versioning & Change Log](#-versioning--change-log)
 - [Reporting Security issues](#-reporting-security-issues)
@@ -59,6 +60,7 @@ composer require rhertogh/yii2-oauth2-server
 Full installation and configuration details can be found in the docs under
 [Installing the Yii2-Oauth2-Server](docs/guide/start-installation.md)
 
+
 🏎️ Test Drive
 ----------
 You can run a local preview instance using [Docker](https://docker.com/):
@@ -73,6 +75,7 @@ To access the CLI of the Docker container you can run:
 ```bash
 docker container exec -it Yii2Oauth2Server bash
 ```
+
 
 📖 Documentation
 ----------------
@@ -94,6 +97,22 @@ To see an overview of the clients you can run: `./yii oauth2/client/list`
 #### *The Oauth2 server throws an error, what should I do?*  
 Please check out the [full FAQ](docs/guide/faq.md#error-messages) first.
 If that doesn't solve the problem, please [report an issue](docs/internals/report-an-issue.md).
+
+
+📒 Implemented Standards
+-----------------------
+
+| Name                                                       | RFC / Specs                                                                    | Since  |
+|------------------------------------------------------------|--------------------------------------------------------------------------------|--------|
+| OAuth 2.0                                                  | [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749)                      | 1.0.0¹ |
+| The OAuth 2.0 Authorization Framework: Bearer Token Usage  | [RFC 6750](https://datatracker.ietf.org/doc/html/rfc6750)                      | 1.0.0¹ |
+| Proof Key for Code Exchange by OAuth Public Clients (PKCE) | [RFC 7636](https://datatracker.ietf.org/doc/html/rfc7636)                      | 1.0.0¹ |
+| OAuth 2.0 Token Revocation                                 | [RFC 7009](https://datatracker.ietf.org/doc/html/rfc7009)                      | 1.0.0  |
+| OpenID Connect Core 1.0                                    | [Specifications](https://openid.net/specs/openid-connect-core-1_0.html)        | 1.0.0  |
+| OpenID Connect Discovery 1.0                               | [Specifications](https://openid.net/specs/openid-connect-discovery-1_0.html)   | 1.0.0  |
+| OpenID Connect RP-Initiated Logout                         | [Specifications](https://openid.net/specs/openid-connect-rpinitiated-1_0.html) | 1.0.0  |
+
+¹ Provided via [PHP OAuth 2.0 Server](https://oauth2.thephpleague.com/).
 
 
 ↘️ Importing/Migrating
@@ -118,6 +137,7 @@ https://forms.gle/8aEGxmN51Hvb7oLJ7)
 DO NOT use the issue tracker or discuss it in public as it will cause more damage than help.
 
 Please note that as a non-commercial OpenSource project we are not able to pay bounties.
+
 
 📂 Directory Structure
 ----------------------
@@ -146,7 +166,7 @@ Thanks in advance for your contribution!
 - [All Contributors](https://github.com/rhertogh/yii2-oauth2-server/graphs/contributors)
 
 
-📗 License
+✒️ License
 ----------
 The Yii2-Oauth2-Server is free software. It is released under the terms of the Apache License.
 Please see [`LICENSE.md`](LICENSE.md) for more information.
