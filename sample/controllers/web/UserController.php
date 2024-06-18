@@ -11,6 +11,13 @@ use yii\web\Controller;
 
 class UserController extends Controller
 {
+    public function actionIndex()
+    {
+        return $this->render('index', [
+            'user' => Yii::$app->user->identity
+        ]);
+    }
+
     # region Default Yii login action with added support for OpenID Connect reauthentication
     /**
      * Allow the user to login

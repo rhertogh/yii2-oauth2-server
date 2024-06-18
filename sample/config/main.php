@@ -60,7 +60,7 @@ if ($dbDriver === 'mysql') {
 return [
 
     'id' => 'Yii2Oauth2Server',
-    'name' => 'Yii2 Oauth2 Server',
+    'name' => 'Yii2 Oauth2 Server Sample',
     'basePath' => dirname(__DIR__),
 
     'aliases' => [
