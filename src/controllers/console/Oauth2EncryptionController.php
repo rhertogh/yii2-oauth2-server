@@ -3,12 +3,13 @@
 namespace rhertogh\Yii2Oauth2Server\controllers\console;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\base\Oauth2BaseConsoleController;
-use rhertogh\Yii2Oauth2Server\controllers\console\encryption\Oauth2EncryptionKeyUsageAction;
-use rhertogh\Yii2Oauth2Server\controllers\console\encryption\Oauth2GenerateSecretAction;
+use rhertogh\Yii2Oauth2Server\controllers\console\encryption\Oauth2EncryptionKeyUsageActionInterface;
+use rhertogh\Yii2Oauth2Server\controllers\console\encryption\Oauth2GenerateSecretActionInterface;
 use rhertogh\Yii2Oauth2Server\controllers\console\encryption\Oauth2RotateEncryptionKeysAction;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2EncryptionControllerInterface;
 use yii\helpers\ArrayHelper;
 
-class Oauth2EncryptionController extends Oauth2BaseConsoleController
+class Oauth2EncryptionController extends Oauth2BaseConsoleController implements Oauth2EncryptionControllerInterface
 {
     /**
      * @var string|null
@@ -53,9 +54,9 @@ class Oauth2EncryptionController extends Oauth2BaseConsoleController
     public function actions()
     {
         return [
-            'key-usage' => Oauth2EncryptionKeyUsageAction::class,
+            'key-usage' => Oauth2EncryptionKeyUsageActionInterface::class,
             'rotate-keys' => Oauth2RotateEncryptionKeysAction::class,
-            'generate-secret' => Oauth2GenerateSecretAction::class,
+            'generate-secret' => Oauth2GenerateSecretActionInterface::class,
         ];
     }
 }

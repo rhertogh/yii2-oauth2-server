@@ -19,6 +19,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - Added setters for module repositories. (rhertogh)
 - Added support for custom claims in access token and include `client_id` by default. (rhertogh)
 - Added support for token revocation [RFC 7009](https://datatracker.ietf.org/doc/html/rfc7009). (rhertogh)
+- Added Interfaces for controllers and actions (NickvdMeij)
 
 ### Changed
 - The `tests` now use the same environment variable name for the DB driver as the sample app (`YII2_OAUTH2_SERVER_TEST_DB_DRIVER` -> `YII_DB_DRIVER`). (rhertogh)

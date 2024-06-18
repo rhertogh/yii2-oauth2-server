@@ -4,6 +4,7 @@ namespace rhertogh\Yii2Oauth2Server\controllers\console\client;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\client\base\Oauth2BaseEditClientAction;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2ClientController;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2UpdateClientActionInterface;
 use yii\console\ExitCode;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Console;
@@ -11,7 +12,7 @@ use yii\helpers\Console;
 /**
  * @property Oauth2ClientController $controller
  */
-class Oauth2UpdateClientAction extends Oauth2BaseEditClientAction
+class Oauth2UpdateClientAction extends Oauth2BaseEditClientAction implements Oauth2UpdateClientActionInterface
 {
     public function run($id)
     {

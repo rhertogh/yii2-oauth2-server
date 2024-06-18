@@ -3,6 +3,7 @@
 namespace rhertogh\Yii2Oauth2Server\controllers\console\PersonalAccessToken;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2PersonalAccessTokenController;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\PersonalAccessToken\Oauth2GeneratePatActionInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\base\Action;
 use yii\console\ExitCode;
@@ -10,7 +11,7 @@ use yii\console\ExitCode;
 /**
  * @property Oauth2PersonalAccessTokenController $controller
  */
-class Oauth2GeneratePatAction extends Action
+class Oauth2GeneratePatAction extends Action implements Oauth2GeneratePatActionInterface
 {
     public function run()
     {

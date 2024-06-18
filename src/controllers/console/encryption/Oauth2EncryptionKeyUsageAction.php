@@ -3,6 +3,7 @@
 namespace rhertogh\Yii2Oauth2Server\controllers\console\encryption;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2EncryptionController;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\encryption\Oauth2EncryptionKeyUsageActionInterface;
 use yii\base\Action;
 use yii\console\ExitCode;
 use yii\console\widgets\Table;
@@ -10,7 +11,7 @@ use yii\console\widgets\Table;
 /**
  * @property Oauth2EncryptionController $controller
  */
-class Oauth2EncryptionKeyUsageAction extends Action
+class Oauth2EncryptionKeyUsageAction extends Action implements Oauth2EncryptionKeyUsageActionInterface
 {
     public function run()
     {

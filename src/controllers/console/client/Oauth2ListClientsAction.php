@@ -4,13 +4,14 @@ namespace rhertogh\Yii2Oauth2Server\controllers\console\client;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\base\traits\GenerateClientsTableTrait;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2ClientController;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2ListClientsActionInterface;
 use yii\base\Action;
 use yii\console\ExitCode;
 
 /**
  * @property Oauth2ClientController $controller
  */
-class Oauth2ListClientsAction extends Action
+class Oauth2ListClientsAction extends Action implements Oauth2ListClientsActionInterface
 {
     use GenerateClientsTableTrait;
 

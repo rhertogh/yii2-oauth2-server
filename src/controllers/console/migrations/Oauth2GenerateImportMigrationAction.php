@@ -4,6 +4,7 @@ namespace rhertogh\Yii2Oauth2Server\controllers\console\migrations;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\migrations\base\Oauth2BaseGenerateMigrationsAction;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2MigrationsController;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\migrations\Oauth2GenerateImportMigrationActionInterface;
 use rhertogh\Yii2Oauth2Server\migrations\import\Oauth2_FilshYii2Oauth2ServerImportMigration;
 use Yii;
 use yii\base\InvalidArgumentException;
@@ -14,7 +15,7 @@ use yii\db\Connection;
 /**
  * @property Oauth2MigrationsController $controller
  */
-class Oauth2GenerateImportMigrationAction extends Oauth2BaseGenerateMigrationsAction
+class Oauth2GenerateImportMigrationAction extends Oauth2BaseGenerateMigrationsAction implements Oauth2GenerateImportMigrationActionInterface
 {
     public function run($origin)
     {

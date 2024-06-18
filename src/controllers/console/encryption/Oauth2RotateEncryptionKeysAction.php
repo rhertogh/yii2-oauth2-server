@@ -3,6 +3,7 @@
 namespace rhertogh\Yii2Oauth2Server\controllers\console\encryption;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2EncryptionController;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\encryption\Oauth2RotateEncryptionKeysActionInterface;
 use yii\base\Action;
 use yii\base\InvalidArgumentException;
 use yii\console\ExitCode;
@@ -12,7 +13,7 @@ use yii\helpers\Console;
 /**
  * @property Oauth2EncryptionController $controller
  */
-class Oauth2RotateEncryptionKeysAction extends Action
+class Oauth2RotateEncryptionKeysAction extends Action implements Oauth2RotateEncryptionKeysActionInterface
 {
     public function run()
     {

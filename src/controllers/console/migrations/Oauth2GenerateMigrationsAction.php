@@ -4,13 +4,14 @@ namespace rhertogh\Yii2Oauth2Server\controllers\console\migrations;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\migrations\base\Oauth2BaseGenerateMigrationsAction;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2MigrationsController;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\migrations\Oauth2GenerateMigrationsActionInterface;
 use rhertogh\Yii2Oauth2Server\migrations\base\Oauth2BaseMigration;
 use yii\base\InvalidConfigException;
 
 /**
  * @property Oauth2MigrationsController $controller
  */
-class Oauth2GenerateMigrationsAction extends Oauth2BaseGenerateMigrationsAction
+class Oauth2GenerateMigrationsAction extends Oauth2BaseGenerateMigrationsAction implements Oauth2GenerateMigrationsActionInterface
 {
     public function run()
     {

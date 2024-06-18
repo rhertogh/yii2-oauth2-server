@@ -3,9 +3,10 @@
 namespace rhertogh\Yii2Oauth2Server\controllers\console;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\base\Oauth2BaseConsoleController;
-use rhertogh\Yii2Oauth2Server\controllers\console\debug\Oauth2DebugConfigAction;
+use rhertogh\Yii2Oauth2Server\controllers\console\debug\Oauth2DebugConfigActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2DebugControllerInterface;
 
-class Oauth2DebugController extends Oauth2BaseConsoleController
+class Oauth2DebugController extends Oauth2BaseConsoleController implements Oauth2DebugControllerInterface
 {
     /**
      * @inheritDoc
@@ -18,7 +19,7 @@ class Oauth2DebugController extends Oauth2BaseConsoleController
     public function actions()
     {
         return [
-            'config' => Oauth2DebugConfigAction::class,
+            'config' => Oauth2DebugConfigActionInterface::class,
         ];
     }
 }

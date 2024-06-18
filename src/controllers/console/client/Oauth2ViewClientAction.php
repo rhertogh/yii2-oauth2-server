@@ -5,6 +5,7 @@ namespace rhertogh\Yii2Oauth2Server\controllers\console\client;
 use rhertogh\Yii2Oauth2Server\controllers\console\client\base\Oauth2BaseClientAction;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2ClientController;
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2ViewClientActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
@@ -15,7 +16,7 @@ use yii\helpers\Console;
 /**
  * @property Oauth2ClientController $controller
  */
-class Oauth2ViewClientAction extends Oauth2BaseClientAction
+class Oauth2ViewClientAction extends Oauth2BaseClientAction implements Oauth2ViewClientActionInterface
 {
     public function run($id)
     {
