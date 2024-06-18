@@ -1,8 +1,8 @@
 <?php
 
-namespace rhertogh\Yii2Oauth2Server\components\authorization\base;
+namespace rhertogh\Yii2Oauth2Server\components\authorization\client\base;
 
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientScopeAuthorizationRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client\Oauth2ClientScopeAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use yii\base\Component;
 

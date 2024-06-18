@@ -4,7 +4,7 @@ namespace Yii2Oauth2ServerTests\functional\grants;
 
 use Codeception\Util\HttpCode;
 use League\OAuth2\Client\Token\AccessToken;
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client\Oauth2ClientAuthorizationRequestInterface;
 use Yii;
 use Yii2Oauth2ServerTests\ApiTester;
 use Yii2Oauth2ServerTests\functional\_base\BaseGrantCest;

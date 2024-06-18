@@ -34,7 +34,7 @@ interface Oauth2ClientRepositoryInterface extends
     # region ClientRepositoryInterface methods (overwritten for type covariance)
     /**
      * @inheritDoc
-     * @return Oauth2ClientInterface
+     * @return Oauth2ClientInterface|null
      */
     public function getClientEntity($clientIdentifier);
     # endregion

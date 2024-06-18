@@ -1,6 +1,6 @@
 <?php
 
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client\Oauth2ClientAuthorizationRequestInterface;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;

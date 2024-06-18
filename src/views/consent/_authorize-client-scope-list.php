@@ -1,7 +1,7 @@
 <?php
 
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientScopeAuthorizationRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client\Oauth2ClientAuthorizationRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client\Oauth2ClientScopeAuthorizationRequestInterface;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 

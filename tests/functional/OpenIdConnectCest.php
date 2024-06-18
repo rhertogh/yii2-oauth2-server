@@ -4,7 +4,7 @@ namespace Yii2Oauth2ServerTests\functional;
 
 use Codeception\Example;
 use Codeception\Util\HttpCode;
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client\Oauth2ClientAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
 use yii\authclient\OpenIdConnect;

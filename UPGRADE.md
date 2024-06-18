@@ -47,6 +47,10 @@ Upgrade from v1.0.0-alpha17
   and implementing classes have been renamed to `Oauth2ClientScopeAuthorizationRequestInterface` (note the "Client" part).
   If you use any of these classes you will need to update your import statements, otherwise this won't require any change.
 
+* The namespaces for `\rhertogh\Yii2Oauth2Server\interfaces\components\authorization\*` and implementing classes have been changed
+  to `\rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client\*` (note the "client\" part).
+  If you use any of these classes you will need to update your import statements, otherwise this won't require any change.
+
 Upgrade from v1.0.0-alpha16
 ---------------------------
 * > Note: Database changes will not be incremental till the first stable release.

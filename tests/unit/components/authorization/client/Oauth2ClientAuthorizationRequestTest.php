@@ -1,10 +1,10 @@
 <?php
 
-namespace Yii2Oauth2ServerTests\unit\components\authorization;
+namespace Yii2Oauth2ServerTests\unit\components\authorization\client;
 
-use rhertogh\Yii2Oauth2Server\components\authorization\Oauth2ClientAuthorizationRequest;
-use rhertogh\Yii2Oauth2Server\components\authorization\Oauth2ClientScopeAuthorizationRequest;
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
+use rhertogh\Yii2Oauth2Server\components\authorization\client\Oauth2ClientAuthorizationRequest;
+use rhertogh\Yii2Oauth2Server\components\authorization\client\Oauth2ClientScopeAuthorizationRequest;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client\Oauth2ClientAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
 use rhertogh\Yii2Oauth2Server\models\Oauth2UserClient;
@@ -14,51 +14,10 @@ use Yii2Oauth2ServerTests\_helpers\TestUserModel;
 use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
 
 /**
- * @covers \rhertogh\Yii2Oauth2Server\components\authorization\Oauth2ClientAuthorizationRequest
+ * @covers \rhertogh\Yii2Oauth2Server\components\authorization\client\Oauth2ClientAuthorizationRequest
  */
 class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
 {
-    public function testSerialization()
-    {
-        $clientAuthorizationRequest = $this->getMockClientAuthorizationRequest();
-        $requestId = 'req-id';
-        $clientIdentifier = 'client-id';
-        $userIdentifier = 123;
-        $authorizeUrl = 'https://localhost/auth_url';
-        $requestedScopeIdentifiers = ['scope1', 'scope2', 'scope3'];
-        $grantType = Oauth2Module::GRANT_TYPE_AUTH_CODE;
-        $selectedScopeIdentifiers = ['scope1', 'scope2'];
-        $authorizationStatus = Oauth2ClientAuthorizationRequest::AUTHORIZATION_APPROVED;
-        $isCompleted = true;
-
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
-        $this->setInaccessibleProperty($clientAuthorizationRequest, '_requestId', $requestId);
-        $this->setInaccessibleProperty($clientAuthorizationRequest, '_clientIdentifier', $clientIdentifier);
-        $this->setInaccessibleProperty($clientAuthorizationRequest, '_userIdentifier', $userIdentifier);
-        $this->setInaccessibleProperty($clientAuthorizationRequest, '_userAuthenticatedBeforeRequest', true);
-        $this->setInaccessibleProperty($clientAuthorizationRequest, '_authenticatedDuringRequest', true);
-        $this->setInaccessibleProperty($clientAuthorizationRequest, '_authorizeUrl', $authorizeUrl);
-        $this->setInaccessibleProperty($clientAuthorizationRequest, '_requestedScopeIdentifiers', $requestedScopeIdentifiers);
-        $this->setInaccessibleProperty($clientAuthorizationRequest, '_grantType', $grantType);
-        $this->setInaccessibleProperty($clientAuthorizationRequest, '_selectedScopeIdentifiers', $selectedScopeIdentifiers);
-        $this->setInaccessibleProperty($clientAuthorizationRequest, '_authorizationStatus', $authorizationStatus);
-        $this->setInaccessibleProperty($clientAuthorizationRequest, '_isCompleted', $isCompleted);
-
-        $clientAuthorizationRequest = unserialize(serialize($clientAuthorizationRequest));
-
-        $this->assertEquals($requestId, $this->getInaccessibleProperty($clientAuthorizationRequest, '_requestId'));
-        $this->assertEquals($clientIdentifier, $this->getInaccessibleProperty($clientAuthorizationRequest, '_clientIdentifier'));
-        $this->assertEquals($userIdentifier, $this->getInaccessibleProperty($clientAuthorizationRequest, '_userIdentifier'));
-        $this->assertTrue($this->getInaccessibleProperty($clientAuthorizationRequest, '_userAuthenticatedBeforeRequest'));
-        $this->assertTrue($this->getInaccessibleProperty($clientAuthorizationRequest, '_authenticatedDuringRequest'));
-        $this->assertEquals($authorizeUrl, $this->getInaccessibleProperty($clientAuthorizationRequest, '_authorizeUrl'));
-        $this->assertEquals($requestedScopeIdentifiers, $this->getInaccessibleProperty($clientAuthorizationRequest, '_requestedScopeIdentifiers'));
-        $this->assertEquals($grantType, $this->getInaccessibleProperty($clientAuthorizationRequest, '_grantType'));
-        $this->assertEquals($selectedScopeIdentifiers, $this->getInaccessibleProperty($clientAuthorizationRequest, '_selectedScopeIdentifiers'));
-        $this->assertEquals($authorizationStatus, $this->getInaccessibleProperty($clientAuthorizationRequest, '_authorizationStatus'));
-        $this->assertEquals($isCompleted, $this->getInaccessibleProperty($clientAuthorizationRequest, '_isCompleted'));
-        // phpcs:enable Generic.Files.LineLength.TooLong
-    }
 
     public function testInitRandomRequestId()
     {
@@ -141,15 +100,6 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $this->assertEquals($customClient, $clientAuthorizationRequest->getClient());
         $this->assertEquals($customClientIdentifier, $this->getInaccessibleProperty($clientAuthorizationRequest, '_clientIdentifier'));
         // phpcs:enable Generic.Files.LineLength.TooLong
-    }
-
-    public function testGetClientWithoutIdentifier()
-    {
-        $clientAuthorizationRequest = $this->getMockClientAuthorizationRequest();
-        $clientAuthorizationRequest->setModule(Oauth2Module::getInstance());
-
-        $this->expectExceptionMessage('Client identifier must be set.');
-        $clientAuthorizationRequest->getClient();
     }
 
     public function testGetSetUser()

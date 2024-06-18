@@ -3,7 +3,7 @@
 namespace Yii2Oauth2ServerTests\unit\controllers\web\scopes;
 
 use Codeception\Util\HttpCode;
-use rhertogh\Yii2Oauth2Server\components\authorization\Oauth2ClientAuthorizationRequest;
+use rhertogh\Yii2Oauth2Server\components\authorization\client\Oauth2ClientAuthorizationRequest;
 use rhertogh\Yii2Oauth2Server\controllers\web\consent\Oauth2AuthorizeClientAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ConsentController;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ConsentControllerInterface;

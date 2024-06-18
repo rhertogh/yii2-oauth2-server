@@ -1,15 +1,15 @@
 <?php
 
-namespace Yii2Oauth2ServerTests\unit\components\authorization\base;
+namespace Yii2Oauth2ServerTests\unit\components\authorization\client\base;
 
-use rhertogh\Yii2Oauth2Server\components\authorization\base\Oauth2BaseClientScopeAuthorizationRequest;
+use rhertogh\Yii2Oauth2Server\components\authorization\client\base\Oauth2BaseClientScopeAuthorizationRequest;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
 use Yii2Oauth2ServerTests\unit\TestCase;
 
 /**
- * @covers \rhertogh\Yii2Oauth2Server\components\authorization\base\Oauth2BaseClientScopeAuthorizationRequest
+ * @covers \rhertogh\Yii2Oauth2Server\components\authorization\client\base\Oauth2BaseClientScopeAuthorizationRequest
  */
-class Oauth2BaseScopeAuthorizationRequestTest extends TestCase
+class Oauth2BaseClientScopeAuthorizationRequestTest extends TestCase
 {
     public function testGetSetScope()
     {

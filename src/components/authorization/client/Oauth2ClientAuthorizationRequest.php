@@ -1,52 +1,27 @@
 <?php
 
-namespace rhertogh\Yii2Oauth2Server\components\authorization;
+namespace rhertogh\Yii2Oauth2Server\components\authorization\client;
 
-use rhertogh\Yii2Oauth2Server\components\authorization\base\Oauth2BaseClientAuthorizationRequest;
+use rhertogh\Yii2Oauth2Server\components\authorization\client\base\Oauth2BaseClientAuthorizationRequest;
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\helpers\UrlHelper;
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientScopeAuthorizationRequestInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client\Oauth2ClientScopeAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserClientInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2UserClientScopeInterface;
 use Yii;
 use yii\base\InvalidCallException;
-use yii\helpers\StringHelper;
 
 class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequest
 {
     /**
-     * @var string|null
-     */
-    protected $_requestId = null;
-
-    /**
-     * @var string|null
-     */
-    protected $_state = null;
-
-    /**
-     * @var bool
-     */
-    protected $_userAuthenticatedBeforeRequest = false;
-
-    /**
-     * @var bool
-     */
-    protected $_authenticatedDuringRequest = false;
-
-    /**
-     * @var Oauth2ClientInterface|null
-     */
-    protected $_client = null;
-
-    /**
+     * Internal caching
      * @var Oauth2ClientScopeAuthorizationRequestInterface[]|null
      */
     protected $_scopeAuthorizationRequests = null;
 
     /**
+     * Internal caching
      * @var Oauth2ScopeInterface[]|null
      */
     protected $_scopesAppliedByDefaultWithoutConfirm = null;
@@ -54,81 +29,11 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
     /**
      * @inheritDoc
      */
-    public function __serialize()
-    {
-        return [
-            '_requestId' => $this->_requestId,
-            '_clientIdentifier' => $this->_clientIdentifier,
-            '_state' => $this->_state,
-            '_userIdentifier' => $this->_userIdentifier,
-            '_userAuthenticatedBeforeRequest' => $this->_userAuthenticatedBeforeRequest,
-            '_authenticatedDuringRequest' => $this->_authenticatedDuringRequest,
-            '_authorizeUrl' => $this->_authorizeUrl,
-            '_redirectUri' => $this->_redirectUri,
-            '_requestedScopeIdentifiers' => $this->_requestedScopeIdentifiers,
-            '_grantType' => $this->_grantType,
-            '_prompts' => $this->_prompts,
-            '_maxAge' => $this->_maxAge,
-            '_selectedScopeIdentifiers' => $this->_selectedScopeIdentifiers,
-            '_authorizationStatus' => $this->_authorizationStatus,
-            '_isCompleted' => $this->_isCompleted,
-        ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function __unserialize($data)
-    {
-        foreach ($data as $name => $value) {
-            $this->$name = $value;
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function init()
-    {
-        parent::init();
-        $this->_requestId = \Yii::$app->security->generateRandomString(128);
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function rules()
     {
-        return [
+        return array_merge(parent::rules(), [
             [['selectedScopeIdentifiers'], 'each', 'rule' => ['string']],
-            [['authorizationStatus'], 'required'],
-            [['authorizationStatus'], 'in', 'range' => [static::AUTHORIZATION_APPROVED, static::AUTHORIZATION_DENIED]],
-        ];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getRequestId()
-    {
-        return $this->_requestId;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getState()
-    {
-        return $this->_state;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setState($state)
-    {
-        $this->_state = $state;
-        return $this;
+        ]);
     }
 
     /**
@@ -136,40 +41,10 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
      */
     public function setClientIdentifier($clientIdentifier)
     {
-        if ($this->_client && $this->_client->getIdentifier() !== $clientIdentifier) {
-            $this->_client = null;
-        }
-
         $this->_scopeAuthorizationRequests = null;
         $this->_scopesAppliedByDefaultWithoutConfirm = null;
 
         return parent::setClientIdentifier($clientIdentifier);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getClient()
-    {
-        $clientIdentifier = $this->getClientIdentifier();
-        if (empty($clientIdentifier)) {
-            throw new InvalidCallException('Client identifier must be set.');
-        }
-        if (empty($this->_client) || $this->_client->getIdentifier() != $clientIdentifier) {
-            $this->_client = $this->getModule()->getClientRepository()->getClientEntity($clientIdentifier);
-        }
-
-        return $this->_client;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setClient($client)
-    {
-        $this->_client = $client;
-        $this->setClientIdentifier($client->getIdentifier());
-        return $this;
     }
 
     /**
@@ -188,55 +63,11 @@ class Oauth2ClientAuthorizationRequest extends Oauth2BaseClientAuthorizationRequ
     /**
      * @inheritDoc
      */
-    public function setUserAuthenticatedBeforeRequest($authenticatedBeforeRequest)
-    {
-        $this->_userAuthenticatedBeforeRequest = $authenticatedBeforeRequest;
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function wasUserAuthenticatedBeforeRequest()
-    {
-        return $this->_userAuthenticatedBeforeRequest;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setUserAuthenticatedDuringRequest($authenticatedDuringRequest)
-    {
-        $this->_authenticatedDuringRequest = $authenticatedDuringRequest;
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function wasUserAthenticatedDuringRequest()
-    {
-        return $this->_authenticatedDuringRequest;
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function setRequestedScopeIdentifiers($requestedScopeIdentifiers)
     {
         $this->_scopeAuthorizationRequests = null;
         $this->_scopesAppliedByDefaultWithoutConfirm = null;
         return parent::setRequestedScopeIdentifiers($requestedScopeIdentifiers);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function isClientIdentifiable()
-    {
-        return
-            $this->getClient()->isConfidential()
-            || StringHelper::startsWith((string)$this->getRedirectUri(), 'https://');
     }
 
     /**

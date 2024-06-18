@@ -1,6 +1,6 @@
 <?php
 
-namespace rhertogh\Yii2Oauth2Server\interfaces\components\authorization;
+namespace rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client;
 
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 

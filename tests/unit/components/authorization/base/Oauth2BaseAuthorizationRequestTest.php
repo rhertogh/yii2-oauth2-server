@@ -2,22 +2,55 @@
 
 namespace Yii2Oauth2ServerTests\unit\components\authorization\base;
 
-use rhertogh\Yii2Oauth2Server\components\authorization\base\Oauth2BaseClientAuthorizationRequest;
+use rhertogh\Yii2Oauth2Server\components\authorization\base\Oauth2BaseAuthorizationRequest;
+use rhertogh\Yii2Oauth2Server\components\authorization\client\base\Oauth2BaseClientAuthorizationRequest;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\base\Oauth2BaseAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;
+use rhertogh\Yii2Oauth2Server\models\Oauth2Client;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii2Oauth2ServerTests\_helpers\TestUserModel;
 use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
 
 /**
- * @covers \rhertogh\Yii2Oauth2Server\components\authorization\base\Oauth2BaseClientAuthorizationRequest
+ * @covers \rhertogh\Yii2Oauth2Server\components\authorization\base\Oauth2BaseAuthorizationRequest
  */
-class Oauth2BaseClientAuthorizationRequestTest extends DatabaseTestCase
+class Oauth2BaseAuthorizationRequestTest extends DatabaseTestCase
 {
+    public function testSerialization()
+    {
+        $baseAuthorizationRequest = $this->getMockBaseAuthorizationRequest();
+        $requestId = 'req-id';
+        $clientIdentifier = 'client-id';
+        $userIdentifier = 123;
+        $redirectUri = 'https://localhost/redirect_url';
+        $authorizationStatus = Oauth2BaseAuthorizationRequestInterface::AUTHORIZATION_APPROVED;
+        $isCompleted = true;
+
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+        $this->setInaccessibleProperty($baseAuthorizationRequest, '_requestId', $requestId);
+        $this->setInaccessibleProperty($baseAuthorizationRequest, '_clientIdentifier', $clientIdentifier);
+        $this->setInaccessibleProperty($baseAuthorizationRequest, '_userIdentifier', $userIdentifier);
+        $this->setInaccessibleProperty($baseAuthorizationRequest, '_redirectUri', $redirectUri);
+        $this->setInaccessibleProperty($baseAuthorizationRequest, '_authorizationStatus', $authorizationStatus);
+        $this->setInaccessibleProperty($baseAuthorizationRequest, '_isCompleted', $isCompleted);
+
+        $baseAuthorizationRequest = unserialize(serialize($baseAuthorizationRequest));
+        $this->assertInstanceOf(Oauth2BaseAuthorizationRequest::class, $baseAuthorizationRequest);
+
+        $this->assertEquals($requestId, $this->getInaccessibleProperty($baseAuthorizationRequest, '_requestId'));
+        $this->assertEquals($clientIdentifier, $this->getInaccessibleProperty($baseAuthorizationRequest, '_clientIdentifier'));
+        $this->assertEquals($userIdentifier, $this->getInaccessibleProperty($baseAuthorizationRequest, '_userIdentifier'));
+        $this->assertEquals($redirectUri, $this->getInaccessibleProperty($baseAuthorizationRequest, '_redirectUri'));
+        $this->assertEquals($authorizationStatus, $this->getInaccessibleProperty($baseAuthorizationRequest, '_authorizationStatus'));
+        $this->assertEquals($isCompleted, $this->getInaccessibleProperty($baseAuthorizationRequest, '_isCompleted'));
+        // phpcs:enable Generic.Files.LineLength.TooLong
+    }
+
     public function testGetSetModule()
     {
         $this->mockWebApplication();
         $module = Oauth2Module::getInstance();
-        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
+        $baseClientAuthorizationRequest = $this->getMockBaseAuthorizationRequest();
 
         $baseClientAuthorizationRequest->setModule($module);
         $this->assertEquals($module, $baseClientAuthorizationRequest->getModule());
@@ -26,7 +59,7 @@ class Oauth2BaseClientAuthorizationRequestTest extends DatabaseTestCase
     public function testGetModuleWithoutItBeingSet()
     {
         $this->mockWebApplication();
-        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
+        $baseClientAuthorizationRequest = $this->getMockBaseAuthorizationRequest();
 
         $this->expectExceptionMessage('Can not call getModule() before it\'s set.');
         $baseClientAuthorizationRequest->getModule();
@@ -35,7 +68,7 @@ class Oauth2BaseClientAuthorizationRequestTest extends DatabaseTestCase
     public function testGetSetAuthorizationStatus()
     {
         $authorizationStatus = Oauth2BaseClientAuthorizationRequest::AUTHORIZATION_APPROVED;
-        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
+        $baseClientAuthorizationRequest = $this->getMockBaseAuthorizationRequest();
 
         $this->setInaccessibleProperty($baseClientAuthorizationRequest, '_isCompleted', true);
         $baseClientAuthorizationRequest->setAuthorizationStatus($authorizationStatus);
@@ -45,26 +78,32 @@ class Oauth2BaseClientAuthorizationRequestTest extends DatabaseTestCase
 
     public function testSetInvalidAuthorizationStatus()
     {
-        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
+        $baseClientAuthorizationRequest = $this->getMockBaseAuthorizationRequest();
 
-        $this->expectExceptionMessage('$authorizationStatus must be null or exist in AUTHORIZATION_STATUSES.');
+        $this->expectExceptionMessage('$authorizationStatus must be null or exist in the return value of `getPossibleAuthorizationStatuses()`.');
         $baseClientAuthorizationRequest->setAuthorizationStatus('non-existing');
     }
 
     public function testGetSetClientIdentifier()
     {
         $clientIdentifier = 'abc';
-        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
+        $baseClientAuthorizationRequest = $this->getMockBaseAuthorizationRequest();
+
+        $baseClientAuthorizationRequest->setClient(new Oauth2Client(['identifier' => strrev($clientIdentifier)]));
+        $this->setInaccessibleProperty($baseClientAuthorizationRequest, '_isCompleted', true);
 
         $baseClientAuthorizationRequest->setClientIdentifier($clientIdentifier);
         $this->assertEquals($clientIdentifier, $baseClientAuthorizationRequest->getClientIdentifier());
+
+        $this->assertnull($this->getInaccessibleProperty($baseClientAuthorizationRequest, '_client'));
+        $this->assertfalse($this->getInaccessibleProperty($baseClientAuthorizationRequest, '_isCompleted'));
     }
 
     public function testGetSetUserIdentity()
     {
         $this->mockWebApplication();
         $user = TestUserModel::findOne(['id' => 123]);
-        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
+        $baseClientAuthorizationRequest = $this->getMockBaseAuthorizationRequest();
 
         $this->setInaccessibleProperty($baseClientAuthorizationRequest, '_isCompleted', true);
         $baseClientAuthorizationRequest->setUserIdentity($user);
@@ -86,7 +125,7 @@ class Oauth2BaseClientAuthorizationRequestTest extends DatabaseTestCase
         $this->mockWebApplication();
         $module = Oauth2Module::getInstance();
         $user = TestUserModel::findOne(['id' => 123]);
-        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
+        $baseClientAuthorizationRequest = $this->getMockBaseAuthorizationRequest();
         $baseClientAuthorizationRequest->setModule($module);
         $baseClientAuthorizationRequest->setUserIdentity($user);
 
@@ -105,79 +144,18 @@ class Oauth2BaseClientAuthorizationRequestTest extends DatabaseTestCase
         $this->assertEquals(124, $baseClientAuthorizationRequest->getUserIdentity()->getIdentifier());
     }
 
-    public function testGetSetAuthorizeUrl()
-    {
-        $authorizeUrl = 'https://localhost/authorize';
-        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
-
-        $baseClientAuthorizationRequest->setAuthorizeUrl($authorizeUrl);
-        $this->assertEquals($authorizeUrl, $baseClientAuthorizationRequest->getAuthorizeUrl());
-    }
-
     public function testGetSetRedirectUri()
     {
         $redirectUri = 'https://localhost/redirect';
-        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
+        $baseClientAuthorizationRequest = $this->getMockBaseAuthorizationRequest();
 
         $baseClientAuthorizationRequest->setRedirectUri($redirectUri);
         $this->assertEquals($redirectUri, $baseClientAuthorizationRequest->getRedirectUri());
     }
 
-    public function testGetSetRequestedScopeIdentifiers()
-    {
-        $requestedScopeIdentifiers = ['scope1', 'scope2'];
-        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
-
-        $this->setInaccessibleProperty($baseClientAuthorizationRequest, '_isCompleted', true);
-        $baseClientAuthorizationRequest->setRequestedScopeIdentifiers($requestedScopeIdentifiers);
-        $this->assertEquals(
-            $requestedScopeIdentifiers,
-            $baseClientAuthorizationRequest->getRequestedScopeIdentifiers()
-        );
-        $this->assertFalse($baseClientAuthorizationRequest->isCompleted());
-    }
-
-    public function testGetSetSelectedScopeIdentifiers()
-    {
-        $selectedScopeIdentifiers = ['scope1', 'scope2'];
-        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
-
-        $this->setInaccessibleProperty($baseClientAuthorizationRequest, '_isCompleted', true);
-        $baseClientAuthorizationRequest->setSelectedScopeIdentifiers($selectedScopeIdentifiers);
-        $this->assertEquals($selectedScopeIdentifiers, $baseClientAuthorizationRequest->getSelectedScopeIdentifiers());
-        $this->assertFalse($baseClientAuthorizationRequest->isCompleted());
-    }
-
-    public function testGetSetGrantType()
-    {
-        $grantType = Oauth2Module::GRANT_TYPE_IDENTIFIER_AUTH_CODE;
-        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
-
-        $baseClientAuthorizationRequest->setGrantType($grantType);
-        $this->assertEquals($grantType, $baseClientAuthorizationRequest->getGrantType());
-    }
-
-    public function testGetSetPrompt()
-    {
-        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
-
-        $prompts = ['test'];
-        $baseClientAuthorizationRequest->setPrompts($prompts);
-        $this->assertEquals($prompts, $baseClientAuthorizationRequest->getPrompts());
-    }
-
-    public function testGetSetMaxAge()
-    {
-        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
-
-        $maxAge = 123;
-        $baseClientAuthorizationRequest->setMaxAge($maxAge);
-        $this->assertEquals($maxAge, $baseClientAuthorizationRequest->getMaxAge());
-    }
-
     public function testIsApproved()
     {
-        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
+        $baseClientAuthorizationRequest = $this->getMockBaseAuthorizationRequest();
 
         $this->assertFalse($baseClientAuthorizationRequest->isApproved());
         $baseClientAuthorizationRequest->setAuthorizationStatus(
@@ -194,7 +172,7 @@ class Oauth2BaseClientAuthorizationRequestTest extends DatabaseTestCase
 
     public function testIsCompleted()
     {
-        $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
+        $baseClientAuthorizationRequest = $this->getMockBaseAuthorizationRequest();
 
         $this->assertFalse($baseClientAuthorizationRequest->isCompleted());
         $this->setInaccessibleProperty($baseClientAuthorizationRequest, '_isCompleted', true);
@@ -203,10 +181,10 @@ class Oauth2BaseClientAuthorizationRequestTest extends DatabaseTestCase
         $this->assertFalse($baseClientAuthorizationRequest->isCompleted());
     }
 
-    protected function getMockBaseClientAuthorizationRequest()
+    protected function getMockBaseAuthorizationRequest()
     {
         return $this->getMockForAbstractClass(
-            Oauth2BaseClientAuthorizationRequest::class,
+            Oauth2BaseAuthorizationRequest::class,
         );
     }
 }
