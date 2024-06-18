@@ -3,12 +3,12 @@
 namespace rhertogh\Yii2Oauth2Server\controllers\console;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\base\Oauth2BaseConsoleController;
-use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2CreateClientActionInterface;
-use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2DeleteClientActionInterface;
-use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2ListClientsActionInterface;
-use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2SetClientSecretActionInterface;
 use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2UpdateClientAction;
 use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2ViewClientAction;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2CreateClientActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2DeleteClientActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2ListClientsActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2SetClientSecretActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2ClientControllerInterface;
 use yii\helpers\ArrayHelper;
 

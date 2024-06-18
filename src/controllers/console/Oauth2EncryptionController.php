@@ -3,9 +3,9 @@
 namespace rhertogh\Yii2Oauth2Server\controllers\console;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\base\Oauth2BaseConsoleController;
-use rhertogh\Yii2Oauth2Server\controllers\console\encryption\Oauth2EncryptionKeyUsageActionInterface;
-use rhertogh\Yii2Oauth2Server\controllers\console\encryption\Oauth2GenerateSecretActionInterface;
 use rhertogh\Yii2Oauth2Server\controllers\console\encryption\Oauth2RotateEncryptionKeysAction;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\encryption\Oauth2EncryptionKeyUsageActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\encryption\Oauth2GenerateSecretActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2EncryptionControllerInterface;
 use yii\helpers\ArrayHelper;
 
