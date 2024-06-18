@@ -28,6 +28,8 @@ class InfoController extends Controller
         echo '<br>';
         echo 'realpath_cache_size: ' . Yii::$app->formatter->asShortSize(realpath_cache_size());
         echo '<br>';
+        echo 'YII_DB_DRIVER: ' . getenv('YII_DB_DRIVER');
+        echo '<br>';
         phpinfo();
         $output = ob_get_clean();
 
