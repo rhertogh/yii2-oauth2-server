@@ -5,6 +5,7 @@ namespace rhertogh\Yii2Oauth2Server\controllers\console\debug;
 use League\OAuth2\Server\Grant\GrantTypeInterface;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2DebugController;
 use rhertogh\Yii2Oauth2Server\helpers\DateIntervalHelper;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\debug\Oauth2DebugConfigActionInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\base\Action;
 use yii\console\ExitCode;
@@ -15,7 +16,7 @@ use yii\log\Logger;
 /**
  * @property Oauth2DebugController $controller
  */
-class Oauth2DebugConfigAction extends Action
+class Oauth2DebugConfigAction extends Action implements Oauth2DebugConfigActionInterface
 {
     public function run()
     {

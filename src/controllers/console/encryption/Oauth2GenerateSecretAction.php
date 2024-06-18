@@ -3,6 +3,7 @@
 namespace rhertogh\Yii2Oauth2Server\controllers\console\encryption;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2EncryptionController;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\encryption\Oauth2GenerateSecretActionInterface;
 use yii\base\Action;
 use yii\console\ExitCode;
 use yii\helpers\Json;
@@ -10,7 +11,7 @@ use yii\helpers\Json;
 /**
  * @property Oauth2EncryptionController $controller
  */
-class Oauth2GenerateSecretAction extends Action
+class Oauth2GenerateSecretAction extends Action implements Oauth2GenerateSecretActionInterface
 {
     public function run()
     {

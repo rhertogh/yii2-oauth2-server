@@ -3,15 +3,16 @@
 namespace rhertogh\Yii2Oauth2Server\controllers\console;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\base\Oauth2BaseConsoleController;
-use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2CreateClientAction;
-use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2DeleteClientAction;
-use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2ListClientsAction;
-use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2SetClientSecretAction;
+use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2CreateClientActionInterface;
+use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2DeleteClientActionInterface;
+use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2ListClientsActionInterface;
+use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2SetClientSecretActionInterface;
 use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2UpdateClientAction;
 use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2ViewClientAction;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2ClientControllerInterface;
 use yii\helpers\ArrayHelper;
 
-class Oauth2ClientController extends Oauth2BaseConsoleController
+class Oauth2ClientController extends Oauth2BaseConsoleController implements Oauth2ClientControllerInterface
 {
     /**
      * @inheritdoc
@@ -158,12 +159,12 @@ class Oauth2ClientController extends Oauth2BaseConsoleController
     public function actions()
     {
         return [
-            'list' => Oauth2ListClientsAction::class,
+            'list' => Oauth2ListClientsActionInterface::class,
             'view' => Oauth2ViewClientAction::class,
-            'create' => Oauth2CreateClientAction::class,
+            'create' => Oauth2CreateClientActionInterface::class,
             'update' => Oauth2UpdateClientAction::class,
-            'set-secret' => Oauth2SetClientSecretAction::class,
-            'delete' => Oauth2DeleteClientAction::class,
+            'set-secret' => Oauth2SetClientSecretActionInterface::class,
+            'delete' => Oauth2DeleteClientActionInterface::class,
         ];
     }
 }

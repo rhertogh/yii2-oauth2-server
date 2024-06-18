@@ -3,6 +3,7 @@
 namespace rhertogh\Yii2Oauth2Server\controllers\console\client;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2ClientController;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2SetClientSecretActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use Yii;
 use yii\base\Action;
@@ -15,7 +16,7 @@ use yii\helpers\StringHelper;
 /**
  * @property Oauth2ClientController $controller
  */
-class Oauth2SetClientSecretAction extends Action
+class Oauth2SetClientSecretAction extends Action implements Oauth2SetClientSecretActionInterface
 {
     /**
      * @throws \yii\base\InvalidConfigException

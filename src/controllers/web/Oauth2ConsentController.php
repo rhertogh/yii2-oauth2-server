@@ -3,7 +3,7 @@
 namespace rhertogh\Yii2Oauth2Server\controllers\web;
 
 use rhertogh\Yii2Oauth2Server\controllers\web\base\Oauth2BaseWebController;
-use rhertogh\Yii2Oauth2Server\controllers\web\consent\Oauth2AuthorizeClientAction;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\consent\Oauth2AuthorizeClientActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ConsentControllerInterface;
 use yii\filters\VerbFilter;
 
@@ -31,7 +31,7 @@ class Oauth2ConsentController extends Oauth2BaseWebController implements Oauth2C
     {
         return [
             static::ACTION_NAME_AUTHORIZE_CLIENT => [
-                'class' => Oauth2AuthorizeClientAction::class,
+                'class' => Oauth2AuthorizeClientActionInterface::class,
                 'clientAuthorizationView' => $this->module->clientAuthorizationView,
             ],
         ];

@@ -12,6 +12,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAu
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\request\Oauth2OidcAuthenticationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\user\Oauth2OidcUserComponentInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\server\Oauth2AuthorizeActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserAuthenticatedAtInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
@@ -24,7 +25,7 @@ use yii\web\UnauthorizedHttpException;
 /**
  * @property Oauth2ServerController $controller
  */
-class Oauth2AuthorizeAction extends Oauth2BaseServerAction
+class Oauth2AuthorizeAction extends Oauth2BaseServerAction implements Oauth2AuthorizeActionInterface
 {
     public function run($clientAuthorizationRequestId = null)
     {

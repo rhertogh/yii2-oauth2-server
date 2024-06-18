@@ -11,6 +11,7 @@ use Lcobucci\JWT\Validation\Constraint\SignedWith;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ServerController;
 use rhertogh\Yii2Oauth2Server\controllers\web\server\base\Oauth2BaseServerAction;
 use rhertogh\Yii2Oauth2Server\helpers\Oauth2RequestHelper;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\server\Oauth2RevokeActionInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
 use yii\helpers\Json;
@@ -21,7 +22,7 @@ use yii\web\NotFoundHttpException;
 /**
  * @property Oauth2ServerController $controller
  */
-class Oauth2RevokeAction extends Oauth2BaseServerAction
+class Oauth2RevokeAction extends Oauth2BaseServerAction implements Oauth2RevokeActionInterface
 {
     public function run()
     {

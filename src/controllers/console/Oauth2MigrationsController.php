@@ -5,9 +5,10 @@ namespace rhertogh\Yii2Oauth2Server\controllers\console;
 use rhertogh\Yii2Oauth2Server\controllers\console\base\Oauth2BaseConsoleController;
 use rhertogh\Yii2Oauth2Server\controllers\console\migrations\Oauth2GenerateImportMigrationAction;
 use rhertogh\Yii2Oauth2Server\controllers\console\migrations\Oauth2GenerateMigrationsAction;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2MigrationsControllerInterface;
 use yii\helpers\ArrayHelper;
 
-class Oauth2MigrationsController extends Oauth2BaseConsoleController
+class Oauth2MigrationsController extends Oauth2BaseConsoleController implements Oauth2MigrationsControllerInterface
 {
     /**
      * Name of the database component.

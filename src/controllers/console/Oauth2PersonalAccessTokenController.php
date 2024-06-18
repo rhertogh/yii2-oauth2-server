@@ -4,9 +4,10 @@ namespace rhertogh\Yii2Oauth2Server\controllers\console;
 
 use rhertogh\Yii2Oauth2Server\controllers\console\base\Oauth2BaseConsoleController;
 use rhertogh\Yii2Oauth2Server\controllers\console\PersonalAccessToken\Oauth2GeneratePatAction;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2PersonalAccessTokenControllerInterface;
 use yii\helpers\ArrayHelper;
 
-class Oauth2PersonalAccessTokenController extends Oauth2BaseConsoleController
+class Oauth2PersonalAccessTokenController extends Oauth2BaseConsoleController implements Oauth2PersonalAccessTokenControllerInterface
 {
     /**
      * @var string|null

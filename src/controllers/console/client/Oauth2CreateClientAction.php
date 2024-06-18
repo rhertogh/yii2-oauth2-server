@@ -6,6 +6,7 @@ use rhertogh\Yii2Oauth2Server\controllers\console\client\base\Oauth2BaseEditClie
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2ClientController;
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeCollectionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2CreateClientActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use yii\base\InvalidArgumentException;
@@ -16,7 +17,7 @@ use yii\helpers\Console;
 /**
  * @property Oauth2ClientController $controller
  */
-class Oauth2CreateClientAction extends Oauth2BaseEditClientAction
+class Oauth2CreateClientAction extends Oauth2BaseEditClientAction implements Oauth2CreateClientActionInterface
 {
     public function run()
     {

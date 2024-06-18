@@ -35,11 +35,37 @@ use rhertogh\Yii2Oauth2Server\components\server\grants\Oauth2RefreshTokenGrant;
 use rhertogh\Yii2Oauth2Server\components\server\Oauth2AuthorizationServer;
 use rhertogh\Yii2Oauth2Server\components\server\Oauth2ResourceServer;
 use rhertogh\Yii2Oauth2Server\components\server\responses\Oauth2BearerTokenResponse;
+use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2CreateClientAction;
+use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2DeleteClientAction;
+use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2ListClientsAction;
+use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2SetClientSecretAction;
+use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2UpdateClientAction;
+use rhertogh\Yii2Oauth2Server\controllers\console\client\Oauth2ViewClientAction;
+use rhertogh\Yii2Oauth2Server\controllers\console\debug\Oauth2DebugConfigAction;
+use rhertogh\Yii2Oauth2Server\controllers\console\encryption\Oauth2EncryptionKeyUsageAction;
+use rhertogh\Yii2Oauth2Server\controllers\console\encryption\Oauth2GenerateSecretAction;
+use rhertogh\Yii2Oauth2Server\controllers\console\encryption\Oauth2RotateEncryptionKeysAction;
+use rhertogh\Yii2Oauth2Server\controllers\console\migrations\Oauth2GenerateImportMigrationAction;
+use rhertogh\Yii2Oauth2Server\controllers\console\migrations\Oauth2GenerateMigrationsAction;
+use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2ClientController;
+use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2DebugController;
+use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2EncryptionController;
+use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2MigrationsController;
+use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2PersonalAccessTokenController;
+use rhertogh\Yii2Oauth2Server\controllers\console\PersonalAccessToken\Oauth2GeneratePatAction;
+use rhertogh\Yii2Oauth2Server\controllers\web\certificates\Oauth2JwksAction;
+use rhertogh\Yii2Oauth2Server\controllers\web\consent\Oauth2AuthorizeClientAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2CertificatesController;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ConsentController;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2OidcController;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ServerController;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2WellKnownController;
+use rhertogh\Yii2Oauth2Server\controllers\web\openidconnect\Oauth2OidcEndSessionAction;
+use rhertogh\Yii2Oauth2Server\controllers\web\openidconnect\Oauth2OidcUserinfoAction;
+use rhertogh\Yii2Oauth2Server\controllers\web\server\Oauth2AccessTokenAction;
+use rhertogh\Yii2Oauth2Server\controllers\web\server\Oauth2AuthorizeAction;
+use rhertogh\Yii2Oauth2Server\controllers\web\server\Oauth2RevokeAction;
+use rhertogh\Yii2Oauth2Server\controllers\web\wellknown\Oauth2OpenidConfigurationAction;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ScopeAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2CryptographerInterface;
@@ -70,11 +96,37 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2RefreshT
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\Oauth2AuthorizationServerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\Oauth2ResourceServerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\responses\Oauth2BearerTokenResponseInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2CreateClientActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2DeleteClientActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2ListClientsActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2SetClientSecretActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2UpdateClientActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2ViewClientActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\debug\Oauth2DebugConfigActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\encryption\Oauth2EncryptionKeyUsageActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\encryption\Oauth2GenerateSecretActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\encryption\Oauth2RotateEncryptionKeysActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\migrations\Oauth2GenerateImportMigrationActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\migrations\Oauth2GenerateMigrationsActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2ClientControllerInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2DebugControllerInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2EncryptionControllerInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2MigrationsControllerInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2PersonalAccessTokenControllerInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\PersonalAccessToken\Oauth2GeneratePatActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\certificates\Oauth2JwksActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\consent\Oauth2AuthorizeClientActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2CertificatesControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ConsentControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2OidcControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ServerControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2WellKnownControllerInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\openidconnect\Oauth2OidcEndSessionActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\openidconnect\Oauth2OidcUserinfoActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\server\Oauth2AccessTokenActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\server\Oauth2AuthorizeActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\server\Oauth2RevokeActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\wellknown\Oauth2OpenidConfigurationActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenScopeInterface;
@@ -314,12 +366,41 @@ abstract class Oauth2BaseModule extends Module
         Oauth2PasswordGrantFactoryInterface::class => Oauth2PasswordGrantFactory::class,
         Oauth2PersonalAccessTokenGrantFactoryInterface::class => Oauth2PersonalAccessTokenGrantFactory::class,
         Oauth2EncryptionKeyFactoryInterface::class => Oauth2EncryptionKeyFactory::class,
-        # Controllers
+        # Controllers (web)
         Oauth2ServerControllerInterface::class => Oauth2ServerController::class,
         Oauth2ConsentControllerInterface::class => Oauth2ConsentController::class,
         Oauth2WellKnownControllerInterface::class => Oauth2WellKnownController::class,
         Oauth2CertificatesControllerInterface::class => Oauth2CertificatesController::class,
         Oauth2OidcControllerInterface::class => Oauth2OidcController::class,
+        # Controllers (console)
+        Oauth2PersonalAccessTokenControllerInterface::class => Oauth2PersonalAccessTokenController::class,
+        Oauth2MigrationsControllerInterface::class => Oauth2MigrationsController::class,
+        Oauth2EncryptionControllerInterface::class => Oauth2EncryptionController::class,
+        Oauth2DebugControllerInterface::class => Oauth2DebugController::class,
+        Oauth2ClientControllerInterface::class => Oauth2ClientController::class,
+        # Actions (web)
+        Oauth2OpenidConfigurationActionInterface::class => Oauth2OpenidConfigurationAction::class,
+        Oauth2RevokeActionInterface::class => Oauth2RevokeAction::class,
+        Oauth2AuthorizeActionInterface::class => Oauth2AuthorizeAction::class,
+        Oauth2AccessTokenActionInterface::class => Oauth2AccessTokenAction::class,
+        Oauth2OidcUserinfoActionInterface::class => Oauth2OidcUserinfoAction::class,
+        Oauth2OidcEndSessionActionInterface::class => Oauth2OidcEndSessionAction::class,
+        Oauth2AuthorizeClientActionInterface::class => Oauth2AuthorizeClientAction::class,
+        Oauth2JwksActionInterface::class => Oauth2JwksAction::class,
+        # Actions (console)
+        Oauth2GeneratePatActionInterface::class => Oauth2GeneratePatAction::class,
+        Oauth2GenerateMigrationsActionInterface::class => Oauth2GenerateMigrationsAction::class,
+        Oauth2GenerateImportMigrationActionInterface::class => Oauth2GenerateImportMigrationAction::class,
+        Oauth2RotateEncryptionKeysActionInterface::class => Oauth2RotateEncryptionKeysAction::class,
+        Oauth2GenerateSecretActionInterface::class => Oauth2GenerateSecretAction::class,
+        Oauth2EncryptionKeyUsageActionInterface::class => Oauth2EncryptionKeyUsageAction::class,
+        Oauth2DebugConfigActionInterface::class => Oauth2DebugConfigAction::class,
+        Oauth2ViewClientActionInterface::class => Oauth2ViewClientAction::class,
+        Oauth2UpdateClientActionInterface::class => Oauth2UpdateClientAction::class,
+        Oauth2SetClientSecretActionInterface::class => Oauth2SetClientSecretAction::class,
+        Oauth2ListClientsActionInterface::class => Oauth2ListClientsAction::class,
+        Oauth2DeleteClientActionInterface::class => Oauth2DeleteClientAction::class,
+        Oauth2CreateClientActionInterface::class => Oauth2CreateClientAction::class,
         # Components (Server)
         Oauth2AuthorizationServerInterface::class => Oauth2AuthorizationServer::class,
         Oauth2ResourceServerInterface::class => Oauth2ResourceServer::class,
