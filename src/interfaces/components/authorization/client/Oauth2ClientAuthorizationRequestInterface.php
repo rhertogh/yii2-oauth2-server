@@ -51,23 +51,6 @@ interface Oauth2ClientAuthorizationRequestInterface extends Oauth2BaseAuthorizat
     public function setAuthorizeUrl($authorizeUrl);
 
     /**
-     * Get the Oauth 2 request state.
-     * @return string
-     * @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1
-     * @since 1.0.0
-     */
-    public function getState();
-
-    /**
-     * Set the Oauth 2 request state.
-     * @param string $state
-     * @return $this
-     * @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1
-     * @since 1.0.0
-     */
-    public function setState($state);
-
-    /**
      * Get the Oauth 2 request grant type.
      * @return string|null
      * @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1

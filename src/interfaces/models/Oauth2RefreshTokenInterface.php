@@ -21,6 +21,15 @@ interface Oauth2RefreshTokenInterface extends
     public static function find();
 
     /**
+     * Find all models by user identifier
+     *
+     * @param int[] $accessTokenIds
+     * @return static[]|Oauth2RefreshTokenInterface
+     * @since 1.0.0
+     */
+    public static function findAllByAccessTokenIds($accessTokenIds);
+
+    /**
      * Get the access token relation
      * @return Oauth2AccessTokenQueryInterface
      * @since 1.0.0

@@ -6,6 +6,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\base\Oauth2Bas
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
+use Yii;
 use yii\base\InvalidArgumentException;
 use yii\base\InvalidCallException;
 use yii\base\Model;
@@ -51,6 +52,11 @@ abstract class Oauth2BaseAuthorizationRequest extends Model implements Oauth2Bas
     /**
      * @var string|null
      */
+    protected $_state = null;
+
+    /**
+     * @var string|null
+     */
     public $_authorizationStatus = null;
 
     /**
@@ -76,6 +82,7 @@ abstract class Oauth2BaseAuthorizationRequest extends Model implements Oauth2Bas
             '_clientIdentifier' => $this->_clientIdentifier,
             '_userIdentifier' => $this->_userIdentifier,
             '_redirectUri' => $this->_redirectUri,
+            '_state' => $this->_state,
             '_authorizationStatus' => $this->_authorizationStatus,
             '_isCompleted' => $this->_isCompleted,
         ];
@@ -97,7 +104,10 @@ abstract class Oauth2BaseAuthorizationRequest extends Model implements Oauth2Bas
     public function init()
     {
         parent::init();
-        $this->_requestId = \Yii::$app->security->generateRandomString(128);
+
+        if (empty($this->getRequestId())) {
+            $this->_requestId = $this->generateRequestId();
+        }
     }
 
     /**
@@ -255,6 +265,23 @@ abstract class Oauth2BaseAuthorizationRequest extends Model implements Oauth2Bas
     /**
      * @inheritDoc
      */
+    public function getState()
+    {
+        return $this->_state;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setState($state)
+    {
+        $this->_state = $state;
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getAuthorizationStatus()
     {
         return $this->_authorizationStatus;
@@ -280,6 +307,11 @@ abstract class Oauth2BaseAuthorizationRequest extends Model implements Oauth2Bas
     public function isApproved()
     {
         return $this->getAuthorizationStatus() === static::AUTHORIZATION_APPROVED;
+    }
+
+    protected function generateRequestId()
+    {
+        return Yii::$app->security->generateRandomString(128);
     }
 
     /**

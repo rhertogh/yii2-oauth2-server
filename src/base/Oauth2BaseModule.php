@@ -8,6 +8,7 @@ use Lcobucci\JWT\Signer\Rsa\Sha256;
 use League\OAuth2\Server\CryptKey;
 use rhertogh\Yii2Oauth2Server\components\authorization\client\Oauth2ClientAuthorizationRequest;
 use rhertogh\Yii2Oauth2Server\components\authorization\client\Oauth2ClientScopeAuthorizationRequest;
+use rhertogh\Yii2Oauth2Server\components\authorization\EndSession\Oauth2EndSessionAuthorizationRequest;
 use rhertogh\Yii2Oauth2Server\components\encryption\Oauth2Cryptographer;
 use rhertogh\Yii2Oauth2Server\components\factories\encryption\Oauth2EncryptionKeyFactory;
 use rhertogh\Yii2Oauth2Server\components\factories\grants\Oauth2AuthCodeGrantFactory;
@@ -55,6 +56,7 @@ use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2PersonalAccessTokenContr
 use rhertogh\Yii2Oauth2Server\controllers\console\PersonalAccessToken\Oauth2GeneratePatAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\certificates\Oauth2JwksAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\consent\Oauth2AuthorizeClientAction;
+use rhertogh\Yii2Oauth2Server\controllers\web\consent\Oauth2AuthorizeEndSessionAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2CertificatesController;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ConsentController;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2OidcController;
@@ -68,6 +70,7 @@ use rhertogh\Yii2Oauth2Server\controllers\web\server\Oauth2RevokeAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\wellknown\Oauth2OpenidConfigurationAction;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client\Oauth2ClientAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client\Oauth2ClientScopeAuthorizationRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\EndSession\Oauth2EndSessionAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2CryptographerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\encryption\Oauth2EncryptionKeyFactoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\grants\Oauth2AuthCodeGrantFactoryInterface;
@@ -116,6 +119,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2PersonalAcces
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\PersonalAccessToken\Oauth2GeneratePatActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\certificates\Oauth2JwksActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\consent\Oauth2AuthorizeClientActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\consent\Oauth2AuthorizeEndSessionActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2CertificatesControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ConsentControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2OidcControllerInterface;
@@ -386,6 +390,7 @@ abstract class Oauth2BaseModule extends Module
         Oauth2OidcUserinfoActionInterface::class => Oauth2OidcUserinfoAction::class,
         Oauth2OidcEndSessionActionInterface::class => Oauth2OidcEndSessionAction::class,
         Oauth2AuthorizeClientActionInterface::class => Oauth2AuthorizeClientAction::class,
+        Oauth2AuthorizeEndSessionActionInterface::class => Oauth2AuthorizeEndSessionAction::class,
         Oauth2JwksActionInterface::class => Oauth2JwksAction::class,
         # Actions (console)
         Oauth2GeneratePatActionInterface::class => Oauth2GeneratePatAction::class,
@@ -418,10 +423,12 @@ abstract class Oauth2BaseModule extends Module
         Oauth2OidcScopeInterface::class => Oauth2OidcScope::class,
         Oauth2OidcClaimInterface::class => Oauth2OidcClaim::class,
         Oauth2OidcBearerTokenResponseInterface::class => Oauth2OidcBearerTokenResponse::class,
-        # Components (Misc)
-        Oauth2CryptographerInterface::class => Oauth2Cryptographer::class,
+        # Authorization
         Oauth2ClientAuthorizationRequestInterface::class => Oauth2ClientAuthorizationRequest::class,
         Oauth2ClientScopeAuthorizationRequestInterface::class => Oauth2ClientScopeAuthorizationRequest::class,
+        Oauth2EndSessionAuthorizationRequestInterface::class => Oauth2EndSessionAuthorizationRequest::class,
+        # Components (Misc)
+        Oauth2CryptographerInterface::class => Oauth2Cryptographer::class,
     ];
 
     /**

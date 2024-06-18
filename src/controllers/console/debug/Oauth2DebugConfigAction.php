@@ -105,6 +105,9 @@ class Oauth2DebugConfigAction extends Action implements Oauth2DebugConfigActionI
             'clientAuthorizationView' => $module->clientAuthorizationView,
             'openIdConnectUserinfoPath' => $module->openIdConnectUserinfoPath,
             'openIdConnectRpInitiatedLogoutPath' => $module->openIdConnectRpInitiatedLogoutPath,
+            'openIdConnectLogoutConfirmationUrl' => $module->openIdConnectLogoutConfirmationUrl,
+            'openIdConnectLogoutConfirmationPath' => $module->openIdConnectLogoutConfirmationPath,
+            'openIdConnectLogoutConfirmationView' => $module->openIdConnectLogoutConfirmationView,
 
             'exceptionOnInvalidScope' => $module->exceptionOnInvalidScope ? 'true' : 'false',
 
@@ -186,12 +189,29 @@ class Oauth2DebugConfigAction extends Action implements Oauth2DebugConfigActionI
                     $oidcUserinfoValue = '[Userinfo Endpoint is disabled]';
                     $oidcUserinfoSettings = 'openIdConnectUserinfoEndpoint';
                 }
+
+                if (!empty($module->openIdConnectRpInitiatedLogoutEndpoint)) {
+                    if ($module->openIdConnectRpInitiatedLogoutEndpoint === true) {
+                        $oidcRpInitiatedLogoutValue = $module->urlRulesPrefix . '/' . $module->openIdConnectRpInitiatedLogoutPath;
+                        $oidcRpInitiatedLogoutSettings = 'urlRulesPrefix, openIdConnectRpInitiatedLogoutPath';
+                    } else {
+                        $oidcRpInitiatedLogoutValue = $module->openIdConnectRpInitiatedLogoutEndpoint;
+                        $oidcRpInitiatedLogoutSettings = 'openIdConnectRpInitiatedLogoutEndpoint';
+                    }
+                } else {
+                    $oidcRpInitiatedLogoutValue = '[Rp Initiated Logout is disabled]';
+                    $oidcRpInitiatedLogoutSettings = 'openIdConnectRpInitiatedLogoutEndpoint';
+                }
+
             } else {
                 $oidcProviderConfigInfoValue = '[OpenID Connect is disabled]';
                 $oidcProviderConfigInfoSettings = 'enableOpenIdConnect';
 
                 $oidcUserinfoValue = '[OpenID Connect is disabled]';
                 $oidcUserinfoSettings = 'enableOpenIdConnect';
+
+                $oidcRpInitiatedLogoutValue = '[OpenID Connect is disabled]';
+                $oidcRpInitiatedLogoutSettings = 'enableOpenIdConnect';
             }
         } else {
             $authorizeClientValue = '[Only available for "authorization_server" role]';
@@ -214,6 +234,9 @@ class Oauth2DebugConfigAction extends Action implements Oauth2DebugConfigActionI
 
             $oidcUserinfoValue = '[Only available for "authorization_server" role]';
             $oidcUserinfoSettings = 'serverRole';
+
+            $oidcRpInitiatedLogoutValue = '[Only available for "authorization_server" role]';
+            $oidcRpInitiatedLogoutSettings = 'serverRole';
         }
 
         return [
@@ -228,6 +251,7 @@ class Oauth2DebugConfigAction extends Action implements Oauth2DebugConfigActionI
                 $oidcProviderConfigInfoSettings,
             ],
             'oidcUserinfo' => ['OpenId Connect Userinfo', $oidcUserinfoValue, $oidcUserinfoSettings],
+            'oidcRpInitiatedLogout' => ['OpenId Connect Rp Initiated Logout', $oidcRpInitiatedLogoutValue, $oidcRpInitiatedLogoutSettings],
         ];
     }
 }

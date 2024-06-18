@@ -117,6 +117,8 @@ class Oauth2DebugConfigActionTest extends TestCase
                 ],
             'oidcUserinfo' =>
                 ['OpenId Connect Userinfo', 'oauth2/oidc/userinfo', 'urlRulesPrefix, openIdConnectUserinfoPath'],
+            'oidcRpInitiatedLogout' =>
+                ['OpenId Connect Rp Initiated Logout', '[Rp Initiated Logout is disabled]', 'openIdConnectRpInitiatedLogoutEndpoint'],
         ];
 
         $expectedEndpoints = array_merge($defaultTestEndpoints, $overwriteExpectedEndpoints);
@@ -163,6 +165,8 @@ class Oauth2DebugConfigActionTest extends TestCase
                     ],
                     'oidcUserinfo' =>
                         ['OpenId Connect Userinfo', '[Only available for "authorization_server" role]', 'serverRole'],
+                    'oidcRpInitiatedLogout' =>
+                        ['OpenId Connect Rp Initiated Logout', '[Only available for "authorization_server" role]', 'serverRole'],
                 ],
             ],
             'revocation disabled' => [
@@ -188,6 +192,8 @@ class Oauth2DebugConfigActionTest extends TestCase
                         '[OpenID Connect is disabled]',
                         'enableOpenIdConnect',
                     ],
+                    'oidcRpInitiatedLogout' =>
+                        ['OpenId Connect Rp Initiated Logout', '[OpenID Connect is disabled]', 'enableOpenIdConnect'],
                 ],
             ],
             'OpenID Connect Discovery disabled' => [
@@ -224,6 +230,24 @@ class Oauth2DebugConfigActionTest extends TestCase
                         'https://custom_openIdConnectUserinfoEndpoint',
                         'openIdConnectUserinfoEndpoint'
                     ],
+                ],
+            ],
+            'OpenID Connect Rp Initiated Logout enabled' => [
+                [
+                    'openIdConnectRpInitiatedLogoutEndpoint' => true,
+                ],
+                [
+                    'oidcRpInitiatedLogout' =>
+                        ['OpenId Connect Rp Initiated Logout', 'oauth2/oidc/end-session', 'urlRulesPrefix, openIdConnectRpInitiatedLogoutPath'],
+                ],
+            ],
+            'OpenID Connect custom Rp Initiated Logout endpoint' => [
+                [
+                    'openIdConnectRpInitiatedLogoutEndpoint' => 'https://custom_openIdConnectEndSessionEndpoint',
+                ],
+                [
+                    'oidcRpInitiatedLogout' =>
+                        ['OpenId Connect Rp Initiated Logout', 'https://custom_openIdConnectEndSessionEndpoint', 'openIdConnectRpInitiatedLogoutEndpoint'],
                 ],
             ],
         ];

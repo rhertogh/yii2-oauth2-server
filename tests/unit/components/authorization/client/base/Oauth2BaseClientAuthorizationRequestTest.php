@@ -15,7 +15,6 @@ class Oauth2BaseClientAuthorizationRequestTest extends DatabaseTestCase
     {
         $baseClientAuthorizationRequest = $this->getMockBaseClientAuthorizationRequest();
         $authorizeUrl = 'https://localhost/auth_url';
-        $state = '1234567890abc';
         $grantType = Oauth2Module::GRANT_TYPE_AUTH_CODE;
         $prompts = 'abc';
         $maxAge = 1716921219;
@@ -24,7 +23,6 @@ class Oauth2BaseClientAuthorizationRequestTest extends DatabaseTestCase
 
         // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
         $this->setInaccessibleProperty($baseClientAuthorizationRequest, '_authorizeUrl', $authorizeUrl);
-        $this->setInaccessibleProperty($baseClientAuthorizationRequest, '_state', $state);
         $this->setInaccessibleProperty($baseClientAuthorizationRequest, '_grantType', $grantType);
         $this->setInaccessibleProperty($baseClientAuthorizationRequest, '_prompts', $prompts);
         $this->setInaccessibleProperty($baseClientAuthorizationRequest, '_maxAge', $maxAge);
@@ -37,7 +35,6 @@ class Oauth2BaseClientAuthorizationRequestTest extends DatabaseTestCase
         $this->assertInstanceOf(Oauth2BaseClientAuthorizationRequest::class, $baseClientAuthorizationRequest);
 
         $this->assertEquals($authorizeUrl, $this->getInaccessibleProperty($baseClientAuthorizationRequest, '_authorizeUrl'));
-        $this->assertEquals($state, $this->getInaccessibleProperty($baseClientAuthorizationRequest, '_state'));
         $this->assertEquals($grantType, $this->getInaccessibleProperty($baseClientAuthorizationRequest, '_grantType'));
         $this->assertEquals($prompts, $this->getInaccessibleProperty($baseClientAuthorizationRequest, '_prompts'));
         $this->assertEquals($maxAge, $this->getInaccessibleProperty($baseClientAuthorizationRequest, '_maxAge'));

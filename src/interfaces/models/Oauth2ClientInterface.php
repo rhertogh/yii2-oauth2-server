@@ -46,12 +46,12 @@ interface Oauth2ClientInterface extends
 
     public const OIDC_RP_INITIATED_LOGOUT_DISABLED = 0;
     public const OIDC_RP_INITIATED_LOGOUT_ENABLED = 1;
-    public const OIDC_RP_INITIATED_LOGOUT_ENABLED_WITHOUT_VERIFICATION = 2;
+    public const OIDC_RP_INITIATED_LOGOUT_ENABLED_WITHOUT_CONFIRMATION = 2;
 
-    public const  OIDC_RP_INITIATED_LOGOUT_OPTIONS = [
+    public const OIDC_RP_INITIATED_LOGOUT_OPTIONS = [
         self::OIDC_RP_INITIATED_LOGOUT_DISABLED,
         self::OIDC_RP_INITIATED_LOGOUT_ENABLED,
-        self::OIDC_RP_INITIATED_LOGOUT_ENABLED_WITHOUT_VERIFICATION,
+        self::OIDC_RP_INITIATED_LOGOUT_ENABLED_WITHOUT_CONFIRMATION,
     ];
 
     /**
@@ -147,7 +147,7 @@ interface Oauth2ClientInterface extends
 
     /**
      * @inheritdoc
-     * @return string[]|null
+     * @return string[]
      */
     public function getRedirectUri();
 

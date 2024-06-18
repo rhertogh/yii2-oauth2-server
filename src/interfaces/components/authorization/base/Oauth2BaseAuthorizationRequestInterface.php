@@ -140,6 +140,23 @@ interface Oauth2BaseAuthorizationRequestInterface extends Configurable
     public function setRedirectUri($redirectUri);
 
     /**
+     * Get the Oauth 2 request state.
+     * @return string
+     * @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1
+     * @since 1.0.0
+     */
+    public function getState();
+
+    /**
+     * Set the Oauth 2 request state.
+     * @param string $state
+     * @return $this
+     * @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.1
+     * @since 1.0.0
+     */
+    public function setState($state);
+
+    /**
      * Populates the model with user input data.
      * @param array $data
      * @param string|null $formName

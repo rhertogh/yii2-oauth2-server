@@ -15,4 +15,10 @@ interface Oauth2ConsentControllerInterface
      * @since 1.0.0
      */
     public const ACTION_NAME_AUTHORIZE_CLIENT = 'authorize-client';
+
+    /**
+     * Name for the Oauth2AuthorizeEndSessionAction in the controller's actions
+     * @since 1.0.0
+     */
+    public const ACTION_NAME_AUTHORIZE_END_SESSION = 'authorize-end-session';
 }

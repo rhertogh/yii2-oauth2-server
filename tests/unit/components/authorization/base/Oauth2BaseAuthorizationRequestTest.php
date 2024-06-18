@@ -23,6 +23,7 @@ class Oauth2BaseAuthorizationRequestTest extends DatabaseTestCase
         $clientIdentifier = 'client-id';
         $userIdentifier = 123;
         $redirectUri = 'https://localhost/redirect_url';
+        $state = '1234567890abc';
         $authorizationStatus = Oauth2BaseAuthorizationRequestInterface::AUTHORIZATION_APPROVED;
         $isCompleted = true;
 
@@ -31,6 +32,7 @@ class Oauth2BaseAuthorizationRequestTest extends DatabaseTestCase
         $this->setInaccessibleProperty($baseAuthorizationRequest, '_clientIdentifier', $clientIdentifier);
         $this->setInaccessibleProperty($baseAuthorizationRequest, '_userIdentifier', $userIdentifier);
         $this->setInaccessibleProperty($baseAuthorizationRequest, '_redirectUri', $redirectUri);
+        $this->setInaccessibleProperty($baseAuthorizationRequest, '_state', $state);
         $this->setInaccessibleProperty($baseAuthorizationRequest, '_authorizationStatus', $authorizationStatus);
         $this->setInaccessibleProperty($baseAuthorizationRequest, '_isCompleted', $isCompleted);
 
@@ -41,6 +43,7 @@ class Oauth2BaseAuthorizationRequestTest extends DatabaseTestCase
         $this->assertEquals($clientIdentifier, $this->getInaccessibleProperty($baseAuthorizationRequest, '_clientIdentifier'));
         $this->assertEquals($userIdentifier, $this->getInaccessibleProperty($baseAuthorizationRequest, '_userIdentifier'));
         $this->assertEquals($redirectUri, $this->getInaccessibleProperty($baseAuthorizationRequest, '_redirectUri'));
+        $this->assertEquals($state, $this->getInaccessibleProperty($baseAuthorizationRequest, '_state'));
         $this->assertEquals($authorizationStatus, $this->getInaccessibleProperty($baseAuthorizationRequest, '_authorizationStatus'));
         $this->assertEquals($isCompleted, $this->getInaccessibleProperty($baseAuthorizationRequest, '_isCompleted'));
         // phpcs:enable Generic.Files.LineLength.TooLong

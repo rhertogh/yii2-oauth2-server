@@ -64,4 +64,11 @@ interface Oauth2AccessTokenRepositoryInterface extends
      * @since 1.0.0
      */
     public function setRevocationValidation($validation);
+
+    /**
+     * @param int|string $userId
+     * @return Oauth2AccessTokenInterface[]
+     * @since 1.0.0
+     */
+    public function revokeAccessTokensByUserId($userId);
 }

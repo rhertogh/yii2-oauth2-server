@@ -18,11 +18,6 @@ abstract class Oauth2BaseClientAuthorizationRequest extends Oauth2BaseAuthorizat
     /**
      * @var string|null
      */
-    protected $_state = null;
-
-    /**
-     * @var string|null
-     */
     public $_grantType = null;
 
     /**
@@ -59,7 +54,6 @@ abstract class Oauth2BaseClientAuthorizationRequest extends Oauth2BaseAuthorizat
     {
         return array_merge(parent::__serialize(), [
             '_authorizeUrl' => $this->_authorizeUrl,
-            '_state' => $this->_state,
             '_grantType' => $this->_grantType,
             '_prompts' => $this->_prompts,
             '_maxAge' => $this->_maxAge,
@@ -115,23 +109,6 @@ abstract class Oauth2BaseClientAuthorizationRequest extends Oauth2BaseAuthorizat
     {
         $this->_authorizeUrl = $authorizeUrl;
         $this->setCompleted(false);
-        return $this;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getState()
-    {
-        return $this->_state;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setState($state)
-    {
-        $this->_state = $state;
         return $this;
     }
 

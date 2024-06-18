@@ -24,7 +24,9 @@ use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2PersonalAccessTokenContr
 use rhertogh\Yii2Oauth2Server\exceptions\Oauth2ServerException;
 use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\helpers\Psr7Helper;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\base\Oauth2BaseAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client\Oauth2ClientAuthorizationRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\EndSession\Oauth2EndSessionAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\common\DefaultAccessTokenTtlInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2CryptographerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\encryption\Oauth2EncryptionKeyFactoryInterface;
@@ -151,7 +153,13 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
      * Prefix used in session storage of Client Authorization Requests
      * @since 1.0.0
      */
-    protected const CLIENT_AUTHORIZATION_REQUEST_SESSION_PREFIX = 'OATH2_CLIENT_AUTHORIZATION_REQUEST_';
+    protected const CLIENT_AUTHORIZATION_REQUEST_SESSION_PREFIX = 'OAUTH2_CLIENT_AUTHORIZATION_REQUEST_';
+
+    /**
+     * Prefix used in session storage of End Session Authorization Requests
+     * @since 1.0.0
+     */
+    protected const END_SESSION_AUTHORIZATION_REQUEST_SESSION_PREFIX = 'OAUTH2_END_SESSION_AUTHORIZATION_REQUEST_SESSION_PREFIX_';
 
     /**
      * Controller mapping for the module. Will be parsed on `init()`.
@@ -316,26 +324,29 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
     public $jwksPath = 'certs';
 
     /**
-     * The URL to the page where the user can perform the client/scope authorization
+     * The URL to the page where the user can perform the Client/Scope authorization
      * (if `null` the build in page will be used).
      * @return string
      * @since 1.0.0
+     * @see $clientAuthorizationPath
      */
     public $clientAuthorizationUrl = null;
 
     /**
-     * @var string The URL path to the build in page where the user can authorize the client for the requested scopes
+     * @var string The URL path to the build in page where the user can authorize the Client for the requested Scopes
      * (will be prefixed with $urlRulesPrefix).
      * Note: This setting will only be used if $clientAuthorizationUrl is `null`.
      * @since 1.0.0
+     * @see $clientAuthorizationView
      */
     public $clientAuthorizationPath = 'authorize-client';
 
     /**
-     * @var string The view to use in the "client authorization action" for the page where the user can
-     * authorize the client for the requested scopes.
+     * @var string The view to use in the "Client Authorization" action for the page where the user can
+     * authorize the Client for the requested Scopes.
      * Note: This setting will only be used if $clientAuthorizationUrl is `null`.
      * @since 1.0.0
+     * @see $clientAuthorizationPath
      */
     public $clientAuthorizationView = 'authorize-client';
 
@@ -400,6 +411,34 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
      * @see https://openid.net/specs/openid-connect-rpinitiated-1_0.html
      */
     public $openIdConnectRpInitiatedLogoutPath = 'oidc/end-session';
+
+    /**
+     * The URL to the page where the user can perform the End Session (logout) confirmation
+     * (if `null` the build in page will be used).
+     * @return string
+     * @since 1.0.0
+     * @see $openIdConnectLogoutConfirmationPath
+     */
+    public $openIdConnectLogoutConfirmationUrl = null;
+
+    /**
+     * @var string The URL path to the build in page where the user can confirm the End Session (logout) request
+     * (will be prefixed with $urlRulesPrefix).
+     * Note: This setting will only be used if $openIdConnectLogoutConfirmationUrl is `null`.
+     * @since 1.0.0
+     * @see $openIdConnectLogoutConfirmationView
+     */
+    public $openIdConnectLogoutConfirmationPath = 'confirm-logout';
+
+    /**
+     * @var string The view to use in the "End Session Authorization" action for the page where the user can
+     * authorize the End Session (logout) request.
+     * Note: This setting will only be used if $openIdConnectLogoutConfirmationUrl is `null`.
+     * @since 1.0.0
+     * @see $openIdConnectLogoutConfirmationPath
+     */
+    public $openIdConnectLogoutConfirmationView = 'confirm-logout';
+
 
     /**
      * @var Oauth2GrantTypeFactoryInterface[]|GrantTypeInterface[]|string[]|Oauth2GrantTypeFactoryInterface|GrantTypeInterface|string|callable
@@ -638,6 +677,11 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
                 $rules[$this->openIdConnectRpInitiatedLogoutPath] =
                     Oauth2OidcControllerInterface::CONTROLLER_NAME
                     . '/' . Oauth2OidcControllerInterface::ACTION_END_SESSION;
+
+                if (empty($this->openIdConnectLogoutConfirmationUrl)) {
+                    $rules[$this->openIdConnectLogoutConfirmationPath] = Oauth2ConsentControllerInterface::CONTROLLER_NAME
+                        . '/' . Oauth2ConsentControllerInterface::ACTION_NAME_AUTHORIZE_END_SESSION;
+                }
             }
 
             $urlManager = $app->getUrlManager();
@@ -1059,8 +1103,8 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
     }
 
     /**
-     * Generates a redirect Response to the client authorization page where the user is prompted to authorize the
-     * client and requested scope.
+     * Generates a redirect Response to the Client Authorization page where the user is prompted to authorize the
+     * Client and requested Scope.
      * @param Oauth2ClientAuthorizationRequestInterface $clientAuthorizationRequest
      * @return Response
      * @since 1.0.0
@@ -1082,6 +1126,29 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
     }
 
     /**
+     * Generates a redirect Response to the End Session Authorization page where the user is prompted to authorize the
+     * logout.
+     * @param Oauth2EndSessionAuthorizationRequestInterface $endSessionAuthorizationRequest
+     * @return Response
+     * @since 1.0.0
+     */
+    public function generateEndSessionAuthReqRedirectResponse($endSessionAuthorizationRequest)
+    {
+        $this->setEndSessionAuthReqSession($endSessionAuthorizationRequest);
+        if (!empty($this->openIdConnectLogoutConfirmationUrl)) {
+            $url = $this->openIdConnectLogoutConfirmationUrl;
+        } else {
+            $url = $this->uniqueId
+                . '/' . Oauth2ConsentControllerInterface::CONTROLLER_NAME
+                . '/' . Oauth2ConsentControllerInterface::ACTION_NAME_AUTHORIZE_END_SESSION;
+        }
+        return Yii::$app->response->redirect([
+            $url,
+            'endSessionAuthorizationRequestId' => $endSessionAuthorizationRequest->getRequestId(),
+        ]);
+    }
+
+    /**
      * Get a previously stored Client Authorization Request from the session.
      * @param string $requestId
      * @return Oauth2ClientAuthorizationRequestInterface|null
@@ -1089,30 +1156,63 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
      */
     public function getClientAuthReqSession($requestId)
     {
+        return $this->getAuthReqSession(
+            $requestId,
+            static::CLIENT_AUTHORIZATION_REQUEST_SESSION_PREFIX,
+            Oauth2ClientAuthorizationRequestInterface::class,
+        );
+    }
+
+    /**
+     * Get a previously stored OIDC End Session Authorization Request from the session.
+     * @param string $requestId
+     * @return Oauth2EndSessionAuthorizationRequestInterface|null
+     * @since 1.0.0
+     */
+    public function getEndSessionAuthReqSession($requestId)
+    {
+        return $this->getAuthReqSession(
+            $requestId,
+            static::END_SESSION_AUTHORIZATION_REQUEST_SESSION_PREFIX,
+            Oauth2EndSessionAuthorizationRequestInterface::class,
+        );
+    }
+
+    /**
+     * Get a previously stored Authorization Request from the session.
+     * @template T of Oauth2BaseAuthorizationRequestInterface
+     * @param string $requestId
+     * @param string $cachePrefix
+     * @param class-string<T> $expectedInterface
+     * @return T|null
+     * @since 1.0.0
+     */
+    protected function getAuthReqSession($requestId, $cachePrefix, $expectedInterface)
+    {
         if (empty($requestId)) {
             return null;
         }
-        $key = static::CLIENT_AUTHORIZATION_REQUEST_SESSION_PREFIX . $requestId;
-        $clientAuthorizationRequest = Yii::$app->session->get($key);
-        if (!($clientAuthorizationRequest instanceof Oauth2ClientAuthorizationRequestInterface)) {
-            if (!empty($clientAuthorizationRequest)) {
+        $key = $cachePrefix . $requestId;
+        $authorizationRequest = Yii::$app->session->get($key);
+        if (!($authorizationRequest instanceof $expectedInterface)) {
+            if (!empty($authorizationRequest)) {
                 Yii::warning(
-                    'Found a ClientAuthorizationRequestSession with key "' . $key
-                        . '", but it\'s not a ' . Oauth2ClientAuthorizationRequestInterface::class
+                    'Found a Authorization Request Session with key "' . $key
+                    . '", but it\'s not a ' . $expectedInterface
                 );
             }
             return null;
         }
-        if ($clientAuthorizationRequest->getRequestId() !== $requestId) {
+        if ($authorizationRequest->getRequestId() !== $requestId) {
             Yii::warning(
-                'Found a ClientAuthorizationRequestSession with key "' . $key
-                    . '", but its request id does not match "' . $requestId . '".'
+                'Found a Authorization Request Session with key "' . $key
+                . '", but its request id does not match "' . $requestId . '".'
             );
             return null;
         }
-        $clientAuthorizationRequest->setModule($this);
+        $authorizationRequest->setModule($this);
 
-        return $clientAuthorizationRequest;
+        return $authorizationRequest;
     }
 
     /**
@@ -1122,12 +1222,68 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
      */
     public function setClientAuthReqSession($clientAuthorizationRequest)
     {
-        $requestId = $clientAuthorizationRequest->getRequestId();
+        $this->setAuthReqSession($clientAuthorizationRequest, static::CLIENT_AUTHORIZATION_REQUEST_SESSION_PREFIX);
+    }
+
+    /**
+     * Stores the OIDC End Session Authorization Request in the session.
+     * @param Oauth2EndSessionAuthorizationRequestInterface $endSessionAuthorizationRequest
+     * @since 1.0.0
+     */
+    public function setEndSessionAuthReqSession($endSessionAuthorizationRequest)
+    {
+        $this->setAuthReqSession($endSessionAuthorizationRequest, static::END_SESSION_AUTHORIZATION_REQUEST_SESSION_PREFIX);
+    }
+
+    /**
+     * Stores the Authorization Request in the session.
+     * @param Oauth2BaseAuthorizationRequestInterface $authorizationRequest
+     * @param string $cachePrefix
+     * @since 1.0.0
+     */
+    protected function setAuthReqSession($authorizationRequest, $cachePrefix)
+    {
+        $requestId = $authorizationRequest->getRequestId();
         if (empty($requestId)) {
-            throw new InvalidArgumentException('$scopeAuthorization must return a request id.');
+            throw new InvalidArgumentException('$authorizationRequest must return a request id.');
         }
-        $key = static::CLIENT_AUTHORIZATION_REQUEST_SESSION_PREFIX . $requestId;
-        Yii::$app->session->set($key, $clientAuthorizationRequest);
+        $key = $cachePrefix . $requestId;
+        Yii::$app->session->set($key, $authorizationRequest);
+    }
+
+    /**
+     * Clears a Client Authorization Request from the session storage.
+     * @param string $requestId
+     * @since 1.0.0
+     */
+    public function removeClientAuthReqSession($requestId)
+    {
+        $this->removeAuthReqSession($requestId, static::CLIENT_AUTHORIZATION_REQUEST_SESSION_PREFIX);
+    }
+
+    /**
+     * Clears an End Session Authorization Request from the session storage.
+     * @param string $requestId
+     * @since 1.0.0
+     */
+    public function removeEndSessionAuthReqSession($requestId)
+    {
+        $this->removeAuthReqSession($requestId, static::END_SESSION_AUTHORIZATION_REQUEST_SESSION_PREFIX);
+    }
+
+    /**
+     * Clears an Authorization Request from the session storage.
+     * @param string $requestId
+     * @param string $cachePrefix
+     * @since 1.0.0
+     */
+    public function removeAuthReqSession($requestId, $cachePrefix)
+    {
+        if (empty($requestId)) {
+            throw new InvalidArgumentException('$requestId can not be empty.');
+        }
+        $key = $cachePrefix . $requestId;
+        Yii::$app->session->remove($key);
     }
 
     /**
@@ -1163,20 +1319,6 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
     }
 
     /**
-     * Clears a Client Authorization Request from the session storage.
-     * @param string $requestId
-     * @since 1.0.0
-     */
-    public function removeClientAuthReqSession($requestId)
-    {
-        if (empty($requestId)) {
-            throw new InvalidArgumentException('$requestId can not be empty.');
-        }
-        $key = static::CLIENT_AUTHORIZATION_REQUEST_SESSION_PREFIX . $requestId;
-        Yii::$app->session->remove($key);
-    }
-
-    /**
      * Generates a redirect Response when the Client Authorization Request is completed.
      * @param Oauth2ClientAuthorizationRequestInterface $clientAuthorizationRequest
      * @return Response
@@ -1187,6 +1329,19 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
         $clientAuthorizationRequest->processAuthorization();
         $this->setClientAuthReqSession($clientAuthorizationRequest);
         return Yii::$app->response->redirect($clientAuthorizationRequest->getAuthorizationRequestUrl());
+    }
+
+    /**
+     * Generates a redirect Response when the End Session Authorization Request is completed.
+     * @param Oauth2EndSessionAuthorizationRequestInterface $endSessionAuthorizationRequest
+     * @return Response
+     * @since 1.0.0
+     */
+    public function generateEndSessionAuthReqCompledRedirectResponse($endSessionAuthorizationRequest)
+    {
+        $endSessionAuthorizationRequest->processAuthorization();
+        $this->setEndSessionAuthReqSession($endSessionAuthorizationRequest);
+        return Yii::$app->response->redirect($endSessionAuthorizationRequest->getEndSessionRequestUrl());
     }
 
     /**
@@ -1351,11 +1506,32 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
         }
     }
 
-    public function logoutUser()
+    /**
+     * @throws InvalidConfigException
+     */
+    public function logoutUser($revokeTokens = true)
     {
-        Yii::$app->user->logout();
+        $identity = $this->getUserIdentity();
+
+        if ($identity) {
+            if ($revokeTokens) {
+                $this->revokeTokensByUserId($identity->getId());
+            }
+
+            Yii::$app->user->logout();
+        }
     }
 
+    public function revokeTokensByUserId($userId)
+    {
+        $accessTokens = $this->getAccessTokenRepository()->revokeAccessTokensByUserId($userId);
+        $accessTokenIds = array_map(fn($accessToken) => $accessToken->getPrimaryKey(), $accessTokens);
+        $this->getRefreshTokenRepository()->revokeRefreshTokensByAccessTokenIds($accessTokenIds);
+    }
+
+    /**
+     * @return int
+     */
     public function getElaboratedHttpClientErrorsLogLevel()
     {
         if ($this->httpClientErrorsLogLevel === null) {

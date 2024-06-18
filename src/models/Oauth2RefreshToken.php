@@ -45,6 +45,18 @@ class Oauth2RefreshToken extends base\Oauth2RefreshToken implements Oauth2Refres
         return parent::getAccessToken();
     }
 
+    ////////////////////////
+    /// Static Functions ///
+    ////////////////////////
+
+    /**
+     * @inheritDoc
+     */
+    public static function findAllByAccessTokenIds($accessTokenIds)
+    {
+        return static::find()->where(['access_token_id' => $accessTokenIds])->all();
+    }
+
     /////////////////////////
     /// Getters & Setters ///
     /////////////////////////

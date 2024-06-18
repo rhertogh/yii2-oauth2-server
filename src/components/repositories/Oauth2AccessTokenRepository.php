@@ -6,10 +6,14 @@ use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use rhertogh\Yii2Oauth2Server\components\repositories\base\Oauth2BaseTokenRepository;
 use rhertogh\Yii2Oauth2Server\components\repositories\traits\Oauth2ModelRepositoryTrait;
+use rhertogh\Yii2Oauth2Server\helpers\DiHelper;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\Oauth2AccessTokenRepositoryInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2IdentifierInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\base\Oauth2UserIdentifierInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use yii\base\InvalidConfigException;
+use yii\db\Connection;
 
 class Oauth2AccessTokenRepository extends Oauth2BaseTokenRepository implements Oauth2AccessTokenRepositoryInterface
 {
@@ -97,5 +101,34 @@ class Oauth2AccessTokenRepository extends Oauth2BaseTokenRepository implements O
     {
         $this->_revocationValidation = $validation;
         return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function revokeAccessTokensByUserId($userId)
+    {
+        $class = $this->getModelClass();
+        /** @var class-string<Oauth2AccessTokenInterface> $className */
+        $className = DiHelper::getValidatedClassName($class);
+
+        $db = $className::getDb();
+
+        $transaction = $db->beginTransaction();
+
+        try {
+            /** @var Oauth2AccessTokenInterface[] $accessTokens */
+            $accessTokens = $className::findAllByUserId($userId);
+            foreach ($accessTokens as $accessToken) {
+                $accessToken->setRevokedStatus(true);
+                $accessToken->persist();
+            }
+            $transaction->commit();
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+
+        return $accessTokens;
     }
 }

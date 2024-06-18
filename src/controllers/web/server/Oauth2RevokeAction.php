@@ -20,7 +20,10 @@ use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 /**
+ * OAuth 2.0 Token Revocation (RFC 7009)
+ *
  * @property Oauth2ServerController $controller
+ * @see https://datatracker.ietf.org/doc/html/rfc7009
  */
 class Oauth2RevokeAction extends Oauth2BaseServerAction implements Oauth2RevokeActionInterface
 {

@@ -1,6 +1,7 @@
 <?php
 
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeCollectionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use rhertogh\Yii2Oauth2Server\models\Oauth2Scope;
 use yii\db\Migration;
 
@@ -120,8 +121,10 @@ class m210103_000000_oauth2_sample extends Migration
             'secret' => '2021-01-01::3vUCADtKx59NPQl3/1fJXmppRbiug3iccJc1S9XY6TPvLE02/+ggB8GtIc24J5oMTj38NIPIpNt8ClNDS7ZBI4+ykNxYOuEHQfdkDiUf5WVKtLegx43gLXfq', # "secret"
             'name' => 'Sample client for OpenID Connect with Grant Type Auth Code',
             'redirect_uris' => '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
+            'post_logout_redirect_uris' => '["http://localhost/post_logout_redirect_uri"]',
             'token_types' => 1, # Bearer
             'grant_types' => 5, # AUTH_CODE | REFRESH_TOKEN
+            'oidc_rp_initiated_logout' => Oauth2ClientInterface::OIDC_RP_INITIATED_LOGOUT_ENABLED,
             'enabled' => 1,
             'created_at' => time(),
             'updated_at' => time(),

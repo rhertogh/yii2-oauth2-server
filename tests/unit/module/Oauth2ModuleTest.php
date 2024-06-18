@@ -39,6 +39,7 @@ use yii\base\Application;
 use yii\filters\auth\HttpBearerAuth;
 use yii\helpers\ReplaceArrayValue;
 use yii\helpers\UnsetArrayValue;
+use yii\log\Logger;
 use yii\web\GroupUrlRule;
 use yii\web\IdentityInterface;
 use Yii2Oauth2ServerTests\_helpers\TestUserModel;
@@ -943,7 +944,7 @@ class Oauth2ModuleTest extends DatabaseTestCase
             }
         };
 
-        $this->expectExceptionMessage('$scopeAuthorization must return a request id.');
+        $this->expectExceptionMessage('$authorizationRequest must return a request id.');
         $module->setClientAuthReqSession($invalidClientAuthorizationRequest);
     }
 
@@ -1239,6 +1240,47 @@ class Oauth2ModuleTest extends DatabaseTestCase
                         new Oauth2Scope(['identifier' => 'user.username.read']),
                     ];
                 },
+            ],
+        ];
+    }
+
+    /**
+     * @param int|null $settingLevel
+     * @param int $expectedOutputLevel
+     *
+     * @dataProvider getElaboratedHttpClientErrorsLogLevelProvider
+     */
+    public function testGetElaboratedHttpClientErrorsLogLevel($settingLevel, $expectedOutputLevel)
+    {
+        $this->mockWebApplication([
+            'modules' => [
+                'oauth2' => [
+                    'httpClientErrorsLogLevel' => $settingLevel,
+                ],
+            ],
+        ]);
+        $module = Oauth2Module::getInstance();
+
+        $outputLevel = $module->getElaboratedHttpClientErrorsLogLevel();
+
+        $this->assertEquals($expectedOutputLevel, $outputLevel);
+    }
+
+    /**
+     * @return array[]
+     * @see testGetElaboratedHttpClientErrorsLogLevel()
+     */
+    public function getElaboratedHttpClientErrorsLogLevelProvider()
+    {
+        return [
+            'unspecified level' => [
+                null,
+                Logger::LEVEL_ERROR,
+            ],
+
+            'specified level' => [
+                Logger::LEVEL_WARNING,
+                Logger::LEVEL_WARNING,
             ],
         ];
     }
