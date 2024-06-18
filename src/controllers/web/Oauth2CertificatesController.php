@@ -3,7 +3,7 @@
 namespace rhertogh\Yii2Oauth2Server\controllers\web;
 
 use rhertogh\Yii2Oauth2Server\controllers\web\base\Oauth2BaseApiController;
-use rhertogh\Yii2Oauth2Server\controllers\web\certificates\Oauth2JwksAction;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\certificates\Oauth2JwksActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2CertificatesControllerInterface;
 use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
@@ -31,7 +31,7 @@ class Oauth2CertificatesController extends Oauth2BaseApiController implements Oa
     public function actions()
     {
         return [
-            static::ACTION_NAME_JWKS => Oauth2JwksAction::class,
+            static::ACTION_NAME_JWKS => Oauth2JwksActionInterface::class,
         ];
     }
 }

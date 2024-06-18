@@ -10,6 +10,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\request\Oauth2
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2CertificatesControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2OidcControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ServerControllerInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\wellknown\Oauth2OpenidConfigurationActionInterface;
 use Yii;
 use yii\helpers\Url;
 use yii\web\ForbiddenHttpException;
@@ -17,7 +18,7 @@ use yii\web\ForbiddenHttpException;
 /**
  * @property Oauth2WellKnownController $controller
  */
-class Oauth2OpenidConfigurationAction extends Oauth2BaseWebAction
+class Oauth2OpenidConfigurationAction extends Oauth2BaseWebAction implements Oauth2OpenidConfigurationActionInterface
 {
     /**
      *

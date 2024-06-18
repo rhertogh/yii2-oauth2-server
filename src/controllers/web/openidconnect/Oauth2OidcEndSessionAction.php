@@ -14,6 +14,7 @@ use League\OAuth2\Server\RedirectUriValidators\RedirectUriValidator;
 use rhertogh\Yii2Oauth2Server\controllers\web\base\Oauth2BaseWebAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2OidcController;
 use rhertogh\Yii2Oauth2Server\helpers\UrlHelper;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\openidconnect\Oauth2OidcEndSessionActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use Yii;
@@ -26,7 +27,7 @@ use yii\web\UnauthorizedHttpException;
 /**
  * @property Oauth2OidcController $controller
  */
-class Oauth2OidcEndSessionAction extends Oauth2BaseWebAction
+class Oauth2OidcEndSessionAction extends Oauth2BaseWebAction implements Oauth2OidcEndSessionActionInterface
 {
     /**
      * @see https://openid.net/specs/openid-connect-rpinitiated-1_0.html

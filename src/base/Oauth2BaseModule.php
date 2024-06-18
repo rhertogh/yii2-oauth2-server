@@ -35,11 +35,19 @@ use rhertogh\Yii2Oauth2Server\components\server\grants\Oauth2RefreshTokenGrant;
 use rhertogh\Yii2Oauth2Server\components\server\Oauth2AuthorizationServer;
 use rhertogh\Yii2Oauth2Server\components\server\Oauth2ResourceServer;
 use rhertogh\Yii2Oauth2Server\components\server\responses\Oauth2BearerTokenResponse;
+use rhertogh\Yii2Oauth2Server\controllers\web\certificates\Oauth2JwksAction;
+use rhertogh\Yii2Oauth2Server\controllers\web\consent\Oauth2AuthorizeClientAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2CertificatesController;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ConsentController;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2OidcController;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ServerController;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2WellKnownController;
+use rhertogh\Yii2Oauth2Server\controllers\web\openidconnect\Oauth2OidcEndSessionAction;
+use rhertogh\Yii2Oauth2Server\controllers\web\openidconnect\Oauth2OidcUserinfoAction;
+use rhertogh\Yii2Oauth2Server\controllers\web\server\Oauth2AccessTokenAction;
+use rhertogh\Yii2Oauth2Server\controllers\web\server\Oauth2AuthorizeAction;
+use rhertogh\Yii2Oauth2Server\controllers\web\server\Oauth2RevokeAction;
+use rhertogh\Yii2Oauth2Server\controllers\web\wellknown\Oauth2OpenidConfigurationAction;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ClientAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\Oauth2ScopeAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2CryptographerInterface;
@@ -70,11 +78,19 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2RefreshT
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\Oauth2AuthorizationServerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\Oauth2ResourceServerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\responses\Oauth2BearerTokenResponseInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\certificates\Oauth2JwksActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\consent\Oauth2AuthorizeClientActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2CertificatesControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ConsentControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2OidcControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2ServerControllerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2WellKnownControllerInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\openidconnect\Oauth2OidcEndSessionActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\openidconnect\Oauth2OidcUserinfoActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\server\Oauth2AccessTokenActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\server\Oauth2AuthorizeActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\server\Oauth2RevokeActionInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\wellknown\Oauth2OpenidConfigurationActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenScopeInterface;
@@ -320,6 +336,15 @@ abstract class Oauth2BaseModule extends Module
         Oauth2WellKnownControllerInterface::class => Oauth2WellKnownController::class,
         Oauth2CertificatesControllerInterface::class => Oauth2CertificatesController::class,
         Oauth2OidcControllerInterface::class => Oauth2OidcController::class,
+        # Actions
+        Oauth2OpenidConfigurationActionInterface::class => Oauth2OpenidConfigurationAction::class,
+        Oauth2RevokeActionInterface::class => Oauth2RevokeAction::class,
+        Oauth2AuthorizeActionInterface::class => Oauth2AuthorizeAction::class,
+        Oauth2AccessTokenActionInterface::class => Oauth2AccessTokenAction::class,
+        Oauth2OidcUserinfoActionInterface::class => Oauth2OidcUserinfoAction::class,
+        Oauth2OidcEndSessionActionInterface::class => Oauth2OidcEndSessionAction::class,
+        Oauth2AuthorizeClientActionInterface::class => Oauth2AuthorizeClientAction::class,
+        Oauth2JwksActionInterface::class => Oauth2JwksAction::class,
         # Components (Server)
         Oauth2AuthorizationServerInterface::class => Oauth2AuthorizationServer::class,
         Oauth2ResourceServerInterface::class => Oauth2ResourceServer::class,

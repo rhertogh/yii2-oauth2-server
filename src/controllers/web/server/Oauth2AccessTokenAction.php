@@ -5,13 +5,14 @@ namespace rhertogh\Yii2Oauth2Server\controllers\web\server;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ServerController;
 use rhertogh\Yii2Oauth2Server\controllers\web\server\base\Oauth2BaseServerAction;
 use rhertogh\Yii2Oauth2Server\helpers\Psr7Helper;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\server\Oauth2AccessTokenActionInterface;
 use Yii;
 use yii\web\HttpException;
 
 /**
  * @property Oauth2ServerController $controller
  */
-class Oauth2AccessTokenAction extends Oauth2BaseServerAction
+class Oauth2AccessTokenAction extends Oauth2BaseServerAction implements Oauth2AccessTokenActionInterface
 {
     /**
      * @throws HttpException

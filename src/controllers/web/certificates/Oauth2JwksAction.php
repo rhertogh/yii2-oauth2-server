@@ -6,13 +6,14 @@ use Jose\Component\Core\JWK;
 use Jose\Component\Core\JWKSet;
 use rhertogh\Yii2Oauth2Server\controllers\web\base\Oauth2BaseWebAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2CertificatesController;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\certificates\Oauth2JwksActionInterface;
 use yii\base\InvalidConfigException;
 use yii\helpers\StringHelper;
 
 /**
  * @property Oauth2CertificatesController $controller
  */
-class Oauth2JwksAction extends Oauth2BaseWebAction
+class Oauth2JwksAction extends Oauth2BaseWebAction implements Oauth2JwksActionInterface
 {
     /**
      * RFC7517: JSON Web Key (JWK)
