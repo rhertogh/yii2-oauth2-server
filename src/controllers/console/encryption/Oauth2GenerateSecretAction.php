@@ -5,6 +5,8 @@ namespace rhertogh\Yii2Oauth2Server\controllers\console\encryption;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2EncryptionController;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\encryption\Oauth2GenerateSecretActionInterface;
 use yii\base\Action;
+use yii\base\Exception;
+use yii\base\InvalidConfigException;
 use yii\console\ExitCode;
 use yii\helpers\Json;
 
@@ -13,6 +15,13 @@ use yii\helpers\Json;
  */
 class Oauth2GenerateSecretAction extends Action implements Oauth2GenerateSecretActionInterface
 {
+    /**
+     * Generate a new random secret.
+     *
+     * @return int
+     * @throws Exception
+     * @throws InvalidConfigException
+     */
     public function run()
     {
         $module = $this->controller->module;

@@ -15,6 +15,13 @@ use yii\helpers\Console;
  */
 class Oauth2RotateEncryptionKeysAction extends Action implements Oauth2RotateEncryptionKeysActionInterface
 {
+    /**
+     * Update the encryption key for all encrypted data to the new encryption key.
+     *
+     * @return int
+     * @throws \Throwable
+     * @throws \yii\base\InvalidConfigException
+     */
     public function run()
     {
         $module = $this->controller->module;

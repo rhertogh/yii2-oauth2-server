@@ -6,6 +6,7 @@ use rhertogh\Yii2Oauth2Server\controllers\console\base\traits\GenerateClientsTab
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2ClientController;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2ListClientsActionInterface;
 use yii\base\Action;
+use yii\base\InvalidConfigException;
 use yii\console\ExitCode;
 
 /**
@@ -15,6 +16,12 @@ class Oauth2ListClientsAction extends Action implements Oauth2ListClientsActionI
 {
     use GenerateClientsTableTrait;
 
+    /**
+     * List all configured Oauth2 Clients.
+     *
+     * @return int
+     * @throws InvalidConfigException
+     */
     public function run()
     {
         $module = $this->controller->module;

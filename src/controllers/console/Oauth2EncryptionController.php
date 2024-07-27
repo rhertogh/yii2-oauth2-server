@@ -9,6 +9,9 @@ use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\encryption\Oauth2Ge
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2EncryptionControllerInterface;
 use yii\helpers\ArrayHelper;
 
+/**
+ * Manage Oauth2 Server encryption keys.
+ */
 class Oauth2EncryptionController extends Oauth2BaseConsoleController implements Oauth2EncryptionControllerInterface
 {
     /**

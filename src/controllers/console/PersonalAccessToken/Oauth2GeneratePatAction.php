@@ -13,6 +13,9 @@ use yii\console\ExitCode;
  */
 class Oauth2GeneratePatAction extends Action implements Oauth2GeneratePatActionInterface
 {
+    /**
+     * Generate an Oauth2 "Personal Access Token".
+     */
     public function run()
     {
         $module = $this->controller->module;

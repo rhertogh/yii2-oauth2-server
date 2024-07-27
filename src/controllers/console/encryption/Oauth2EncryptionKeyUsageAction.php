@@ -13,6 +13,12 @@ use yii\console\widgets\Table;
  */
 class Oauth2EncryptionKeyUsageAction extends Action implements Oauth2EncryptionKeyUsageActionInterface
 {
+    /**
+     * Lists how many times each encryption key is used.
+     *
+     * @throws \Throwable
+     * @throws \yii\base\InvalidConfigException
+     */
     public function run()
     {
         $module = $this->controller->module;

@@ -12,6 +12,9 @@ use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2SetCli
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2ClientControllerInterface;
 use yii\helpers\ArrayHelper;
 
+/**
+ * Manage Oauth2 Clients.
+ */
 class Oauth2ClientController extends Oauth2BaseConsoleController implements Oauth2ClientControllerInterface
 {
     /**

@@ -13,6 +13,9 @@ use yii\helpers\Console;
  */
 class Oauth2DeleteClientAction extends Oauth2BaseClientAction implements Oauth2DeleteClientActionInterface
 {
+    /**
+     * Delete an existing Oauth2 Client.
+     */
     public function run($id)
     {
         $controller = $this->controller;

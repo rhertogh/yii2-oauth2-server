@@ -19,6 +19,9 @@ use yii\helpers\Console;
  */
 class Oauth2CreateClientAction extends Oauth2BaseEditClientAction implements Oauth2CreateClientActionInterface
 {
+    /**
+     * Create a new Oauth2 Client.
+     */
     public function run()
     {
         $controller = $this->controller;

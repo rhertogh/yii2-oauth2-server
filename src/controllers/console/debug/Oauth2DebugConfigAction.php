@@ -18,6 +18,11 @@ use yii\log\Logger;
  */
 class Oauth2DebugConfigAction extends Action implements Oauth2DebugConfigActionInterface
 {
+    /**
+     * Show Oauth2 Server configuration.
+     *
+     * @throws \Throwable
+     */
     public function run()
     {
         $module = $this->controller->module;

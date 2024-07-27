@@ -9,6 +9,9 @@ use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2ViewCl
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
+use Throwable;
+use yii\base\InvalidConfigException;
+use yii\console\Exception as ConsoleException;
 use yii\console\ExitCode;
 use yii\console\widgets\Table;
 use yii\helpers\Console;
@@ -18,6 +21,13 @@ use yii\helpers\Console;
  */
 class Oauth2ViewClientAction extends Oauth2BaseClientAction implements Oauth2ViewClientActionInterface
 {
+    /**
+     * View configuration details of an Oauth2 Client.
+     *
+     * @throws Throwable
+     * @throws InvalidConfigException
+     * @throws ConsoleException
+     */
     public function run($id)
     {
         $module = $this->controller->module;

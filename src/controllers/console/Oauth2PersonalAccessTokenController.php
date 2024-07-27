@@ -7,6 +7,9 @@ use rhertogh\Yii2Oauth2Server\controllers\console\PersonalAccessToken\Oauth2Gene
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2PersonalAccessTokenControllerInterface;
 use yii\helpers\ArrayHelper;
 
+/**
+ * Manage Oauth2 "Personal Access Tokens".
+ */
 class Oauth2PersonalAccessTokenController extends Oauth2BaseConsoleController implements Oauth2PersonalAccessTokenControllerInterface
 {
     /**

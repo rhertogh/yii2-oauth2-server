@@ -8,6 +8,9 @@ use rhertogh\Yii2Oauth2Server\controllers\console\migrations\Oauth2GenerateMigra
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2MigrationsControllerInterface;
 use yii\helpers\ArrayHelper;
 
+/**
+ * Manage Oauth2 Server migrations.
+ */
 class Oauth2MigrationsController extends Oauth2BaseConsoleController implements Oauth2MigrationsControllerInterface
 {
     /**

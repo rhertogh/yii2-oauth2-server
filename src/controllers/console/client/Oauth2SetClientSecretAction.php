@@ -9,6 +9,7 @@ use Yii;
 use yii\base\Action;
 use yii\base\InvalidArgumentException;
 use yii\base\InvalidCallException;
+use yii\base\InvalidConfigException;
 use yii\console\ExitCode;
 use yii\helpers\Console;
 use yii\helpers\StringHelper;
@@ -19,7 +20,9 @@ use yii\helpers\StringHelper;
 class Oauth2SetClientSecretAction extends Action implements Oauth2SetClientSecretActionInterface
 {
     /**
-     * @throws \yii\base\InvalidConfigException
+     * Update the "client secret" of an Oauth2 Client.
+     *
+     * @throws InvalidConfigException
      */
     public function run()
     {

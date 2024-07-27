@@ -6,6 +6,7 @@ use rhertogh\Yii2Oauth2Server\controllers\console\migrations\base\Oauth2BaseGene
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2MigrationsController;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\migrations\Oauth2GenerateMigrationsActionInterface;
 use rhertogh\Yii2Oauth2Server\migrations\base\Oauth2BaseMigration;
+use yii\base\Exception;
 use yii\base\InvalidConfigException;
 
 /**
@@ -13,6 +14,13 @@ use yii\base\InvalidConfigException;
  */
 class Oauth2GenerateMigrationsAction extends Oauth2BaseGenerateMigrationsAction implements Oauth2GenerateMigrationsActionInterface
 {
+    /**
+     * Generate the migrations needed for the Oauth2 Server based on the current configuration.
+     *
+     * @return int
+     * @throws InvalidConfigException
+     * @throws Exception
+     */
     public function run()
     {
         $sourcePath = $this->getMigrationsSourcePath();

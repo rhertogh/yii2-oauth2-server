@@ -6,6 +6,9 @@ use rhertogh\Yii2Oauth2Server\controllers\console\base\Oauth2BaseConsoleControll
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\debug\Oauth2DebugConfigActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\Oauth2DebugControllerInterface;
 
+/**
+ * Oauth2 Server information and debugging.
+ */
 class Oauth2DebugController extends Oauth2BaseConsoleController implements Oauth2DebugControllerInterface
 {
     /**

@@ -17,6 +17,9 @@ use yii\db\Connection;
  */
 class Oauth2GenerateImportMigrationAction extends Oauth2BaseGenerateMigrationsAction implements Oauth2GenerateImportMigrationActionInterface
 {
+    /**
+     * Generate a migration to import data from another Oauth server.
+     */
     public function run($origin)
     {
         $imports = [

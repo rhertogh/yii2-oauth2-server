@@ -5,7 +5,10 @@ namespace rhertogh\Yii2Oauth2Server\controllers\console\client;
 use rhertogh\Yii2Oauth2Server\controllers\console\client\base\Oauth2BaseEditClientAction;
 use rhertogh\Yii2Oauth2Server\controllers\console\Oauth2ClientController;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\console\client\Oauth2UpdateClientActionInterface;
+use yii\base\InvalidConfigException;
+use yii\console\Exception;
 use yii\console\ExitCode;
+use yii\db\Exception as DbException;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Console;
 
@@ -14,6 +17,13 @@ use yii\helpers\Console;
  */
 class Oauth2UpdateClientAction extends Oauth2BaseEditClientAction implements Oauth2UpdateClientActionInterface
 {
+    /**
+     * Update an existing Oauth2 Client.
+     *
+     * @throws InvalidConfigException
+     * @throws Exception
+     * @throws DbException
+     */
     public function run($id)
     {
         $controller = $this->controller;
