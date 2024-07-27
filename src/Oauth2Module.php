@@ -606,6 +606,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
             $controllerMap = static::CONTROLLER_MAP[static::APPLICATION_TYPE_WEB];
         } elseif ($app instanceof ConsoleApplication || $this->appType == static::APPLICATION_TYPE_CONSOLE) {
             $controllerMap = static::CONTROLLER_MAP[static::APPLICATION_TYPE_CONSOLE];
+            $this->defaultRoute = 'debug';
         } else {
             throw new InvalidConfigException(
                 'Unable to detect application type, configure it manually by setting `$appType`.'
