@@ -9,7 +9,7 @@ use yii\web\View;
  */
 
 if ($user) {
-    echo 'Current user: ' . $user->username;
+    echo 'Current user: ' . $user->username . ' (id: ' . $user->id . ')';
 } else {
     echo 'Not logged in';
 }
