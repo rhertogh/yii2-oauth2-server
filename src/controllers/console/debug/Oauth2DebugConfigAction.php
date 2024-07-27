@@ -80,6 +80,10 @@ class Oauth2DebugConfigAction extends Action implements Oauth2DebugConfigActionI
             ? VarDumper::export($module->clientRedirectUrisEnvVarConfig)
             : '';
 
+        $userAccountCreationUrl = $module->userAccountCreationUrl
+            ? VarDumper::export($module->userAccountCreationUrl)
+            : '';
+
         $httpClientErrorsLogLevel = $module->getElaboratedHttpClientErrorsLogLevel();
 
         return [
@@ -95,6 +99,8 @@ class Oauth2DebugConfigAction extends Action implements Oauth2DebugConfigActionI
             'nonTlsAllowedRanges' => $module->nonTlsAllowedRanges,
 
             'clientRedirectUrisEnvVarConfig' => $clientRedirectUrisEnvVarConfig,
+
+            'userAccountCreationUrl' => $userAccountCreationUrl,
 
             'identityClass' => $module->identityClass,
 

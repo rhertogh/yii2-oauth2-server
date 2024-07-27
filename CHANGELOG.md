@@ -11,6 +11,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ----------------------------
 
 ### Added
+- Initiating User Registration via OpenID Connect. (rhertogh)
 
 ### Changed
 

@@ -102,15 +102,16 @@ If that doesn't solve the problem, please [report an issue](docs/internals/repor
 📒 Implemented Standards
 -----------------------
 
-| Name                                                       | RFC / Specs                                                                    | Since  |
-|------------------------------------------------------------|--------------------------------------------------------------------------------|--------|
-| OAuth 2.0                                                  | [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749)                      | 1.0.0¹ |
-| The OAuth 2.0 Authorization Framework: Bearer Token Usage  | [RFC 6750](https://datatracker.ietf.org/doc/html/rfc6750)                      | 1.0.0¹ |
-| Proof Key for Code Exchange by OAuth Public Clients (PKCE) | [RFC 7636](https://datatracker.ietf.org/doc/html/rfc7636)                      | 1.0.0¹ |
-| OAuth 2.0 Token Revocation                                 | [RFC 7009](https://datatracker.ietf.org/doc/html/rfc7009)                      | 1.0.0  |
-| OpenID Connect Core 1.0                                    | [Specifications](https://openid.net/specs/openid-connect-core-1_0.html)        | 1.0.0  |
-| OpenID Connect Discovery 1.0                               | [Specifications](https://openid.net/specs/openid-connect-discovery-1_0.html)   | 1.0.0  |
-| OpenID Connect RP-Initiated Logout                         | [Specifications](https://openid.net/specs/openid-connect-rpinitiated-1_0.html) | 1.0.0  |
+| Name                                                       | RFC / Specs                                                                      | Since  |
+|------------------------------------------------------------|----------------------------------------------------------------------------------|--------|
+| OAuth 2.0                                                  | [RFC 6749](https://datatracker.ietf.org/doc/html/rfc6749)                        | 1.0.0¹ |
+| The OAuth 2.0 Authorization Framework: Bearer Token Usage  | [RFC 6750](https://datatracker.ietf.org/doc/html/rfc6750)                        | 1.0.0¹ |
+| Proof Key for Code Exchange by OAuth Public Clients (PKCE) | [RFC 7636](https://datatracker.ietf.org/doc/html/rfc7636)                        | 1.0.0¹ |
+| OAuth 2.0 Token Revocation                                 | [RFC 7009](https://datatracker.ietf.org/doc/html/rfc7009)                        | 1.0.0  |
+| OpenID Connect Core 1.0                                    | [Specifications](https://openid.net/specs/openid-connect-core-1_0.html)          | 1.0.0  |
+| OpenID Connect Discovery 1.0                               | [Specifications](https://openid.net/specs/openid-connect-discovery-1_0.html)     | 1.0.0  |
+| OpenID Connect RP-Initiated Logout                         | [Specifications](https://openid.net/specs/openid-connect-rpinitiated-1_0.html)   | 1.0.0  |
+| Initiating User Registration via OpenID Connect            | [Specifications](https://openid.net/specs/openid-connect-prompt-create-1_0.html) | 1.0.0  |
 
 ¹ Provided via [PHP OAuth 2.0 Server](https://oauth2.thephpleague.com/).
 

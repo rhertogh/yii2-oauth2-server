@@ -77,7 +77,7 @@ interface Oauth2ClientAuthorizationRequestInterface extends Oauth2BaseAuthorizat
     public function getPrompts();
 
     /**
-    Set the authorization request prompts (parsed from the "promp" parameter). Originally defined in the
+     * Set the authorization request prompts (parsed from the "promp" parameter). Originally defined in the
      * OpenID Connect specs but generalized to take in consideration for all Oauth 2 authorization requests.
      * @param string[] $prompts
      * @return $this
@@ -85,6 +85,23 @@ interface Oauth2ClientAuthorizationRequestInterface extends Oauth2BaseAuthorizat
      * @since 1.0.0
      */
     public function setPrompts($prompts);
+
+    /**
+     * Get if the "create" prompt has been processed.
+     * @return bool
+     * @see https://openid.net/specs/openid-connect-prompt-create-1_0.html
+     * @since 1.0.0
+     */
+    public function getCreateUserPromptProcessed();
+
+    /**
+     * Set if the "create" prompt has been processed.
+     * @param bool $processed
+     * @return $this
+     * @see https://openid.net/specs/openid-connect-prompt-create-1_0.html
+     * @since 1.0.0
+     */
+    public function setCreateUserPromptProcessed($processed);
 
     /**
      * Get the authorization request max age. Originally defined in the OpenID Connect specs but generalized

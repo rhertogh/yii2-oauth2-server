@@ -157,6 +157,32 @@ class Oauth2AuthorizeAction extends Oauth2BaseServerAction implements Oauth2Auth
                 ]);
             }
 
+            if (
+                in_array(
+                    Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_CREATE,
+                    $module->getSupportedPromptValues()
+                )
+                && in_array(
+                    Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_CREATE,
+                    $clientAuthorizationRequest->getPrompts()
+                )
+                && !$clientAuthorizationRequest->getCreateUserPromptProcessed()
+            ) {
+                if (!$request->get('createUserPromtProcessed')) {
+                    $module->setClientAuthReqSession($clientAuthorizationRequest);
+                    $returnUrl = $clientAuthorizationRequest->getAuthorizationRequestUrl();
+                    $returnUrl = UrlHelper::addQueryParams($returnUrl, ['createUserPromtProcessed' => 'true']);
+                    $user->setReturnUrl($returnUrl);
+
+                    return Yii::$app->response->redirect($module->userAccountCreationUrl);
+                } else {
+                    if ($user->isGuest) {
+                        throw new BadRequestHttpException('The `createUserPromtProcessed` parameter is set, but no user is logged in.');
+                    }
+                    $clientAuthorizationRequest->setCreateUserPromptProcessed(true);
+                }
+            }
+
             if ($user->isGuest) {
                 if (
                     in_array(

@@ -65,6 +65,12 @@ interface Oauth2OidcAuthenticationRequestInterface
     public const REQUEST_PARAMETER_PROMPT_SELECT_ACCOUNT = 'select_account';
 
     /**
+     * Prompt option: The Authorization Server SHOULD prompt the End-User to create a new user account.
+     * @since 1.0.0
+     */
+    public const REQUEST_PARAMETER_PROMPT_CREATE = 'create';
+
+    /**
      * Supported Oauth 2 grant types for OpenID Connect.
      * @since 1.0.0
      */

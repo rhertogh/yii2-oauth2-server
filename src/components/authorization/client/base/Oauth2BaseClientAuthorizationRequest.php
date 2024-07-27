@@ -26,6 +26,8 @@ abstract class Oauth2BaseClientAuthorizationRequest extends Oauth2BaseAuthorizat
      */
     public $_prompts = [];
 
+    public $_createUserPromptProcessed = false;
+
     /**
      * @var int|null
      */
@@ -57,6 +59,7 @@ abstract class Oauth2BaseClientAuthorizationRequest extends Oauth2BaseAuthorizat
             '_authorizeUrl' => $this->_authorizeUrl,
             '_grantType' => $this->_grantType,
             '_prompts' => $this->_prompts,
+            '_createUserPromptProcessed' => $this->_createUserPromptProcessed,
             '_maxAge' => $this->_maxAge,
             '_requestedScopeIdentifiers' => $this->_requestedScopeIdentifiers,
             '_selectedScopeIdentifiers' => $this->_selectedScopeIdentifiers,
@@ -145,6 +148,17 @@ abstract class Oauth2BaseClientAuthorizationRequest extends Oauth2BaseAuthorizat
     public function setPrompts($prompts)
     {
         $this->_prompts = $prompts;
+        return $this;
+    }
+
+    public function getCreateUserPromptProcessed()
+    {
+        return $this->_createUserPromptProcessed;
+    }
+
+    public function setCreateUserPromptProcessed($processed)
+    {
+        $this->_createUserPromptProcessed = $processed;
         return $this;
     }
 

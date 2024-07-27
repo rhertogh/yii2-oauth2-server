@@ -43,6 +43,7 @@ return [
             'enableOpenIdConnect' => true,
             'openIdConnectRpInitiatedLogoutEndpoint' => true,
             'defaultUserAccountSelection' => Oauth2Module::USER_ACCOUNT_SELECTION_UPON_CLIENT_REQUEST,
+            'userAccountCreationUrl' => ['user/register'],
         ],
     ],
 

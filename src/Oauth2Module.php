@@ -32,6 +32,7 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\common\DefaultAccessTokenTtl
 use rhertogh\Yii2Oauth2Server\interfaces\components\encryption\Oauth2CryptographerInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\encryption\Oauth2EncryptionKeyFactoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\factories\grants\base\Oauth2GrantTypeFactoryInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\request\Oauth2OidcAuthenticationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeCollectionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\server\responses\Oauth2OidcBearerTokenResponseInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\Oauth2AuthorizationServerInterface;
@@ -67,6 +68,7 @@ use yii\web\GroupUrlRule;
 use yii\web\IdentityInterface;
 use yii\web\Response;
 use yii\web\UrlRule;
+
 // phpcs:enable Generic.Files.LineLength.TooLong
 
 /**
@@ -387,6 +389,8 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
      * @see \rhertogh\Yii2Oauth2Server\helpers\EnvironmentHelper::parseEnvVars()
      */
     public $clientRedirectUrisEnvVarConfig = null;
+
+    public $userAccountCreationUrl = null;
 
     /**
      * @var string|null The URL path to the OpenID Connect Provider Configuration Information Action.
@@ -1539,6 +1543,22 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
         $accessTokens = $this->getAccessTokenRepository()->revokeAccessTokensByUserId($userId);
         $accessTokenIds = array_map(fn($accessToken) => $accessToken->getPrimaryKey(), $accessTokens);
         $this->getRefreshTokenRepository()->revokeRefreshTokensByAccessTokenIds($accessTokenIds);
+    }
+
+    public function getSupportedPromptValues()
+    {
+        $supportedPromptValues = [
+            Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_NONE,
+            Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_LOGIN,
+            Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_CONSENT,
+            Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_SELECT_ACCOUNT,
+        ];
+
+        if (!empty($this->userAccountCreationUrl)) {
+            $supportedPromptValues[] = Oauth2OidcAuthenticationRequestInterface::REQUEST_PARAMETER_PROMPT_CREATE;
+        }
+
+        return $supportedPromptValues;
     }
 
     /**

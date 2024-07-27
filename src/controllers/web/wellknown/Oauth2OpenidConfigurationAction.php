@@ -115,6 +115,7 @@ class Oauth2OpenidConfigurationAction extends Oauth2BaseWebAction implements Oau
             'jwks_uri' => $jwksUri,
             'scopes_supported' => $supportedScopeAndClaimIdentifiers['scopeIdentifiers'],
             'claims_supported' => $supportedScopeAndClaimIdentifiers['claimIdentifiers'],
+            'prompt_values_supported' => $module->getSupportedPromptValues(),
             'response_types_supported' => $responseTypeCombinations,
         ];
 

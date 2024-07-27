@@ -248,3 +248,10 @@ return [
     // ...
 ];
 ```
+
+OpenID Connect RP-Initiated Logout
+----------------------------------
+The Yii2 Oauth2 Server supports Single Logout (a.k.a. Single Sign-out) via the
+[OpenID Connect RP-Initiated Logout](https://openid.net/specs/openid-connect-rpinitiated-1_0.html) protocol.  
+Please see [OpenID Connect RP-Initiated Logout for the Yii2-Oauth2-Server](start-openid-connect-rp-initiated-logout.md)
+on how to set up OpenID Connect RP-Initiated Logout.

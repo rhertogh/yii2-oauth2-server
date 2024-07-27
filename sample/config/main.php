@@ -115,6 +115,7 @@ return [
                 ],
             ],
             'openIdConnectRpInitiatedLogoutEndpoint' => true, // Optional, enable the OpenID Connect end session endpoint for Single Sign Out.
+            'userAccountCreationUrl' => ['user/register'],
             'httpClientErrorsLogLevel' => Logger::LEVEL_ERROR, // Optional, defaults to "LEVEL_ERROR" when YII_DEBUG is `true` or "LEVEL_INFO" when YII_DEBUG `false`. Set to `0` to completely disable logging for HTTP client errors.
         ],
     ],
