@@ -2,6 +2,7 @@
 
 namespace rhertogh\Yii2Oauth2Server\components\openidconnect\server\responses;
 
+// phpcs:disable Generic.Files.LineLength.TooLong
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use rhertogh\Yii2Oauth2Server\components\server\responses\Oauth2BearerTokenResponse;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\request\Oauth2OidcAuthenticationRequestInterface;
@@ -13,6 +14,7 @@ use Yii;
 use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
 use yii\helpers\ArrayHelper;
+// phpcs:enable Generic.Files.LineLength.TooLong
 
 class Oauth2OidcBearerTokenResponse extends Oauth2BearerTokenResponse implements Oauth2OidcBearerTokenResponseInterface
 {

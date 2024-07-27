@@ -6,7 +6,8 @@ use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client\Oauth2C
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ScopeInterface;
 use yii\base\Component;
 
-abstract class Oauth2BaseClientScopeAuthorizationRequest extends Component implements Oauth2ClientScopeAuthorizationRequestInterface
+abstract class Oauth2BaseClientScopeAuthorizationRequest extends Component implements
+    Oauth2ClientScopeAuthorizationRequestInterface
 {
     /**
      * @var Oauth2ScopeInterface|null

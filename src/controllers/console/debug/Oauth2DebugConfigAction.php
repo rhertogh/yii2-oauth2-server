@@ -128,13 +128,16 @@ class Oauth2DebugConfigAction extends Action implements Oauth2DebugConfigActionI
             'openIdConnectDiscoveryIncludeSupportedGrantTypes' =>
                 $module->openIdConnectDiscoveryIncludeSupportedGrantTypes ? 'true' : 'false',
             'openIdConnectUserinfoEndpoint' => $module->openIdConnectUserinfoEndpoint ? 'true' : 'false',
-            'openIdConnectRpInitiatedLogoutEndpoint' => $module->openIdConnectRpInitiatedLogoutEndpoint ? 'true' : 'false',
-            'openIdConnectAllowAnonymousRpInitiatedLogout' => $module->openIdConnectAllowAnonymousRpInitiatedLogout ? 'true' : 'false',
+            'openIdConnectRpInitiatedLogoutEndpoint' =>
+                $module->openIdConnectRpInitiatedLogoutEndpoint ? 'true' : 'false',
+            'openIdConnectAllowAnonymousRpInitiatedLogout' =>
+                $module->openIdConnectAllowAnonymousRpInitiatedLogout ? 'true' : 'false',
             'openIdConnectDiscoveryServiceDocumentationUrl' => $module->openIdConnectDiscoveryServiceDocumentationUrl,
             'openIdConnectIssueRefreshTokenWithoutOfflineAccessScope' =>
                 $module->openIdConnectIssueRefreshTokenWithoutOfflineAccessScope ? 'true' : 'false',
 
-            'defaultUserAccountSelection' => Oauth2Module::USER_ACCOUNT_SELECTION_NAMES[$module->defaultUserAccountSelection],
+            'defaultUserAccountSelection' =>
+                Oauth2Module::USER_ACCOUNT_SELECTION_NAMES[$module->defaultUserAccountSelection],
 
             'displayConfidentialExceptionMessages' => $module->displayConfidentialExceptionMessages === null
                 ? 'null'
@@ -197,7 +200,8 @@ class Oauth2DebugConfigAction extends Action implements Oauth2DebugConfigActionI
 
                 if (!empty($module->openIdConnectRpInitiatedLogoutEndpoint)) {
                     if ($module->openIdConnectRpInitiatedLogoutEndpoint === true) {
-                        $oidcRpInitiatedLogoutValue = $module->urlRulesPrefix . '/' . $module->openIdConnectRpInitiatedLogoutPath;
+                        $oidcRpInitiatedLogoutValue = $module->urlRulesPrefix
+                            . '/' . $module->openIdConnectRpInitiatedLogoutPath;
                         $oidcRpInitiatedLogoutSettings = 'urlRulesPrefix, openIdConnectRpInitiatedLogoutPath';
                     } else {
                         $oidcRpInitiatedLogoutValue = $module->openIdConnectRpInitiatedLogoutEndpoint;
@@ -245,18 +249,46 @@ class Oauth2DebugConfigAction extends Action implements Oauth2DebugConfigActionI
         }
 
         return [
-            'authorizeClient' => ['Authorize Client', $authorizeClientValue, $authorizeClientSettings],
-            'accessToken' => ['Access Token', $accessTokenValue, $accessTokenSettings],
-            'tokenRevocation' => ['Token Revocation', $tokenRevocationValue, $tokenRevocationSettings],
-            'jwks' => ['JSON Web Key Sets', $jwksValue, $jwksSettings],
-            'clientAuthorization' => ['Client Authorization', $clientAuthorizationValue, $clientAuthorizationSettings],
+            'authorizeClient' => [
+                'Authorize Client',
+                $authorizeClientValue,
+                $authorizeClientSettings,
+            ],
+            'accessToken' => [
+                'Access Token',
+                $accessTokenValue,
+                $accessTokenSettings,
+            ],
+            'tokenRevocation' => [
+                'Token Revocation',
+                $tokenRevocationValue,
+                $tokenRevocationSettings,
+            ],
+            'jwks' => [
+                'JSON Web Key Sets',
+                $jwksValue,
+                $jwksSettings,
+            ],
+            'clientAuthorization' => [
+                'Client Authorization',
+                $clientAuthorizationValue,
+                $clientAuthorizationSettings,
+            ],
             'oidcProviderConfigInfo' => [
                 'OpenID Connect Provider Configuration Information',
                 $oidcProviderConfigInfoValue,
                 $oidcProviderConfigInfoSettings,
             ],
-            'oidcUserinfo' => ['OpenId Connect Userinfo', $oidcUserinfoValue, $oidcUserinfoSettings],
-            'oidcRpInitiatedLogout' => ['OpenId Connect Rp Initiated Logout', $oidcRpInitiatedLogoutValue, $oidcRpInitiatedLogoutSettings],
+            'oidcUserinfo' => [
+                'OpenId Connect Userinfo',
+                $oidcUserinfoValue,
+                $oidcUserinfoSettings,
+            ],
+            'oidcRpInitiatedLogout' => [
+                'OpenId Connect Rp Initiated Logout',
+                $oidcRpInitiatedLogoutValue,
+                $oidcRpInitiatedLogoutSettings,
+            ],
         ];
     }
 }

@@ -91,7 +91,10 @@ class Oauth2AccessToken extends base\Oauth2AccessToken implements Oauth2AccessTo
     {
         $this->initJwtConfiguration();
         $builder = $this->jwtConfiguration->builder();
-        return $this->buildJwt($builder)->getToken($this->jwtConfiguration->signer(), $this->jwtConfiguration->signingKey());
+        return $this->buildJwt($builder)->getToken(
+            $this->jwtConfiguration->signer(),
+            $this->jwtConfiguration->signingKey()
+        );
     }
 
     protected function buildJwt(Builder $builder)
@@ -106,7 +109,7 @@ class Oauth2AccessToken extends base\Oauth2AccessToken implements Oauth2AccessTo
             ->relatedTo((string) $this->getUserIdentifier())
             ->withClaim('scopes', $this->getScopes());
 
-        // Additional claims
+        // Additional claims.
         $builder
             ->withClaim(static::TOKEN_CLAIM_CLIENT_ID, $this->getClient()->getIdentifier());
 

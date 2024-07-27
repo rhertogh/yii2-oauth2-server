@@ -292,8 +292,11 @@ abstract class Oauth2BaseAuthorizationRequest extends Model implements Oauth2Bas
      */
     public function setAuthorizationStatus($authorizationStatus)
     {
-        if ($authorizationStatus !== null && !in_array($authorizationStatus, $this->getPossibleAuthorizationStatuses())) {
-            throw new InvalidArgumentException('$authorizationStatus must be null or exist in the return value of `getPossibleAuthorizationStatuses()`.');
+        if (
+            $authorizationStatus !== null
+            && !in_array($authorizationStatus, $this->getPossibleAuthorizationStatuses())
+        ) {
+            throw new InvalidArgumentException('$authorizationStatus must be null or exist in the return value of `getPossibleAuthorizationStatuses()`.'); // phpcs:ignore Generic.Files.LineLength.TooLong
         }
 
         $this->_authorizationStatus = $authorizationStatus;

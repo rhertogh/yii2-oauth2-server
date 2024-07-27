@@ -31,7 +31,7 @@ class Oauth2BaseTokenRepositoryTest extends DatabaseTestCase
     public function testPersistTokenWithInvalidScopes()
     {
         $model = new class extends Oauth2BaseActiveRecord implements
-            Oauth2IdentifierInterface,
+           Oauth2IdentifierInterface,
             Oauth2ScopeRelationInterface
         {
             use Oauth2EntityIdentifierTrait;

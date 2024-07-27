@@ -2,6 +2,7 @@
 
 namespace Yii2Oauth2ServerTests\unit\module;
 
+// phpcs:disable Generic.Files.LineLength.TooLong
 use Codeception\Util\HttpCode;
 use Defuse\Crypto\Exception\EnvironmentIsBrokenException;
 use League\OAuth2\Server\CryptKey;
@@ -44,6 +45,7 @@ use yii\web\GroupUrlRule;
 use yii\web\IdentityInterface;
 use Yii2Oauth2ServerTests\_helpers\TestUserModel;
 use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
+// phpcs:enable Generic.Files.LineLength.TooLong
 
 /**
  * @covers \rhertogh\Yii2Oauth2Server\Oauth2Module
@@ -596,8 +598,7 @@ class Oauth2ModuleTest extends DatabaseTestCase
         $this->mockConsoleApplication([
             'container' => [
                 'definitions' => [
-                    // phpcs:ignore Generic.Files.LineLength.TooLong -- readability actually better on single line
-                    Oauth2EncryptionKeyFactoryInterface::class => new class implements Oauth2EncryptionKeyFactoryInterface {
+                    Oauth2EncryptionKeyFactoryInterface::class => new class implements Oauth2EncryptionKeyFactoryInterface { // phpcs:ignore Generic.Files.LineLength.TooLong
                         public function createFromAsciiSafeString($keyString, $doNotTrim = null)
                         {
                             throw new EnvironmentIsBrokenException('test message');

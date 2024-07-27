@@ -231,9 +231,10 @@ class Oauth2AccessTokenTest extends BaseOauth2ActiveRecordTest
         $this->assertEquals(
             $implementationSource,
             $methodBody,
-            'The source of `' . $sourceMethod . '` has changed since the implementation of `' . Oauth2AccessToken::class . '::convertToJWT`, make sure it is updated accordingly and update the test case with the new source.'
+            'The source of `' . $sourceMethod . '` has changed since the implementation of `'
+                . Oauth2AccessToken::class
+                . '::convertToJWT`, make sure it is updated accordingly and update the test case with the new source.'
         );
 
     }
-
 }

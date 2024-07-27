@@ -2,6 +2,7 @@
 
 namespace Yii2Oauth2ServerTests\unit\traits;
 
+// phpcs:disable Generic.Files.LineLength.TooLong
 use rhertogh\Yii2Oauth2Server\components\openidconnect\claims\Oauth2OidcClaim;
 use rhertogh\Yii2Oauth2Server\components\openidconnect\server\responses\Oauth2OidcBearerTokenResponse;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcClaimInterface;
@@ -12,6 +13,7 @@ use rhertogh\Yii2Oauth2Server\traits\models\Oauth2OidcUserIdentityTrait;
 use yii\base\Component;
 use Yii2Oauth2ServerTests\_helpers\TestUserModelOidc;
 use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
+// phpcs:enable Generic.Files.LineLength.TooLong
 
 /**
  * @covers \rhertogh\Yii2Oauth2Server\traits\models\Oauth2OidcUserIdentityTrait

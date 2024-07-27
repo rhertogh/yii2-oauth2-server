@@ -58,7 +58,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
         $controller = new Controller('test', $module);
         $accessTokenAction = new Oauth2AuthorizeAction('test', $controller);
 
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
         Yii::$app->request->setQueryParams([
             'response_type' => 'code',
             'client_id' => 'test-client-type-auth-code-valid', // Note, using `confidential` client, public clients always require a code challenge.
@@ -291,7 +291,7 @@ class Oauth2AuthorizeActionTest extends DatabaseTestCase
             'code_challenge_method' => 'S256',
         ]);
 
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
         $clientAuthorizationRequest = new Oauth2ClientAuthorizationRequest([
             'module' => $module,
             'clientIdentifier' => $clientIdentifier,

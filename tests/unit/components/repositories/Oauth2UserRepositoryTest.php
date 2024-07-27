@@ -74,8 +74,7 @@ class Oauth2UserRepositoryTest extends BaseOauth2RepositoryTest
 
     public function testGetUserEntityByIdentifierWithInvalidFindIdentityClass()
     {
-        // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
-        $mockTestUserModelClass = get_class(new class extends TestUserModel implements Oauth2PasswordGrantUserInterface {
+        $mockTestUserModelClass = get_class(new class extends TestUserModel implements Oauth2PasswordGrantUserInterface { // phpcs:ignore Generic.Files.LineLength.TooLong
             public function validatePassword($password)
             {
             }
@@ -146,7 +145,7 @@ class Oauth2UserRepositoryTest extends BaseOauth2RepositoryTest
      */
     public function getUserEntityByUserCredentialsProvider()
     {
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
         return [
             ['test.user', 'password',  Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD, 'test-client-type-password-public-valid', 123],
             ['test.user', 'incorrect', Oauth2Module::GRANT_TYPE_IDENTIFIER_PASSWORD, 'test-client-type-password-public-valid', null],
@@ -157,8 +156,7 @@ class Oauth2UserRepositoryTest extends BaseOauth2RepositoryTest
 
     public function testGetUserEntityByUserCredentialsWithInvalidFindByUsernameClass()
     {
-        // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
-        $mockTestUserModelClass = get_class(new class extends TestUserModel implements Oauth2PasswordGrantUserInterface {
+        $mockTestUserModelClass = get_class(new class extends TestUserModel implements Oauth2PasswordGrantUserInterface { // phpcs:ignore Generic.Files.LineLength.TooLong
             public function validatePassword($password)
             {
             }
@@ -207,7 +205,6 @@ class Oauth2UserRepositoryTest extends BaseOauth2RepositoryTest
 
     public function testGetUserEntityByUserCredentialsWithoutOauth2FindByUsernamePasswordGrantUserInterface()
     {
-        // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
         $mockTestUserModelClass = get_class(new class extends TestUserModel implements Oauth2PasswordGrantUserInterface {
             public function validatePassword($password)
             {

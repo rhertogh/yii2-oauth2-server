@@ -19,12 +19,16 @@ class Oauth2RequestHelper
         // Piggyback on underlying Oauth2 server in order to maintain same client identification methods.
         $grant = new class extends AbstractGrant
         {
-            public function getIdentifier() {
+            public function getIdentifier()
+            {
                 return 'dummy';
             }
 
-            public function respondToAccessTokenRequest(ServerRequestInterface $request, ResponseTypeInterface $responseType, \DateInterval $accessTokenTTL)
-            {
+            public function respondToAccessTokenRequest(
+                ServerRequestInterface $request,
+                ResponseTypeInterface $responseType,
+                \DateInterval $accessTokenTTL
+            ) {
                 return new RedirectResponse();
             }
 

@@ -21,7 +21,7 @@ class Oauth2BaseClientAuthorizationRequestTest extends DatabaseTestCase
         $requestedScopeIdentifiers = ['scope1', 'scope2', 'scope3'];
         $selectedScopeIdentifiers = ['scope1', 'scope2'];
 
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
         $this->setInaccessibleProperty($baseClientAuthorizationRequest, '_authorizeUrl', $authorizeUrl);
         $this->setInaccessibleProperty($baseClientAuthorizationRequest, '_grantType', $grantType);
         $this->setInaccessibleProperty($baseClientAuthorizationRequest, '_prompts', $prompts);

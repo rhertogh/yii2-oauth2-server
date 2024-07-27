@@ -12,7 +12,8 @@ use yii\base\InvalidConfigException;
 /**
  * @property Oauth2MigrationsController $controller
  */
-class Oauth2GenerateMigrationsAction extends Oauth2BaseGenerateMigrationsAction implements Oauth2GenerateMigrationsActionInterface
+class Oauth2GenerateMigrationsAction extends Oauth2BaseGenerateMigrationsAction implements
+    Oauth2GenerateMigrationsActionInterface
 {
     /**
      * Generate the migrations needed for the Oauth2 Server based on the current configuration.

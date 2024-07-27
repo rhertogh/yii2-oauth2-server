@@ -17,7 +17,7 @@ class Oauth2HttpBearerAuthTest extends DatabaseTestCase
 {
     public function testAuthenticate()
     {
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
         $this->mockWebApplication([
             'modules' => [
                 'oauth2' => [
@@ -72,7 +72,7 @@ class Oauth2HttpBearerAuthTest extends DatabaseTestCase
 
     public function testAuthenticateNonExistingIdentity()
     {
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
         $this->mockWebApplication([
             'modules' => [
                 'oauth2' => [

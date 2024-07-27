@@ -54,8 +54,7 @@ class Oauth2CryptographerTest extends TestCase
         $this->mockConsoleApplication([
             'container' => [
                 'definitions' => [
-                    // phpcs:ignore Generic.Files.LineLength.TooLong -- readability acually better on single line
-                    Oauth2EncryptionKeyFactoryInterface::class => new class implements Oauth2EncryptionKeyFactoryInterface {
+                    Oauth2EncryptionKeyFactoryInterface::class => new class implements Oauth2EncryptionKeyFactoryInterface { // phpcs:ignore Generic.Files.LineLength.TooLong
                         public function createFromAsciiSafeString($keyString, $doNotTrim = null)
                         {
                             throw new EnvironmentIsBrokenException('test message');

@@ -48,7 +48,7 @@ class Oauth2RefreshTokenRepositoryTest extends BaseOauth2RepositoryTest
 
         $validateRefreshToken = $this->getModelClass()::findOne(['identifier' => $identifier]);
 
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
         $this->assertInstanceOf($this->getModelInterface(), $validateRefreshToken);
         $this->assertGreaterThanOrEqual(1, $validateRefreshToken->getPrimaryKey());
         $this->assertEquals($identifier, $validateRefreshToken->getIdentifier());

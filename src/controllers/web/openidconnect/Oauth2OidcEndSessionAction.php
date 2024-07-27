@@ -2,23 +2,12 @@
 
 namespace rhertogh\Yii2Oauth2Server\controllers\web\openidconnect;
 
-use Lcobucci\JWT\Encoding\JoseEncoder;
-use Lcobucci\JWT\Signer\Key\InMemory;
-use Lcobucci\JWT\Signer\Rsa\Sha256;
-use Lcobucci\JWT\Token\Parser;
-use Lcobucci\JWT\Validation\Constraint\PermittedFor;
-use Lcobucci\JWT\Validation\Constraint\RelatedTo;
-use Lcobucci\JWT\Validation\Constraint\SignedWith;
-use Lcobucci\JWT\Validation\Validator;
-use League\OAuth2\Server\RedirectUriValidators\RedirectUriValidator;
+// phpcs:disable Generic.Files.LineLength.TooLong
 use rhertogh\Yii2Oauth2Server\controllers\web\base\Oauth2BaseWebAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2OidcController;
-use rhertogh\Yii2Oauth2Server\helpers\UrlHelper;
-use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\openidconnect\Oauth2OidcEndSessionActionInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client\Oauth2ClientAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\EndSession\Oauth2EndSessionAuthorizationRequestInterface;
+use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\openidconnect\Oauth2OidcEndSessionActionInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2OidcUserInterface;
-use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\web\BadRequestHttpException;
@@ -26,6 +15,7 @@ use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\web\UnauthorizedHttpException;
+// phpcs:enable Generic.Files.LineLength.TooLong
 
 /**
  * @property Oauth2OidcController $controller

@@ -103,22 +103,46 @@ class Oauth2DebugConfigActionTest extends TestCase
     public function testGetEndpoints($moduleConfig, $overwriteExpectedEndpoints)
     {
         $defaultTestEndpoints = [
-            'accessToken' => ['Access Token', 'oauth2/access-token', 'urlRulesPrefix, accessTokenPath'],
-            'authorizeClient' => ['Authorize Client', 'oauth2/authorize', 'urlRulesPrefix, authorizePath'],
-            'tokenRevocation' => ['Token Revocation', 'oauth2/revoke', 'urlRulesPrefix, tokenRevocationPath'],
-            'clientAuthorization' =>
-                ['Client Authorization', 'oauth2/authorize-client', 'urlRulesPrefix, clientAuthorizationPath'],
-            'jwks' => ['JSON Web Key Sets', 'oauth2/certs', 'urlRulesPrefix, jwksPath'],
-            'oidcProviderConfigInfo' =>
-                [
-                    'OpenID Connect Provider Configuration Information',
-                    '.well-known/openid-configuration',
-                    'openIdConnectProviderConfigurationInformationPath',
-                ],
-            'oidcUserinfo' =>
-                ['OpenId Connect Userinfo', 'oauth2/oidc/userinfo', 'urlRulesPrefix, openIdConnectUserinfoPath'],
-            'oidcRpInitiatedLogout' =>
-                ['OpenId Connect Rp Initiated Logout', '[Rp Initiated Logout is disabled]', 'openIdConnectRpInitiatedLogoutEndpoint'],
+            'accessToken' => [
+                'Access Token',
+                'oauth2/access-token',
+                'urlRulesPrefix, accessTokenPath',
+            ],
+            'authorizeClient' => [
+                'Authorize Client',
+                'oauth2/authorize',
+                'urlRulesPrefix, authorizePath',
+            ],
+            'tokenRevocation' => [
+                'Token Revocation',
+                'oauth2/revoke',
+                'urlRulesPrefix, tokenRevocationPath',
+            ],
+            'clientAuthorization' => [
+                'Client Authorization',
+                'oauth2/authorize-client',
+                'urlRulesPrefix, clientAuthorizationPath',
+            ],
+            'jwks' => [
+                'JSON Web Key Sets',
+                'oauth2/certs',
+                'urlRulesPrefix, jwksPath',
+            ],
+            'oidcProviderConfigInfo' => [
+                'OpenID Connect Provider Configuration Information',
+                '.well-known/openid-configuration',
+                'openIdConnectProviderConfigurationInformationPath',
+            ],
+            'oidcUserinfo' => [
+                'OpenId Connect Userinfo',
+                'oauth2/oidc/userinfo',
+                'urlRulesPrefix, openIdConnectUserinfoPath',
+            ],
+            'oidcRpInitiatedLogout' => [
+                'OpenId Connect Rp Initiated Logout',
+                '[Rp Initiated Logout is disabled]',
+                'openIdConnectRpInitiatedLogoutEndpoint',
+            ],
         ];
 
         $expectedEndpoints = array_merge($defaultTestEndpoints, $overwriteExpectedEndpoints);
@@ -153,20 +177,41 @@ class Oauth2DebugConfigActionTest extends TestCase
                         '[Only available for "authorization_server" role]',
                         'serverRole',
                     ],
-                    'accessToken' => ['Access Token', '[Only available for "authorization_server" role]', 'serverRole'],
-                    'tokenRevocation' => ['Token Revocation', '[Only available for "authorization_server" role]', 'serverRole'],
-                    'jwks' => ['JSON Web Key Sets', '[Only available for "authorization_server" role]', 'serverRole'],
-                    'clientAuthorization' =>
-                        ['Client Authorization', '[Only available for "authorization_server" role]', 'serverRole'],
+                    'accessToken' => [
+                        'Access Token',
+                        '[Only available for "authorization_server" role]',
+                        'serverRole',
+                    ],
+                    'tokenRevocation' => [
+                        'Token Revocation',
+                        '[Only available for "authorization_server" role]',
+                        'serverRole',
+                    ],
+                    'jwks' => [
+                        'JSON Web Key Sets',
+                        '[Only available for "authorization_server" role]',
+                        'serverRole',
+                    ],
+                    'clientAuthorization' => [
+                        'Client Authorization',
+                        '[Only available for "authorization_server" role]',
+                        'serverRole'
+                    ],
                     'oidcProviderConfigInfo' => [
                         'OpenID Connect Provider Configuration Information',
                         '[Only available for "authorization_server" role]',
                         'serverRole',
                     ],
-                    'oidcUserinfo' =>
-                        ['OpenId Connect Userinfo', '[Only available for "authorization_server" role]', 'serverRole'],
-                    'oidcRpInitiatedLogout' =>
-                        ['OpenId Connect Rp Initiated Logout', '[Only available for "authorization_server" role]', 'serverRole'],
+                    'oidcUserinfo' => [
+                        'OpenId Connect Userinfo',
+                        '[Only available for "authorization_server" role]',
+                        'serverRole',
+                    ],
+                    'oidcRpInitiatedLogout' => [
+                        'OpenId Connect Rp Initiated Logout',
+                        '[Only available for "authorization_server" role]',
+                        'serverRole',
+                    ],
                 ],
             ],
             'revocation disabled' => [
@@ -174,7 +219,11 @@ class Oauth2DebugConfigActionTest extends TestCase
                     'enableTokenRevocation' => false,
                 ],
                 [
-                    'tokenRevocation' => ['Token Revocation', '[Token Revocation is disabled]', 'enableTokenRevocation'],
+                    'tokenRevocation' => [
+                        'Token Revocation',
+                        '[Token Revocation is disabled]',
+                        'enableTokenRevocation',
+                    ],
                 ],
             ],
             'OpenID Connect disabled' => [
@@ -192,8 +241,11 @@ class Oauth2DebugConfigActionTest extends TestCase
                         '[OpenID Connect is disabled]',
                         'enableOpenIdConnect',
                     ],
-                    'oidcRpInitiatedLogout' =>
-                        ['OpenId Connect Rp Initiated Logout', '[OpenID Connect is disabled]', 'enableOpenIdConnect'],
+                    'oidcRpInitiatedLogout' => [
+                        'OpenId Connect Rp Initiated Logout',
+                        '[OpenID Connect is disabled]',
+                        'enableOpenIdConnect',
+                    ],
                 ],
             ],
             'OpenID Connect Discovery disabled' => [
@@ -237,8 +289,11 @@ class Oauth2DebugConfigActionTest extends TestCase
                     'openIdConnectRpInitiatedLogoutEndpoint' => true,
                 ],
                 [
-                    'oidcRpInitiatedLogout' =>
-                        ['OpenId Connect Rp Initiated Logout', 'oauth2/oidc/end-session', 'urlRulesPrefix, openIdConnectRpInitiatedLogoutPath'],
+                    'oidcRpInitiatedLogout' => [
+                        'OpenId Connect Rp Initiated Logout',
+                        'oauth2/oidc/end-session',
+                        'urlRulesPrefix, openIdConnectRpInitiatedLogoutPath',
+                    ],
                 ],
             ],
             'OpenID Connect custom Rp Initiated Logout endpoint' => [
@@ -246,8 +301,11 @@ class Oauth2DebugConfigActionTest extends TestCase
                     'openIdConnectRpInitiatedLogoutEndpoint' => 'https://custom_openIdConnectEndSessionEndpoint',
                 ],
                 [
-                    'oidcRpInitiatedLogout' =>
-                        ['OpenId Connect Rp Initiated Logout', 'https://custom_openIdConnectEndSessionEndpoint', 'openIdConnectRpInitiatedLogoutEndpoint'],
+                    'oidcRpInitiatedLogout' => [
+                        'OpenId Connect Rp Initiated Logout',
+                        'https://custom_openIdConnectEndSessionEndpoint',
+                        'openIdConnectRpInitiatedLogoutEndpoint',
+                    ],
                 ],
             ],
         ];

@@ -60,7 +60,7 @@ class Oauth2OidcScopeCollectionTest extends TestCase
             ],
         ];
 
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
 
         $this->assertEquals($collection, $collection->setOidcScopes($scopes));
 

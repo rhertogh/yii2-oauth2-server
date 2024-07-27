@@ -212,7 +212,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
 
         foreach ($uris as $key => $uri) {
             if (!is_string($uri)) {
-                throw new InvalidConfigException('`' . $attribute . '` must be a JSON encoded string or array of strings.');
+                throw new InvalidConfigException('`' . $attribute . '` must be a JSON encoded string or array of strings.'); // phpcs:ignore Generic.Files.LineLength.TooLong
             }
             if ($redirectUrisEnvVarConfig) {
                 $uris[$key] = EnvironmentHelper::parseEnvVars($uri, ...$redirectUrisEnvVarConfig);
@@ -908,7 +908,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
                     [$clientScopeTableName . '.enabled' => 1],
                 ];
             } else {
-                throw new InvalidArgumentException('`$possibleScopesConditions` must be either an array of strings or `true`.');
+                throw new InvalidArgumentException('`$possibleScopesConditions` must be either an array of strings or `true`.'); // phpcs:ignore Generic.Files.LineLength.TooLong
             }
         }
 
@@ -924,7 +924,10 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
                             ? [[$scopeTableName . '.identifier' => $requestedScopeIdentifiers]]
                             : []
                         ),
-                        ['NOT', [$scopeTableName . '.applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO]],
+                        [
+                            'NOT',
+                            [$scopeTableName . '.applied_by_default' => Oauth2ScopeInterface::APPLIED_BY_DEFAULT_NO]
+                        ],
                     ],
                 ];
             } elseif ($requestedScopeIdentifiers === true) {
@@ -935,7 +938,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
 
         return $scopeClass::find()
             ->joinWith(
-                ['clientScopes' => function(Oauth2ClientScopeQuery $query) use ($clientScopeTableName) {
+                ['clientScopes' => function (Oauth2ClientScopeQuery $query) use ($clientScopeTableName) {
                     $query->andOnCondition([$clientScopeTableName . '.client_id' => $this->getPrimaryKey()]);
                 }],
                 true

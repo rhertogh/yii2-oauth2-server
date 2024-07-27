@@ -37,7 +37,9 @@ class Oauth2ViewClientAction extends Oauth2BaseClientAction implements Oauth2Vie
             'ID' => $client->getPrimaryKey(),
             'Identifier' => $client->getIdentifier(),
             'Name' => $client->getName(),
-            'Type' => $client->isConfidential() ? 'Confidential (client secret required)' : 'Public (no client secret required)',
+            'Type' => $client->isConfidential()
+                ? 'Confidential (client secret required)'
+                : 'Public (no client secret required)',
             'Redirect URIs' => implode(', ', $client->getRedirectUri()),
             'Allow Variable URI Query' => $client->isVariableRedirectUriQueryAllowed() ? 'Yes' : 'No',
             'Grant Types' => implode(',', Oauth2Module::getGrantTypeIdentifiers($client->getGrantTypes())),
@@ -133,7 +135,7 @@ class Oauth2ViewClientAction extends Oauth2BaseClientAction implements Oauth2Vie
             ]));
 
             if ($showInheritedInfo) {
-                $this->controller->stdout('¹ Config inherited from scope.'. PHP_EOL);
+                $this->controller->stdout('¹ Config inherited from scope.' . PHP_EOL);
             }
 
             /** @var Oauth2ClientScopeInterface $clientScopeClass */
@@ -151,7 +153,6 @@ class Oauth2ViewClientAction extends Oauth2BaseClientAction implements Oauth2Vie
                     . ' scope(s) explicitly disabled for this client: ' . implode(', ', $disabledClientScopes)
                     . '.' . PHP_EOL);
             }
-
         } else {
             $this->controller->stdout(count($scopes) . ' scope(s) configured for "'
                 . $client->getIdentifier() . '" client.' . PHP_EOL);

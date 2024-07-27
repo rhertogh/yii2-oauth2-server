@@ -18,7 +18,6 @@ use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
  */
 class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
 {
-
     public function testInitRandomRequestId()
     {
         $this->mockWebApplication();
@@ -77,7 +76,7 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $clientAuthorizationRequest = $this->getMockClientAuthorizationRequest();
         $clientAuthorizationRequest->setModule(Oauth2Module::getInstance());
 
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
         $scopeAuthorizationRequests = [new Oauth2ClientScopeAuthorizationRequest()];
         $scopesAppliedByDefaultWithoutConfirm = [new Oauth2Scope()];
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests', $scopeAuthorizationRequests);
@@ -111,7 +110,7 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $clientAuthorizationRequest = $this->getMockClientAuthorizationRequest();
         $clientAuthorizationRequest->setModule(Oauth2Module::getInstance());
 
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
         $scopeAuthorizationRequests = [new Oauth2ClientScopeAuthorizationRequest()];
         $scopesAppliedByDefaultWithoutConfirm = [new Oauth2Scope()];
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests', $scopeAuthorizationRequests);
@@ -157,7 +156,7 @@ class Oauth2ClientAuthorizationRequestTest extends DatabaseTestCase
         $requestedScopeIdentifiers = ['scope1', 'scope2'];
         $clientAuthorizationRequest = $this->getMockClientAuthorizationRequest();
 
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
         $scopeAuthorizationRequests = [new Oauth2ClientScopeAuthorizationRequest()];
         $scopesAppliedByDefaultWithoutConfirm = [new Oauth2Scope()];
         $this->setInaccessibleProperty($clientAuthorizationRequest, '_scopeAuthorizationRequests', $scopeAuthorizationRequests);

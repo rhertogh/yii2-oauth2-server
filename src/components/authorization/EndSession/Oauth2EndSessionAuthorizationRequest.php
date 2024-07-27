@@ -59,7 +59,7 @@ class Oauth2EndSessionAuthorizationRequest extends Oauth2BaseEndSessionAuthoriza
             return $this->getDefaultRedirectUrl();
         }
 
-        // Return the original `post_logout_redirect_uri` with the `state`
+        // Return the original `post_logout_redirect_uri` with the `state`.
         return UrlHelper::addQueryParams($redirectUri, ['state' => $this->getState()]);
     }
 

@@ -61,7 +61,7 @@ class Oauth2OidcScopeTest extends TestCase
             ],
         ];
 
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
 
         // Dummy that should be cleared by `setClaims`.
         $oidcScope->setClaims([new Oauth2OidcClaim([

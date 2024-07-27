@@ -10,7 +10,8 @@ use yii\helpers\ArrayHelper;
 /**
  * Manage Oauth2 "Personal Access Tokens".
  */
-class Oauth2PersonalAccessTokenController extends Oauth2BaseConsoleController implements Oauth2PersonalAccessTokenControllerInterface
+class Oauth2PersonalAccessTokenController extends Oauth2BaseConsoleController implements
+    Oauth2PersonalAccessTokenControllerInterface
 {
     /**
      * @var string|null

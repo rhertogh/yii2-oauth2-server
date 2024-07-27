@@ -2,6 +2,7 @@
 
 namespace rhertogh\Yii2Oauth2Server\base;
 
+// phpcs:disable Generic.Files.LineLength.TooLong
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
@@ -176,6 +177,7 @@ use Yii;
 use yii\base\InvalidCallException;
 use yii\base\InvalidConfigException;
 use yii\base\Module;
+// phpcs:enable Generic.Files.LineLength.TooLong
 
 /**
  * @property Oauth2OidcScopeCollectionInterface|array|callable|string $openIdConnectScopes;

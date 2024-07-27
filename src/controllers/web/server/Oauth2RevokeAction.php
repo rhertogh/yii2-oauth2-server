@@ -51,7 +51,7 @@ class Oauth2RevokeAction extends Oauth2BaseServerAction implements Oauth2RevokeA
             if (!empty($tokenTypeHint)) {
 
                 if (in_array($tokenTypeHint, array_keys($tokenParsers))) {
-                    // Move hinted type to beginning
+                    // Move hinted type to beginning.
                     $tokenParsers = [$tokenTypeHint => $tokenParsers[$tokenTypeHint]] + $tokenParsers;
                 } else {
                     Yii::getLogger()->log(
@@ -78,13 +78,14 @@ class Oauth2RevokeAction extends Oauth2BaseServerAction implements Oauth2RevokeA
 
             $client = $module->getClientRepository()->findModelByIdentifier($clientIdentifier);
             if (!$client) {
-                throw new BadRequestHttpException('The `client_id` "' . $clientIdentifier . '" specified in the token is not valid.');
+                throw new BadRequestHttpException('The `client_id` "' . $clientIdentifier . '" specified in the token is not valid.'); // phpcs:ignore Generic.Files.LineLength.TooLong
             }
 
             if ($client->isConfidential()) {
                 try {
                     [$credentialsClientIdentifier, $clientSecret] = Oauth2RequestHelper::getClientCredentials($request);
-                } catch (\Exception $exception) {}
+                } catch (\Exception $exception) {
+                }
 
                 if (empty($credentialsClientIdentifier) || empty($clientSecret)) {
                     throw new ForbiddenHttpException('Client authentication is required for confidential clients.');
@@ -104,7 +105,6 @@ class Oauth2RevokeAction extends Oauth2BaseServerAction implements Oauth2RevokeA
             $module->getAccessTokenRepository()->revokeAccessToken($accessTokenIdentifier);
 
             return Yii::$app->response;
-
         } catch (\Exception $e) {
             return $this->processException($e, __METHOD__);
         }
@@ -118,7 +118,8 @@ class Oauth2RevokeAction extends Oauth2BaseServerAction implements Oauth2RevokeA
         } catch (\Throwable $e) {
             if ($tokenTypeHint === 'refresh_token') {
                 Yii::getLogger()->log(
-                    'The client specified the `token_type_hint` as "refresh_token", however the server is unable to parse the `token` as such: ' . $e,
+                    'The client specified the `token_type_hint` as "refresh_token",'
+                        . ' however the server is unable to parse the `token` as such: ' . $e,
                     $module->getElaboratedHttpClientErrorsLogLevel(),
                     __METHOD__
                 );
@@ -183,7 +184,8 @@ class Oauth2RevokeAction extends Oauth2BaseServerAction implements Oauth2RevokeA
         } catch (\Throwable $e) {
             if ($tokenTypeHint === 'access_token') {
                 Yii::getLogger()->log(
-                    'The client specified the `token_type_hint` as "access_token", however the server is unable to parse the `token` as such: ' . $e,
+                    'The client specified the `token_type_hint` as "access_token",'
+                        . ' however the server is unable to parse the `token` as such: ' . $e,
                     $module->getElaboratedHttpClientErrorsLogLevel(),
                     __METHOD__
                 );

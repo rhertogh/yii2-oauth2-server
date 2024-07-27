@@ -8,6 +8,7 @@
 
 namespace rhertogh\Yii2Oauth2Server;
 
+// phpcs:disable Generic.Files.LineLength.TooLong
 use Defuse\Crypto\Exception\BadFormatException;
 use Defuse\Crypto\Exception\EnvironmentIsBrokenException;
 use GuzzleHttp\Psr7\Response as Psr7Response;
@@ -66,6 +67,7 @@ use yii\web\GroupUrlRule;
 use yii\web\IdentityInterface;
 use yii\web\Response;
 use yii\web\UrlRule;
+// phpcs:enable Generic.Files.LineLength.TooLong
 
 /**
  * This is the main module class for the Yii2 Oauth2 Server module.
@@ -156,10 +158,11 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
     protected const CLIENT_AUTHORIZATION_REQUEST_SESSION_PREFIX = 'OAUTH2_CLIENT_AUTHORIZATION_REQUEST_';
 
     /**
-     * Prefix used in session storage of End Session Authorization Requests
+     * Prefix used in session storage of End Session Authorization Requests.
+     *
      * @since 1.0.0
      */
-    protected const END_SESSION_AUTHORIZATION_REQUEST_SESSION_PREFIX = 'OAUTH2_END_SESSION_AUTHORIZATION_REQUEST_SESSION_PREFIX_';
+    protected const END_SESSION_AUTHORIZATION_REQUEST_SESSION_PREFIX = 'OAUTH2_END_SESSION_AUTHORIZATION_REQUEST_SESSION_PREFIX_'; // phpcs:ignore Generic.Files.LineLength.TooLong
 
     /**
      * Controller mapping for the module. Will be parsed on `init()`.
@@ -405,7 +408,8 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
 
     /**
      * @var string The URL path to the OpenID Connect End Session Action (will be prefixed with $urlRulesPrefix).
-     * Note: This setting will only be used if $enableOpenIdConnect and $openIdConnectRpInitiatedLogoutEndpoint are `true`.
+     * Note: This setting will only be used if $enableOpenIdConnect and
+     * $openIdConnectRpInitiatedLogoutEndpoint are `true`.
      * @since 1.0.0
      * @see $openIdConnectRpInitiatedLogoutEndpoint
      * @see https://openid.net/specs/openid-connect-rpinitiated-1_0.html
@@ -680,7 +684,8 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
                     . '/' . Oauth2OidcControllerInterface::ACTION_END_SESSION;
 
                 if (empty($this->openIdConnectLogoutConfirmationUrl)) {
-                    $rules[$this->openIdConnectLogoutConfirmationPath] = Oauth2ConsentControllerInterface::CONTROLLER_NAME
+                    $rules[$this->openIdConnectLogoutConfirmationPath] =
+                        Oauth2ConsentControllerInterface::CONTROLLER_NAME
                         . '/' . Oauth2ConsentControllerInterface::ACTION_NAME_AUTHORIZE_END_SESSION;
                 }
             }
@@ -1223,7 +1228,10 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
      */
     public function setClientAuthReqSession($clientAuthorizationRequest)
     {
-        $this->setAuthReqSession($clientAuthorizationRequest, static::CLIENT_AUTHORIZATION_REQUEST_SESSION_PREFIX);
+        $this->setAuthReqSession(
+            $clientAuthorizationRequest,
+            static::CLIENT_AUTHORIZATION_REQUEST_SESSION_PREFIX
+        );
     }
 
     /**
@@ -1233,7 +1241,10 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
      */
     public function setEndSessionAuthReqSession($endSessionAuthorizationRequest)
     {
-        $this->setAuthReqSession($endSessionAuthorizationRequest, static::END_SESSION_AUTHORIZATION_REQUEST_SESSION_PREFIX);
+        $this->setAuthReqSession(
+            $endSessionAuthorizationRequest,
+            static::END_SESSION_AUTHORIZATION_REQUEST_SESSION_PREFIX
+        );
     }
 
     /**

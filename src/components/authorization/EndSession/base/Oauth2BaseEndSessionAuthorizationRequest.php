@@ -2,6 +2,7 @@
 
 namespace rhertogh\Yii2Oauth2Server\components\authorization\EndSession\base;
 
+// phpcs:disable Generic.Files.LineLength.TooLong
 use Lcobucci\JWT\Encoding\JoseEncoder;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
@@ -19,8 +20,10 @@ use yii\base\InvalidCallException;
 use yii\web\BadRequestHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\UnauthorizedHttpException;
+// phpcs:enable Generic.Files.LineLength.TooLong
 
-abstract class Oauth2BaseEndSessionAuthorizationRequest extends Oauth2BaseAuthorizationRequest implements Oauth2EndSessionAuthorizationRequestInterface
+abstract class Oauth2BaseEndSessionAuthorizationRequest extends Oauth2BaseAuthorizationRequest implements
+    Oauth2EndSessionAuthorizationRequestInterface
 {
     /**
      * @var string|null
@@ -109,10 +112,12 @@ abstract class Oauth2BaseEndSessionAuthorizationRequest extends Oauth2BaseAuthor
 
             $validator = new Validator();
 
-            if (!$validator->validate($idToken, new SignedWith(
-                new Sha256(),
-                InMemory::plainText($module->getPublicKey()->getKeyContents())
-            ))) {
+            if (
+                !$validator->validate(
+                    $idToken,
+                    new SignedWith(new Sha256(), InMemory::plainText($module->getPublicKey()->getKeyContents()))
+                )
+            ) {
                 throw new UnauthorizedHttpException('Invalid `id_token_hint` signature.');
             }
 
@@ -154,7 +159,7 @@ abstract class Oauth2BaseEndSessionAuthorizationRequest extends Oauth2BaseAuthor
                 !($client->getOpenIdConnectRpInitiatedLogout()
                     > Oauth2ClientInterface::OIDC_RP_INITIATED_LOGOUT_DISABLED)
             ) {
-                throw new ForbiddenHttpException('Client "' . $clientIdentifier . '" is not allowed to initiated end-user logout.');
+                throw new ForbiddenHttpException('Client "' . $clientIdentifier . '" is not allowed to initiated end-user logout.'); // phpcs:ignore Generic.Files.LineLength.TooLong
             }
         }
 
@@ -171,7 +176,7 @@ abstract class Oauth2BaseEndSessionAuthorizationRequest extends Oauth2BaseAuthor
                     throw new UnauthorizedHttpException('Invalid `post_logout_redirect_uri`.');
                 }
             } else {
-                throw new UnauthorizedHttpException('`post_logout_redirect_uri` is only allowed if the client is known.');
+                throw new UnauthorizedHttpException('`post_logout_redirect_uri` is only allowed if the client is known.'); // phpcs:ignore Generic.Files.LineLength.TooLong
             }
         }
 
@@ -202,5 +207,4 @@ abstract class Oauth2BaseEndSessionAuthorizationRequest extends Oauth2BaseAuthor
         $this->_endUserAuthorizationRequired = $endUserAuthorizationRequired;
         return $this;
     }
-
 }

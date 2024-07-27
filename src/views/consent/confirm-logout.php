@@ -1,10 +1,12 @@
 <?php
 
+// phpcs:disable Generic.Files.LineLength.TooLong
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client\Oauth2ClientAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\EndSession\Oauth2EndSessionAuthorizationRequestInterface;
 use yii\helpers\Html;
 use yii\web\View;
 use yii\widgets\ActiveForm;
+// phpcs:enable Generic.Files.LineLength.TooLong
 
 /**
  * @var View $this
@@ -99,9 +101,9 @@ $client = $endSessionAuthorizationRequest->getClient();
 <div class="oauth2_authorize-client-wrapper">
     <div class="oauth2_authorize-client-modal">
         <?php $form = ActiveForm::begin(['id' => 'oauth2-end-session-authorization-request-form']) ?>
-        <div class="oauth2_authorize-client-content">
-            <h3 class="oauth2_authorize-client-modal-title oauth2_authorize-client-modal-title_no-scopes">
-                <?php
+            <div class="oauth2_authorize-client-content">
+                <h3 class="oauth2_authorize-client-modal-title oauth2_authorize-client-modal-title_no-scopes">
+                    <?php
                     if ($client) {
                         echo Yii::t('oauth2', '{clientName} requested to log you out from {appName}, is this OK?', [
                             'clientName' => Html::encode($client->getName()),
@@ -112,27 +114,27 @@ $client = $endSessionAuthorizationRequest->getClient();
                             'appName' => Yii::$app->name,
                         ]);
                     }
-                ?>
-            </h3>
-        </div>
-        <div class="oauth2_authorize-client-modal-footer">
-            <button
-                type="submit"
-                name="<?= Html::getInputName($endSessionAuthorizationRequest, 'authorizationStatus') ?>"
-                value="<?= Oauth2ClientAuthorizationRequestInterface::AUTHORIZATION_DENIED ?>"
-                class="oauth2_authorize-client-modal-button"
-            >
-                <?= Yii::t('oauth2', 'No') ?>
-            </button>
-            <button
-                type="submit"
-                name="<?= Html::getInputName($endSessionAuthorizationRequest, 'authorizationStatus') ?>"
-                value="<?= Oauth2ClientAuthorizationRequestInterface::AUTHORIZATION_APPROVED ?>"
-                class="oauth2_authorize-client-modal-button oauth2_authorize-client-modal-button-primary"
-            >
-                <?= Yii::t('oauth2', 'Yes') ?>
-            </button>
-        </div>
+                    ?>
+                </h3>
+            </div>
+            <div class="oauth2_authorize-client-modal-footer">
+                <button
+                    type="submit"
+                    name="<?= Html::getInputName($endSessionAuthorizationRequest, 'authorizationStatus') ?>"
+                    value="<?= Oauth2ClientAuthorizationRequestInterface::AUTHORIZATION_DENIED ?>"
+                    class="oauth2_authorize-client-modal-button"
+                >
+                    <?= Yii::t('oauth2', 'No') ?>
+                </button>
+                <button
+                    type="submit"
+                    name="<?= Html::getInputName($endSessionAuthorizationRequest, 'authorizationStatus') ?>"
+                    value="<?= Oauth2ClientAuthorizationRequestInterface::AUTHORIZATION_APPROVED ?>"
+                    class="oauth2_authorize-client-modal-button oauth2_authorize-client-modal-button-primary"
+                >
+                    <?= Yii::t('oauth2', 'Yes') ?>
+                </button>
+            </div>
         <?php ActiveForm::end() ?>
     </div>
 </div>

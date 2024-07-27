@@ -18,7 +18,6 @@ use Yii2Oauth2ServerTests\unit\DatabaseTestCase;
  */
 class Oauth2RevokeActionTest extends DatabaseTestCase
 {
-
     /**
      * @dataProvider revokeProvider()
      */
@@ -64,7 +63,10 @@ class Oauth2RevokeActionTest extends DatabaseTestCase
         ]);
 
         if ($clientCredentials) {
-            Yii::$app->request->headers->set('Authorization', 'Basic ' . base64_encode(implode(':', $clientCredentials)));
+            Yii::$app->request->headers->set(
+                'Authorization',
+                'Basic ' . base64_encode(implode(':', $clientCredentials))
+            );
         }
 
         if ($expectedLogMessage) {
@@ -89,7 +91,7 @@ class Oauth2RevokeActionTest extends DatabaseTestCase
 
         if (isset($origLogger)) {
             Yii::setLogger($origLogger);
-            $this->assertTrue($logTestPassed, 'Expected logger to be called with message "' . $expectedLogMessage . '".');
+            $this->assertTrue($logTestPassed, 'Expected logger to be called with message "' . $expectedLogMessage . '".'); // phpcs:ignore Generic.Files.LineLength.TooLong
         }
 
         $this->assertInstanceOf(Response::class, $response);
@@ -105,6 +107,7 @@ class Oauth2RevokeActionTest extends DatabaseTestCase
      */
     public function revokeProvider()
     {
+        // phpcs:disable Generic.Files.LineLength.TooLong
         return [
             'refresh token' => [
                 'token' => 'def50200abbe4150b3ba4bfee9642ef6c804e922eb591d214529517d8aa3bb93e3ad20ec71aa88077276bf6d96cb0314f0c50171bfa688d4e0b0e63b7d6217e31e2fa486dfd8e4ce570b1ffeb239007865511b29f8419cf4ad62fa21d5a04ff4f0c193faec28916aafb9e447c1bd800048db0f13f768e4f314aeebe3fd49ae75f6d528e5c8d90324f488ff2d62d39e2a8d426e3793e061cc1dbd83a58f45f5b6a7459aba3d3e4173773008eefa09633456ac1b7359fcad43d35ed0774e8f69c9103e1e33e89bdfb84b640663d97d3354367dd40590b4bd7819ef5bc57ce46ab2a1af4072025fcb64ec9684a5a7f8141a8a0356e0f67dd0da0e9eb4aae3afb917d5176883658edda68aa5a77cd111cd19a6c40e0f6e15412a5d23ce20d5c97606488d5103cb1d7b9e581ae7cf0402c15c4de2196e75e588551826f2a9ef1fe737841b1dfb6eb7f7018f21153550dda17c059481c8691b79db005bba1135c1f54c59c3b4219b36eaa36fdf34db9e1ed89ae3ac8b126cffeb53ac7ea0e0a39daaa43a5a8ab8562d717896a01bbf03971474a4b1c6bf4b14f23c4415843c93f5f12cde36b8753817c17da0363dba4cfd39b7621df96d55876c317e00dfc67b21ffdb47dc7a10dab12623f99f679e25938a98a67ec6aaa2a2881f8027ce863a546f0663fb671da30868a6c6b77e0dea805d41f8d12b442e339fae8bb482960620db24bf7d6ef2309e77b01fc960e25026c4c3c8450c0880380801d2a5ef6f6778a22a0fe9756bd7b7b52a0c4a6cf5226ac81f6ee08adcfc9f741d252afafe64c124d33fd0e4d43b0b94414b0d4614a5',
@@ -192,6 +195,7 @@ class Oauth2RevokeActionTest extends DatabaseTestCase
                 'expectedLogMessage' => 'The client specified the `token_type_hint` as "access_token", however the server is unable to parse the `token` as such',
             ],
         ];
+        // phpcs:enable Generic.Files.LineLength.TooLong
     }
 
     public function testRevokeDisabled()

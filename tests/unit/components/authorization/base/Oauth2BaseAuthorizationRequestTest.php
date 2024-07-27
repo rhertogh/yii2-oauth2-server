@@ -27,7 +27,7 @@ class Oauth2BaseAuthorizationRequestTest extends DatabaseTestCase
         $authorizationStatus = Oauth2BaseAuthorizationRequestInterface::AUTHORIZATION_APPROVED;
         $isCompleted = true;
 
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
         $this->setInaccessibleProperty($baseAuthorizationRequest, '_requestId', $requestId);
         $this->setInaccessibleProperty($baseAuthorizationRequest, '_clientIdentifier', $clientIdentifier);
         $this->setInaccessibleProperty($baseAuthorizationRequest, '_userIdentifier', $userIdentifier);
@@ -83,7 +83,7 @@ class Oauth2BaseAuthorizationRequestTest extends DatabaseTestCase
     {
         $baseClientAuthorizationRequest = $this->getMockBaseAuthorizationRequest();
 
-        $this->expectExceptionMessage('$authorizationStatus must be null or exist in the return value of `getPossibleAuthorizationStatuses()`.');
+        $this->expectExceptionMessage('$authorizationStatus must be null or exist in the return value of `getPossibleAuthorizationStatuses()`.'); // phpcs:ignore Generic.Files.LineLength.TooLong
         $baseClientAuthorizationRequest->setAuthorizationStatus('non-existing');
     }
 

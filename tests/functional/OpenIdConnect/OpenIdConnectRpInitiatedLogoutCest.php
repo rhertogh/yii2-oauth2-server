@@ -35,7 +35,10 @@ class OpenIdConnectRpInitiatedLogoutCest extends BaseOpenIdConnectCest
 
         # region authorize client
         $I->amLoggedInAs(123);
-        $I->assertEquals(123, Yii::$app->user->getId()); // Ensure we have an id in the app, so we can validate the logout later.
+
+        // Ensure we have an id in the app, so we can validate the logout later.
+        $I->assertEquals(123, Yii::$app->user->getId());
+
         $I->startFollowingRedirects();
         $I->sendGet($authorizationUrl);
         $I->stopFollowingRedirects();
@@ -65,7 +68,13 @@ class OpenIdConnectRpInitiatedLogoutCest extends BaseOpenIdConnectCest
         # endregion fetch access token
 
         $state = 'testState';
-        $url = Url::to(['openid-connect/end-session', 'id_token_hint' => $idToken, 'client_id' => $oauthClient->clientId, 'state' => $state, 'post_logout_redirect_uri' => 'http://localhost/logout_redirect_uri/']);
+        $url = Url::to([
+            'openid-connect/end-session',
+            'id_token_hint' => $idToken,
+            'client_id' => $oauthClient->clientId,
+            'state' => $state,
+            'post_logout_redirect_uri' => 'http://localhost/logout_redirect_uri/'
+        ]);
         $I->startFollowingRedirects();
         $I->sendGet($url);
         $I->stopFollowingRedirects();

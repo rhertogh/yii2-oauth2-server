@@ -616,8 +616,10 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
         $ciphertext = $client->getAttribute('old_secret');
         $this->assertStringStartsWith($oldKeyName . '::', $ciphertext);
         $this->assertEquals($secret2, $client->getDecryptedSecret($cryptographer));
-        $this->assertTrue($client->validateSecret($secret2, $cryptographer)); // new secret.
-        $this->assertTrue($client->validateSecret($secret, $cryptographer)); // old secret (which should still be valid).
+        // new secret.
+        $this->assertTrue($client->validateSecret($secret2, $cryptographer));
+        // old secret (which should still be valid).
+        $this->assertTrue($client->validateSecret($secret, $cryptographer));
         $this->assertFalse($client->validateSecret('incorrect', $cryptographer));
 
         $client->setSecret($secret3, $cryptographer, (new \DateTimeImmutable('yesterday')));
@@ -635,11 +637,11 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
     {
         $secret = 'iWjgoZNcof';
         $secretEnvVarName = 'SECRET_VIA_ENV_VAR_SECRET';
-        $secretEnvVarValue = '2022-01-01::3vUCAL1/Qh2FzmH99AUxSxc/y7w2DSGKbv8PC5Qxl46S70xVB7oBz5m3YNkD0dDByxPgAlAKimVlRr98+oIqUo2McahxkqNkBATBLcNPrPzTfCDxH8ZA++ZcsDjBhA==';
+        $secretEnvVarValue = '2022-01-01::3vUCAL1/Qh2FzmH99AUxSxc/y7w2DSGKbv8PC5Qxl46S70xVB7oBz5m3YNkD0dDByxPgAlAKimVlRr98+oIqUo2McahxkqNkBATBLcNPrPzTfCDxH8ZA++ZcsDjBhA=='; // phpcs:ignore Generic.Files.LineLength.TooLong
 
         $oldSecret = 'bvuH7joLZN';
         $oldSecretEnvVarName = 'SECRET_VIA_ENV_VAR_OLD_SECRET';
-        $oldSecretEnvVarValue = '2021-01-01::3vUCALFgiRV0PVg7owgeUO2+hpeVsrwVx0OViUcbf5QcoB6wmzjq5rcWpJX8l6T5qvNFMRBILtCTKhW0w0o+KpH4oJmzLZL4If3wvmWSremPutwc1jn38w2MSUdZWg==';
+        $oldSecretEnvVarValue = '2021-01-01::3vUCALFgiRV0PVg7owgeUO2+hpeVsrwVx0OViUcbf5QcoB6wmzjq5rcWpJX8l6T5qvNFMRBILtCTKhW0w0o+KpH4oJmzLZL4If3wvmWSremPutwc1jn38w2MSUdZWg=='; // phpcs:ignore Generic.Files.LineLength.TooLong
 
         $client = $this->getMockModel();
 
@@ -893,8 +895,8 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
             ],
             'all_strict' => [
                 1003000,
-                true, // Request all possible scopes
-                false, // only strictly defined scopes
+                true, // Request all possible scopes.
+                false, // only strictly defined scopes.
                 [
                     'user.id.read',
                     'user.username.read',
@@ -915,8 +917,8 @@ class Oauth2ClientTest extends BaseOauth2ActiveRecordTest
             ],
             'all_generic' => [
                 1003000,
-                true, // Request all possible scopes
-                true, // include generic scopes (not only directly connected to the client)
+                true, // Request all possible scopes.
+                true, // include generic scopes (not only directly connected to the client).
                 [
                     'openid',
                     'profile',

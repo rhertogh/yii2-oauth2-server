@@ -37,7 +37,7 @@ class Oauth2BaseModuleTest extends DatabaseTestCase
 {
     public function testGetGrantTypeId()
     {
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
         $this->assertEquals(Oauth2Module::GRANT_TYPE_AUTH_CODE, Oauth2Module::getGrantTypeId('authorization_code'));
         $this->assertEquals(Oauth2Module::GRANT_TYPE_CLIENT_CREDENTIALS, Oauth2Module::getGrantTypeId('client_credentials'));
         $this->assertEquals(Oauth2Module::GRANT_TYPE_REFRESH_TOKEN, Oauth2Module::getGrantTypeId('refresh_token'));
@@ -50,7 +50,7 @@ class Oauth2BaseModuleTest extends DatabaseTestCase
 
     public function testGetGrantTypeIdentifier()
     {
-        // phpcs:disable Generic.Files.LineLength.TooLong -- readability acually better on single line
+        // phpcs:disable Generic.Files.LineLength.TooLong -- readability actually better on single line
         $this->assertEquals('authorization_code', Oauth2Module::getGrantTypeIdentifier(Oauth2Module::GRANT_TYPE_AUTH_CODE));
         $this->assertEquals('client_credentials', Oauth2Module::getGrantTypeIdentifier(Oauth2Module::GRANT_TYPE_CLIENT_CREDENTIALS));
         $this->assertEquals('refresh_token', Oauth2Module::getGrantTypeIdentifier(Oauth2Module::GRANT_TYPE_REFRESH_TOKEN));

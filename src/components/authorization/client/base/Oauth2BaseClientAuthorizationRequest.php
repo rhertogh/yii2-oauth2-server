@@ -8,7 +8,8 @@ use yii\base\InvalidArgumentException;
 use yii\base\InvalidCallException;
 use yii\web\ForbiddenHttpException;
 
-abstract class Oauth2BaseClientAuthorizationRequest extends Oauth2BaseAuthorizationRequest implements Oauth2ClientAuthorizationRequestInterface
+abstract class Oauth2BaseClientAuthorizationRequest extends Oauth2BaseAuthorizationRequest implements
+    Oauth2ClientAuthorizationRequestInterface
 {
     /**
      * @var string|null
@@ -75,7 +76,7 @@ abstract class Oauth2BaseClientAuthorizationRequest extends Oauth2BaseAuthorizat
         }
         if (empty($this->_client) || $this->_client->getIdentifier() != $clientIdentifier) {
             $this->_client = $this->getModule()->getClientRepository()->getClientEntity($clientIdentifier);
-            if (!$this->_client  || !$this->_client->isEnabled()) {
+            if (!$this->_client || !$this->_client->isEnabled()) {
                 throw new ForbiddenHttpException('Client "' . $clientIdentifier . '" not found or disabled.');
             }
         }

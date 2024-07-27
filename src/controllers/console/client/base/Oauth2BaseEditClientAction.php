@@ -222,11 +222,11 @@ class Oauth2BaseEditClientAction extends Oauth2BaseClientAction
                 ]);
                 $scopes = implode(' ', array_filter(array_map('trim', explode(' ', $scopes))));
                 $valid = $this->validateScope($scopes, $error);
-                if (!$valid){
+                if (!$valid) {
                     $controller->stdout("Invalid scopes: $error" . PHP_EOL);
                     $scopes = null;
                 }
-            } while(!$valid);
+            } while (!$valid);
         }
 
         return $scopes;

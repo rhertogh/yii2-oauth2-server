@@ -15,7 +15,8 @@ use yii\db\Connection;
 /**
  * @property Oauth2MigrationsController $controller
  */
-class Oauth2GenerateImportMigrationAction extends Oauth2BaseGenerateMigrationsAction implements Oauth2GenerateImportMigrationActionInterface
+class Oauth2GenerateImportMigrationAction extends Oauth2BaseGenerateMigrationsAction implements
+    Oauth2GenerateImportMigrationActionInterface
 {
     /**
      * Generate a migration to import data from another Oauth server.

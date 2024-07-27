@@ -130,7 +130,8 @@ interface Oauth2BaseActiveQueryInterface extends ActiveQueryInterface
      * Sets the SELECT part of the query.
      * @param string|array|ExpressionInterface $columns the columns to be selected.
      * Columns can be specified in either a string (e.g. "id, name") or an array (e.g. ['id', 'name']).
-     * Columns can be prefixed with table names (e.g. "user.id") and/or contain column aliases (e.g. "user.id AS user_id").
+     * Columns can be prefixed with table names (e.g. "user.id") and/or contain column aliases
+     * (e.g. "user.id AS user_id").
      * The method will automatically quote the column names unless a column contains some parenthesis
      * (which means the column contains a DB expression). A DB expression may also be passed in form of
      * an [[ExpressionInterface]] object.
