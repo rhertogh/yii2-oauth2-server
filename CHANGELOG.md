@@ -7,7 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer version.  
 
-[1.0.0-alpha18] - Unreleased
+[1.0.0-alpha19] - Unreleased
+----------------------------
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Improved
+
+### Security
+
+
+[1.0.0-alpha18] - 2024-07-27
 ----------------------------
 
 ### Added
@@ -27,18 +45,12 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - The `Oauth2ScopeAuthorizationRequestInterface` and implementing classes are renamed to `Oauth2ClientScopeAuthorizationRequestInterface` (note the "Client" part). (rhertogh)
 - The "authorization" classes and interfaces have been refactored in more separate entities for reusability. (rhertogh)
 
-### Deprecated
-
-### Removed
-
 ### Fixed
-- Allow `null` values for `Oauth2Client` `$uri` and `$postLogoutRedirectUris`. (rhertogh) 
+- Allow `null` values for `Oauth2Client` `$uri` and `$postLogoutRedirectUris`. (rhertogh)
 
 ### Improved
 - Added health checks to docker compose files for MySQL and PostgreSQL. (rhertogh)
 - Postman can now be used to connect to the `tests` instance (redirect_uri has been added). (rhertogh)
-
-### Security
 
 
 [1.0.0-alpha17] - 2023-11-27
