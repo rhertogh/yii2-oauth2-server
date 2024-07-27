@@ -33,7 +33,7 @@ This must be one of the `Oauth2ClientInterface::OIDC_RP_INITIATED_LOGOUT_OPTIONS
 | OIDC_RP_INITIATED_LOGOUT_ENABLED                      | 1     | Client may initiate logout, end-user will be prompted to confirm the logout.                                |
 | OIDC_RP_INITIATED_LOGOUT_ENABLED_WITHOUT_CONFIRMATION | 2     | Client can logout the user directly (no prompt), this is useful if the Client is under your direct control. |
 
-The default endpoint is `/oauth2/oidc/end-session`. When enabled, this url will also be visible via the [OpenID Connect Discovery endpoint](start-openid-connect.md#open-id-connect-discovery)
+The default endpoint is `/oauth2/oidc/end-session`. When enabled, this url will also be visible via the [OpenID Connect Discovery endpoint](start-openid-connect.md#openid-connect-discovery)
 as the `end_session_endpoint` element. 
 
 Post Logout Redirect Uris
