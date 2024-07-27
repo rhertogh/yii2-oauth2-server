@@ -1,4 +1,4 @@
-OpenID Connect - RP-Initiated Logout for the Yii2-Oauth2-Server
+OpenID Connect RP-Initiated Logout for the Yii2-Oauth2-Server
 ===============================================================
 
 The Yii2 Oauth2 Server supports Single Logout (a.k.a. Single Sign-out) via the
@@ -33,13 +33,13 @@ This must be one of the `Oauth2ClientInterface::OIDC_RP_INITIATED_LOGOUT_OPTIONS
 | OIDC_RP_INITIATED_LOGOUT_ENABLED                      | 1     | Client may initiate logout, end-user will be prompted to confirm the logout.                                |
 | OIDC_RP_INITIATED_LOGOUT_ENABLED_WITHOUT_CONFIRMATION | 2     | Client can logout the user directly (no prompt), this is useful if the Client is under your direct control. |
 
-The default endpoint is `/oauth2/oidc/end-session`. When enabled, this url will also be visible via the [OpenID Connect Discovery endpoint](docs/guide/start-openid-connect.md#open-id-connect-discovery)
+The default endpoint is `/oauth2/oidc/end-session`. When enabled, this url will also be visible via the [OpenID Connect Discovery endpoint](start-openid-connect.md#open-id-connect-discovery)
 as the `end_session_endpoint` element. 
 
 Post Logout Redirect Uris
 -------------------------
 By default, the Yii2-Oauth2-Server will redirect the user to the [application's home URL](https://www.yiiframework.com/doc/api/2.0/yii-web-application#getHomeUrl()-detail). 
-The Client may request a custom redirect URI via the [`post_logout_redirect_uri` parameter](https://openid.net/specs/openid-connect-rpinitiated-1_0.html#RPLogout).
+The Client may request a custom redirect URI via the `post_logout_redirect_uri` [parameter](https://openid.net/specs/openid-connect-rpinitiated-1_0.html#RPLogout).
 For security, these URIs have to be specified per Client via the `post_logout_redirect_uris` property. 
 The same requirements and options as for the login redirect URIs apply, please see [Yii2-Oauth2-Server Redirect URIs Configuration](start-redirect-uris.md) for more information.
 
