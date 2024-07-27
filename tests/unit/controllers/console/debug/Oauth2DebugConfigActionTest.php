@@ -140,8 +140,8 @@ class Oauth2DebugConfigActionTest extends TestCase
             ],
             'oidcRpInitiatedLogout' => [
                 'OpenId Connect Rp Initiated Logout',
-                '[Rp Initiated Logout is disabled]',
-                'openIdConnectRpInitiatedLogoutEndpoint',
+                'oauth2/oidc/end-session',
+                'urlRulesPrefix, openIdConnectRpInitiatedLogoutPath',
             ],
         ];
 
