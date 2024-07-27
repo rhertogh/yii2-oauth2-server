@@ -4,7 +4,6 @@ namespace rhertogh\Yii2Oauth2Server\controllers\web\consent;
 
 use rhertogh\Yii2Oauth2Server\controllers\web\base\Oauth2BaseWebAction;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ConsentController;
-use rhertogh\Yii2Oauth2Server\exceptions\Oauth2ServerHttpException;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\consent\Oauth2AuthorizeEndSessionActionInterface;
 use Yii;
 use yii\base\InvalidConfigException;

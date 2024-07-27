@@ -23,10 +23,12 @@ INSERT INTO "oauth2_client"
         "secret",
         "name",
         "redirect_uris",
+        "post_logout_redirect_uris",
         "token_types",
         "grant_types",
         "skip_authorization_if_scope_is_allowed",
         "client_credentials_grant_user_id",
+        "oidc_rp_initiated_logout",
         "enabled",
         "created_at",
         "updated_at"
@@ -39,10 +41,12 @@ INSERT INTO "oauth2_client"
         '2021-01-01::3vUCADtKx59NPQl3/1fJXmppRbiug3iccJc1S9XY6TPvLE02/+ggB8GtIc24J5oMTj38NIPIpNt8ClNDS7ZBI4+ykNxYOuEHQfdkDiUf5WVKtLegx43gLXfq', -- "secret"
         'Valid client with Grant Type Auth Code',
         '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
+        null,
         1, -- Bearer
         5, -- AUTH_CODE | REFRESH_TOKEN
         false,
         null,
+        0,
         true,
         EXTRACT(EPOCH FROM NOW()),
         EXTRACT(EPOCH FROM NOW())
@@ -54,10 +58,12 @@ INSERT INTO "oauth2_client"
         '2021-01-01::3vUCADtKx59NPQl3/1fJXmppRbiug3iccJc1S9XY6TPvLE02/+ggB8GtIc24J5oMTj38NIPIpNt8ClNDS7ZBI4+ykNxYOuEHQfdkDiUf5WVKtLegx43gLXfq', -- "secret"
         'Valid client with Grant Type client credentials',
         null,
+        null,
         1, -- Bearer
         2, -- CLIENT_CREDENTIALS // refresh token SHOULD NOT be included: https://datatracker.ietf.org/doc/html/rfc6749--section-4.4.3
         false,
         123,
+        0,
         true,
         EXTRACT(EPOCH FROM NOW()),
         EXTRACT(EPOCH FROM NOW())
@@ -69,10 +75,12 @@ INSERT INTO "oauth2_client"
         NULL,
         'Valid client with Grant Type password',
         '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
+        null,
         1, -- Bearer
         1028, -- PASSWORD | REFRESH_TOKEN
         false,
         null,
+        0,
         true,
         EXTRACT(EPOCH FROM NOW()),
         EXTRACT(EPOCH FROM NOW())
@@ -84,10 +92,12 @@ INSERT INTO "oauth2_client"
         '2021-01-01::3vUCADtKx59NPQl3/1fJXmppRbiug3iccJc1S9XY6TPvLE02/+ggB8GtIc24J5oMTj38NIPIpNt8ClNDS7ZBI4+ykNxYOuEHQfdkDiUf5WVKtLegx43gLXfq', -- "secret",
         'Valid client with Grant Type Implicit',
         '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
+        null,
         1, -- Bearer
         2052, -- IMPLICIT // The authorization server MUST NOT issue a refresh token: https://datatracker.ietf.org/doc/html/rfc6749--section-4.2.2
         false,
         null,
+        0,
         true,
         EXTRACT(EPOCH FROM NOW()),
         EXTRACT(EPOCH FROM NOW())
@@ -99,10 +109,12 @@ INSERT INTO "oauth2_client"
         '2021-01-01::3vUCADtKx59NPQl3/1fJXmppRbiug3iccJc1S9XY6TPvLE02/+ggB8GtIc24J5oMTj38NIPIpNt8ClNDS7ZBI4+ykNxYOuEHQfdkDiUf5WVKtLegx43gLXfq', -- "secret"
         'Disabled client with Grant Type Auth Code',
         '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
+        null,
         1, -- Bearer
         5, -- AUTH_CODE | REFRESH_TOKEN
         false,
         null,
+        0,
         false,
         EXTRACT(EPOCH FROM NOW()),
         EXTRACT(EPOCH FROM NOW())
@@ -114,10 +126,12 @@ INSERT INTO "oauth2_client"
         null,
         'Valid public client with Grant Type Auth Code without scopes',
         '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
+        null,
         1, -- Bearer
         5, -- AUTH_CODE | REFRESH_TOKEN
         false,
         null,
+        0,
         true,
         EXTRACT(EPOCH FROM NOW()),
         EXTRACT(EPOCH FROM NOW())
@@ -129,10 +143,12 @@ INSERT INTO "oauth2_client"
         null,
         'Valid client with Grant Type Auth Code and OpenID connect',
         '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
+        '["http://localhost/logout_redirect_uri/"]',
         1, -- Bearer
         5, -- AUTH_CODE | REFRESH_TOKEN
         false,
         null,
+        1,  -- Enabled with authorization
         true,
         EXTRACT(EPOCH FROM NOW()),
         EXTRACT(EPOCH FROM NOW())
@@ -145,10 +161,12 @@ INSERT INTO "oauth2_client"
         null,
         'Valid client with Grant Type Auth Code and OpenID connect skip authorization if scope allowed',
         '["http://localhost/redirect_uri/", "https://oauth.pstmn.io/v1/callback"]',
+        '["http://localhost/logout_redirect_uri/"]',
         1, -- Bearer
         5, -- AUTH_CODE | REFRESH_TOKEN
         true,
         null,
+        2, -- Enabled, skip authorization
         true,
         EXTRACT(EPOCH FROM NOW()),
         EXTRACT(EPOCH FROM NOW())
@@ -160,10 +178,12 @@ INSERT INTO "oauth2_client"
         '2021-01-01::3vUCADtKx59NPQl3/1fJXmppRbiug3iccJc1S9XY6TPvLE02/+ggB8GtIc24J5oMTj38NIPIpNt8ClNDS7ZBI4+ykNxYOuEHQfdkDiUf5WVKtLegx43gLXfq', -- "secret"
         'Valid client with Grant Type Personal Access Token',
         null,
+        null,
         1, -- Bearer
         4096, -- PERSONAL_ACCESS_TOKEN
         true,
         null,
+        0,
         true,
         EXTRACT(EPOCH FROM NOW()),
         EXTRACT(EPOCH FROM NOW())

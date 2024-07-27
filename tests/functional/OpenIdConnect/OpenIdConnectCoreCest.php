@@ -1,6 +1,6 @@
 <?php
 
-namespace Yii2Oauth2ServerTests\functional;
+namespace Yii2Oauth2ServerTests\functional\OpenIdConnect;
 
 use Codeception\Example;
 use Codeception\Util\HttpCode;
@@ -15,6 +15,7 @@ use Yii2Oauth2ServerTests\_helpers\OpenIdConnectTestClient;
 use Yii2Oauth2ServerTests\_helpers\TestUserModelOidc;
 use Yii2Oauth2ServerTests\ApiTester;
 use Yii2Oauth2ServerTests\functional\_base\BaseGrantCest;
+use Yii2Oauth2ServerTests\functional\OpenIdConnect\_base\BaseOpenIdConnectCest;
 
 /**
  * @covers \rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ServerController
@@ -30,17 +31,8 @@ use Yii2Oauth2ServerTests\functional\_base\BaseGrantCest;
  * @covers \rhertogh\Yii2Oauth2Server\controllers\web\Oauth2OidcController
  * @covers \rhertogh\Yii2Oauth2Server\controllers\web\openidconnect\Oauth2OidcUserinfoAction
  */
-class OpenIdConnectCest extends BaseGrantCest
+class OpenIdConnectCoreCest extends BaseOpenIdConnectCest
 {
-    public function _before(ApiTester $I)
-    {
-        parent::_before($I);
-
-        // Using TestUserModelOidc as definition for the Oauth2Module's and user component identityClass.
-        Oauth2Module::getInstance()->identityClass = TestUserModelOidc::class;
-        Yii::$app->user->identityClass = TestUserModelOidc::class;
-    }
-
     /**
      * @dataProvider openIdConnectTestProvider
      */
@@ -297,27 +289,5 @@ class OpenIdConnectCest extends BaseGrantCest
 
         // Expect test.user2 as subject.
         $I->assertEquals(124, $accessToken->getParam('sub'));
-    }
-
-    protected function getOpenIdConnectTestClient($I, $config = [])
-    {
-        return new OpenIdConnect(ArrayHelper::merge(
-            [
-                'httpClient' => [
-                    'class' => Client::class,
-                    'transport' => [
-                        'class' => ApiTesterTransport::class,
-                        'apiTester' => $I,
-                    ]
-                ],
-                'validateAuthNonce' => true,
-                'returnUrl' => 'http://localhost/redirect_uri/',
-                'issuerUrl' => 'https://localhost',
-                'clientId' => 'test-client-type-auth-code-open-id-connect',
-                'enablePkce' => true,
-                'scope' => 'openid'
-            ],
-            $config,
-        ));
     }
 }

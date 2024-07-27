@@ -41,6 +41,7 @@ return [
                 Oauth2Module::GRANT_TYPE_PERSONAL_ACCESS_TOKEN,
             ],
             'enableOpenIdConnect' => true,
+            'openIdConnectRpInitiatedLogoutEndpoint' => true,
             'defaultUserAccountSelection' => Oauth2Module::USER_ACCOUNT_SELECTION_UPON_CLIENT_REQUEST,
         ],
     ],
