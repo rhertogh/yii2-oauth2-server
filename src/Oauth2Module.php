@@ -1493,7 +1493,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
     /**
      * @inheritDoc
      */
-    protected function getRequestOauthClaim($attribute, $default = null)
+    public function getRequestOauthClaim($attribute, $default = null)
     {
         if (empty($this->_oauthClaimsAuthorizationHeader)) {
             // User authorization was not processed by Oauth2Module.
