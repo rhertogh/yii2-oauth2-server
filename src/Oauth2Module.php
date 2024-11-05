@@ -1395,10 +1395,15 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
 
         $psr7Request = $this->getResourceServer()->validateAuthenticatedRequest($psr7Request);
 
-        $claims = $this->getAccessTokenClaims(Yii::$app->request->getBodyParam('token'));
-        foreach ($claims->all() as $claimKey => $claimValue) {
-            if (!$this->isDefaultClaimKey($claimKey)) {
-                $psr7Request = $psr7Request->withAttribute($claimKey, $claimValue);
+        $token = substr(Yii::$app->request->headers->get('Authorization'), 7);
+
+        if ($token) {
+            $claims = $this->getAccessTokenClaims($token);
+
+            foreach ($claims->all() as $claimKey => $claimValue) {
+                if (!$this->isDefaultClaimKey($claimKey)) {
+                    $psr7Request = $psr7Request->withAttribute($claimKey, $claimValue);
+                }
             }
         }
 
@@ -1620,7 +1625,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
         return $this->getAccessToken($token)->claims();
     }
 
-    private function isDefaultClaimKey(string $claimKey): bool
+    protected function isDefaultClaimKey(string $claimKey): bool
     {
         return in_array(
             $claimKey,
