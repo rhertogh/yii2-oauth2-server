@@ -4,10 +4,6 @@ namespace rhertogh\Yii2Oauth2Server\controllers\web\server;
 
 use Defuse\Crypto\Crypto;
 use Defuse\Crypto\Key;
-use Lcobucci\JWT\Configuration;
-use Lcobucci\JWT\Signer\Key\InMemory;
-use Lcobucci\JWT\Signer\Rsa\Sha256;
-use Lcobucci\JWT\Validation\Constraint\SignedWith;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2ServerController;
 use rhertogh\Yii2Oauth2Server\controllers\web\server\base\Oauth2BaseServerAction;
 use rhertogh\Yii2Oauth2Server\helpers\Oauth2RequestHelper;
@@ -156,24 +152,7 @@ class Oauth2RevokeAction extends Oauth2BaseServerAction implements Oauth2RevokeA
     protected function parseTokenAsAccessToken(Oauth2Module $module, string $token, string $tokenTypeHint)
     {
         try {
-            // Based on \League\OAuth2\Server\AuthorizationValidators\BearerTokenValidator::initJwtConfiguration().
-            $jwtConfiguration = Configuration::forSymmetricSigner(
-                new Sha256(),
-                InMemory::plainText('empty', 'empty')
-            );
-
-            $publicKey = $module->getPublicKey();
-            $jwtConfiguration->setValidationConstraints(
-                new SignedWith(
-                    new Sha256(),
-                    InMemory::plainText($publicKey->getKeyContents(), $publicKey->getPassPhrase() ?? '')
-                )
-            );
-
-            $accessToken = $jwtConfiguration->parser()->parse($token);
-            $jwtConfiguration->validator()->assert($accessToken, ...$jwtConfiguration->validationConstraints());
-            Yii::debug('Found access token: ' . $token, __METHOD__);
-            $accessTokenClaims = $accessToken->claims();
+            $accessTokenClaims = $module->getAccessTokenClaims($token);
             $accessTokenIdentifier = $accessTokenClaims->get('jti');
             $clientIdentifier = $accessTokenClaims->get('client_id');
 

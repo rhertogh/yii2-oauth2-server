@@ -13,6 +13,11 @@ use Defuse\Crypto\Exception\BadFormatException;
 use Defuse\Crypto\Exception\EnvironmentIsBrokenException;
 use GuzzleHttp\Psr7\Response as Psr7Response;
 use GuzzleHttp\Psr7\ServerRequest as Psr7ServerRequest;
+use Lcobucci\JWT\Configuration;
+use Lcobucci\JWT\Signer\Key\InMemory;
+use Lcobucci\JWT\Signer\Rsa\Sha256;
+use Lcobucci\JWT\Token;
+use Lcobucci\JWT\Validation\Constraint\SignedWith;
 use League\OAuth2\Server\CryptKey;
 use League\OAuth2\Server\Grant\GrantTypeInterface;
 use rhertogh\Yii2Oauth2Server\base\Oauth2BaseModule;
@@ -1390,6 +1395,13 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
 
         $psr7Request = $this->getResourceServer()->validateAuthenticatedRequest($psr7Request);
 
+        $claims = $this->getAccessTokenClaims(Yii::$app->request->getBodyParam('token'));
+        foreach ($claims->all() as $claimKey => $claimValue) {
+            if (!$this->isDefaultClaimKey($claimKey)) {
+                $psr7Request = $psr7Request->withAttribute($claimKey, $claimValue);
+            }
+        }
+
         $this->_oauthClaims = $psr7Request->getAttributes();
         $this->_oauthClaimsAuthorizationHeader = Yii::$app->request->getHeaders()->get('Authorization');
     }
@@ -1571,5 +1583,57 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
         }
 
         return $this->httpClientErrorsLogLevel;
+    }
+
+
+    public function getJwtConfiguration(): Configuration
+    {
+        // Based on \League\OAuth2\Server\AuthorizationValidators\BearerTokenValidator::initJwtConfiguration().
+        $jwtConfiguration = Configuration::forSymmetricSigner(
+            new Sha256(),
+            InMemory::plainText('empty', 'empty')
+        );
+
+        $publicKey = $this->getPublicKey();
+        $jwtConfiguration->setValidationConstraints(
+            new SignedWith(
+                new Sha256(),
+                InMemory::plainText($publicKey->getKeyContents(), $publicKey->getPassPhrase() ?? '')
+            )
+        );
+
+        return $jwtConfiguration;
+    }
+
+    public function getAccessToken(string $token): Token
+    {
+        $jwtConfiguration = $this->getJwtConfiguration();
+        $accessToken = $jwtConfiguration->parser()->parse($token);
+        $jwtConfiguration->validator()->assert($accessToken, ...$jwtConfiguration->validationConstraints());
+        Yii::debug('Found access token: ' . $token, __METHOD__);
+
+        return $accessToken;
+    }
+
+    public function getAccessTokenClaims(string $token): Token\DataSet
+    {
+        return $this->getAccessToken($token)->claims();
+    }
+
+    private function isDefaultClaimKey(string $claimKey): bool
+    {
+        return in_array(
+            $claimKey,
+            [
+                'aud',
+                'jti',
+                'iat',
+                'nbf',
+                'exp',
+                'sub',
+                'scopes',
+                'client_id',
+            ]
+        );
     }
 }
