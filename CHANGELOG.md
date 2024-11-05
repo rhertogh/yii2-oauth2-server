@@ -12,8 +12,11 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 
 ### Added
 - Initiating User Registration via OpenID Connect. (rhertogh)
+- Addition of all extra claims in access token to request. (m.vanderzijden)
 
 ### Changed
+- Altered scope of getRequestOauthClaim function to public. (m.vanderzijden)
+- Centralized JWTConfiguration to Oauth2Module. (m.vanderzijden)
 
 ### Deprecated
 

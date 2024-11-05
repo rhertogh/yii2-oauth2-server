@@ -152,7 +152,7 @@ class Oauth2RevokeAction extends Oauth2BaseServerAction implements Oauth2RevokeA
     protected function parseTokenAsAccessToken(Oauth2Module $module, string $token, string $tokenTypeHint)
     {
         try {
-            $accessTokenClaims = $module->getAccessTokenClaims($token);
+            $accessTokenClaims = $module->getAccessToken($token)->claims();
             $accessTokenIdentifier = $accessTokenClaims->get('jti');
             $clientIdentifier = $accessTokenClaims->get('client_id');
 

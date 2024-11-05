@@ -223,6 +223,11 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
     ];
 
     /**
+     * Offset of Bearer: in Authorization header
+     */
+    protected const BEARER_TOKEN_OFFSET = 7;
+
+    /**
      * @inheritdoc
      */
     public $controllerNamespace = __NAMESPACE__ . '\-'; // Set explicitly via $controllerMap in `init()`.
@@ -1395,10 +1400,10 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
 
         $psr7Request = $this->getResourceServer()->validateAuthenticatedRequest($psr7Request);
 
-        $token = substr(Yii::$app->request->headers->get('Authorization'), 7);
+        $token = substr(Yii::$app->request->headers->get('Authorization'), self::BEARER_TOKEN_OFFSET);
 
         if ($token) {
-            $claims = $this->getAccessTokenClaims($token);
+            $claims = $this->getAccessToken($token)->claims();
 
             foreach ($claims->all() as $claimKey => $claimValue) {
                 if (!$this->isDefaultClaimKey($claimKey)) {
@@ -1510,7 +1515,7 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
     /**
      * @inheritDoc
      */
-    protected function getRequestOauthClaim($attribute, $default = null)
+    public function getRequestOauthClaim($attribute, $default = null)
     {
         if (empty($this->_oauthClaimsAuthorizationHeader)) {
             // User authorization was not processed by Oauth2Module.
@@ -1618,11 +1623,6 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
         Yii::debug('Found access token: ' . $token, __METHOD__);
 
         return $accessToken;
-    }
-
-    public function getAccessTokenClaims(string $token): Token\DataSet
-    {
-        return $this->getAccessToken($token)->claims();
     }
 
     protected function isDefaultClaimKey(string $claimKey): bool
