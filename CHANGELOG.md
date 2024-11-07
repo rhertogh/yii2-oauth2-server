@@ -27,6 +27,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Improved
 
 ### Security
+- Updated composer dependencies (notably "symfony/process" to v5.4.46 for https://github.com/advisories/GHSA-qq5c-677p-737q) (rhertogh)
 
 
 [1.0.0-alpha18] - 2024-07-27
