@@ -7,7 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer version.  
 
-[1.0.0-alpha19] - Unreleased
+[1.0.0-alpha20] - Unreleased
+----------------------------
+
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Improved
+
+### Security
+
+
+[1.0.0-alpha19] - 2025-04-24
 ----------------------------
 
 ### Added
@@ -18,14 +36,8 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 - Altered scope of getRequestOauthClaim function to public. (m.vanderzijden)
 - Centralized JWTConfiguration to Oauth2Module. (m.vanderzijden)
 
-### Deprecated
-
-### Removed
-
 ### Fixed
 - Setting a callable "determiner" via the OpenID Connect claims function `Oauth2OidcScope::setClaims()`. (rhertogh)
-
-### Improved
 
 ### Security
 - Updated composer dependencies (notably "symfony/process" to v5.4.46 for https://github.com/advisories/GHSA-qq5c-677p-737q) (rhertogh)
