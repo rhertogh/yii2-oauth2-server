@@ -67,6 +67,17 @@ class Oauth2OidcScope extends BaseObject implements Oauth2OidcScopeInterface
         foreach ($claims as $claimIdentifier => $claimConfig) {
             if ($claimConfig instanceof Oauth2OidcClaimInterface) {
                 $this->addClaim($claimConfig);
+            } elseif (is_callable($claimConfig)) {
+                if (is_numeric($claimIdentifier)) {
+                    throw new InvalidArgumentException(
+                        'If an element is an callable it should be declared as an associative element.'
+                    );
+                }
+                // e.g. ['claim_identifier' => ['CustomClass', 'customFunction']].
+                $this->addClaim([
+                    'identifier' => $claimIdentifier,
+                    'determiner' => $claimConfig,
+                ]);
             } elseif (is_string($claimConfig)) {
                 if (is_numeric($claimIdentifier)) {
                     // e.g. ['claim_identifier'].

@@ -36,6 +36,8 @@ class Oauth2OidcScopeTest extends TestCase
         $testClaim = new Oauth2OidcClaim([
             'identifier' => 'test-claim-object',
         ]);
+        $callableMock = $this->getMockCallable();
+
         $claims = [
             'ignored-claim-identifier' => $testClaim,
             new Oauth2OidcClaim([
@@ -46,6 +48,8 @@ class Oauth2OidcScopeTest extends TestCase
                 'identifier' => 'test-duplicate',
                 'determiner' => 'test-duplicate-determiner-overwritten',
             ]),
+            'test-claim-callable' => [$callableMock, 'testFunction'],
+            'test-claim-anonymous-function' => fn() => 'anonymous',
             'test-claim-string-indexed',
             'test-claim-string-associative' => 'test-claim-string-associative-determiner',
             [
@@ -77,6 +81,16 @@ class Oauth2OidcScopeTest extends TestCase
         $this->assertEquals($testClaim, $oidcScope->getClaim('test-claim-object'));
         // Duplicate identifier.
         $this->assertEquals('test-duplicate-determiner-overwritten', $oidcScope->getClaim('test-duplicate')->getDeterminer());
+        // Callable.
+        $testClaimCallable = $oidcScope->getClaim('test-claim-callable');
+        $this->assertInstanceOf(Oauth2OidcClaimInterface::class, $testClaimCallable);
+        $this->assertEquals('test-claim-callable', $testClaimCallable->getIdentifier());
+        $this->assertIsCallable($testClaimCallable->getDeterminer());
+        // Anonymous function.
+        $testClaimAnonymousFunction = $oidcScope->getClaim('test-claim-anonymous-function');
+        $this->assertInstanceOf(Oauth2OidcClaimInterface::class, $testClaimAnonymousFunction);
+        $this->assertEquals('test-claim-anonymous-function', $testClaimAnonymousFunction->getIdentifier());
+        $this->assertIsCallable($testClaimAnonymousFunction->getDeterminer());
         // Indexed string.
         $testClaimIndexedString = $oidcScope->getClaim('test-claim-string-indexed');
         $this->assertInstanceOf(Oauth2OidcClaimInterface::class, $testClaimIndexedString);
@@ -123,6 +137,20 @@ class Oauth2OidcScopeTest extends TestCase
         $this->assertEquals([], $oidcScope->getClaims());
 
         // phpcs:enable Generic.Files.LineLength.TooLong
+    }
+
+    public function testAddClaimsInvalidCallableConfig()
+    {
+        $oidcScope = new Oauth2OidcScope();
+
+        $this->expectExceptionMessage(
+            'If an element is an callable it should be declared as an associative element.'
+        );
+
+        $callableMock = $this->getMockCallable();
+        $oidcScope->addClaims([
+            [$callableMock, 'testFunction'], // Note the missing key (which is the required "identifier").
+        ]);
     }
 
     public function testAddClaimsInvalidArrayConfig()
@@ -187,5 +215,12 @@ class Oauth2OidcScopeTest extends TestCase
         $this->assertEquals($oidcScope, $oidcScope->removeClaim('test-claim2'));
         $this->assertTrue($oidcScope->hasClaim('test-claim1'));
         $this->assertFalse($oidcScope->hasClaim('test-claim2'));
+    }
+
+    protected function getMockCallable()
+    {
+        return $this->getMockBuilder(\stdClass::class)
+            ->addMethods(['testFunction'])
+            ->getMock();
     }
 }

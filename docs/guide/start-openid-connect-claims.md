@@ -20,7 +20,10 @@ The `openIdConnectScopes` is a multidimensional array in the format:
         'claim_1', // in this case the name of the claim is also used for determining its value (see below).
         
         // Advanced claim configuration where the array key is used as claim "name" and the value as "determiner".  
-        'claim_2' => [MyCustomDeterminer::class, 'myCustomFunction'], // A callable with the signature `function(User $identity, Oauth2OidcClaimInterface $claim, Oauth2Module $module)`.
+        'claim_2a' => [MyCustomDeterminer::class, 'myCustomFunction'], // A callable with the signature `function(Oauth2OidcUserInterface $identity, Oauth2OidcClaimInterface $claim, Oauth2Module $module)`.
+        'claim_2b' => function(Oauth2OidcUserInterface $identity, Oauth2OidcClaimInterface $claim, Oauth2Module $module) { // An anonymous function (or any other closure)
+            return 'myCustomValue';
+        },
         'claim_3' => 'myCustomFunction', // The name of a function on the Identity
         'claim_4' => 'custom_property', // The name of a property on the Identity
         'claim_5a' => 'custom_relation.custom_property', // A path to a nested property (see `\yii\helpers\ArrayHelper`)

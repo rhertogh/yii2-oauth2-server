@@ -23,6 +23,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Removed
 
 ### Fixed
+- Setting a callable "determiner" via the OpenID Connect claims function `Oauth2OidcScope::setClaims()`. (rhertogh)
 
 ### Improved
 
