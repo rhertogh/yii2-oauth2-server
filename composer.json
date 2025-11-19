@@ -19,8 +19,8 @@
     ],
     "require": {
         "php": ">=7.4.0",
-        "yiisoft/yii2": "~2.0.49",
-        "league/oauth2-server": "~8.4.2"
+        "yiisoft/yii2": "^2.0.49",
+        "league/oauth2-server": "^9.2.0"
     },
     "require-dev": {
         "ext-json": "*",
