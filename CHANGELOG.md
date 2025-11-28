@@ -13,6 +13,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Added
 
 ### Changed
+- Fixed deprecated call_user_func usage (m.vanderzijden) 
 
 ### Deprecated
 

@@ -38,7 +38,7 @@ abstract class Oauth2BaseMigration extends Migration
      */
     protected function getTableName($tableClass)
     {
-        return call_user_func([DiHelper::getValidatedClassName($tableClass), 'tableName']);
+        return call_user_func(DiHelper::getValidatedClassName($tableClass) . '::tableName');
     }
 
     /**
@@ -50,7 +50,7 @@ abstract class Oauth2BaseMigration extends Migration
      */
     protected function getTableSchema($tableClass)
     {
-        return call_user_func([DiHelper::getValidatedClassName($tableClass), 'getTableSchema']);
+        return call_user_func(DiHelper::getValidatedClassName($tableClass) . '::getTableSchema');
     }
 
     /**
