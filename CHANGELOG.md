@@ -21,6 +21,7 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Fixed
 
 ### Improved
+ - Disable the `requireCodeChallengeForPublicClients` in the underling library since PKCE is independent of the Client type (https://oauth.net/2/pkce/), it is handled in this library. (rhertogh)
 
 ### Security
 

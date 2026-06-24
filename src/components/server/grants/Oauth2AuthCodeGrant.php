@@ -2,9 +2,12 @@
 
 namespace rhertogh\Yii2Oauth2Server\components\server\grants;
 
+use DateInterval;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 use League\OAuth2\Server\Grant\AuthCodeGrant;
+use League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface;
+use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\components\server\grants\traits\Oauth2GrantTrait;
 use rhertogh\Yii2Oauth2Server\interfaces\components\openidconnect\scope\Oauth2OidcScopeInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\server\grants\Oauth2AuthCodeGrantInterface;
@@ -15,6 +18,15 @@ class Oauth2AuthCodeGrant extends AuthCodeGrant implements Oauth2AuthCodeGrantIn
 {
     use Oauth2GrantTrait {
         issueRefreshToken as issueRefreshTokenInternal;
+    }
+
+    public function __construct(AuthCodeRepositoryInterface $authCodeRepository, RefreshTokenRepositoryInterface $refreshTokenRepository, DateInterval $authCodeTTL)
+    {
+        parent::__construct($authCodeRepository, $refreshTokenRepository, $authCodeTTL);
+
+        // PKCE is independent of the Client type (both public and confidential clients should have it, https://oauth.net/2/pkce/).
+        // It is handled by the Oauth2ClientInterface::isAuthCodeWithoutPkceAllowed() functionality instead.
+        $this->disableRequireCodeChallengeForPublicClients();
     }
 
     /**
