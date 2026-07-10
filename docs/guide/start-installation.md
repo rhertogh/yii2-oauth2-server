@@ -307,6 +307,15 @@ It will list the current Oauth2Module settings and the server endpoints (along w
 
 If everything is set up correctly your application now supports Oauth 2.0 🥳
 
+Usage
+-----
+Since the Yii2-Oauth2-Server integrates with the Yii2 authentication system you can continue to use the user
+component (`Yii::$app->user`) and identity (`Yii::$app->user->identity`).
+For example (assuming you've set up [RBAC](https://www.yiiframework.com/doc/guide/2.0/en/security-authorization#rbac))
+`Yii::$app->user->can('role_you_want_to_check')`.
+
+For further details, please see [Identity, Permissions and Scopes](start-identity-permissions-and-scopes.md)
+
 OpenID Connect
 --------------
 Please see [OpenID Connect for the Yii2-Oauth2-Server](start-openid-connect.md)
