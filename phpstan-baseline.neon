@@ -1,0 +1,331 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to an undefined method Lcobucci\\JWT\\Token\:\:claims\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Oauth2Module.php
+
+		-
+			message: '#^Unknown option "skip_authorization_if_scope_is_allowed" for object rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/Oauth2Module.php
+
+		-
+			message: '#^Call to an undefined method Lcobucci\\JWT\\Token\:\:claims\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/components/authorization/EndSession/base/Oauth2BaseEndSessionAuthorizationRequest.php
+
+		-
+			message: '#^Unknown option "client_id" for object rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2UserClientScopeInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/authorization/client/Oauth2ClientAuthorizationRequest.php
+
+		-
+			message: '#^Unknown option "scope_id" for object rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2UserClientScopeInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/authorization/client/Oauth2ClientAuthorizationRequest.php
+
+		-
+			message: '#^Unknown option "user_id" for object rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2UserClientScopeInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/authorization/client/Oauth2ClientAuthorizationRequest.php
+
+		-
+			message: '#^Unknown option "module" for object rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\Oauth2AuthCodeGrantInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/factories/grants/Oauth2AuthCodeGrantFactory.php
+
+		-
+			message: '#^Unknown option "module" for object rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\Oauth2ClientCredentialsGrantInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/factories/grants/Oauth2ClientCredentialsGrantFactory.php
+
+		-
+			message: '#^Unknown option "module" for object rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\Oauth2ImplicitGrantInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/factories/grants/Oauth2ImplicitGrantFactory.php
+
+		-
+			message: '#^Unknown option "module" for object rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\Oauth2PasswordGrantInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/factories/grants/Oauth2PasswordGrantFactory.php
+
+		-
+			message: '#^Unknown option "module" for object rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\Oauth2PersonalAccessTokenGrantInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/factories/grants/Oauth2PersonalAccessTokenGrantFactory.php
+
+		-
+			message: '#^Unknown option "module" for object rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\Oauth2RefreshTokenGrantInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/factories/grants/Oauth2RefreshTokenGrantFactory.php
+
+		-
+			message: '#^Object option "accessToken" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2RefreshTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AccessTokenInterface\|null, League\\OAuth2\\Server\\Entities\\AccessTokenEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2AuthCodeGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2AuthCodeGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2AuthCodeGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2AuthCodeGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2AuthCodeGrant.php
+
+		-
+			message: '#^Object option "accessToken" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2RefreshTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AccessTokenInterface\|null, League\\OAuth2\\Server\\Entities\\AccessTokenEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ClientCredentialsGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ClientCredentialsGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ClientCredentialsGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ClientCredentialsGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ClientCredentialsGrant.php
+
+		-
+			message: '#^Object option "accessToken" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2RefreshTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AccessTokenInterface\|null, League\\OAuth2\\Server\\Entities\\AccessTokenEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ImplicitGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ImplicitGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ImplicitGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ImplicitGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ImplicitGrant.php
+
+		-
+			message: '#^Object option "accessToken" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2RefreshTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AccessTokenInterface\|null, League\\OAuth2\\Server\\Entities\\AccessTokenEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PasswordGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PasswordGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PasswordGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PasswordGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PasswordGrant.php
+
+		-
+			message: '#^Object option "accessToken" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2RefreshTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AccessTokenInterface\|null, League\\OAuth2\\Server\\Entities\\AccessTokenEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PersonalAccessTokenGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PersonalAccessTokenGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PersonalAccessTokenGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PersonalAccessTokenGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PersonalAccessTokenGrant.php
+
+		-
+			message: '#^Object option "accessToken" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2RefreshTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AccessTokenInterface\|null, League\\OAuth2\\Server\\Entities\\AccessTokenEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2RefreshTokenGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2RefreshTokenGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2RefreshTokenGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2RefreshTokenGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2RefreshTokenGrant.php
+
+		-
+			message: '#^Controller action class "rhertogh\\Yii2Oauth2Server\\interfaces\\controllers\\console\\client\\Oauth2CreateClientActionInterface" must be yii\\base\\Action or its subclass\.$#'
+			identifier: mspirkovYii2.controllerActionsValidation
+			count: 1
+			path: src/controllers/console/Oauth2ClientController.php
+
+		-
+			message: '#^Controller action class "rhertogh\\Yii2Oauth2Server\\interfaces\\controllers\\console\\client\\Oauth2DeleteClientActionInterface" must be yii\\base\\Action or its subclass\.$#'
+			identifier: mspirkovYii2.controllerActionsValidation
+			count: 1
+			path: src/controllers/console/Oauth2ClientController.php
+
+		-
+			message: '#^Controller action class "rhertogh\\Yii2Oauth2Server\\interfaces\\controllers\\console\\client\\Oauth2ListClientsActionInterface" must be yii\\base\\Action or its subclass\.$#'
+			identifier: mspirkovYii2.controllerActionsValidation
+			count: 1
+			path: src/controllers/console/Oauth2ClientController.php
+
+		-
+			message: '#^Controller action class "rhertogh\\Yii2Oauth2Server\\interfaces\\controllers\\console\\client\\Oauth2SetClientSecretActionInterface" must be yii\\base\\Action or its subclass\.$#'
+			identifier: mspirkovYii2.controllerActionsValidation
+			count: 1
+			path: src/controllers/console/Oauth2ClientController.php
+
+		-
+			message: '#^Controller action class "rhertogh\\Yii2Oauth2Server\\interfaces\\controllers\\console\\debug\\Oauth2DebugConfigActionInterface" must be yii\\base\\Action or its subclass\.$#'
+			identifier: mspirkovYii2.controllerActionsValidation
+			count: 1
+			path: src/controllers/console/Oauth2DebugController.php
+
+		-
+			message: '#^Controller action class "rhertogh\\Yii2Oauth2Server\\interfaces\\controllers\\console\\encryption\\Oauth2EncryptionKeyUsageActionInterface" must be yii\\base\\Action or its subclass\.$#'
+			identifier: mspirkovYii2.controllerActionsValidation
+			count: 1
+			path: src/controllers/console/Oauth2EncryptionController.php
+
+		-
+			message: '#^Controller action class "rhertogh\\Yii2Oauth2Server\\interfaces\\controllers\\console\\encryption\\Oauth2GenerateSecretActionInterface" must be yii\\base\\Action or its subclass\.$#'
+			identifier: mspirkovYii2.controllerActionsValidation
+			count: 1
+			path: src/controllers/console/Oauth2EncryptionController.php
+
+		-
+			message: '#^Method yii\\db\\ActiveQueryInterface\:\:with\(\) invoked with 1 parameter, 0 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/controllers/console/client/Oauth2CreateClientAction.php
+
+		-
+			message: '#^Method yii\\db\\ActiveQueryInterface\:\:with\(\) invoked with 1 parameter, 0 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/controllers/console/client/Oauth2UpdateClientAction.php
+
+		-
+			message: '#^Method yii\\db\\ActiveQueryInterface\:\:with\(\) invoked with 1 parameter, 0 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/controllers/console/client/base/Oauth2BaseEditClientAction.php
+
+		-
+			message: '#^Call to an undefined method Lcobucci\\JWT\\Token\:\:claims\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/controllers/web/server/Oauth2RevokeAction.php
+
+		-
+			message: '#^Variable \$refreshTokenString might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: src/controllers/web/server/Oauth2RevokeAction.php
+
+		-
+			message: '#^Access to an undefined property rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientScopeInterface\:\:\$client_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/models/Oauth2Client.php

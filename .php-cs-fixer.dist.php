@@ -25,6 +25,7 @@ return $config
     ->setRules([
         '@PSR12' => true,
         'function_declaration' => false,
+        'phpdoc_var_annotation_correct_order' => true,
         'new_with_braces' => [
             'anonymous_class' => false,
         ],
