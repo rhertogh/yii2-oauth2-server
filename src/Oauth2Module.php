@@ -17,6 +17,7 @@ use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Lcobucci\JWT\Token;
+use Lcobucci\JWT\UnencryptedToken;
 use Lcobucci\JWT\Validation\Constraint\SignedWith;
 use League\OAuth2\Server\CryptKey;
 use League\OAuth2\Server\Grant\GrantTypeInterface;
@@ -1615,9 +1616,13 @@ class Oauth2Module extends Oauth2BaseModule implements BootstrapInterface, Defau
         return $jwtConfiguration;
     }
 
+    /**
+     * @return UnencryptedToken
+     */
     public function getAccessToken(string $token): Token
     {
         $jwtConfiguration = $this->getJwtConfiguration();
+        /** @var UnencryptedToken $accessToken */
         $accessToken = $jwtConfiguration->parser()->parse($token);
         $jwtConfiguration->validator()->assert($accessToken, ...$jwtConfiguration->validationConstraints());
         Yii::debug('Found access token: ' . $token, __METHOD__);

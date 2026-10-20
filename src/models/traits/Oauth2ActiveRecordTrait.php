@@ -11,6 +11,10 @@ use yii\db\Exception as DbException;
 use yii\db\TableSchema;
 use yii\helpers\ArrayHelper;
 
+/**
+ * @phpstan-require-extends ActiveRecord
+ * @phpstan-require-implements Oauth2ActiveRecordInterface
+ */
 trait Oauth2ActiveRecordTrait
 {
     /**
@@ -63,7 +67,6 @@ trait Oauth2ActiveRecordTrait
      */
     public function persist($runValidation = true, $attributeNames = null)
     {
-        /** @var ActiveRecord|Oauth2ActiveRecordInterface $this */
         if (!$this->save($runValidation, $attributeNames)) {
             throw new DbException('Could not save ' . static::class .
                 (YII_DEBUG ? PHP_EOL . print_r($this->attributes, true) : '') .
