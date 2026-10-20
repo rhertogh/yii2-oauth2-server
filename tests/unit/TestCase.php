@@ -200,6 +200,7 @@ abstract class TestCase extends \Codeception\Test\Unit
      * @param $propertyName
      * @param bool $revoke whether to make property inaccessible after getting
      * @return mixed
+     * @phpstan-impure
      */
     protected function getInaccessibleProperty($object, $propertyName, $revoke = true)
     {

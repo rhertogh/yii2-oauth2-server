@@ -7,7 +7,7 @@ interface Oauth2IdentifierInterface
     /**
      * Find model by identifier. Note: this might be different from the model's id.
      * @param string $identifier
-     * @return static|Oauth2ActiveRecordInterface|null
+     * @return static|null
      * @since 1.0.0
      */
     public static function findByIdentifier($identifier);

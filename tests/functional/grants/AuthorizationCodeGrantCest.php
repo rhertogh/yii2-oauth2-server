@@ -7,6 +7,7 @@ use Codeception\Util\HttpCode;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
+use Lcobucci\JWT\UnencryptedToken;
 use League\OAuth2\Client\Token\AccessToken;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client\Oauth2ClientAuthorizationRequestInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
@@ -120,6 +121,7 @@ class AuthorizationCodeGrantCest extends BaseGrantCest
         $response = Json::decode($I->grabResponse());
         $accessToken = new AccessToken($response);
         $I->assertFalse($accessToken->hasExpired());
+        /** @var UnencryptedToken $token */
         $token = $jwtConfiguration->parser()->parse($accessToken->getToken());
         $exp = $token->claims()->get('exp');
         $I->assertGreaterThanOrEqual($expirationTime, $exp);

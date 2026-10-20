@@ -31,7 +31,7 @@ trait Oauth2IdentifierTestTrait
      */
     public function testFindByIdentifier($identifier)
     {
-        /** @var Oauth2IdentifierInterface $className */
+        /** @var class-string<Oauth2IdentifierInterface> $className */
         $className = DiHelper::getValidatedClassName($this->getModelInterface());
         $model = $className::findByIdentifier($identifier);
 

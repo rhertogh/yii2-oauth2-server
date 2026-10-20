@@ -8,16 +8,17 @@ parameters:
 
     paths:
         - src
-#       - tests
+        - sample
+        - tests
 
     excludePaths:
-        -   sample/runtime
-        -   tests/_runtime (?)
-        -   sample/dev/giiant/generators/model/templates
-        -   src/models/base
-        -   src/exceptions/Oauth2OidcServerException.php # https://github.com/phpstan/phpstan/issues/6007
-        -   src/exceptions/Oauth2UniqueTokenIdentifierConstraintViolationException.php # https://github.com/phpstan/phpstan/issues/6007
-        -   src/controllers/console/migrations/generate (?)
+        analyse:
+            -   tests/_support/_generated
+        analyseAndScan:
+            -   sample/runtime
+            -   sample/dev/giiant/generators/model/templates
+            -   tests/_runtime (?)
+            -   tests/_output (?)
 
     bootstrapFiles:
         - phpstan-bootstrap.php
@@ -25,9 +26,11 @@ parameters:
     mspirkovYii2:
         enableAllRules: false
         enableValidationRules: true
+        viewPaths:
+            'sample\controllers\web': sample/views
         applicationConfigs:
             -
                 paths:
-                    - %currentWorkingDirectory%
+                    - sample
                 files:
-                    - %currentWorkingDirectory%/sample/config/site.php
+                    - sample/config/site.php
