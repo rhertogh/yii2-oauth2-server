@@ -12,7 +12,7 @@ trait Oauth2EnabledQueryTrait
      */
     public function enabled($enabled = true)
     {
-        /** @var ActiveQuery|mixed $this */
+        /** @var ActiveQuery&$this $this */
         if (!is_null($enabled)) {
             if (is_null($this->from)) {
                 /** @var Oauth2ActiveRecordInterface $modelClass */

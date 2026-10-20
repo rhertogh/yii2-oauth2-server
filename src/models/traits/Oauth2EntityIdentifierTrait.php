@@ -28,7 +28,7 @@ trait Oauth2EntityIdentifierTrait
      */
     public function getIdentifier()
     {
-        /** @var ActiveRecordInterface $this */
+        /** @var ActiveRecordInterface&$this $this */
         return $this->getAttribute('identifier');
     }
 
@@ -37,7 +37,7 @@ trait Oauth2EntityIdentifierTrait
      */
     public function setIdentifier($identifier)
     {
-        /** @var ActiveRecordInterface $this */
+        /** @var ActiveRecordInterface&$this $this */
         $this->setAttribute('identifier', $identifier);
     }
 
