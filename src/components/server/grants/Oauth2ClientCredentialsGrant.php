@@ -3,6 +3,7 @@
 namespace rhertogh\Yii2Oauth2Server\components\server\grants;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
+use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Grant\ClientCredentialsGrant;
 use rhertogh\Yii2Oauth2Server\components\server\grants\traits\Oauth2GrantTrait;
 use rhertogh\Yii2Oauth2Server\interfaces\components\authorization\client\Oauth2ClientAuthorizationRequestInterface;
@@ -25,9 +26,9 @@ class Oauth2ClientCredentialsGrant extends ClientCredentialsGrant implements Oau
     protected function issueAccessToken(
         \DateInterval $accessTokenTTL,
         ClientEntityInterface $client,
-        $userIdentifier,
+        ?string $userIdentifier,
         array $scopes = []
-    ) {
+    ): AccessTokenEntityInterface {
         if ($userIdentifier === null) {
             $clientCredentialsGrantUserId = $client->getClientCredentialsGrantUserId();
             if ($clientCredentialsGrantUserId) {

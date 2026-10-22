@@ -3,6 +3,7 @@
 namespace rhertogh\Yii2Oauth2Server\interfaces\components\repositories;
 
 use League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface;
+use League\OAuth2\Server\Entities\AuthCodeEntityInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\base\Oauth2ModelRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AuthCodeInterface;
 
@@ -35,6 +36,6 @@ interface Oauth2AuthCodeRepositoryInterface extends
      * @inheritDoc
      * @return Oauth2AuthCodeInterface
      */
-    public function getNewAuthCode();
+    public function getNewAuthCode(): AuthCodeEntityInterface;
     # endregion
 }

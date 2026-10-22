@@ -31,7 +31,7 @@ class Oauth2ScopeRepository extends Oauth2BaseRepository implements Oauth2ScopeR
      * @inheritDoc
      * @throws InvalidConfigException
      */
-    public function getScopeEntityByIdentifier($identifier)
+    public function getScopeEntityByIdentifier(string $identifier): ?Oauth2ScopeInterface
     {
         return $this->findModelByIdentifier($identifier);
     }
@@ -43,10 +43,11 @@ class Oauth2ScopeRepository extends Oauth2BaseRepository implements Oauth2ScopeR
      */
     public function finalizeScopes(
         array $scopes,
-        $grantType,
+        string $grantType,
         ClientEntityInterface $clientEntity,
-        $userIdentifier = null
-    ) {
+        ?string $userIdentifier = null,
+        ?string $authCodeId = null
+    ): array {
         if (!($clientEntity instanceof Oauth2ClientInterface)) {
             throw new InvalidArgumentException(
                 get_class($clientEntity) . ' must implement ' . Oauth2ClientInterface::class

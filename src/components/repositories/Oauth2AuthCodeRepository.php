@@ -24,7 +24,7 @@ class Oauth2AuthCodeRepository extends Oauth2BaseTokenRepository implements Oaut
     /**
      * @inheritDoc
      */
-    public function getNewAuthCode()
+    public function getNewAuthCode(): AuthCodeEntityInterface
     {
         return static::getNewTokenInternally();
     }
@@ -32,7 +32,7 @@ class Oauth2AuthCodeRepository extends Oauth2BaseTokenRepository implements Oaut
     /**
      * @inheritDoc
      */
-    public function persistNewAuthCode(AuthCodeEntityInterface $authCodeEntity)
+    public function persistNewAuthCode(AuthCodeEntityInterface $authCodeEntity): void
     {
         static::persistToken($authCodeEntity);
     }
@@ -40,7 +40,7 @@ class Oauth2AuthCodeRepository extends Oauth2BaseTokenRepository implements Oaut
     /**
      * @inheritDoc
      */
-    public function revokeAuthCode($codeId)
+    public function revokeAuthCode(string $codeId): void
     {
         static::revokeToken($codeId);
     }
@@ -48,7 +48,7 @@ class Oauth2AuthCodeRepository extends Oauth2BaseTokenRepository implements Oaut
     /**
      * @inheritDoc
      */
-    public function isAuthCodeRevoked($codeId)
+    public function isAuthCodeRevoked(string $codeId): bool
     {
         return static::isTokenRevoked($codeId);
     }

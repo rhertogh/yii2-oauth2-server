@@ -17,7 +17,7 @@ interface Oauth2UserRepositoryInterface extends
      * @return Oauth2UserInterface|null
      * @since 1.0.0
      */
-    public function getUserEntityByIdentifier($identifier);
+    public function getUserEntityByIdentifier(string $identifier): ?Oauth2UserInterface;
 
     # region UserRepositoryInterface methods (overwritten for type covariance)
     /**
@@ -25,10 +25,10 @@ interface Oauth2UserRepositoryInterface extends
      * @return Oauth2PasswordGrantUserInterface|null
      */
     public function getUserEntityByUserCredentials(
-        $username,
-        $password,
-        $grantType,
+        string $username,
+        string $password,
+        string $grantType,
         ClientEntityInterface $clientEntity
-    );
+    ): ?Oauth2PasswordGrantUserInterface;
     # endregion
 }

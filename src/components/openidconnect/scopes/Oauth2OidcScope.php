@@ -25,7 +25,7 @@ class Oauth2OidcScope extends BaseObject implements Oauth2OidcScopeInterface
     /**
      * @inheritDoc
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         if (empty($this->_identifier)) {
             throw new InvalidCallException('Trying to get scope identifier without it being set.');

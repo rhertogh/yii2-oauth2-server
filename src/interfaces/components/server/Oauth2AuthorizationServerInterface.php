@@ -4,14 +4,14 @@ namespace rhertogh\Yii2Oauth2Server\interfaces\components\server;
 
 use DateInterval;
 use Defuse\Crypto\Key;
-use League\Event\EmitterAwareInterface;
+use League\OAuth2\Server\EventEmitting\EmitterAwareInterface;
 use League\OAuth2\Server\CryptKey;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\Grant\GrantTypeInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
 use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
-use League\OAuth2\Server\RequestTypes\AuthorizationRequest;
+use League\OAuth2\Server\RequestTypes\AuthorizationRequestInterface;
 use League\OAuth2\Server\ResponseTypes\ResponseTypeInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -32,8 +32,8 @@ interface Oauth2AuthorizationServerInterface extends EmitterAwareInterface
         ClientRepositoryInterface $clientRepository,
         AccessTokenRepositoryInterface $accessTokenRepository,
         ScopeRepositoryInterface $scopeRepository,
-        $privateKey,
-        $encryptionKey,
+        CryptKey|string $privateKey,
+        Key|string $encryptionKey,
         ResponseTypeInterface $responseType = null
     );
 
@@ -43,7 +43,7 @@ interface Oauth2AuthorizationServerInterface extends EmitterAwareInterface
      * @param null|DateInterval $accessTokenTTL
      * @since 1.0.0
      */
-    public function enableGrantType(GrantTypeInterface $grantType, DateInterval $accessTokenTTL = null);
+    public function enableGrantType(GrantTypeInterface $grantType, DateInterval|null $accessTokenTTL = null): void;
 
     /**
      * Validate an authorization request
@@ -52,7 +52,7 @@ interface Oauth2AuthorizationServerInterface extends EmitterAwareInterface
      * @throws OAuthServerException
      * @since 1.0.0
      */
-    public function validateAuthorizationRequest(ServerRequestInterface $request);
+    public function validateAuthorizationRequest(ServerRequestInterface $request): AuthorizationRequestInterface;
 
     /**
      * Complete an authorization request
@@ -61,7 +61,7 @@ interface Oauth2AuthorizationServerInterface extends EmitterAwareInterface
      * @return ResponseInterface
      * @since 1.0.0
      */
-    public function completeAuthorizationRequest(AuthorizationRequest $authRequest, ResponseInterface $response);
+    public function completeAuthorizationRequest(AuthorizationRequestInterface $authRequest, ResponseInterface $response): ResponseInterface;
 
     /**
      * Return an access token response.
@@ -71,14 +71,14 @@ interface Oauth2AuthorizationServerInterface extends EmitterAwareInterface
      * @throws OAuthServerException
      * @since 1.0.0
      */
-    public function respondToAccessTokenRequest(ServerRequestInterface $request, ResponseInterface $response);
+    public function respondToAccessTokenRequest(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface;
 
     /**
      * Set the default scope for the authorization server.
      * @param string $defaultScope
      * @since 1.0.0
      */
-    public function setDefaultScope($defaultScope);
+    public function setDefaultScope(string $defaultScope): void;
 
     /**
      * Sets whether to revoke refresh tokens or not (for all grant types).

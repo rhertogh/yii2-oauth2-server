@@ -3,6 +3,8 @@
 namespace rhertogh\Yii2Oauth2Server\components\server\grants\traits;
 
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
+use League\OAuth2\Server\Entities\AuthCodeEntityInterface;
+use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use rhertogh\Yii2Oauth2Server\events\Oauth2AccessTokenIssuanceEvent;
@@ -22,10 +24,10 @@ trait Oauth2GrantTrait
     protected function issueAuthCode(
         \DateInterval $authCodeTTL,
         ClientEntityInterface $client,
-        $userIdentifier,
-        $redirectUri,
+        string $userIdentifier,
+        ?string $redirectUri,
         array $scopes = []
-    ) {
+    ): AuthCodeEntityInterface {
         /** @var Oauth2AuthCodeIssuanceEvent $event */
         $event = Yii::createObject([
             'class' => Oauth2AuthCodeIssuanceEvent::class,
@@ -51,9 +53,9 @@ trait Oauth2GrantTrait
     protected function issueAccessToken(
         \DateInterval $accessTokenTTL,
         ClientEntityInterface $client,
-        $userIdentifier,
+        ?string $userIdentifier,
         array $scopes = []
-    ) {
+    ): AccessTokenEntityInterface {
         /** @var Oauth2AccessTokenIssuanceEvent $event */
         $event = Yii::createObject([
             'class' => Oauth2AccessTokenIssuanceEvent::class,
@@ -75,7 +77,7 @@ trait Oauth2GrantTrait
         return $event->accessToken;
     }
 
-    protected function issueRefreshToken(AccessTokenEntityInterface $accessToken)
+    protected function issueRefreshToken(AccessTokenEntityInterface $accessToken): ?RefreshTokenEntityInterface
     {
         /** @var Oauth2RefreshTokenIssuanceEvent $event */
         $event = Yii::createObject([
@@ -99,7 +101,7 @@ trait Oauth2GrantTrait
         string $redirectUri,
         ClientEntityInterface $client,
         ServerRequestInterface $request
-    ) {
+    ): void {
         if (!($client instanceof Oauth2ClientInterface)) {
             throw new InvalidConfigException(get_class($client) . ' must implement ' . Oauth2ClientInterface::class);
         }

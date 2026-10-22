@@ -145,7 +145,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
      * @throws EnvironmentVariableNotSetException
      * @throws EnvironmentVariableNotAllowedException
      */
-    public function getRedirectUri()
+    public function getRedirectUri(): string|array
     {
         return $this->getUrisAttribute('redirect_uris');
     }

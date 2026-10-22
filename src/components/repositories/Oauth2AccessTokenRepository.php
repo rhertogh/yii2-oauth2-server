@@ -38,7 +38,7 @@ class Oauth2AccessTokenRepository extends Oauth2BaseTokenRepository implements O
      * @param Oauth2ClientInterface $clientEntity
      * @throws InvalidConfigException
      */
-    public function getNewToken(ClientEntityInterface $clientEntity, array $scopes, $userIdentifier = null)
+    public function getNewToken(ClientEntityInterface $clientEntity, array $scopes, ?string $userIdentifier = null): AccessTokenEntityInterface
     {
         /** @var Oauth2AccessTokenInterface $accessToken */
         $accessToken = static::getNewTokenInternally([
@@ -56,7 +56,7 @@ class Oauth2AccessTokenRepository extends Oauth2BaseTokenRepository implements O
      * @throws \yii\db\Exception
      * @throws InvalidConfigException
      */
-    public function persistNewAccessToken(AccessTokenEntityInterface $accessTokenEntity)
+    public function persistNewAccessToken(AccessTokenEntityInterface $accessTokenEntity): void
     {
         static::persistToken($accessTokenEntity);
     }
@@ -64,7 +64,7 @@ class Oauth2AccessTokenRepository extends Oauth2BaseTokenRepository implements O
     /**
      * @inheritDoc
      */
-    public function revokeAccessToken($tokenIdentifier)
+    public function revokeAccessToken(string $tokenIdentifier): void
     {
         static::revokeToken($tokenIdentifier);
     }
@@ -72,7 +72,7 @@ class Oauth2AccessTokenRepository extends Oauth2BaseTokenRepository implements O
     /**
      * @inheritDoc
      */
-    public function isAccessTokenRevoked($tokenIdentifier)
+    public function isAccessTokenRevoked(string $tokenIdentifier): bool
     {
         $validation = $this->getRevocationValidation();
         if ($validation === true) {

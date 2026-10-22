@@ -3,6 +3,7 @@
 namespace rhertogh\Yii2Oauth2Server\interfaces\components\repositories;
 
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
+use League\OAuth2\Server\Entities\ClientEntityInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\base\Oauth2ModelRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2ClientInterface;
 use yii\base\InvalidConfigException;
@@ -36,7 +37,7 @@ interface Oauth2ClientRepositoryInterface extends
      * @inheritDoc
      * @return Oauth2ClientInterface|null
      */
-    public function getClientEntity($clientIdentifier);
+    public function getClientEntity(string $clientIdentifier): ?ClientEntityInterface;
     # endregion
 
     /**

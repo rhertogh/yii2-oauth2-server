@@ -26,7 +26,7 @@ trait Oauth2EntityIdentifierTrait
     /**
      * @inheritDoc
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         /** @var ActiveRecordInterface $this */
         return $this->getAttribute('identifier');

@@ -35,7 +35,7 @@ class Oauth2RefreshTokenGrant extends RefreshTokenGrant implements Oauth2Refresh
         ServerRequestInterface $request,
         ResponseTypeInterface $responseType,
         DateInterval $accessTokenTTL
-    ) {
+    ): ResponseTypeInterface {
         /** @var Oauth2ClientInterface $client */
         $client = $this->validateClient($request);
         $oldRefreshToken = $this->validateOldRefreshToken($request, $client->getIdentifier());

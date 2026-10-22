@@ -39,7 +39,7 @@ class Oauth2PersonalAccessTokenGrant extends AbstractGrant implements Oauth2Pers
         $this->setAccessTokenRepository($accessTokenRepository);
     }
 
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return Oauth2Module::GRANT_TYPE_IDENTIFIER_PERSONAL_ACCESS_TOKEN;
     }
