@@ -2,7 +2,7 @@
 
 namespace Yii2Oauth2ServerTests\unit\controllers\_base;
 
-use yii\web\Controller;
+use yii\base\Controller;
 use Yii2Oauth2ServerTests\unit\TestCase;
 
 abstract class Oauth2BaseControllerTest extends TestCase

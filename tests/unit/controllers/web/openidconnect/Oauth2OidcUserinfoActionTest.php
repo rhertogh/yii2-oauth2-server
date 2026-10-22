@@ -6,6 +6,7 @@ use Codeception\Util\HttpCode;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
+use Lcobucci\JWT\UnencryptedToken;
 use rhertogh\Yii2Oauth2Server\controllers\web\Oauth2OidcController;
 use rhertogh\Yii2Oauth2Server\controllers\web\openidconnect\Oauth2OidcUserinfoAction;
 use rhertogh\Yii2Oauth2Server\interfaces\controllers\web\Oauth2OidcControllerInterface;
@@ -70,6 +71,7 @@ class Oauth2OidcUserinfoActionTest extends DatabaseTestCase
                 new Sha256(),
                 InMemory::empty()
             );
+            /** @var UnencryptedToken $token */
             $token = $jwtConfiguration->parser()->parse($response->data);
             $responseData = [
                 'sub' => $token->claims()->get('sub'),

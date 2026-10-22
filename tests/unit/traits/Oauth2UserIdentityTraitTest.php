@@ -28,7 +28,6 @@ class Oauth2UserIdentityTraitTest extends DatabaseTestCase
         $module = Oauth2Module::getInstance();
 
         $module->validateAuthenticatedRequest();
-        /** @var Oauth2UserIdentityTrait $modelClass */
         $modelClass = get_class(new class {
             use Oauth2UserIdentityTrait;
 
@@ -57,7 +56,6 @@ class Oauth2UserIdentityTraitTest extends DatabaseTestCase
             ],
         ]);
 
-        /** @var Oauth2UserIdentityTrait|class-string $modelClass */
         $modelClass = get_class(new class {
             use Oauth2UserIdentityTrait;
 

@@ -50,7 +50,7 @@ abstract class Oauth2BaseGenerateMigrationsAction extends Action
             }
             $sourceMigrationName = StringHelper::basename($sourceMigrationClass);
             $wrapperName = $sourceMigrationName . 'Wrapper';
-            /** @var string|Oauth2BaseMigration $sourceMigrationWrapper */
+            /** @var class-string<Oauth2BaseMigration> $sourceMigrationWrapper */
             $sourceMigrationWrapper = __NAMESPACE__ . '\\' . $wrapperName;
             if (!class_exists($sourceMigrationWrapper, false)) {
                 eval(

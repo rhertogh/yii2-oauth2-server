@@ -7,6 +7,7 @@ use Lcobucci\JWT\Encoding\JoseEncoder;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
 use Lcobucci\JWT\Token\Parser;
+use Lcobucci\JWT\UnencryptedToken;
 use Lcobucci\JWT\Validation\Constraint\PermittedFor;
 use Lcobucci\JWT\Validation\Constraint\RelatedTo;
 use Lcobucci\JWT\Validation\Constraint\SignedWith;
@@ -108,6 +109,7 @@ abstract class Oauth2BaseEndSessionAuthorizationRequest extends Oauth2BaseAuthor
 
             $parser = new Parser(new JoseEncoder());
 
+            /** @var UnencryptedToken $idToken */
             $idToken = $parser->parse($idTokenHint);
 
             $validator = new Validator();

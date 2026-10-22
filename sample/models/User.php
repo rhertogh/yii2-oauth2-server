@@ -18,7 +18,7 @@ use yii\web\IdentityInterface;
  * @property string $username
  * @property string $password_hash
  * @property string $email_address
- * @property string $latest_authenticated_at
+ * @property int|null $latest_authenticated_at
  * @property boolean $enabled
  * @property int $created_at
  * @property int $updated_at

@@ -11,7 +11,7 @@ class Oauth2UniqueTokenIdentifierConstraintViolationException extends UniqueToke
 {
     /**
      * @inheritDoc
-     * @param null $message
+     * @param string|null $errorMessage
      * @return static
      */
     public static function create($errorMessage = null)

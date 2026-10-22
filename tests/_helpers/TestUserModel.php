@@ -11,6 +11,16 @@ use Yii;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 
+/**
+ * @property int $id
+ * @property string $username
+ * @property string $password_hash
+ * @property string $email_address
+ * @property int|null $latest_authenticated_at
+ * @property boolean $enabled
+ * @property int $created_at
+ * @property int $updated_at
+ */
 class TestUserModel extends ActiveRecord implements
     IdentityInterface,
     Oauth2UserInterface

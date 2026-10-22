@@ -1,0 +1,865 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method sample\\models\\User\:\:getAuthKey\(\) should return string\|null but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: sample/models/User.php
+
+		-
+			message: '#^Method sample\\models\\User\:\:validateAuthKey\(\) should return bool\|null but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: sample/models/User.php
+
+		-
+			message: '#^Access to an undefined property yii\\web\\IdentityInterface\:\:\$username\.$#'
+			identifier: property.notFound
+			count: 1
+			path: sample/views/layouts/main.php
+
+		-
+			message: '#^Unknown option "skip_authorization_if_scope_is_allowed" for object rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/Oauth2Module.php
+
+		-
+			message: '#^Unknown option "client_id" for object rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2UserClientScopeInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/authorization/client/Oauth2ClientAuthorizationRequest.php
+
+		-
+			message: '#^Unknown option "scope_id" for object rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2UserClientScopeInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/authorization/client/Oauth2ClientAuthorizationRequest.php
+
+		-
+			message: '#^Unknown option "user_id" for object rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2UserClientScopeInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/authorization/client/Oauth2ClientAuthorizationRequest.php
+
+		-
+			message: '#^Unknown option "module" for object rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\Oauth2AuthCodeGrantInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/factories/grants/Oauth2AuthCodeGrantFactory.php
+
+		-
+			message: '#^Unknown option "module" for object rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\Oauth2ClientCredentialsGrantInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/factories/grants/Oauth2ClientCredentialsGrantFactory.php
+
+		-
+			message: '#^Unknown option "module" for object rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\Oauth2ImplicitGrantInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/factories/grants/Oauth2ImplicitGrantFactory.php
+
+		-
+			message: '#^Unknown option "module" for object rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\Oauth2PasswordGrantInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/factories/grants/Oauth2PasswordGrantFactory.php
+
+		-
+			message: '#^Unknown option "module" for object rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\Oauth2PersonalAccessTokenGrantInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/factories/grants/Oauth2PersonalAccessTokenGrantFactory.php
+
+		-
+			message: '#^Unknown option "module" for object rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\Oauth2RefreshTokenGrantInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/factories/grants/Oauth2RefreshTokenGrantFactory.php
+
+		-
+			message: '#^Object option "accessToken" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2RefreshTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AccessTokenInterface\|null, League\\OAuth2\\Server\\Entities\\AccessTokenEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2AuthCodeGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2AuthCodeGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2AuthCodeGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2AuthCodeGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2AuthCodeGrant.php
+
+		-
+			message: '#^Object option "accessToken" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2RefreshTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AccessTokenInterface\|null, League\\OAuth2\\Server\\Entities\\AccessTokenEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ClientCredentialsGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ClientCredentialsGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ClientCredentialsGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ClientCredentialsGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ClientCredentialsGrant.php
+
+		-
+			message: '#^Object option "accessToken" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2RefreshTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AccessTokenInterface\|null, League\\OAuth2\\Server\\Entities\\AccessTokenEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ImplicitGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ImplicitGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ImplicitGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ImplicitGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2ImplicitGrant.php
+
+		-
+			message: '#^Object option "accessToken" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2RefreshTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AccessTokenInterface\|null, League\\OAuth2\\Server\\Entities\\AccessTokenEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PasswordGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PasswordGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PasswordGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PasswordGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PasswordGrant.php
+
+		-
+			message: '#^Object option "accessToken" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2RefreshTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AccessTokenInterface\|null, League\\OAuth2\\Server\\Entities\\AccessTokenEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PersonalAccessTokenGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PersonalAccessTokenGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PersonalAccessTokenGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PersonalAccessTokenGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2PersonalAccessTokenGrant.php
+
+		-
+			message: '#^Object option "accessToken" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2RefreshTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AccessTokenInterface\|null, League\\OAuth2\\Server\\Entities\\AccessTokenEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2RefreshTokenGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2RefreshTokenGrant.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2RefreshTokenGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2RefreshTokenGrant.php
+
+		-
+			message: '#^Object option "scopes" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be array\<rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\>, array\<League\\OAuth2\\Server\\Entities\\ScopeEntityInterface\> given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: src/components/server/grants/Oauth2RefreshTokenGrant.php
+
+		-
+			message: '#^Controller action class "rhertogh\\Yii2Oauth2Server\\interfaces\\controllers\\console\\client\\Oauth2CreateClientActionInterface" must be yii\\base\\Action or its subclass\.$#'
+			identifier: mspirkovYii2.controllerActionsValidation
+			count: 1
+			path: src/controllers/console/Oauth2ClientController.php
+
+		-
+			message: '#^Controller action class "rhertogh\\Yii2Oauth2Server\\interfaces\\controllers\\console\\client\\Oauth2DeleteClientActionInterface" must be yii\\base\\Action or its subclass\.$#'
+			identifier: mspirkovYii2.controllerActionsValidation
+			count: 1
+			path: src/controllers/console/Oauth2ClientController.php
+
+		-
+			message: '#^Controller action class "rhertogh\\Yii2Oauth2Server\\interfaces\\controllers\\console\\client\\Oauth2ListClientsActionInterface" must be yii\\base\\Action or its subclass\.$#'
+			identifier: mspirkovYii2.controllerActionsValidation
+			count: 1
+			path: src/controllers/console/Oauth2ClientController.php
+
+		-
+			message: '#^Controller action class "rhertogh\\Yii2Oauth2Server\\interfaces\\controllers\\console\\client\\Oauth2SetClientSecretActionInterface" must be yii\\base\\Action or its subclass\.$#'
+			identifier: mspirkovYii2.controllerActionsValidation
+			count: 1
+			path: src/controllers/console/Oauth2ClientController.php
+
+		-
+			message: '#^Controller action class "rhertogh\\Yii2Oauth2Server\\interfaces\\controllers\\console\\debug\\Oauth2DebugConfigActionInterface" must be yii\\base\\Action or its subclass\.$#'
+			identifier: mspirkovYii2.controllerActionsValidation
+			count: 1
+			path: src/controllers/console/Oauth2DebugController.php
+
+		-
+			message: '#^Controller action class "rhertogh\\Yii2Oauth2Server\\interfaces\\controllers\\console\\encryption\\Oauth2EncryptionKeyUsageActionInterface" must be yii\\base\\Action or its subclass\.$#'
+			identifier: mspirkovYii2.controllerActionsValidation
+			count: 1
+			path: src/controllers/console/Oauth2EncryptionController.php
+
+		-
+			message: '#^Controller action class "rhertogh\\Yii2Oauth2Server\\interfaces\\controllers\\console\\encryption\\Oauth2GenerateSecretActionInterface" must be yii\\base\\Action or its subclass\.$#'
+			identifier: mspirkovYii2.controllerActionsValidation
+			count: 1
+			path: src/controllers/console/Oauth2EncryptionController.php
+
+		-
+			message: '#^Method yii\\db\\ActiveQueryInterface\:\:with\(\) invoked with 1 parameter, 0 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/controllers/console/client/Oauth2CreateClientAction.php
+
+		-
+			message: '#^Method yii\\db\\ActiveQueryInterface\:\:with\(\) invoked with 1 parameter, 0 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/controllers/console/client/Oauth2UpdateClientAction.php
+
+		-
+			message: '#^Method yii\\db\\ActiveQueryInterface\:\:with\(\) invoked with 1 parameter, 0 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/controllers/console/client/base/Oauth2BaseEditClientAction.php
+
+		-
+			message: '#^Call to an undefined method yii\\web\\User\:\:accountSelectionRequired\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/controllers/web/server/Oauth2AuthorizeAction.php
+
+		-
+			message: '#^Call to an undefined method yii\\web\\User\:\:reauthenticationRequired\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/controllers/web/server/Oauth2AuthorizeAction.php
+
+		-
+			message: '#^Variable \$refreshTokenString might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: src/controllers/web/server/Oauth2RevokeAction.php
+
+		-
+			message: '#^Access to an undefined property rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientScopeInterface\:\:\$client_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/models/Oauth2Client.php
+
+		-
+			message: '#^Calling parent\:\:init\(\) outside of class scope\.$#'
+			identifier: outOfClass.parent
+			count: 1
+			path: tests/_config/site.php
+
+		-
+			message: '#^Method Yii2Oauth2ServerTests\\_helpers\\EchoMigrateController\:\:stdout\(\) should return bool\|int but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/_helpers/EchoMigrateController.php
+
+		-
+			message: '#^Method Yii2Oauth2ServerTests\\_helpers\\TestUserModel\:\:getAuthKey\(\) should return string\|null but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/_helpers/TestUserModel.php
+
+		-
+			message: '#^Method Yii2Oauth2ServerTests\\_helpers\\TestUserModel\:\:validateAuthKey\(\) should return bool\|null but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/_helpers/TestUserModel.php
+
+		-
+			message: '#^Method Yii2Oauth2ServerTests\\ApiTester\:\:sendYiiHttpClientRequest\(\) should return yii\\httpclient\\Response but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/_support/ApiTester.php
+
+		-
+			message: '#^Variable \$e might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: tests/functional/OpenIdConnect/OpenIdConnectCoreCest.php
+
+		-
+			message: '#^Class League\\OAuth2\\Server\\Oauth2AuthorizationServerInterface not found\.$#'
+			identifier: class.notFound
+			count: 2
+			path: tests/functional/exceptions/Oauth2ServerHttpExceptionCest.php
+
+		-
+			message: '#^Method rhertogh\\Yii2Oauth2Server\\models\\Oauth2Scope@anonymous/tests/unit/components/authorization/client/base/Oauth2BaseClientScopeAuthorizationRequestTest\.php\:17\:\:loadDefaultValues\(\) should return \$this\(rhertogh\\Yii2Oauth2Server\\models\\Oauth2Scope@anonymous/tests/unit/components/authorization/client/base/Oauth2BaseClientScopeAuthorizationRequestTest\.php\:17\) but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/components/authorization/client/base/Oauth2BaseClientScopeAuthorizationRequestTest.php
+
+		-
+			message: '#^Access to an undefined property rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AccessTokenInterface\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: tests/unit/components/repositories/Oauth2AccessTokenRepositoryTest.php
+
+		-
+			message: '#^Method League\\OAuth2\\Server\\Entities\\ClientEntityInterface@anonymous/tests/unit/components/repositories/Oauth2ScopeRepositoryTest\.php\:405\:\:getIdentifier\(\) should return string but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/components/repositories/Oauth2ScopeRepositoryTest.php
+
+		-
+			message: '#^Method League\\OAuth2\\Server\\Entities\\ClientEntityInterface@anonymous/tests/unit/components/repositories/Oauth2ScopeRepositoryTest\.php\:405\:\:getName\(\) should return string but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/components/repositories/Oauth2ScopeRepositoryTest.php
+
+		-
+			message: '#^Method League\\OAuth2\\Server\\Entities\\ClientEntityInterface@anonymous/tests/unit/components/repositories/Oauth2ScopeRepositoryTest\.php\:405\:\:getRedirectUri\(\) should return array\<string\>\|string but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/components/repositories/Oauth2ScopeRepositoryTest.php
+
+		-
+			message: '#^Method League\\OAuth2\\Server\\Entities\\ClientEntityInterface@anonymous/tests/unit/components/repositories/Oauth2ScopeRepositoryTest\.php\:405\:\:isConfidential\(\) should return bool but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/components/repositories/Oauth2ScopeRepositoryTest.php
+
+		-
+			message: '#^Method Yii2Oauth2ServerTests\\_helpers\\TestUserModel@anonymous/tests/unit/components/repositories/Oauth2UserRepositoryTest\.php\:159\:\:validatePassword\(\) should return bool but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/components/repositories/Oauth2UserRepositoryTest.php
+
+		-
+			message: '#^Method Yii2Oauth2ServerTests\\_helpers\\TestUserModel@anonymous/tests/unit/components/repositories/Oauth2UserRepositoryTest\.php\:208\:\:validatePassword\(\) should return bool but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/components/repositories/Oauth2UserRepositoryTest.php
+
+		-
+			message: '#^Method Yii2Oauth2ServerTests\\_helpers\\TestUserModel@anonymous/tests/unit/components/repositories/Oauth2UserRepositoryTest\.php\:77\:\:findByUsername\(\) should return Yii2Oauth2ServerTests\\_helpers\\TestUserModel@anonymous/tests/unit/components/repositories/Oauth2UserRepositoryTest\.php\:77 but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/components/repositories/Oauth2UserRepositoryTest.php
+
+		-
+			message: '#^Method Yii2Oauth2ServerTests\\_helpers\\TestUserModel@anonymous/tests/unit/components/repositories/Oauth2UserRepositoryTest\.php\:77\:\:validatePassword\(\) should return bool but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/components/repositories/Oauth2UserRepositoryTest.php
+
+		-
+			message: '#^Method rhertogh\\Yii2Oauth2Server\\components\\repositories\\base\\Oauth2BaseTokenRepository@anonymous/tests/unit/components/repositories/base/Oauth2BaseTokenRepositoryTest\.php\:94\:\:findModelByIdentifier\(\) should return rhertogh\\Yii2Oauth2Server\\interfaces\\models\\base\\Oauth2ActiveRecordInterface\|null but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/components/repositories/base/Oauth2BaseTokenRepositoryTest.php
+
+		-
+			message: '#^Method rhertogh\\Yii2Oauth2Server\\components\\repositories\\base\\Oauth2BaseTokenRepository@anonymous/tests/unit/components/repositories/base/Oauth2BaseTokenRepositoryTest\.php\:94\:\:findModelByPk\(\) should return rhertogh\\Yii2Oauth2Server\\interfaces\\models\\base\\Oauth2ActiveRecordInterface\|null but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/components/repositories/base/Oauth2BaseTokenRepositoryTest.php
+
+		-
+			message: '#^Method rhertogh\\Yii2Oauth2Server\\components\\repositories\\base\\Oauth2BaseTokenRepository@anonymous/tests/unit/components/repositories/base/Oauth2BaseTokenRepositoryTest\.php\:94\:\:findModelByPkOrIdentifier\(\) should return rhertogh\\Yii2Oauth2Server\\interfaces\\models\\base\\Oauth2ActiveRecordInterface\|null but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/components/repositories/base/Oauth2BaseTokenRepositoryTest.php
+
+		-
+			message: '#^Method rhertogh\\Yii2Oauth2Server\\models\\base\\Oauth2BaseActiveRecord@anonymous/tests/unit/components/repositories/base/Oauth2BaseTokenRepositoryTest\.php\:33\:\:loadDefaultValues\(\) should return \$this\(rhertogh\\Yii2Oauth2Server\\models\\base\\Oauth2BaseActiveRecord@anonymous/tests/unit/components/repositories/base/Oauth2BaseTokenRepositoryTest\.php\:33\) but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/components/repositories/base/Oauth2BaseTokenRepositoryTest.php
+
+		-
+			message: '#^Method rhertogh\\Yii2Oauth2Server\\models\\base\\Oauth2BaseActiveRecord@anonymous/tests/unit/components/repositories/traits/Oauth2RepositoryIdentifierTest\.php\:36\:\:loadDefaultValues\(\) should return \$this\(rhertogh\\Yii2Oauth2Server\\models\\base\\Oauth2BaseActiveRecord@anonymous/tests/unit/components/repositories/traits/Oauth2RepositoryIdentifierTest\.php\:36\) but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/components/repositories/traits/Oauth2RepositoryIdentifierTest.php
+
+		-
+			message: '#^Access to an undefined property rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\base\\Oauth2GrantTypeInterface\:\:\$module\.$#'
+			identifier: property.notFound
+			count: 1
+			path: tests/unit/components/server/grants/Oauth2RefreshTokenGrantTest.php
+
+		-
+			message: '#^Access to an undefined static property rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\base\\Oauth2GrantTypeInterface\:\:\$scopes\.$#'
+			identifier: staticProperty.notFound
+			count: 1
+			path: tests/unit/components/server/grants/Oauth2RefreshTokenGrantTest.php
+
+		-
+			message: '#^Access to an undefined static property rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\base\\Oauth2GrantTypeInterface\:\:\$userId\.$#'
+			identifier: staticProperty.notFound
+			count: 1
+			path: tests/unit/components/server/grants/Oauth2RefreshTokenGrantTest.php
+
+		-
+			message: '#^Object option "accessToken" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2RefreshTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AccessTokenInterface\|null, League\\OAuth2\\Server\\Entities\\AccessTokenEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: tests/unit/components/server/grants/traits/Oauth2GrantTraitTest.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: tests/unit/components/server/grants/traits/Oauth2GrantTraitTest.php
+
+		-
+			message: '#^Object option "client" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface, League\\OAuth2\\Server\\Entities\\ClientEntityInterface given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: tests/unit/components/server/grants/traits/Oauth2GrantTraitTest.php
+
+		-
+			message: '#^Object option "grant" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AccessTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\base\\Oauth2GrantTypeInterface, \$this\(class@anonymous/tests/unit/components/server/grants/traits/Oauth2GrantTraitTest\.php\:21\) given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: tests/unit/components/server/grants/traits/Oauth2GrantTraitTest.php
+
+		-
+			message: '#^Object option "grant" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2AuthCodeIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\base\\Oauth2GrantTypeInterface, \$this\(class@anonymous/tests/unit/components/server/grants/traits/Oauth2GrantTraitTest\.php\:21\) given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: tests/unit/components/server/grants/traits/Oauth2GrantTraitTest.php
+
+		-
+			message: '#^Object option "grant" for rhertogh\\Yii2Oauth2Server\\events\\Oauth2RefreshTokenIssuanceEvent must be rhertogh\\Yii2Oauth2Server\\interfaces\\components\\server\\grants\\base\\Oauth2GrantTypeInterface, \$this\(class@anonymous/tests/unit/components/server/grants/traits/Oauth2GrantTraitTest\.php\:21\) given\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: tests/unit/components/server/grants/traits/Oauth2GrantTraitTest.php
+
+		-
+			message: '#^class@anonymous/tests/unit/components/server/grants/traits/Oauth2GrantTraitTest\.php\:21\:\:issueAccessToken\(\) calls parent\:\:issueAccessToken\(\) but class@anonymous/tests/unit/components/server/grants/traits/Oauth2GrantTraitTest\.php\:21 does not extend any class\.$#'
+			identifier: class.noParent
+			count: 1
+			path: tests/unit/components/server/grants/traits/Oauth2GrantTraitTest.php
+
+		-
+			message: '#^class@anonymous/tests/unit/components/server/grants/traits/Oauth2GrantTraitTest\.php\:21\:\:issueAuthCode\(\) calls parent\:\:issueAuthCode\(\) but class@anonymous/tests/unit/components/server/grants/traits/Oauth2GrantTraitTest\.php\:21 does not extend any class\.$#'
+			identifier: class.noParent
+			count: 1
+			path: tests/unit/components/server/grants/traits/Oauth2GrantTraitTest.php
+
+		-
+			message: '#^class@anonymous/tests/unit/components/server/grants/traits/Oauth2GrantTraitTest\.php\:21\:\:issueRefreshToken\(\) calls parent\:\:issueRefreshToken\(\) but class@anonymous/tests/unit/components/server/grants/traits/Oauth2GrantTraitTest\.php\:21 does not extend any class\.$#'
+			identifier: class.noParent
+			count: 1
+			path: tests/unit/components/server/grants/traits/Oauth2GrantTraitTest.php
+
+		-
+			message: '#^class@anonymous/tests/unit/components/server/grants/traits/Oauth2GrantTraitTest\.php\:21\:\:validateRedirectUri\(\) calls parent\:\:validateRedirectUri\(\) but class@anonymous/tests/unit/components/server/grants/traits/Oauth2GrantTraitTest\.php\:21 does not extend any class\.$#'
+			identifier: class.noParent
+			count: 1
+			path: tests/unit/components/server/grants/traits/Oauth2GrantTraitTest.php
+
+		-
+			message: '#^Method rhertogh\\Yii2Oauth2Server\\controllers\\console\\Oauth2DebugController@anonymous/tests/unit/controllers/console/debug/Oauth2DebugConfigActionTest\.php\:24\:\:stderr\(\) should return bool\|int but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/controllers/console/debug/Oauth2DebugConfigActionTest.php
+
+		-
+			message: '#^Method rhertogh\\Yii2Oauth2Server\\controllers\\console\\Oauth2DebugController@anonymous/tests/unit/controllers/console/debug/Oauth2DebugConfigActionTest\.php\:24\:\:stdout\(\) should return bool\|int but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/controllers/console/debug/Oauth2DebugConfigActionTest.php
+
+		-
+			message: '#^Method rhertogh\\Yii2Oauth2Server\\controllers\\console\\Oauth2MigrationsController@anonymous/tests/unit/controllers/console/migrations/Oauth2GenerateMigrationsActionTest\.php\:46\:\:stderr\(\) should return bool\|int but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/controllers/console/migrations/Oauth2GenerateMigrationsActionTest.php
+
+		-
+			message: '#^Method rhertogh\\Yii2Oauth2Server\\controllers\\console\\Oauth2MigrationsController@anonymous/tests/unit/controllers/console/migrations/Oauth2GenerateMigrationsActionTest\.php\:46\:\:stdout\(\) should return bool\|int but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/controllers/console/migrations/Oauth2GenerateMigrationsActionTest.php
+
+		-
+			message: '#^Call to an undefined method yii\\web\\User\:\:expects\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: tests/unit/controllers/web/server/Oauth2AuthorizeActionTest.php
+
+		-
+			message: '#^Class yii\\log\\Logger referenced with incorrect case\: Yii\\log\\Logger\.$#'
+			identifier: class.nameCase
+			count: 1
+			path: tests/unit/controllers/web/server/Oauth2RevokeActionTest.php
+
+		-
+			message: '#^Variable \$logTestPassed might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: tests/unit/controllers/web/server/Oauth2RevokeActionTest.php
+
+		-
+			message: '#^Variable \$e might not be defined\.$#'
+			identifier: variable.undefined
+			count: 1
+			path: tests/unit/filters/auth/Oauth2HttpBearerAuthTest.php
+
+		-
+			message: '#^Call to an undefined method rhertogh\\Yii2Oauth2Server\\migrations\\Oauth2_00001_CreateOauth2TablesMigration\:\:getTablesWrapper\(\)\.$#'
+			identifier: method.notFound
+			count: 3
+			path: tests/unit/migrations/CreateOauth2TablesMigrationTest.php
+
+		-
+			message: '#^Call to an undefined method rhertogh\\Yii2Oauth2Server\\migrations\\base\\Oauth2BaseMigration@anonymous/tests/unit/migrations/base/Oauth2BaseMigrationTest\.php\:106\:\:getTables\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/unit/migrations/base/Oauth2BaseMigrationTest.php
+
+		-
+			message: '#^Method rhertogh\\Yii2Oauth2Server\\migrations\\base\\Oauth2BaseMigration@anonymous/tests/unit/migrations/base/Oauth2BaseMigrationTest\.php\:27\:\:generationIsActive\(\) should return bool but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/migrations/base/Oauth2BaseMigrationTest.php
+
+		-
+			message: '#^Method rhertogh\\Yii2Oauth2Server\\migrations\\base\\Oauth2BaseMigration@anonymous/tests/unit/migrations/base/Oauth2BaseMigrationTest\.php\:50\:\:generationIsActive\(\) should return bool but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/migrations/base/Oauth2BaseMigrationTest.php
+
+		-
+			message: '#^Access to an undefined property rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AccessTokenInterface\|rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AuthCodeInterface\:\:\$client_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: tests/unit/models/Oauth2AccessTokenTest.php
+
+		-
+			message: '#^Unknown option "id" for object rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 2
+			path: tests/unit/models/Oauth2AccessTokenTest.php
+
+		-
+			message: '#^Unknown option "id" for object rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 5
+			path: tests/unit/models/Oauth2AccessTokenTest.php
+
+		-
+			message: '#^Unknown option "identifier" for object rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 2
+			path: tests/unit/models/Oauth2AccessTokenTest.php
+
+		-
+			message: '#^Access to an undefined property rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AccessTokenInterface\|rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AuthCodeInterface\:\:\$client_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: tests/unit/models/Oauth2AuthCodeTest.php
+
+		-
+			message: '#^Unknown option "id" for object rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: tests/unit/models/Oauth2AuthCodeTest.php
+
+		-
+			message: '#^Unknown option "id" for object rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ScopeInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 3
+			path: tests/unit/models/Oauth2AuthCodeTest.php
+
+		-
+			message: '#^Access to an undefined property rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface\:\:\$redirect_uris\.$#'
+			identifier: property.notFound
+			count: 2
+			path: tests/unit/models/Oauth2ClientTest.php
+
+		-
+			message: '#^Access to an undefined property rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface\:\:\$secret\.$#'
+			identifier: property.notFound
+			count: 2
+			path: tests/unit/models/Oauth2ClientTest.php
+
+		-
+			message: '#^Access to an undefined property rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientInterface\:\:\$type\.$#'
+			identifier: property.notFound
+			count: 1
+			path: tests/unit/models/Oauth2ClientTest.php
+
+		-
+			message: '#^Access to an undefined property rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientScopeInterface\:\:\$required_on_authorization\.$#'
+			identifier: property.notFound
+			count: 1
+			path: tests/unit/models/Oauth2ClientTest.php
+
+		-
+			message: '#^Call to an undefined method rhertogh\\Yii2Oauth2Server\\interfaces\\models\\base\\Oauth2ActiveRecordInterface\|yii\\db\\ActiveRecord\:\:setModule\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/unit/models/Oauth2ClientTest.php
+
+		-
+			message: '#^Access to an undefined property rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2RefreshTokenInterface\|yii\\db\\ActiveRecord\:\:\$access_token_id\.$#'
+			identifier: property.notFound
+			count: 2
+			path: tests/unit/models/Oauth2RefreshTokenTest.php
+
+		-
+			message: '#^Unknown option "id" for object rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2AccessTokenInterface\.$#'
+			identifier: mspirkovYii2.yiiCreateObjectValidation
+			count: 1
+			path: tests/unit/models/Oauth2RefreshTokenTest.php
+
+		-
+			message: '#^Access to an undefined property rhertogh\\Yii2Oauth2Server\\interfaces\\models\\Oauth2ClientScopeInterface\:\:\$client\.$#'
+			identifier: property.notFound
+			count: 1
+			path: tests/unit/models/Oauth2ScopeTest.php
+
+		-
+			message: '#^Object option "required_on_authorization" for rhertogh\\Yii2Oauth2Server\\models\\Oauth2Scope must be bool, int given\.$#'
+			identifier: mspirkovYii2.baseObjectInstantiationValidation
+			count: 1
+			path: tests/unit/models/Oauth2ScopeTest.php
+
+		-
+			message: '#^Method rhertogh\\Yii2Oauth2Server\\models\\base\\Oauth2BaseActiveRecord@anonymous/tests/unit/models/base/Oauth2BaseActiveRecordTest\.php\:19\:\:loadDefaultValues\(\) should return \$this\(rhertogh\\Yii2Oauth2Server\\models\\base\\Oauth2BaseActiveRecord@anonymous/tests/unit/models/base/Oauth2BaseActiveRecordTest\.php\:19\) but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/models/base/Oauth2BaseActiveRecordTest.php
+
+		-
+			message: '#^Access to an undefined property class@anonymous/tests/unit/models/traits/Oauth2ActiveRecordTraitTest\.php\:16\:\:\$attributes\.$#'
+			identifier: property.notFound
+			count: 1
+			path: tests/unit/models/traits/Oauth2ActiveRecordTraitTest.php
+
+		-
+			message: '#^Access to an undefined property class@anonymous/tests/unit/models/traits/Oauth2ActiveRecordTraitTest\.php\:27\:\:\$attributes\.$#'
+			identifier: property.notFound
+			count: 1
+			path: tests/unit/models/traits/Oauth2ActiveRecordTraitTest.php
+
+		-
+			message: '#^Call to an undefined method class@anonymous/tests/unit/models/traits/Oauth2ActiveRecordTraitTest\.php\:16\:\:getErrorSummary\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/unit/models/traits/Oauth2ActiveRecordTraitTest.php
+
+		-
+			message: '#^Call to an undefined method class@anonymous/tests/unit/models/traits/Oauth2ActiveRecordTraitTest\.php\:16\:\:save\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/unit/models/traits/Oauth2ActiveRecordTraitTest.php
+
+		-
+			message: '#^Call to an undefined method class@anonymous/tests/unit/models/traits/Oauth2ActiveRecordTraitTest\.php\:27\:\:getErrorSummary\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/unit/models/traits/Oauth2ActiveRecordTraitTest.php
+
+		-
+			message: '#^Call to an undefined method class@anonymous/tests/unit/models/traits/Oauth2ActiveRecordTraitTest\.php\:27\:\:save\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: tests/unit/models/traits/Oauth2ActiveRecordTraitTest.php
+
+		-
+			message: '#^Call to an undefined static method class@anonymous/tests/unit/models/traits/Oauth2ActiveRecordTraitTest\.php\:16\:\:findOne\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 2
+			path: tests/unit/models/traits/Oauth2ActiveRecordTraitTest.php
+
+		-
+			message: '#^Call to an undefined static method class@anonymous/tests/unit/models/traits/Oauth2ActiveRecordTraitTest\.php\:16\:\:getTableSchema\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: tests/unit/models/traits/Oauth2ActiveRecordTraitTest.php
+
+		-
+			message: '#^Call to an undefined static method class@anonymous/tests/unit/models/traits/Oauth2ActiveRecordTraitTest\.php\:27\:\:getTableSchema\(\)\.$#'
+			identifier: staticMethod.notFound
+			count: 1
+			path: tests/unit/models/traits/Oauth2ActiveRecordTraitTest.php
+
+		-
+			message: '#^Trait rhertogh\\Yii2Oauth2Server\\models\\traits\\Oauth2ActiveRecordTrait requires using class to extend yii\\db\\ActiveRecord, but class@anonymous/tests/unit/models/traits/Oauth2ActiveRecordTraitTest\.php\:16 does not\.$#'
+			identifier: class.missingExtends
+			count: 1
+			path: tests/unit/models/traits/Oauth2ActiveRecordTraitTest.php
+
+		-
+			message: '#^Trait rhertogh\\Yii2Oauth2Server\\models\\traits\\Oauth2ActiveRecordTrait requires using class to extend yii\\db\\ActiveRecord, but class@anonymous/tests/unit/models/traits/Oauth2ActiveRecordTraitTest\.php\:27 does not\.$#'
+			identifier: class.missingExtends
+			count: 1
+			path: tests/unit/models/traits/Oauth2ActiveRecordTraitTest.php
+
+		-
+			message: '#^Trait rhertogh\\Yii2Oauth2Server\\models\\traits\\Oauth2ActiveRecordTrait requires using class to implement rhertogh\\Yii2Oauth2Server\\interfaces\\models\\base\\Oauth2ActiveRecordInterface, but class@anonymous/tests/unit/models/traits/Oauth2ActiveRecordTraitTest\.php\:16 does not\.$#'
+			identifier: class.missingImplements
+			count: 1
+			path: tests/unit/models/traits/Oauth2ActiveRecordTraitTest.php
+
+		-
+			message: '#^Trait rhertogh\\Yii2Oauth2Server\\models\\traits\\Oauth2ActiveRecordTrait requires using class to implement rhertogh\\Yii2Oauth2Server\\interfaces\\models\\base\\Oauth2ActiveRecordInterface, but class@anonymous/tests/unit/models/traits/Oauth2ActiveRecordTraitTest\.php\:27 does not\.$#'
+			identifier: class.missingImplements
+			count: 1
+			path: tests/unit/models/traits/Oauth2ActiveRecordTraitTest.php
+
+		-
+			message: '#^Method yii\\base\\Application@anonymous/tests/unit/module/Oauth2ModuleTest\.php\:93\:\:handleRequest\(\) should return yii\\base\\Response but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/module/Oauth2ModuleTest.php
+
+		-
+			message: '#^Method yii\\web\\IdentityInterface@anonymous/tests/unit/module/Oauth2ModuleTest\.php\:1033\:\:findIdentity\(\) should return yii\\web\\IdentityInterface\|null but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/module/Oauth2ModuleTest.php
+
+		-
+			message: '#^Method yii\\web\\IdentityInterface@anonymous/tests/unit/module/Oauth2ModuleTest\.php\:1033\:\:findIdentityByAccessToken\(\) should return yii\\web\\IdentityInterface\|null but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/module/Oauth2ModuleTest.php
+
+		-
+			message: '#^Method yii\\web\\IdentityInterface@anonymous/tests/unit/module/Oauth2ModuleTest\.php\:1033\:\:getAuthKey\(\) should return string\|null but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/module/Oauth2ModuleTest.php
+
+		-
+			message: '#^Method yii\\web\\IdentityInterface@anonymous/tests/unit/module/Oauth2ModuleTest\.php\:1033\:\:getId\(\) should return int\|string but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/module/Oauth2ModuleTest.php
+
+		-
+			message: '#^Method yii\\web\\IdentityInterface@anonymous/tests/unit/module/Oauth2ModuleTest\.php\:1033\:\:validateAuthKey\(\) should return bool\|null but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/module/Oauth2ModuleTest.php
+
+		-
+			message: '#^Method rhertogh\\Yii2Oauth2Server\\base\\Oauth2BaseModule@anonymous/tests/unit/module/base/Oauth2BaseModuleTest\.php\:167\:\:getOidcScopeCollection\(\) should return rhertogh\\Yii2Oauth2Server\\interfaces\\components\\openidconnect\\scope\\Oauth2OidcScopeCollectionInterface but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/module/base/Oauth2BaseModuleTest.php
+
+		-
+			message: '#^Method rhertogh\\Yii2Oauth2Server\\base\\Oauth2BaseModule@anonymous/tests/unit/module/base/Oauth2BaseModuleTest\.php\:205\:\:getOidcScopeCollection\(\) should return rhertogh\\Yii2Oauth2Server\\interfaces\\components\\openidconnect\\scope\\Oauth2OidcScopeCollectionInterface but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/module/base/Oauth2BaseModuleTest.php
+
+		-
+			message: '#^Method rhertogh\\Yii2Oauth2Server\\base\\Oauth2BaseModule@anonymous/tests/unit/module/base/Oauth2BaseModuleTest\.php\:240\:\:getOidcScopeCollection\(\) should return rhertogh\\Yii2Oauth2Server\\interfaces\\components\\openidconnect\\scope\\Oauth2OidcScopeCollectionInterface but return statement is missing\.$#'
+			identifier: return.missing
+			count: 1
+			path: tests/unit/module/base/Oauth2BaseModuleTest.php
+
+		-
+			message: '#^Access to an undefined property rhertogh\\Yii2Oauth2Server\\interfaces\\models\\external\\user\\Oauth2UserInterface\:\:\$id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: tests/unit/traits/Oauth2UserIdentityTraitTest.php

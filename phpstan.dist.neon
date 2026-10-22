@@ -1,0 +1,36 @@
+includes:
+    - phpstan-baseline.neon
+    - vendor/mspirkov/yii2-phpstan/extension.neon
+
+parameters:
+
+    level: 2
+
+    paths:
+        - src
+        - sample
+        - tests
+
+    excludePaths:
+        analyse:
+            -   tests/_support/_generated
+        analyseAndScan:
+            -   sample/runtime
+            -   sample/dev/giiant/generators/model/templates
+            -   tests/_runtime (?)
+            -   tests/_output (?)
+
+    bootstrapFiles:
+        - phpstan-bootstrap.php
+
+    mspirkovYii2:
+        enableAllRules: false
+        enableValidationRules: true
+        viewPaths:
+            'sample\controllers\web': sample/views
+        applicationConfigs:
+            -
+                paths:
+                    - sample
+                files:
+                    - sample/config/site.php

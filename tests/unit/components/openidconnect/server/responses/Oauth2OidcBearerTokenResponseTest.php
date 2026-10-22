@@ -5,6 +5,7 @@ namespace Yii2Oauth2ServerTests\unit\components\openidconnect\server\responses;
 use Lcobucci\JWT\Configuration;
 use Lcobucci\JWT\Signer\Key\InMemory;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
+use Lcobucci\JWT\UnencryptedToken;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use rhertogh\Yii2Oauth2Server\components\openidconnect\claims\Oauth2OidcClaim;
 use rhertogh\Yii2Oauth2Server\components\openidconnect\scopes\Oauth2OidcScope;
@@ -121,6 +122,7 @@ class Oauth2OidcBearerTokenResponseTest extends DatabaseTestCase
             new Sha256(),
             InMemory::empty()
         );
+        /** @var UnencryptedToken $idToken */
         $idToken = $jwtConfiguration->parser()->parse($extraParams['id_token']);
         $claims = $idToken->claims()->all();
         $this->assertEquals(['test-client'], $claims['aud']);

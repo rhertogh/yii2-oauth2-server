@@ -6,9 +6,9 @@
  * The following variables are available in this view:
  */
 
-/* @var $class string the new migration class name including namespace */
-/* @var $sourceClass string the source class to extend */
-/* @var $config array the source class to extend */
+/** @var string $class the new migration class name including namespace */
+/** @var string $sourceClass the source class to extend */
+/** @var array $config the source class to extend */
 
 /**
  * phpcs:disable

@@ -5,7 +5,6 @@ namespace rhertogh\Yii2Oauth2Server\traits\models;
 use rhertogh\Yii2Oauth2Server\interfaces\models\external\user\Oauth2UserInterface;
 use rhertogh\Yii2Oauth2Server\Oauth2Module;
 use Yii;
-use yii\web\IdentityInterface;
 
 trait Oauth2UserIdentityTrait
 {
@@ -44,7 +43,6 @@ trait Oauth2UserIdentityTrait
      */
     public function getIdentifier(): string
     {
-        /** @var IdentityInterface $this */
         return $this->getId();
     }
 }

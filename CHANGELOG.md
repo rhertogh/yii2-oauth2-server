@@ -21,6 +21,9 @@ Please check the [Upgrading Instructions](UPGRADE.md) when upgrading to a newer 
 ### Fixed
 
 ### Improved
+ - Disable the `requireCodeChallengeForPublicClients` in the underling library since PKCE is independent of the Client type (https://oauth.net/2/pkce/), it is handled in this library. (rhertogh)
+- Replaced `proget-hq/phpstan-yii2` with `mspirkov/yii2-phpstan` for PHPStan analysis. (mspirkov)
+- Extended the PHPStan analysis to `sample` and `tests` and fixed incorrect PHPDoc types. (mspirkov)
 
 ### Security
 

@@ -11,6 +11,9 @@ use Yii2Oauth2ServerTests\unit\controllers\_base\Oauth2BaseControllerTest;
  */
 class Oauth2MigrationsControllerTest extends Oauth2BaseControllerTest
 {
+    /**
+     * @return Oauth2MigrationsController
+     */
     protected function getMockController()
     {
         $this->mockConsoleApplication();
