@@ -447,7 +447,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritdoc
      */
-    public function isConfidential()
+    public function isConfidential(): bool
     {
         return (int)$this->type !== static::TYPE_PUBLIC;
     }
