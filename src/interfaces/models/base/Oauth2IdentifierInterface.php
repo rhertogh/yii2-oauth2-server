@@ -17,7 +17,7 @@ interface Oauth2IdentifierInterface
      * @return string
      * @since 1.0.0
      */
-    public function getIdentifier();
+    public function getIdentifier(): string;
 
     /**
      * Set the model identifier.

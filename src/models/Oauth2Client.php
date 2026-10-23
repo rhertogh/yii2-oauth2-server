@@ -104,7 +104,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritdoc
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -145,7 +145,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
      * @throws EnvironmentVariableNotSetException
      * @throws EnvironmentVariableNotAllowedException
      */
-    public function getRedirectUri()
+    public function getRedirectUri(): string|array
     {
         return $this->getUrisAttribute('redirect_uris');
     }
@@ -447,7 +447,7 @@ class Oauth2Client extends base\Oauth2Client implements Oauth2ClientInterface
     /**
      * @inheritdoc
      */
-    public function isConfidential()
+    public function isConfidential(): bool
     {
         return (int)$this->type !== static::TYPE_PUBLIC;
     }

@@ -149,7 +149,7 @@ interface Oauth2ClientInterface extends
      * @inheritdoc
      * @return string[]
      */
-    public function getRedirectUri();
+    public function getRedirectUri(): string|array;
 
     /**
      * Sets the one or multiple redirect URIs

@@ -34,7 +34,7 @@ class Oauth2AuthCodeGrant extends AuthCodeGrant implements Oauth2AuthCodeGrantIn
      * @param Oauth2AccessTokenInterface|AccessTokenEntityInterface $accessToken
      * @return Oauth2RefreshTokenInterface|RefreshTokenEntityInterface|void|null
      */
-    protected function issueRefreshToken(AccessTokenEntityInterface $accessToken)
+    protected function issueRefreshToken(AccessTokenEntityInterface $accessToken): ?RefreshTokenEntityInterface
     {
         if (
             $this->module->enableOpenIdConnect

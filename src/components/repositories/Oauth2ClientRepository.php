@@ -49,7 +49,7 @@ class Oauth2ClientRepository extends Oauth2BaseRepository implements Oauth2Clien
      * @inheritDoc
      * @throws InvalidConfigException
      */
-    public function getClientEntity($clientIdentifier)
+    public function getClientEntity(string $clientIdentifier): ?Oauth2ClientInterface
     {
         return $this->findModelByIdentifier($clientIdentifier);
     }
@@ -57,7 +57,7 @@ class Oauth2ClientRepository extends Oauth2BaseRepository implements Oauth2Clien
     /**
      * @inheritDoc
      */
-    public function validateClient($clientIdentifier, $clientSecret, $grantType)
+    public function validateClient(string $clientIdentifier, ?string $clientSecret, ?string $grantType): bool
     {
         /** @var Oauth2ClientInterface $client */
         $client = $this->findModelByIdentifier($clientIdentifier);

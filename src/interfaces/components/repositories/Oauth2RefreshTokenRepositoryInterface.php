@@ -3,6 +3,7 @@
 namespace rhertogh\Yii2Oauth2Server\interfaces\components\repositories;
 
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
+use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\components\repositories\base\Oauth2ModelRepositoryInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2AccessTokenInterface;
 use rhertogh\Yii2Oauth2Server\interfaces\models\Oauth2RefreshTokenInterface;
@@ -36,7 +37,7 @@ interface Oauth2RefreshTokenRepositoryInterface extends
      * @inheritDoc
      * @return Oauth2RefreshTokenInterface
      */
-    public function getNewRefreshToken();
+    public function getNewRefreshToken(): ?RefreshTokenEntityInterface;
     # endregion
 
     /**

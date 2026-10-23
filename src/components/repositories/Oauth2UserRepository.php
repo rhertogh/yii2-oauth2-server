@@ -23,7 +23,7 @@ class Oauth2UserRepository extends Oauth2BaseRepository implements Oauth2UserRep
     /**
      * @inheritDoc
      */
-    public function getUserEntityByIdentifier($identifier)
+    public function getUserEntityByIdentifier(string $identifier): ?Oauth2UserInterface
     {
         $userClass = $this->getModelClass();
         $user = $userClass::findIdentity($identifier);
@@ -46,11 +46,11 @@ class Oauth2UserRepository extends Oauth2BaseRepository implements Oauth2UserRep
      * @throws InvalidConfigException
      */
     public function getUserEntityByUserCredentials(
-        $username,
-        $password,
-        $grantType,
+        string $username,
+        string $password,
+        string $grantType,
         ClientEntityInterface $clientEntity
-    ) {
+    ): ?Oauth2PasswordGrantUserInterface {
         $userClass = $this->getModelClass();
         if (!is_a($userClass, Oauth2PasswordGrantUserInterface::class, true)) {
             throw new \TypeError(

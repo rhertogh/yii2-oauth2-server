@@ -36,7 +36,7 @@ interface Oauth2ScopeRepositoryInterface extends
      * @inheritDoc
      * @return Oauth2ScopeInterface
      */
-    public function getScopeEntityByIdentifier($identifier);
+    public function getScopeEntityByIdentifier(string $identifier): ?Oauth2ScopeInterface;
 
     /**
      * @inheritDoc
@@ -44,9 +44,10 @@ interface Oauth2ScopeRepositoryInterface extends
      */
     public function finalizeScopes(
         array $scopes,
-        $grantType,
+        string $grantType,
         ClientEntityInterface $clientEntity,
-        $userIdentifier = null
-    );
+        ?string $userIdentifier = null,
+        ?string $authCodeId = null
+    ): array;
     # endregion
 }

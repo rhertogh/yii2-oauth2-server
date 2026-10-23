@@ -26,7 +26,7 @@ class Oauth2RefreshTokenRepository extends Oauth2BaseTokenRepository implements 
     /**
      * @inheritDoc
      */
-    public function getNewRefreshToken()
+    public function getNewRefreshToken(): ?RefreshTokenEntityInterface
     {
         return static::getNewTokenInternally();
     }
@@ -34,7 +34,7 @@ class Oauth2RefreshTokenRepository extends Oauth2BaseTokenRepository implements 
     /**
      * @inheritDoc
      */
-    public function persistNewRefreshToken(RefreshTokenEntityInterface $refreshTokenEntity)
+    public function persistNewRefreshToken(RefreshTokenEntityInterface $refreshTokenEntity): void
     {
         static::persistToken($refreshTokenEntity);
     }
@@ -42,7 +42,7 @@ class Oauth2RefreshTokenRepository extends Oauth2BaseTokenRepository implements 
     /**
      * @inheritDoc
      */
-    public function revokeRefreshToken($tokenId)
+    public function revokeRefreshToken(string $tokenId): void
     {
         static::revokeToken($tokenId);
     }
@@ -50,7 +50,7 @@ class Oauth2RefreshTokenRepository extends Oauth2BaseTokenRepository implements 
     /**
      * @inheritDoc
      */
-    public function isRefreshTokenRevoked($tokenId)
+    public function isRefreshTokenRevoked(string $tokenId): bool
     {
         return static::isTokenRevoked($tokenId);
     }

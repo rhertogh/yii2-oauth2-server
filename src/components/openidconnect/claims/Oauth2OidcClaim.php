@@ -26,7 +26,7 @@ class Oauth2OidcClaim extends BaseObject implements Oauth2OidcClaimInterface
     /**
      * @inheritDoc
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         if (empty($this->_identifier)) {
             throw new InvalidCallException('Trying to get claim identifier without it being set.');

@@ -41,7 +41,7 @@ trait Oauth2UserIdentityTrait
      * @return int|string|null
      * @since 1.0.0
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return $this->getId();
     }
